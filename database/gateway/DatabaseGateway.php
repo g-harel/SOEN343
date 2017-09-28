@@ -6,12 +6,14 @@ class DatabaseGateway
     private $userName;
     private $password;
     private $databaseName;
+    private $tableName;
 
-    public function __construct() {
+    public function __construct($tableName) {
         $this->serverName = "localhost";
         $this->userName = "root";
         $this->password = "";
         $this->databaseName = "soen343";
+        $this->tableName = $tableName;
     }
 
     private function openDBConnection() {
@@ -60,7 +62,6 @@ class DatabaseGateway
 
     /**
      * Select all values that match a specifc condition
-     * $table = string
      * $selectFieldsArray = is an Array of all the columns you want to select
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
@@ -68,15 +69,15 @@ class DatabaseGateway
      * This function returns an array of associative arrays. Every index of the first array represent a row. 
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
-    public function selectFields($table, $selectFieldsArray, $conditionsAssociativeArray = null) {
+    public function selectFields($selectFieldsArray, $conditionsAssociativeArray = null) {
         $fields = implode(", ", $selectFieldsArray);
         $sql = "";
         $isConditionPresent = $conditionsAssociativeArray != null;
         if ($isConditionPresent) {
             $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
-            $sql = "SELECT $fields FROM $table WHERE $conditions;";
+            $sql = "SELECT $fields FROM $this->tableName WHERE $conditions;";
         } else {
-            $sql = "SELECT $fields FROM $table;";
+            $sql = "SELECT $fields FROM $this->tableName;";
         }
         $result = $this->queryDB($sql);
         return $this::parseSelectResult($result);
@@ -84,21 +85,19 @@ class DatabaseGateway
 
     /**
      * Select all the rows that match a specific condition
-     * $table = string
-     * $selectFieldsArray = is an Array of all the columns you want to select
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
      * This function returns an array of associative arrays. Every index of the first array represent a row. 
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
-     public function selectRows($table, $selectFieldsArray, $conditionsAssociativeArray = null) {
-        return $this->selectFields($table, ["*"], $conditionsAssociativeArray);
+     public function selectRows($conditionsAssociativeArray = null) {
+        $selectRows = ["*"];
+        return $this->selectFields($selectRows, $conditionsAssociativeArray);
     }
 
     /**
      * Update all values that match a specifc condition
-     * $table = string
      * $columnValuePairsAssociativeArray = Associative array where [key => value] where the key is the column name and value
      * is what the new value should be in the DB
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
@@ -106,48 +105,46 @@ class DatabaseGateway
      *
      * This function returns a boolean of whether it worked or not.
      */
-    public function update($table, $columnValuePairsAssociativeArray, $conditionsAssociativeArray = null) {
+    public function update($columnValuePairsAssociativeArray, $conditionsAssociativeArray = null) {
         $valuePairs = $this::implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
         $sql = "";
         $isConditionPresent = $conditionsAssociativeArray != null;        
         if ($isConditionPresent) {
             $conditions = $this::transformConditionsToString($conditionsAssociativeArray);            
-            $sql = "UPDATE $table SET $valuePairs WHERE $conditions;";
+            $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
         } else {
-            $sql = "UPDATE $table SET $valuePairs;";
+            $sql = "UPDATE $this->tableName SET $valuePairs;";
         }
         return $this->queryDB($sql);
     }
 
     /**
      * Deletes all values that match a specifc condition
-     * $table = string
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
      * This function returns a boolean of whether it worked or not.
      */
-    public function delete($table, $conditionsAssociativeArray = null) {
+    public function delete($conditionsAssociativeArray = null) {
         $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
-        $sql = $sql = "DELETE FROM $table WHERE $conditions;";
+        $sql = $sql = "DELETE FROM $this->tableName WHERE $conditions;";
         return $this->queryDB($sql);
     }
 
     /**
      * Inserts a value in a specific table. The "key" is the column name and "value" is the value to be placed.
-     * $table = string
-     * $columnValueAssociativeArray = Associative array where [key => value]
+     * $columnValueAssociativeArray = Associative array where [column => value]
      *
      * This function returns a boolean of whether it worked or not.
      */
-    public function insert($table, $columnValueAssociativeArray) {
+    public function insert($columnValueAssociativeArray) {
         // Concatenates all the columns to a string separated by ,
         $columns = implode(", ", array_keys($columnValueAssociativeArray));
         // Gets all the values into an array
         $valuesArray = array_values($columnValueAssociativeArray);
         // Add ' ' in front of each values for SQL syntax
         $valueCount = count($valuesArray);
-        $sql = "INSERT INTO $table ($columns) VALUES (";
+        $sql = "INSERT INTO $this->tableName ($columns) VALUES (";
         foreach($valuesArray as $value) {
             $valueCount--;
             $sql .= "'".$value."'";
@@ -156,6 +153,7 @@ class DatabaseGateway
             }
         }
         $sql .= ");";
+        echo($sql);
         $values = implode(", ", $valuesArray);
         return $this->queryDB($sql);
     }
