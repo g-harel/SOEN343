@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/items/tv/showTv">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -38,13 +38,29 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
                     <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
+                        <span class="pull-left">View:</span>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-4">
+                                    <a href="/items/computer/showLaptop">
+                                        Laptop
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="/items/computer/showTablet">
+                                        Tablet
+                                    </a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="/items/computer/showDesktop">
+                                        Desktop
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </a>
             </div>
         </div>
         <div class="col-lg-4 col-md-6">
@@ -60,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/items/monitor/showMonitor">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
