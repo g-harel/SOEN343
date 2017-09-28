@@ -15,3 +15,15 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
 Route::resource('items', 'ItemsController');
+
+// TV
+Route::get('items/tv/showTv', 'TelevisionsController@showTv');
+
+// Computer
+Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
+Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
+Route::get('items/computer/showTablet', 'ComputerController@showTablet');
+
+
+// Monitor
+Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
