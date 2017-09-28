@@ -19,7 +19,6 @@ Route::resource('items', 'ItemsController');
 // TV
 Route::get('items/tv/showTv', 'TelevisionsController@showTv');
 
-
 // Computer
 Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
 Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');

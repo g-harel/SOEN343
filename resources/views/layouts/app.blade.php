@@ -13,10 +13,10 @@
         @include('inc.navbar')
         <div class='container'>
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     @include('inc.category-sidebar')
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-10">
                     @include('inc.messages')
                     @yield('content')
                 </div>
