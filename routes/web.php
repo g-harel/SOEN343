@@ -17,10 +17,7 @@ Route::get('/about', 'PagesController@about');
 Route::resource('items', 'ItemsController');
 
 // TV
-Route::get('items/tv/showTvHd', 'TelevisionsController@showTvHd');
-Route::get('items/tv/showTvThreeD', 'TelevisionsController@showTvThreeD');
-Route::get('items/tv/showTvLed', 'TelevisionsController@showTvLed');
-Route::get('items/tv/showTvSmart', 'TelevisionsController@showTvSmart');
+Route::get('items/tv/showTv', 'TelevisionsController@showTv');
 
 
 // Computer

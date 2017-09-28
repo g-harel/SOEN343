@@ -2,33 +2,10 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <a href="/items/tv/showTv">
                     Televisions
                 </a>
             </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                <ul class="list-group">
-                    <a href="/items/tv/showTvHd">
-                    <li class="list-group-item">
-                        <span class="badge">124</span>HD
-                    </li></a>
-                    <a href="/items/tv/showTvLed">
-                    <li class="list-group-item">
-                        <span class="badge">14</span>LED
-                    </li></a>
-                    <a href="/items/tv/showTvSmart">
-                    <li class="list-group-item">
-                        <span class="badge">50</span>Smart
-                    </li></a>
-                    <a href="/items/tv/showTvThreeD">
-                    <li class="list-group-item">
-                        <span class="badge">71</span>3D
-                    </li></a>
-                </ul>
-                <a href="#" class="btn btn-success">Add new</a>
-            </div>
         </div>
     </div>
     <div class="panel panel-default">

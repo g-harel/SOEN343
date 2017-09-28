@@ -22,6 +22,21 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>@mdo</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Dropdown header 1</li>
+                            <li><a href="#">HTML</a></li>
+                            <li><a href="#">CSS</a></li>
+                            <li><a href="#">JavaScript</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Dropdown header 2</li>
+                            <li><a href="#">About Us</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <th scope="row">2</th>
