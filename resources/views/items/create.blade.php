@@ -222,5 +222,7 @@
                 }
         }
         </script>
+
+        <!-- bootstrap submit button -->
         <button type="submit" class="btn btn-primary btn-lg">Submit</button>
         @endsection
