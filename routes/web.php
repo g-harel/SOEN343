@@ -13,5 +13,6 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+Route::get('/register', 'PagesController@register');
 
 Route::resource('items', 'ItemsController');
