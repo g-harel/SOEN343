@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Items <a class='btn btn-success' href='/items/create'>Create Items</a></h1>
     @if(count($items) > 0)
         @foreach($items as $item)
             <div class='well'>

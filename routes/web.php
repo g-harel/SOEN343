@@ -13,5 +13,9 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+Route::get('/admin', 'PagesController@admin');
 
 Route::resource('items', 'ItemsController');
+
+
+Route::get('/admin/view', 'AdminController@showItems');

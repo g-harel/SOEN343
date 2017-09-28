@@ -15,4 +15,9 @@ class PagesController extends Controller
         $title = 'This is the about page';
         return view('pages.about')->with('title', $title);
     }
+
+    public function admin(){
+        $title = 'Welcome to the Admin page';
+        return view('pages.admin')->with('title',$title);
+    }
 }
