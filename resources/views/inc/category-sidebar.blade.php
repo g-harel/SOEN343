@@ -3,30 +3,31 @@
         <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                    Television
+                    Televisions
                 </a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
                 <ul class="list-group">
+                    <a href="/items/tv/showTvHd">
                     <li class="list-group-item">
-                        <span class="badge">124</span>
-                        HD
-                    </li>
+                        <span class="badge">124</span>HD
+                    </li></a>
+                    <a href="/items/tv/showTvLed">
                     <li class="list-group-item">
-                        <span class="badge">14</span>
-                        LED
-                    </li>
+                        <span class="badge">14</span>LED
+                    </li></a>
+                    <a href="/items/tv/showTvSmart">
                     <li class="list-group-item">
-                        <span class="badge">50</span>
-                        Smart
-                    </li>
+                        <span class="badge">50</span>Smart
+                    </li></a>
+                    <a href="/items/tv/showTvThreeD">
                     <li class="list-group-item">
-                        <span class="badge">71</span>
-                        3D
-                    </li>
+                        <span class="badge">71</span>3D
+                    </li></a>
                 </ul>
+                <a href="#" class="btn btn-success">Add new</a>
             </div>
         </div>
     </div>
@@ -34,34 +35,35 @@
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Computer System
+                    Computer Systems
                 </a>
             </h4>
         </div>
         <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                 <ul class="list-group">
+                    <a href="/items/computer/showLaptop">
                     <li class="list-group-item">
-                        <span class="badge">124</span>
-                        Laptop
-                    </li>
+                        <span class="badge">31</span>Laptop
+                    </li></a>
+                    <a href="/items/computer/showTablet">
                     <li class="list-group-item">
-                        <span class="badge">14</span>
-                        Tablet
-                    </li>
+                        <span class="badge">10</span>Tablet
+                    </li></a>
+                    <a href="/items/computer/showDesktop">
                     <li class="list-group-item">
-                        <span class="badge">50</span>
-                        Desktop
-                    </li>
+                        <span class="badge">45</span>Desktop
+                    </li></a>
                 </ul>
+                <a href="#" class="btn btn-success">Add new</a>
             </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingThree">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Monitor
+                <a href="/items/monitor/showMonitor">
+                    Monitors
                 </a>
             </h4>
         </div>

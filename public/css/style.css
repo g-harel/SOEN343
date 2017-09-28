@@ -1,0 +1,10 @@
+.panel-green {
+    border-color: #5cb85c;
+    color: white;
+    background-color: #5cb85c;
+}
+.panel-yellow {
+    border-color: #f0ad4e;
+    color: white;
+    background-color: #f0ad4e;
+}
