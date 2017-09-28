@@ -21,17 +21,17 @@
 <style>
 	.panel-login {
 		border-color: #ccc;
-		-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-		-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-		box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+		-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
+		box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
 	}
 	.panel-login>.panel-heading {
 		color: #00415d;
 		background-color: #fff;
 		border-color: #fff;
-		text-align:center;
+		text-align: center;
 	}
-	.panel-login>.panel-heading a{
+	.panel-login>.panel-heading a {
 		text-decoration: none;
 		color: #666;
 		font-weight: bold;
@@ -40,22 +40,24 @@
 		-moz-transition: all 0.1s linear;
 		transition: all 0.1s linear;
 	}
-	.panel-login>.panel-heading a.active{
+	.panel-login>.panel-heading a.active {
 		color: #029f5b;
 		font-size: 18px;
 	}
-	.panel-login>.panel-heading hr{
+	.panel-login>.panel-heading hr {
 		margin-top: 10px;
 		margin-bottom: 0px;
 		clear: both;
 		border: 0;
 		height: 1px;
-		background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
-		background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-		background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
-		background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+		background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+		background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+		background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+		background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
 	}
-	.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
+	.panel-login input[type="text"],
+	.panel-login input[type="email"],
+	.panel-login input[type="password"] {
 		height: 45px;
 		border: 1px solid #ddd;
 		font-size: 16px;
@@ -65,7 +67,7 @@
 	}
 	.panel-login input:hover,
 	.panel-login input:focus {
-		outline:none;
+		outline: none;
 		-webkit-box-shadow: none;
 		-moz-box-shadow: none;
 		box-shadow: none;
