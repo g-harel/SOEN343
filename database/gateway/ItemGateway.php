@@ -20,7 +20,11 @@ class ItemGateway
 
     public $model = "items";
     public $idColumnName = "id";
-    public $fields = array("");
+    public $fields = array(
+        "brand",
+        "price",
+        "quantity",
+    );
 
     public function __construct() {
         $this->gateway = new DatabaseGateway("");
@@ -77,20 +81,94 @@ class ItemGateway
     }
 }
 
+class TelevisionGateway extends ItemGateway {
+    public $model = "televisions";
+    public $idColumnName = "item_id";
+    public $fields = array(
+        "height",
+        "width",
+        "thickness",
+        "weight",
+        "type",
+    );
+
+    protected function ancestry() {
+        return $this->generation("TelevisionGateway", parent::ancestry());
+    }
+}
+
+class MonitorGateway extends ItemGateway {
+    public $model = "monitors";
+    public $idColumnName = "item_id";
+    public $fields = array(
+        "display_size",
+        "weight",
+    );
+
+    protected function ancestry() {
+        return $this->generation("MonitorGateway", parent::ancestry());
+    }
+}
+
 class ComputerGateway extends ItemGateway {
     public $model = "computers";
     public $idColumnName = "item_id";
-    public $fields = array("");
+    public $fields = array(
+        "processor_type",
+        "ram_size",
+        "cpu_cores",
+        "weight",
+        "type",
+    );
 
     protected function ancestry() {
         return $this->generation("ComputerGateway", parent::ancestry());
     }
 }
 
+class TabletGateway extends ComputerGateway {
+    public $model = "tablets";
+    public $idColumnName = "item_id";
+    public $fields = array(
+        "display_size",
+        "width",
+        "height",
+        "thickness",
+        "battery",
+        "os",
+        "camera",
+        "touchscreen",
+    );
+
+    protected function ancestry() {
+        return $this->generation("TabletGateway", parent::ancestry());
+    }
+}
+
+class LaptopGateway extends ComputerGateway {
+    public $model = "laptops";
+    public $idColumnName = "item_id";
+    public $fields = array(
+        "display_size",
+        "os",
+        "battery",
+        "camera",
+        "touchscreen",
+    );
+
+    protected function ancestry() {
+        return $this->generation("LaptopGateway", parent::ancestry());
+    }
+}
+
 class DesktopGateway extends ComputerGateway {
     public $model = "desktops";
     public $idColumnName = "item_id";
-    public $fields = array("");
+    public $fields = array(
+        "height",
+        "width",
+        "thickness",
+    );
 
     protected function ancestry() {
         return $this->generation("DesktopGateway", parent::ancestry());
