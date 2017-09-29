@@ -5,8 +5,8 @@
 
         include_once(__DIR__ . "/../../../database/gateway/ItemGateway.php");
 
-        $g = new ItemGateway("desktops", array("computers"));
-        $r = $g->getById(1);
+        $g = new DesktopGateway();
+        $r = $g->getAll();
 
         echo '<pre>'; print_r($r); echo '</pre>';
 

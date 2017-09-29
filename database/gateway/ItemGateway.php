@@ -16,37 +16,43 @@ LEFT JOIN items ON items.id = desktops.item_id;
 
 class ItemGateway
 {
-    private $db;
+    private $gateway;
 
-    private $currentModel;
-    private $inheritanceChain;
-    private $rootModel = "items";
+    public $model = "items";
+    public $idColumnName = "id";
+    public $fields = array("");
 
-    public function __construct($currentModel, $inheritanceChain = array())
-    {
-        $this->db = new DatabaseGateway("");
-        $this->currentModel = $currentModel;
-        $this->inheritanceChain = $inheritanceChain;
+    public function __construct() {
+        $this->gateway = new DatabaseGateway("");
+    }
+
+    protected static function generation($className, $pastAncestry) {
+        return array_merge(array(get_class_vars($className)), $pastAncestry);
+    }
+
+    protected function ancestry() {
+        return array(get_class_vars("ItemGateway"));
     }
 
     // TODO reuse condition and result parsing logic from DatabaseGateway
     private function selectRows($condition)
     {
+        // return $this->ancestry();
+        $ancestry = $this->ancestry();
+        array_shift($ancestry);
         // base query on the current model's table
-        $query = "SELECT * FROM $this->currentModel ";
+        $query = "SELECT * FROM $this->model ";
         // for each layer of inheritance, a join must be added
-        foreach ($this->inheritanceChain as &$value) {
-            $query .= "LEFT JOIN $value ON $value.item_id = $this->currentModel.item_id ";
+        foreach ($ancestry as &$value) {
+            $query .= "LEFT JOIN ".$value["model"]." ON ".$value["model"].".".$value["idColumnName"]." = ".$this->model.".".$this->idColumnName." ";
         }
-        // join with the root model
-        $query .= "LEFT JOIN items ON items.id = $this->currentModel.item_id ";
         // add a condition if one is given
         if ($condition) {
             $query .= "WHERE $condition";
         }
         $query .= ";";
         // query the db and return the result
-        $queryResult = $this->db->queryDB($query);
+        $queryResult = $this->gateway->queryDB($query);
         $result = null;
         if ($queryResult != null) {
             while ($row = $queryResult->fetch_assoc()) {
@@ -68,5 +74,25 @@ class ItemGateway
             return $row[0];
         }
         return null;
+    }
+}
+
+class ComputerGateway extends ItemGateway {
+    public $model = "computers";
+    public $idColumnName = "item_id";
+    public $fields = array("");
+
+    protected function ancestry() {
+        return $this->generation("ComputerGateway", parent::ancestry());
+    }
+}
+
+class DesktopGateway extends ComputerGateway {
+    public $model = "desktops";
+    public $idColumnName = "item_id";
+    public $fields = array("");
+
+    protected function ancestry() {
+        return $this->generation("DesktopGateway", parent::ancestry());
     }
 }
