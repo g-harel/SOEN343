@@ -13,7 +13,25 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
-Route::get('/login', 'PagesController@login');
+Route::get('/admin', 'PagesController@admin');
 
 Route::resource('items', 'ItemsController');
+
+// TV
+Route::get('items/tv/showTv', 'TelevisionsController@showTv');
+
+// Computer
+Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
+Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
+Route::get('items/computer/showTablet', 'ComputerController@showTablet');
+
+
+// Monitor
+Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
+Route::resource('items', 'ItemsController');
+
+
+Route::get('/admin/view', 'AdminController@showItems');//Login pages
+Route::get('/login', 'PagesController@login');
+Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 

@@ -93,59 +93,60 @@
 </style>
 @section('content')
 <div class="container">
-<h1 class="text-center">{{$title}}</h1>
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="panel panel-login">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <a href="#" class="active" id="login-form-link">Admin</a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a href="#" id="register-form-link">Client</a>
-                    </div>
-                </div>
-                <hr>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form id="admin-form" action="" method="post" role="form" style="display: block;">
-                            <div class="form-group">
-                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value=""required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <form id="client-form" action="" method="post" role="form" style="display: none;">
-                            <div class="form-group">
-                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<h1 class="text-center">{{$title}}</h1>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-login">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-6">
+							<a href="#" class="active" id="login-form-link">Admin</a>
+						</div>
+						<div class="col-xs-6">
+							<a href="#" id="register-form-link">Client</a>
+						</div>
+					</div>
+					<hr>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<form id="admin-form" action="loginAdminVerification" method="post" role="form" style="display: block;">
+								{{ csrf_field() }}
+								<div class="form-group">
+									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value=""required>
+								</div>
+								<div class="form-group">
+									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3">
+											<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" required>
+										</div>
+									</div>
+								</div>
+							</form>
+							<form id="client-form" action="" method="post" role="form" style="display: none;">
+								<div class="form-group">
+									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+								</div>
+								<div class="form-group">
+									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+								</div>
+								<div class="form-group">
+									<div class="row">
+										<div class="col-sm-6 col-sm-offset-3">
+											<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In" required>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
