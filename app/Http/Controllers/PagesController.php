@@ -19,6 +19,7 @@ class PagesController extends Controller
     public function register(){
         $title = 'Register';
         return view('pages.register')->with('title', $title);
+    }
 
     public function admin(){
         $title = 'Welcome to the Admin page';
