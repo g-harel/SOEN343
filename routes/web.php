@@ -13,6 +13,9 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+
+Route::get('/register', 'PagesController@register');
+
 Route::get('/admin', 'PagesController@admin');
 
 Route::resource('items', 'ItemsController');
@@ -35,4 +38,3 @@ Route::get('/admin/view', 'AdminController@showItems');//Login pages
 Route::get('/login', 'PagesController@login');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
-
