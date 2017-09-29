@@ -17,13 +17,12 @@ class Login{
         $this->password = $password;
     }
 
-    public function validate($email, $password)
+    public function validate()
 	{ 
-		$user = $this->userMapper->setUserFromRecordByEmail($email);
+		$user = $this->userMapper->setUserFromRecordByEmail($this->email)->getUser();
 	
-		if($user){
-            $this->$email = $email;
-            $this->password = $user->getPassword();
+		if($user){;
+            $password = $user->getPassword();
             $isAdmin = $user->getIsAdmin();
     
             if($password == $this->password){
