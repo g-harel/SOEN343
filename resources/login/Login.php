@@ -19,7 +19,7 @@ class Login{
 
     public function validate()
 	{ 
-		$user = $this->userMapper->setUserFromRecordByEmail($this->email);
+		$user = $this->userMapper->setUserFromRecordByEmail($this->email)->getUser();
 	
 		if($user){;
             $password = $user->getPassword();

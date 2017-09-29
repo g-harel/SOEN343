@@ -11,7 +11,6 @@ $password = $_POST['password'];
 $login = new Login($email, $password);
 $result = $login->validate();
 
-echo $result;
 if($result == 1){
     $_SESSION['isAdmin'] = $result;
     header("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin");
