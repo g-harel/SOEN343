@@ -4,9 +4,9 @@ include_once(__DIR__ . "/DatabaseGateway.php");
 
 /*
 
-INSERT INTO items (brand, price, type) VALUES ("brand", 12.0, "type");
-INSERT INTO computers (item_id, processor_type, ram_size, cpu_cores, weight, type) VALUES (5, "ptype", 1, 2, 12.0, "type");
-INSERT INTO desktops (item_id, height, width, thickness) VALUES (3, 1.0, 2.0, 3.0);
+INSERT INTO items (brand, price, quantity) VALUES ("brand", 12.0, 1);
+INSERT INTO computers (item_id, processor_type, ram_size, cpu_cores, weight, type) VALUES (1, "ptype", 1, 2, 12.0, "type");
+INSERT INTO desktops (item_id, height, width, thickness) VALUES (1, 1.0, 2.0, 3.0);
 
 SELECT * FROM desktops
 LEFT JOIN computers ON computers.item_id = desktops.item_id
@@ -24,8 +24,7 @@ class ItemGateway
 
     public function __construct($currentModel, $inheritanceChain = array())
     {
-        $tableName = "items";
-        $this->db = new DatabaseGateway($tableName);
+        $this->db = new DatabaseGateway("");
         $this->currentModel = $currentModel;
         $this->inheritanceChain = $inheritanceChain;
     }
@@ -34,22 +33,23 @@ class ItemGateway
     private function selectRows($condition)
     {
         // base query on the current model's table
-        $query = "SELECT * FROM $this->currentModel";
+        $query = "SELECT * FROM $this->currentModel ";
         // for each layer of inheritance, a join must be added
         foreach ($this->inheritanceChain as &$value) {
-            $query .= "LEFT JOIN $value ON $value\.item_id = $this->currentModel\.item_id ";
+            $query .= "LEFT JOIN $value ON $value.item_id = $this->currentModel.item_id ";
         }
         // join with the root model
-        $query .= "LEFT JOIN items ON items.id = $this->currentModel\.item_id ";
+        $query .= "LEFT JOIN items ON items.id = $this->currentModel.item_id ";
         // add a condition if one is given
         if ($condition) {
             $query .= "WHERE $condition";
         }
         $query .= ";";
         // query the db and return the result
-        $result = $this->$db->queryDB($query);
-        if ($result != null) {
-            while ($row = $queryResults->fetch_assoc()) {
+        $queryResult = $this->db->queryDB($query);
+        $result = null;
+        if ($queryResult != null) {
+            while ($row = $queryResult->fetch_assoc()) {
                 $result[] = $row;
             }
         }
@@ -58,7 +58,7 @@ class ItemGateway
 
     public function getAll()
     {
-        return $this->selectRows();
+        return $this->selectRows(null);
     }
 
     public function getById($id)

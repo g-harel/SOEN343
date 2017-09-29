@@ -24,7 +24,7 @@ class DatabaseGateway
         mysqli_close($this->DBConnection);
     }
 
-    private function queryDB($sql) {
+    public function queryDB($sql) {
         $this->openDBConnection();
         $query = $this->DBConnection->query($sql);
         $this->closeDBConnection();
@@ -66,7 +66,7 @@ class DatabaseGateway
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
-     * This function returns an array of associative arrays. Every index of the first array represent a row. 
+     * This function returns an array of associative arrays. Every index of the first array represent a row.
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
     public function selectFields($selectFieldsArray, $conditionsAssociativeArray = null) {
@@ -88,7 +88,7 @@ class DatabaseGateway
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
-     * This function returns an array of associative arrays. Every index of the first array represent a row. 
+     * This function returns an array of associative arrays. Every index of the first array represent a row.
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
      public function selectRows($conditionsAssociativeArray = null) {
@@ -108,9 +108,9 @@ class DatabaseGateway
     public function update($columnValuePairsAssociativeArray, $conditionsAssociativeArray = null) {
         $valuePairs = $this::implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
         $sql = "";
-        $isConditionPresent = $conditionsAssociativeArray != null;        
+        $isConditionPresent = $conditionsAssociativeArray != null;
         if ($isConditionPresent) {
-            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);            
+            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
             $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
         } else {
             $sql = "UPDATE $this->tableName SET $valuePairs;";
@@ -175,19 +175,19 @@ class DatabaseGateway
 
 
     SELECT title, m2.txt1 AS teaser, inputdat, db_file.*
-    FROM db_item 
-        INNER JOIN db_itemv AS m1 USING(id_item) 
-        INNER JOIN db_itemf USING(id_item) 
-        INNER JOIN db_itemd USING(id_item) 
-        LEFT JOIN  db_itemv AS m2 
+    FROM db_item
+        INNER JOIN db_itemv AS m1 USING(id_item)
+        INNER JOIN db_itemf USING(id_item)
+        INNER JOIN db_itemd USING(id_item)
+        LEFT JOIN  db_itemv AS m2
           ON db_item.id_item = m2.id_item
           AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
-    WHERE type=15 
-        AND m1.fldnr = '12' 
+    WHERE type=15
+        AND m1.fldnr = '12'
         AND m1.indik = 'b'
         AND m1.txt1s = 'en'
-        AND visibility = 0 
-        AND inputdat > '2005-11-02' 
+        AND visibility = 0
+        AND inputdat > '2005-11-02'
     GROUP BY title
     ORDER BY inputdat DESC
 
