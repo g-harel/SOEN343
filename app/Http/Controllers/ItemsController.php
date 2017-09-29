@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Item;
-
 class ItemsController extends Controller
 {
     /**
@@ -17,7 +14,6 @@ class ItemsController extends Controller
         $items = Item::all();
         return view('items.index')->with('items', $items);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +23,6 @@ class ItemsController extends Controller
     {
         return view('items.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,18 +36,14 @@ class ItemsController extends Controller
             'price' => 'required',
             'type' => 'required'
         ]);
-
         //Create Item
-
         $item = new Item;
         $item->brand = $request->input('brand');
         $item->price = $request->input('price');
         $item->type = $request->input('type');
         $item->save();
-
         return redirect('/items')->with('success', 'Item Created');
     }
-
     /**
      * Display the specified resource.
      *
@@ -64,7 +55,6 @@ class ItemsController extends Controller
         $item = Item::find($id);
         return view('items.show')->with('item', $item);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -75,7 +65,6 @@ class ItemsController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -87,7 +76,6 @@ class ItemsController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
