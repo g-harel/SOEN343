@@ -227,7 +227,6 @@ class Computer extends Item
     }
 }
 
-
 class Desktop extends Computer
 {
     private $height;
