@@ -29,5 +29,9 @@ class PagesController extends Controller
     public function loginAdminVerification(){
         return view('pages.loginAdminVerification');
     }
+	
+	public function loginClientVerification(){
+        return view('pages.loginClientVerification');
+    }
 }
 
