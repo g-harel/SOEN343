@@ -53,12 +53,31 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form id="register-form" action="" method="post" role="form" style="display: block;">
+                            
                             <div class="form-group">
-                                <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="First Name" value="">
                             </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="Last Name" value="">
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                            </div>
+                            
                             <div class="form-group">
                                 <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
                             </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="Home Address" value="">
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="Phone Number" value="">
+                            </div>
+                            
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
@@ -66,6 +85,9 @@
                                     </div>
                                 </div>
                             </div>
+                            
+
+                            
                         </form>
                     </div>
                 </div>
