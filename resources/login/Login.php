@@ -9,6 +9,7 @@ class Login{
     private $sessionMapper;
     private $email;
     private $password;
+	private $user;
 
     public function __construct() {
         $this->userMapper = new UserMapper();
@@ -17,9 +18,22 @@ class Login{
 
     public function login($email, $password){
 
-        $user = $this->userMapper->setUserFromRecordByEmail($email);
-        
-        if($user){
+		$userTemp = $this->userMapper->setUserFromRecordByEmail($email);
+		
+        if(($this->validate($email, $password)) >= 0)
+		{
+			$this->user = $userTemp;
+		}
+		else {
+			$user = null;
+		}
+    }
+
+    public function validate($email, $password)
+	{ 
+		$user = $this->userMapper->setUserFromRecordByEmail($email);
+	
+		if($user){
             $this->$email = $email;
             $this->password = $user->getPassword();
             $isAdmin = $user->getIsAdmin();
@@ -36,14 +50,12 @@ class Login{
         else{
             return -1;
         }
-    }
-
-    public function validate(){ 
                
     }
 
     public function getSession(){
-        
+		$session = $this->sessionMapper->$openSession($user);
+        return $session;
         
     }
 
