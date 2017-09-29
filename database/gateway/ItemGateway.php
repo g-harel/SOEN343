@@ -14,6 +14,30 @@ LEFT JOIN items ON items.id = desktops.item_id;
 
 */
 
+function console_log($str) {
+    echo "<script>console.log(`".json_encode($str)."`)</script>";
+}
+
+function cherryPick($keys, $source) {
+    $res = array();
+    $sourceValues = get_object_vars($source);
+    foreach ($keys as &$key) {
+        array_push($res, $sourceValues["$key"]);
+    }
+    return $res;
+}
+
+function intersperse($arr, $str = ", ") {
+    $res = "";
+    foreach ($arr as $key => $value) {
+        if ($key != "0") {
+            $res .= "$str";
+        }
+        $res .= "$value";
+    }
+    return $res;
+}
+
 class ItemGateway
 {
     private $gateway;
@@ -26,15 +50,18 @@ class ItemGateway
         "quantity",
     );
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->gateway = new DatabaseGateway("");
     }
 
-    protected static function generation($className, $pastAncestry) {
+    protected static function generation($className, $pastAncestry)
+    {
         return array_merge(array(get_class_vars($className)), $pastAncestry);
     }
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return array(get_class_vars("ItemGateway"));
     }
 
@@ -47,7 +74,7 @@ class ItemGateway
         // base query on the current model's table
         $query = "SELECT * FROM $this->model ";
         // for each layer of inheritance, a join must be added
-        foreach ($ancestry as &$value) {
+        foreach ($ancestry as $value) {
             $query .= "LEFT JOIN ".$value["model"]." ON ".$value["model"].".".$value["idColumnName"]." = ".$this->model.".".$this->idColumnName." ";
         }
         // add a condition if one is given
@@ -56,6 +83,7 @@ class ItemGateway
         }
         $query .= ";";
         // query the db and return the result
+        console_log($query);
         $queryResult = $this->gateway->queryDB($query);
         $result = null;
         if ($queryResult != null) {
@@ -79,9 +107,27 @@ class ItemGateway
         }
         return null;
     }
+
+    public function insert($item)
+    {
+        $ancestry = array_reverse($this->ancestry());
+        $items = array_shift($ancestry);
+        $queries = array("INSERT INTO ".$items["model"]." (".intersperse($items["fields"]).") VALUES (".intersperse(cherryPick($items["fields"], $item)).");");
+        foreach ($ancestry as $value) {
+            array_push($queries, "INSERT INTO ".$value["model"]." (item_id, ".intersperse($value["fields"]).") VALUES (LAST_INSERT_ID(), '".intersperse(cherryPick($value["fields"], $item), "', '")."');");
+        }
+        $conn = new mysqli("localhost", "root", "", "soen343");
+        console_log($queries);
+        foreach ($queries as $query) {
+            $conn->query($query);
+        }
+        console_log(mysqli_error($conn));
+        mysqli_close($conn);
+    }
 }
 
-class TelevisionGateway extends ItemGateway {
+class TelevisionGateway extends ItemGateway
+{
     public $model = "televisions";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -92,12 +138,14 @@ class TelevisionGateway extends ItemGateway {
         "type",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("TelevisionGateway", parent::ancestry());
     }
 }
 
-class MonitorGateway extends ItemGateway {
+class MonitorGateway extends ItemGateway
+{
     public $model = "monitors";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -105,12 +153,14 @@ class MonitorGateway extends ItemGateway {
         "weight",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("MonitorGateway", parent::ancestry());
     }
 }
 
-class ComputerGateway extends ItemGateway {
+class ComputerGateway extends ItemGateway
+{
     public $model = "computers";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -121,12 +171,14 @@ class ComputerGateway extends ItemGateway {
         "type",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("ComputerGateway", parent::ancestry());
     }
 }
 
-class TabletGateway extends ComputerGateway {
+class TabletGateway extends ComputerGateway
+{
     public $model = "tablets";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -140,12 +192,14 @@ class TabletGateway extends ComputerGateway {
         "touchscreen",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("TabletGateway", parent::ancestry());
     }
 }
 
-class LaptopGateway extends ComputerGateway {
+class LaptopGateway extends ComputerGateway
+{
     public $model = "laptops";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -156,12 +210,14 @@ class LaptopGateway extends ComputerGateway {
         "touchscreen",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("LaptopGateway", parent::ancestry());
     }
 }
 
-class DesktopGateway extends ComputerGateway {
+class DesktopGateway extends ComputerGateway
+{
     public $model = "desktops";
     public $idColumnName = "item_id";
     public $fields = array(
@@ -170,7 +226,8 @@ class DesktopGateway extends ComputerGateway {
         "thickness",
     );
 
-    protected function ancestry() {
+    protected function ancestry()
+    {
         return $this->generation("DesktopGateway", parent::ancestry());
     }
 }
