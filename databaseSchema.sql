@@ -37,7 +37,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`television`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`televisions` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `height` FLOAT(10, 2) NOT NULL,
   `width` FLOAT(10, 2) NOT NULL,
   `thickness` FLOAT(10, 2) NOT NULL,
@@ -57,7 +57,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`monitor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`monitors` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `display_size` FLOAT(10, 2) NOT NULL,
   `weight` FLOAT(10, 2) NOT NULL,
   PRIMARY KEY (`item_id`),
@@ -74,7 +74,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`computer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`computers` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `processor_type` VARCHAR(100) NOT NULL,
   `ram_size` INT UNSIGNED NOT NULL,
   `cpu_cores` INT UNSIGNED NOT NULL,
@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`desktop`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`desktops` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `height` FLOAT(10, 2) NOT NULL,
   `width` FLOAT(10, 2) NOT NULL,
   `thickness` FLOAT(10, 2) NOT NULL,
@@ -112,7 +112,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`laptop`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`laptops` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `display_size` FLOAT(10, 2) NOT NULL,
   `os` VARCHAR(100) NOT NULL,
   `battery` VARCHAR(100) NOT NULL,
@@ -132,7 +132,7 @@ ENGINE = InnoDB;
 -- Table `soen343`.`tablet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soen343`.`tablets` (
-  `item_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_id` INT UNSIGNED NOT NULL,
   `display_size` FLOAT(10, 2) NOT NULL,
   `width` FLOAT(10, 2) NOT NULL,
   `height` FLOAT(10, 2) NOT NULL,

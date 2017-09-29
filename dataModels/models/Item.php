@@ -2,22 +2,22 @@
 
 class Item
 {
-    private $itemId;
+    private $id;
     private $brand;
     private $price;
     private $quantity;
 
-    public function __construct($itemId, $brand, $price, $quantity)
+    public function __construct($id, $brand, $price, $quantity)
     {
-        $this->itemId = $itemId;
+        $this->id = $id;
         $this->brand = $brand;
         $this->price = $price;
         $this->quantity = $quantity;
     }
 
-    public function getItemId()
+    public function getId()
     {
-        return $this->itemId;
+        return $this->id;
     }
 
     public function getBrand()
@@ -35,9 +35,9 @@ class Item
         return $this->quantity;
     }
 
-    public function setItemId($itemId)
+    public function setId($id)
     {
-        $this->itemId = $itemId;
+        $this->id = $id;
     }
 
     public function setBrand($brand)
@@ -64,9 +64,9 @@ class Television extends Item
     private $weight;
     private $type;
 
-    public function __construct($itemId, $brand, $price, $quantity, $height, $width, $thickness, $weight, $type)
+    public function __construct($id, $brand, $price, $quantity, $height, $width, $thickness, $weight, $type)
     {
-        parent::__construct($itemId, $brand, $price, $quantity);
+        parent::__construct($id, $brand, $price, $quantity);
         $this->height = $height;
         $this->width = $width;
         $this->thickness = $thickness;
@@ -130,9 +130,9 @@ class Monitor extends Item
     private $displaySize;
     private $weight;
 
-    public function __construct($itemId, $brand, $price, $quantity, $displaySize, $weight)
+    public function __construct($id, $brand, $price, $quantity, $displaySize, $weight)
     {
-        parent::__construct($itemId, $brand, $price, $quantity);
+        parent::__construct($id, $brand, $price, $quantity);
         $this->displaySize = $displaySize;
         $this->weight = $weight;
     }
@@ -166,9 +166,9 @@ class Computer extends Item
     private $weight;
     private $type;
 
-    public function __construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize)
+    public function __construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize)
     {
-        parent::__construct($itemId, $brand, $price, $quantity);
+        parent::__construct($id, $brand, $price, $quantity);
         $this->processorType = $processorType;
         $this->ramSize = $ramSize;
         $this->weight = $weight;
@@ -233,9 +233,9 @@ class Desktop extends Computer
     private $width;
     private $thickness;
 
-    public function __construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $height, $width, $thickness)
+    public function __construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $height, $width, $thickness)
     {
-        parent::__construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+        parent::__construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->height = $height;
         $this->width = $width;
         $this->thickness = $thickness;
@@ -277,9 +277,9 @@ class Laptop extends Computer
     private $camera;
     private $touchscreen;
 
-    public function __construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $os, $battery, $camera, $touchscreen)
+    public function __construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $os, $battery, $camera, $touchscreen)
     {
-        parent::__construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+        parent::__construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->displaySize = $displaySize;
         $this->os = $os;
         $this->battery = $battery;
@@ -344,9 +344,9 @@ class Tablet extends Computer
     private $camera;
     private $touchscreen;
 
-    public function __construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera, $touchscreen)
+    public function __construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera, $touchscreen)
     {
-        parent::__construct($itemId, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+        parent::__construct($id, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->displaySize = $displaySize;
         $this->width = $width;
         $this->height = $height;
