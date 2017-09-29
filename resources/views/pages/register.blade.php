@@ -54,40 +54,57 @@
                     <div class="col-lg-12">
                         <form id="register-form" action="" method="post" role="form" style="display: block;">
                             
+
                             <div class="form-group">
-                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="First Name" value="">
+                                <label for="firstName">
+                                    First name
+                                </label>
+                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="" value="">
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="Last Name" value="">
+                                <label for="lastName">
+                                    Last name
+                                </label>
+                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="" value="">
+                            </div>
+
+                            <div class="form-group">
+                                 <label for="address">
+                                    Home address
+                                </label>
+                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="" value="">
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                                <label for="phone">
+                                    Phone number
+                                </label>
+                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="" value="">
                             </div>
                             
                             <div class="form-group">
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                <label for="email">
+                                    Email
+                                </label>
+                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="">
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="Home Address" value="">
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="Phone Number" value="">
+                                <label for="password">
+                                    Password
+                                </label>
+                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="">
+                                 <small id="passwordHelp" class="form-text text-muted">Between 2 and 16 characters.</small>
                             </div>
                             
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register">
+                                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Create your account">
                                     </div>
                                 </div>
                             </div>
-                            
-
-                            
                         </form>
                     </div>
                 </div>
