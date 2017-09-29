@@ -19,12 +19,11 @@ class Login{
 
     public function validate()
 	{ 
-		$user = $this->userMapper->setUserFromRecordByEmail($this->email)->getUser();
+		$user = $this->userMapper->setUserFromRecordByEmail($this->email);
 	
 		if($user){;
             $password = $user->getPassword();
             $isAdmin = $user->getIsAdmin();
-    
             if($password == $this->password){
                 $this->sessionMapper = SessionMapper::openSession($user);
                 return $isAdmin;
