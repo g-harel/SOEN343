@@ -19,7 +19,7 @@ if ($DBConnection->connect_error) {
 $email = $_POST['username'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM users WHERE email='".$email."' AND isAdmin='1'";
+$sql = "SELECT * FROM users WHERE email='".$email."'";
 $result = $DBConnection->query($sql);
 
 //check if the entry exits in the table
@@ -27,12 +27,11 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     //verify the password
     if($password == $row['password']){
-        $_SESSION["isAdmin"] = $row['isAdmin'];
 		$userMap = new UserMapper();
 		$user = $userMap->setUserFromRecordByEmail($email);
 		$sessionMap = new SessionMapper();
 		$sessionMap->openSession($user);
-        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin");
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/");
         exit();
     }
     else{
