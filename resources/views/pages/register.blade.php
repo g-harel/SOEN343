@@ -59,49 +59,49 @@
                                 <label for="firstName">
                                     First name
                                 </label>
-                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="" value="">
+                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="lastName">
                                     Last name
                                 </label>
-                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="" value="">
+                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
 
                             <div class="form-group">
                                  <label for="address">
                                     Home address
                                 </label>
-                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="" value="">
+                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="phone">
                                     Phone number
                                 </label>
-                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="" value="">
+                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="email">
                                     Email
                                 </label>
-                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="">
+                                <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="password">
                                     Password
                                 </label>
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="">
+                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" required>
                                  <small id="passwordHelp" class="form-text text-muted">Between 2 and 16 characters.</small>
                             </div>
                             
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Create your account">
+                                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Create your account" required>
                                     </div>
                                 </div>
                             </div>
