@@ -8,8 +8,8 @@ session_start();
 $email = $_POST['username'];
 $password = $_POST['password'];
 
-$login = new Login();
-$result = $login->login($email, $password);
+$login = new Login($email, $password);
+$result = $login->validate();
 
 if($result >= 0){
     $_SESSION['isAdmin'] = $result;
