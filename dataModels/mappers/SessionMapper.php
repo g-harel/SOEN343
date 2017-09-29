@@ -11,7 +11,7 @@ class SessionMapper
     private $gateway;
     private $userMapper;
 
-    public function __construct() {
+    private function __construct() {
         $this->gateway = new SessionGateway();
     }
 
