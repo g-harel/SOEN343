@@ -13,5 +13,8 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
+
+//Login pages
 Route::get('/login', 'PagesController@login');
+Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 

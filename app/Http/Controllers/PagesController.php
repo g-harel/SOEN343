@@ -20,5 +20,9 @@ class PagesController extends Controller
         $title = 'Login';
         return view('pages.login')->with('title', $title);
     }
+
+    public function loginAdminVerification(){
+        return view('pages.loginAdminVerification');
+    }
 }
 
