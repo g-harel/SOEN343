@@ -14,7 +14,6 @@ class Session
         $this->user = $user;
     }
 
-    // GETTERS
     public function getUserId() {
         return $this->user->getId();
     }
@@ -47,8 +46,6 @@ class Session
         return $this->user->getIsAdmin();
     }
 
-
-    // FORWARDING GETTERS TO ADDRESS
     public function getUserDoorNumber() {
         return $this->user->getDoorNumber();    
     }
@@ -77,8 +74,6 @@ class Session
         return $this->user->getPostalCode();
     }
 
-
-    // SETTERS
     public function setUserId($id) {
         $this->user->setId($id);
     }
@@ -118,7 +113,6 @@ class Session
         return $this;
     }
 
-    // FORWARDING SETTERS TO ADDRESS
     public function setUserDoorNumber($doorNumber) {
         $this->user->setDoorNumber($doorNumber); 
         return $this;   
@@ -154,7 +148,6 @@ class Session
         return $this;
     }
 
-    //UTILITY
     public function getUserFullName() {
         return $this->user->getFullName();
     }
