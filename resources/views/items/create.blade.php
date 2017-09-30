@@ -46,13 +46,7 @@
                     </div>
                     <div class="form-group">
                         RAM Size:
-                        <select name="ram" class="form-control">
-                            <option value="512">512 MB</option>
-                            <option value="1">1 GB</option>
-                            <option value="2">2 GB</option>
-                            <option value="4">4 GB</option>
-                            <option value="8">8 GB</option>
-                            <option value="12">12 GB</option>
+                        <select name="ram" id="computer-ram-size" class="form-control">
                         </select>
                     </div>
                     <div class="form-group">
@@ -70,15 +64,8 @@
                     </div>
                     <div class="form-group">
                         Hard Drive Size:
-                        <select name="harddrive" class="form-control">
-                            <option value="64">64 GB</option>
-                            <option value="128">128 GB</option>
-                            <option value="256">256 GB</option>
-                            <option value="500">500 GB</option>
-                            <option value="1">1 TB</option>
-                            <option value="1.5">1.5 TB</option>
-                            <option value="2">2 TB</option>
-                            <option value="4">4 TB</option>
+                        <select name="harddrive" id="storage-capacity" class="form-control">
+
                         </select>
                     </div>
                     <div class="form-group">

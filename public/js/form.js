@@ -1,7 +1,6 @@
 var dropDownOptions = {
     "computer": {
     "brands": [
-        "HP",
         "Hewlett Packard",
         "Dell",
         "Acer",
@@ -34,22 +33,21 @@ var dropDownOptions = {
         "Other"
     ],
         "storageSize": [
-        2,
-        4,
-        8,
-        16,
-        32,
-        64,
-        120,
-        128,
-        180,
-        240,
-        480,
-        500,
-        512,
-        1000,
-        2000
-    ],
+            [512, "512MB"],
+            [4, "4GB"],
+            [8, "8GB"],
+            [16,"16GB"],
+            [32, "32GB"],
+            [64, "64GB"],
+            [120,"120GB"],
+            [128,"128GB"],
+            [180,"180GB"],
+            [240,"240GB"],
+            [480,"480GB"],
+            [500,"500GB"],
+            [1,"1TB"],
+            [2,"2TB"]
+        ],
         "os": [
         "Windows 7",
         "Windows 10",
@@ -152,8 +150,10 @@ var dropDownOptions = {
 
 var FormFunctions = (function () {
 
-    var populateBrandsDropDown = {};
+    var populateDesktopComputer_BrandsDropDown = {};
     var computerBrandSel = {};
+    var ramSizeSel = {};
+    var storageCapacitySel = {};
 
     return {
 
@@ -163,19 +163,27 @@ var FormFunctions = (function () {
          */
         init: function () {
 
-            populateBrandsDropDown = null;
+            populateDesktopComputer_BrandsDropDown = null;
             computerBrandSel = $('#computer-brand');
+            ramSizeSel = $("#computer-ram-size");
+            storageCapacitySel = $('#storage-capacity');
             this.formFunctions();
         },
         formFunctions: function () {
 
-            populateBrandsDropDown = function () {
+            populateDesktopComputer_BrandsDropDown = function () {
                 $.each(dropDownOptions.computer.brands, function (key, value) {
-                    var h = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
-                    computerBrandSel.append(h);
+                    computerBrandSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
                 });
+                $.each(dropDownOptions.computer.ramSize, function (key, value) {
+                    ramSizeSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                });
+                $.each(dropDownOptions.computer.storageSize, function (k, v) {
+                    storageCapacitySel.append('<option value="'+v[0]+'" title="'+v[1]+'">'+v[1]+'</option>');
+                });
+
             };
-            populateBrandsDropDown();
+            populateDesktopComputer_BrandsDropDown();
 
         }
     }; // end return
