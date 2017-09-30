@@ -11,3 +11,6 @@
 .margin-btm {
     margin-bottom: 1em;
 }
+.no-pad {
+    padding: 0;
+}

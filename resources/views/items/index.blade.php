@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col-lg-2" style="float: left">
+    <div class="col-lg-3" style="float: left">
         @include('inc.category-sidebar')
     </div>
-    <div class="row" style="float: left">
+    <div class="col-lg-9" style="float: left">
         <div class="col-lg-4 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
