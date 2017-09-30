@@ -32,73 +32,49 @@
             <div class="col-md-12">
                 <div class="col-md-5">
                     <div class="form-group">
-                        Dimensions (in centimeters):
-                        <input type="text" name="dimensions" class="form-control">
-                    </div>
-                    <div class="form-group">
                         Brand:
                         <select name="brand" id="computer-brand" class="form-control">
                         </select>
                     </div>
                     <div class="form-group">
                         Processor Type:
-                        <input type="text" name="processor" class="form-control">
+                        <select name="processor" id="desktop-processor" class="form-control"></select>
                     </div>
                     <div class="form-group">
                         RAM Size:
-                        <select name="ram" id="computer-ram-size" class="form-control">
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        Weight:
-                        <input type="text" name="weight" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        Number of Cores:
-                        <select name="core" class="form-control">
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="8">8</option>
+                        <select name="ram" id="desktop-ram-size" class="form-control">
                         </select>
                     </div>
                     <div class="form-group">
                         Hard Drive Size:
-                        <select name="harddrive" id="storage-capacity" class="form-control">
-
-                        </select>
+                        <select name="hard-drive-size" id="storage-capacity" class="form-control"></select>
                     </div>
                     <div class="form-group">
-                        Brand Name:<br>
-                        <input type="text" name="brand" class="form-control">
+                        Number of Cores:
+                        <select name="core" id="cpu-cores" class="form-control"></select>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        Model Number:
-                        <input type="text" name="model" class="form-control">
-                    </div>
-                    <div class="form-group">
                         Price:
-                        <input type="text" name="price" class="form-control">
+                        <input type="number" name="desktop-price"  class="form-control">
                     </div>
                     <div class="form-group">
-                        Monitor Display Size (if any; in inches):
-                        <input type="text" name="monitor-size" class="form-control">
+                        Weight:
+                        <input type="text" name="desktop-weight" class="form-control">
                     </div>
                     <div class="form-group">
-                        Monitor Weight:
-                        <input type="text" name="monitor-weight" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        Monitor Model Number:
-                        <input type="text" name="monitor-model" class="form-control">
+                        Height:
+                        <input type="text" name="desktop-height" class="form-control">
                     </div>
                     <div class="form-group">
-                        Monitor Price:
-                        <input type="text" name="monitor-price" class="form-control">
+                        Width:
+                        <input type="text" name="desktop-width" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Thickness:
+                        <input type="text" name="desktop-thickness" class="form-control">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg">Submit</button>
@@ -115,7 +91,7 @@
         <form id="laptop">
             Display Size (in inches):<br>
             <input type="text" name="display-size-laptop" class="form-control"><br>
-            Processor Type:<br>
+            Processor Type:
             <input type="text" name="processor-laptop" class="form-control"><br>
             RAM Size:<br>
             <select name="ram-laptop" class="form-control">
