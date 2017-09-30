@@ -34,6 +34,7 @@
                     <div class="form-group">
                         Brand:
                         <select name="brand" id="computer-brand" class="form-control">
+                            <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -58,7 +59,7 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         Price:
-                        <input type="number" name="desktop-price"  class="form-control">
+                        <input type="text" name="desktop-price"  class="form-control">
                     </div>
                     <div class="form-group">
                         Weight:
@@ -83,8 +84,6 @@
 
         </form>
     </div>
-
-
 
     <!-- Form for Laptops -->
     <div id="nextSetOfLaptopOptions" style="display:none;" class="form-group">
@@ -197,18 +196,46 @@
     </div>
 
     <!-- Form for Televisions -->
-    <div id="nextSetOfTelevisionOptions" style="display:none;" class="form-group">
-        Detailed Dimensions (in centimeters):<br>
-        <input type="text" name="dimensions-television" class="form-control"><br>
-        Weight:<br>
-        <input type="text" name="weight-television" class="form-control"><br>
-        Model Number:<br>
-        <input type="text" name="model-television" class="form-control"><br>
-        Brand Name:<br>
-        <input type="text" name="brand-television" class="form-control"><br>
-        Price:<br>
-        <input type="text" name="price-television" class="form-control"><br>
-
+    <div id="nextSetOfTelevisionOptions" style="display:none;" class="row">
+        <form id="television" class="form-horizontal">
+            <div class="col-md-12">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        Brand Name:
+                        <select name="television-brand" id="television-brand" class="form-control">
+                            <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Price:
+                        <input type="text" name="television-price" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Height:
+                        <input type="text" name="television-height" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Width:
+                        <input type="text" name="television-width" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        Thickness:
+                        <input type="text" name="television-thickness" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Weight:
+                        <input type="text" name="television-weight" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Type:
+                        <select name="television-type" id="television-type" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+        </form>
         <!-- bootstrap submit button -->
         <button type="submit" class="btn btn-primary btn-lg">Submit</button>
     </div>

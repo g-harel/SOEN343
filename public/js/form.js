@@ -182,12 +182,17 @@ var dropDownOptions = {
 
 var FormFunctions = (function () {
 
-    var populateDesktopComputer_BrandsDropDown = {};
-    var computerBrandSel = {};
-    var ramSizeSel = {};
-    var storageCapacitySel = {};
-    var desktopProcessorSel = {};
-    var cpuCoresSel = {};
+    var populateDesktopComputer_DropDowns = {},
+    computerBrandSel = {},
+    ramSizeSel = {},
+    storageCapacitySel = {},
+    desktopProcessorSel = {},
+    cpuCoresSel = {};
+
+    // tv
+    var populateTv_DropDowns = {},
+    brandTvSel = {},
+    tvTypesSel = {};
 
     return {
 
@@ -197,17 +202,24 @@ var FormFunctions = (function () {
          */
         init: function () {
 
-            populateDesktopComputer_BrandsDropDown = null;
+            populateDesktopComputer_DropDowns = null;
             computerBrandSel = $('#computer-brand');
             ramSizeSel = $("#desktop-ram-size");
             storageCapacitySel = $('#storage-capacity');
             desktopProcessorSel = $('#desktop-processor');
             cpuCoresSel = $('#cpu-cores');
+
+            // tv
+            populateTv_DropDowns = null;
+            brandTvSel = $('#television-brand');
+            tvTypesSel = $('#television-type');
+
+
             this.formFunctions();
         },
         formFunctions: function () {
 
-            populateDesktopComputer_BrandsDropDown = function () {
+            (function () {
                 $.each(dropDownOptions.computer.brands, function (key, value) {
                     computerBrandSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
                 });
@@ -224,8 +236,17 @@ var FormFunctions = (function () {
                     cpuCoresSel.append('<option value="'+v+'" title="'+v+'">'+v+'</option>');
                 });
 
-            };
-            populateDesktopComputer_BrandsDropDown();
+            }());
+
+            (function () {
+                $.each(dropDownOptions.tv.brands, function (key, value) {
+                    brandTvSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                });
+                $.each(dropDownOptions.tv.types, function (key, value) {
+                    tvTypesSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                });
+            }());
+
 
         }
     }; // end return
