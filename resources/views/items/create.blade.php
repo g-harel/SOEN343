@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="/items" class='btn btn-default'>Go Back</a>
-    <h1>Create Items</h1>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/items">Items</a></li>
+            <li>Create Items</li>
+        </ol>
+        <h1>Create Items</h1>
+    </div>
 
     <div class="row">
         <div class="col-md-12 radio no-pad">
@@ -27,7 +32,7 @@
     </div>
 
     <!-- Form for Computers -->
-    <div id="nextSetOfComputerOptions" style="display:none;" class="form-group row">
+    <div id="nextSetOfComputerOptions" style="display:none;" class="form-group row bg-color-white">
         <form id="desktop" class="form-horizontal">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -62,19 +67,19 @@
                         <input type="text" name="desktop-price"  class="form-control">
                     </div>
                     <div class="form-group">
-                        Weight:
+                        Weight (Kg):
                         <input type="text" name="desktop-weight" class="form-control">
                     </div>
                     <div class="form-group">
-                        Height:
+                        Height (cm):
                         <input type="text" name="desktop-height" class="form-control">
                     </div>
                     <div class="form-group">
-                        Width:
+                        Width (cm):
                         <input type="text" name="desktop-width" class="form-control">
                     </div>
                     <div class="form-group">
-                        Thickness:
+                        Thickness (cm):
                         <input type="text" name="desktop-thickness" class="form-control">
                     </div>
                 </div>
@@ -196,7 +201,7 @@
     </div>
 
     <!-- Form for Televisions -->
-    <div id="nextSetOfTelevisionOptions" style="display:none;" class="row">
+    <div id="nextSetOfTelevisionOptions" style="display:none;" class="row bg-color-white">
         <form id="television" class="form-horizontal">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -211,22 +216,22 @@
                         <input type="text" name="television-price" class="form-control">
                     </div>
                     <div class="form-group">
-                        Height:
+                        Height (cm):
                         <input type="text" name="television-height" class="form-control">
                     </div>
                     <div class="form-group">
-                        Width:
+                        Width (cm):
                         <input type="text" name="television-width" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        Thickness:
+                        Thickness (cm):
                         <input type="text" name="television-thickness" class="form-control">
                     </div>
                     <div class="form-group">
-                        Weight:
+                        Weight (Kg):
                         <input type="text" name="television-weight" class="form-control">
                     </div>
                     <div class="form-group">
