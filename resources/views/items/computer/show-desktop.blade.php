@@ -6,8 +6,8 @@
         <li>Computer</li>
         <li class="active">Desktop</li>
     </ol>
-    <p><a href="#" class="btn btn-success">Add new</a></p>
-    <table class="table table-bordered table-responsive">
+    <p><button class="btn btn-success create-new-items" >Add new</button></p>
+    <table class="table table-bordered table-responsive bg-color-white">
         <thead>
         <tr>
             <th>#</th>
