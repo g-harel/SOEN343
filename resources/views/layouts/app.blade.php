@@ -22,7 +22,6 @@
                     @include('inc.messages')
                     @yield('content')
                 </div>
-
             </div>
         </div>
 

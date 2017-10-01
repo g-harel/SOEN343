@@ -52,8 +52,6 @@ class Address
         return $this->postalCode;
     }
 
-
-
     public function setId($id) {
         $this->id = $id;
         return $this;
