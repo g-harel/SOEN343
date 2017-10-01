@@ -56,16 +56,20 @@ var dropDownOptions = {
             [2, "2TB"]
         ],
         "os": [
-            "Windows 7",
-            "Windows 10",
-            "Windows 8.1",
-            "Windows XP",
+            "Microsoft Windows 7",
+            "Microsoft Windows 8",
+            "Microsoft Windows 8.1",
+            "Microsoft Windows 10",
+            "Microsoft Windows XP",
+			"Microsoft Windows RT",
             "Mac OS X 10.12",
-            "Linux",
-            "Windows 8",
             "Mac OS X 10.11",
             "Macc OS X 10.10",
-            "Other"
+            "Apple iOS",
+            "Linux",
+			"Google Android",
+			"Amazon Fire OS",
+			"Other"
         ],
         "width": [
             70.9,
