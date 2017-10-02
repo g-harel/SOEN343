@@ -6,7 +6,7 @@
         <li class="active">Monitors</li>
     </ol>
     <div class="col-lg-9">
-        <p><a href="" class="btn btn-success">Add new</a></p>
+        <p><a href="../create" class="btn btn-success">Add new</a></p>
         <table class="table table-bordered">
             <thead>
             <tr>

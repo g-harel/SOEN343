@@ -11,3 +11,10 @@
 .margin-btm {
     margin-bottom: 1em;
 }
+.no-pad {
+    padding: 0;
+}
+.bg-color-white {
+    background-color: #fff;
+    padding: 1em 0 1em 0;
+}
