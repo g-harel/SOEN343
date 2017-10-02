@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <p><a href="#" class="btn btn-success">Add new</a></p>
+    <p><a href="../create" class="btn btn-success">Add new</a></p>
 
     <table class="table table-bordered table-responsive">
         <thead>
