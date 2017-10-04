@@ -1,4 +1,57 @@
 <?php
+
+// log result in the client console.
+function console_log($str) {
+    echo "<script>console.log(`".json_encode($str)."`)</script>";
+}
+
+// log errors in the client console.
+function console_error($str) {
+    if ($str) {
+        echo "<script>console.error(`".json_encode($str)."`)</script>";
+    }
+}
+
+function implodeAssociativeArray($associativeArray, $connector) {
+    $length = count($associativeArray);
+    $conditions = "";
+    foreach ($associativeArray as $key => $value){
+        $length--;
+        $conditions .= $key . " = '" . $value . "'";
+        if($length) {
+            $conditions .= "$connector";
+        }
+    }
+    return $conditions;
+}
+
+// fetch data from a query result.
+function parseSelectResult($queryResults) {
+    $isQueryResultsExist = $queryResults != null;
+    $result = null;
+    if ($isQueryResultsExist) {
+        while ($row = $queryResults->fetch_assoc()) {
+            $result[] = $row;
+        }
+    }
+    return $result;
+}
+
+function transformConditionsToString($connectionsAssociativeArray) {
+    $separatorStringBetweenConditions = " AND ";
+    return implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
+}
+
+// pluck the keys from the source object and accumulate them into an array.
+function cherryPick($keys, $source) {
+    $res = array();
+    $sourceValues = get_object_vars($source);
+    foreach ($keys as &$key) {
+        array_push($res, $sourceValues["$key"]);
+    }
+    return $res;
+}
+
 class DatabaseGateway
 {
     private $DBConnection;
@@ -6,14 +59,12 @@ class DatabaseGateway
     private $userName;
     private $password;
     private $databaseName;
-    private $tableName;
 
-    public function __construct($tableName) {
+    public function __construct() {
         $this->serverName = "localhost";
         $this->userName = "root";
         $this->password = "";
         $this->databaseName = "soen343";
-        $this->tableName = $tableName;
     }
 
     private function openDBConnection() {
@@ -26,38 +77,22 @@ class DatabaseGateway
 
     public function queryDB($sql) {
         $this->openDBConnection();
+        console_log($sql);
         $query = $this->DBConnection->query($sql);
+        console_error(mysqli_error($this->DBConnection));
         $this->closeDBConnection();
         return $query;
     }
+}
 
-    private static function implodeAssociativeArray($associativeArray, $connector) {
-        $length = count($associativeArray);
-        $conditions = "";
-        foreach ($associativeArray as $key => $value){
-            $length--;
-            $conditions .= $key . " = '" . $value . "'";
-            if($length) {
-                $conditions .= "$connector";
-            }
-        }
-        return $conditions;
-    }
+// gateway with included helper methods for dealing with a simple table.
+class SingleTableGateway extends DatabaseGateway
+{
+    private $tableName;
 
-    private static function parseSelectResult($queryResults) {
-        $isQueryResultsExist = $queryResults != null;
-        $result = null;
-        if ($isQueryResultsExist) {
-            while ($row = $queryResults->fetch_assoc()) {
-                $result[] = $row;
-            }
-        }
-        return $result;
-    }
-
-    private static function transformConditionsToString($connectionsAssociativeArray) {
-        $separatorStringBetweenConditions = " AND ";
-        return self::implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
+    public function __construct($tableName) {
+        parent::__construct();
+        $this->tableName = $tableName;
     }
 
     /**
@@ -74,13 +109,13 @@ class DatabaseGateway
         $sql = "";
         $isConditionPresent = $conditionsAssociativeArray != null;
         if ($isConditionPresent) {
-            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
+            $conditions = transformConditionsToString($conditionsAssociativeArray);
             $sql = "SELECT $fields FROM $this->tableName WHERE $conditions;";
         } else {
             $sql = "SELECT $fields FROM $this->tableName;";
         }
         $result = $this->queryDB($sql);
-        return $this::parseSelectResult($result);
+        return parseSelectResult($result);
     }
 
     /**
@@ -106,11 +141,11 @@ class DatabaseGateway
      * This function returns a boolean of whether it worked or not.
      */
     public function update($columnValuePairsAssociativeArray, $conditionsAssociativeArray = null) {
-        $valuePairs = $this::implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
+        $valuePairs = implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
         $sql = "";
         $isConditionPresent = $conditionsAssociativeArray != null;
         if ($isConditionPresent) {
-            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
+            $conditions = transformConditionsToString($conditionsAssociativeArray);
             $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
         } else {
             $sql = "UPDATE $this->tableName SET $valuePairs;";
@@ -126,7 +161,7 @@ class DatabaseGateway
      * This function returns a boolean of whether it worked or not.
      */
     public function delete($conditionsAssociativeArray = null) {
-        $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
+        $conditions = transformConditionsToString($conditionsAssociativeArray);
         $sql = $sql = "DELETE FROM $this->tableName WHERE $conditions;";
         return $this->queryDB($sql);
     }
@@ -158,30 +193,14 @@ class DatabaseGateway
         return $this->queryDB($sql);
     }
 /*
-    public function innerJoin($tableArray, $selectFieldsArray) {
-        // Concatenates all the columns to a string separated by ,
-        $fields = implode(", ", array_keys($selectFieldsArray));
-        // Gets all the values into an array
-        $valuesArray = array_values($columnValueAssociativeArray)
-        // Add ' ' in front of each values for SQL syntax
-        foreach ($valuesArray as $value){
-            $value = "'$value'";
-        }
-        $values = implode(", ", $valuesArray);
-        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-        return this->DBConnection->query($sql);
-    }
-
-
-
     SELECT title, m2.txt1 AS teaser, inputdat, db_file.*
     FROM db_item
         INNER JOIN db_itemv AS m1 USING(id_item)
         INNER JOIN db_itemf USING(id_item)
         INNER JOIN db_itemd USING(id_item)
         LEFT JOIN  db_itemv AS m2
-          ON db_item.id_item = m2.id_item
-          AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
+            ON db_item.id_item = m2.id_item
+            AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
     WHERE type=15
         AND m1.fldnr = '12'
         AND m1.indik = 'b'
@@ -192,14 +211,14 @@ class DatabaseGateway
     ORDER BY inputdat DESC
 
     SELECT s.studentname
-    , s.studentid
-    , s.studentdesc
-    , h.hallname
-FROM students s
-INNER JOIN hallprefs hp
-    on s.studentid = hp.studentid
-INNER JOIN halls h
-    on hp.hallid = h.hallid
+        , s.studentid
+        , s.studentdesc
+        , h.hallname
+    FROM students s
+    INNER JOIN hallprefs hp
+        on s.studentid = hp.studentid
+    INNER JOIN halls h
+        on hp.hallid = h.hallid
 
 */
 }

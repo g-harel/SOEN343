@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`televisions` (
   CONSTRAINT `fk_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`monitors` (
   CONSTRAINT `fk_monitor_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`computers` (
   CONSTRAINT `fk_computer_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`desktops` (
   CONSTRAINT `fk_desktop_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`laptops` (
   CONSTRAINT `fk_laptop_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `soen343`.`tablets` (
   CONSTRAINT `fk_tablet_item_id`
     FOREIGN KEY (`item_id`)
     REFERENCES `soen343`.`items` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
