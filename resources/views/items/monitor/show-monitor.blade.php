@@ -30,7 +30,7 @@
                 <td>5</td>
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs" href="items/monitor/edit/2" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
+                        <a class="btn btn-primary btn-xs edit-monitor-link" href="items/monitor/edit/2" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
                             <span class="fa fa-scissors"></span>
                         </a>
                     </p>
