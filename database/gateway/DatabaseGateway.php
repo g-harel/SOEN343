@@ -2,13 +2,13 @@
 
 // log result in the client console.
 function console_log($str) {
-    echo "<script>console.log(`".json_encode($str)."`)</script>";
+    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
 }
 
 // log errors in the client console.
 function console_error($str) {
     if ($str) {
-        echo "<script>console.error(`".json_encode($str)."`)</script>";
+        echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
     }
 }
 
@@ -75,13 +75,32 @@ class DatabaseGateway
         mysqli_close($this->DBConnection);
     }
 
+    // supports multiple queries.
+    // returns the result of the last query.
     public function queryDB($sql) {
         $this->openDBConnection();
         console_log($sql);
-        $query = $this->DBConnection->query($sql);
-        console_error(mysqli_error($this->DBConnection));
+        $conn = $this->DBConnection;
+        $result = $conn->multi_query($sql);
+        $returned = array();
+        if ($result) {
+            $returned[0] = $conn->store_result();
+            $count = 0;
+            while ($conn->more_results()) {
+                $count++;
+                $conn->next_result();
+                $result = $conn->store_result();
+                if($result) {
+                    $returned[$count] = $result;
+                } else {
+                    console_error($conn->error);
+                }
+            }
+        } else {
+            console_error($conn->error);
+        }
         $this->closeDBConnection();
-        return $query;
+        return $returned[count($returned) - 1];
     }
 }
 

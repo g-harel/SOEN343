@@ -24,6 +24,7 @@ abstract class ItemGateway
     public $model = "items";
     public $idColumnName = "id";
     public $fields = array(
+        "category",
         "brand",
         "price",
         "quantity",
@@ -77,15 +78,12 @@ abstract class ItemGateway
         // the insert on the top level model is done manually because it is
         // different from the rest. (does not have item_id)
         $items = array_shift($ancestry);
-        $queries = array();
-        array_push($queries, "INSERT INTO ".$items["model"]." (".implode(", ", $items["fields"]).") VALUES (".implode(", ", cherryPick($items["fields"], $item)).");");
+        $queries = "";
+        $queries .= "INSERT INTO ".$items["model"]." (".implode(", ", $items["fields"]).") VALUES ('".implode("', '", cherryPick($items["fields"], $item))."');";
         foreach ($ancestry as $value) {
-            array_push($queries, "INSERT INTO ".$value["model"]." (item_id, ".implode(", ", $value["fields"]).") VALUES (LAST_INSERT_ID(), '".implode("', '", cherryPick($value["fields"], $item))."');");
+            $queries .= "INSERT INTO ".$value["model"]." (item_id, ".implode(", ", $value["fields"]).") VALUES (LAST_INSERT_ID(), '".implode("', '", cherryPick($value["fields"], $item))."');";
         }
-        // execute all queries sequentially (they cannot be done in together)
-        foreach ($queries as $query) {
-            $this->gateway->queryDB($query);
-        }
+        $this->gateway->queryDB($queries);
     }
 }
 

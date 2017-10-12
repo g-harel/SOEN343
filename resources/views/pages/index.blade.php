@@ -5,10 +5,8 @@
 
         include_once(__DIR__ . "/../../../database/gateway/ItemGateway.php");
 
-        $g = new MonitorGateway();
-        $r = $g->getAll();
-
         class Item {
+            public $category;
             public $brand;
             public $price;
             public $quantity;
@@ -27,6 +25,7 @@
             public $touchscreen;
 
             public function __construct() {
+                $this->category = "monitor";
                 $this->brand = "brand";
                 $this->price = 10.0;
                 $this->quantity = 10;
@@ -46,7 +45,11 @@
             }
         }
 
+        $g = new MonitorGateway();
+
         $g->insert(new Item());
+        $r = $g->getAll();
+
         echo '<pre>'; print_r($r); echo '</pre>';
 
     ?>
