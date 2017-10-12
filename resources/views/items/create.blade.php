@@ -6,33 +6,44 @@
             <li><a href="/items">Items</a></li>
             <li>Create Items</li>
         </ol>
-        <h1>Create Items</h1>
+        {{--<h1>Create Items</h1>--}}
     </div>
 
     <div class="row">
-        <div class="col-md-12 radio no-pad">
-            <form name="form1" id="myForm" method="post" class="">
-                <div class="col-md-2">
-                    <label><input type="radio" name="type" id="type_Computer" value="Computer"
-                                  onclick="toggleOptions();">Desktop Computer</label>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create Items</h2>
+            </div>
+            <div class="panel-body">
+                <!-- radio buttons category -->
+                <div class="col-md-12 radio no-pad">
+                    <div class="col-md-2">
+                        <label><input type="radio" name="type" id="type_Computer" value="Computer" onclick="toggleOptions();">Desktop Computer</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label><input type="radio" name="type" id="type_Laptop" value="Laptop" onclick="toggleOptions();">Laptop</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label><input type="radio" name="type" id="type_Tablet" value="Tablet" onclick="toggleOptions();">Tablet</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label><input type="radio" name="type" id="type_Television" value="Television" onclick="toggleOptions();">Television</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label><input type="radio" name="type" id="type_Monitor" value="Monitor" onclick="toggleOptions();">Monitor</label>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <label><input type="radio" name="type" id="type_Laptop" value="Laptop" onclick="toggleOptions();">Laptop</label>
-                </div>
-                <div class="col-md-2">
-                    <label><input type="radio" name="type" id="type_Tablet" value="Tablet" onclick="toggleOptions();">Tablet</label>
-                </div>
-                <div class="col-md-2">
-                    <label><input type="radio" name="type" id="type_Television" value="Television"
-                                  onclick="toggleOptions();">Television</label>
-                </div>
-                <div class="col-md-2"></div>
-            </form>
+
+            </div>
         </div>
     </div>
 
+    <div class="row">
+
+    </div>
+
     <!-- Form for Computers -->
-    <div id="nextSetOfComputerOptions" style="display:none;" class="form-group row bg-color-white">
+    <div id="nextSetOfComputerOptions" class="row hide-this-element">
         <form id="desktop" class="form-horizontal">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -95,7 +106,7 @@
     </div>
 
     <!-- Form for Laptops -->
-    <div id="nextSetOfLaptopOptions" style="display:none;" class="form-group bg-color-white">
+    <div id="nextSetOfLaptopOptions" class="row hide-this-element">
         <form id="laptop" class="form-horizontal">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -169,7 +180,7 @@
     </div>
 
     <!-- Form for Tablets -->
-    <div id="nextSetOfTabletOptions" style="display:none;" class="bg-color-white">
+    <div id="nextSetOfTabletOptions" class="row hide-this-element">
         <form id="tablet">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -250,7 +261,7 @@
     </div>
 
     <!-- Form for Televisions -->
-    <div id="nextSetOfTelevisionOptions" style="display:none;" class="row bg-color-white">
+    <div id="nextSetOfTelevisionOptions" class="row hide-this-element">
         <form id="television" class="form-horizontal">
             <div class="col-md-12">
                 <div class="col-md-5">
@@ -299,6 +310,43 @@
         </form>
     </div>
 
+    <!-- Form for Monitors -->
+    <div id="nextSetOfMonitorOptions" class="row hide-this-element">
+        <form id="monitor-form">
+            <div class="col-md-12">
+                <div class="2"></div>
+                <div class="col-md-7">
+                    <div class="form-group">
+                        Brand Name:
+                        <select name="television-brand" id="television-brand" class="form-control">
+                            <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Price:
+                        <input type="text" name="television-price" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        Display size (inches):
+                        <select name="laptop-display-size" id="laptop-display-size" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        Weight (Kg):
+                        <input type="text" name="monitor-weight" id="monitor-weight" class="form-control">
+                    </div>
+                </div>
+                <div class="2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        <button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <!-- trigger onclick depending on which radio button checked -->
     <script type="text/javascript">
         function toggleOptions() {
@@ -306,25 +354,32 @@
                 document.getElementById('nextSetOfTabletOptions').style.display = 'none';
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfComputerOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Laptop').checked) {
+                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
+                document.getElementById('nextSetOfComputerOptions').style.display = 'block';
+            } else if (document.getElementById('type_Laptop').checked) {
                 document.getElementById('nextSetOfTabletOptions').style.display = 'none';
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Tablet').checked) {
+                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
+                document.getElementById('nextSetOfLaptopOptions').style.display = 'block';
+            } else if (document.getElementById('type_Tablet').checked) {
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfTabletOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Television').checked) {
+                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
+                document.getElementById('nextSetOfTabletOptions').style.display = 'block';
+            } else if (document.getElementById('type_Television').checked) {
                 document.getElementById('nextSetOfTabletOptions').style.display = 'none';
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = '';
+                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
+                document.getElementById('nextSetOfTelevisionOptions').style.display = 'block';
+            } else if (document.getElementById('type_Monitor').checked) {
+                document.getElementById('nextSetOfTabletOptions').style.display = 'none';
+                document.getElementById('nextSetOfComputerOptions').style.display = 'none';
+                document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
+                document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
+                document.getElementById('nextSetOfMonitorOptions').style.display = 'block';
             }
         }
     </script>

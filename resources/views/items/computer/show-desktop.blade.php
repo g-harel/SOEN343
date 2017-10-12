@@ -19,16 +19,16 @@
             <th>Weight</th>
             <th>CPU cores</th>
             <th>HDD size</th>
-            <th>Height</th>
-            <th>Width</th>
-            <th>Thickness</th>
+            <th>Height (cm)</th>
+            <th>Width (cm)</th>
+            <th>Thickness (cm)</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
+            <th scope="row" id="id-from-database-here">1</th>
             <td>text here</td>
             <td>text here</td>
             <td>text here</td>

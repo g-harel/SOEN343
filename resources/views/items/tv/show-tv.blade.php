@@ -37,10 +37,10 @@
             <th>Brand</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Height</th>
-            <th>Width</th>
-            <th>Thickness</th>
-            <th>Weight</th>
+            <th>Height (cm)</th>
+            <th>Width (cm)</th>
+            <th>Thickness (cm)</th>
+            <th>Weight (kg)</th>
             <th>Type</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>

@@ -19,10 +19,10 @@
             <th>Weight</th>
             <th>CPU cores</th>
             <th>HDD size</th>
-            <th>Display Size</th>
-            <th>Width</th>
-            <th>Height</th>
-            <th>Thickness</th>
+            <th>Display Size (inches)</th>
+            <th>Height (cm)</th>
+            <th>Width (cm)</th>
+            <th>Thickness (cm)</th>
             <th>Battery</th>
             <th>OS</th>
             <th>Camera</th>

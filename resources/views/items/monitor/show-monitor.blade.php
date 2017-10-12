@@ -14,8 +14,8 @@
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Display Size</th>
-                <th>Weight</th>
+                <th>Display Size (inches)</th>
+                <th>Weight (kg)</th>
                 <th class="text-center">Edit</th>
                 <th class="text-center">Delete</th>
             </tr>

@@ -19,9 +19,9 @@
             <th>Weight</th>
             <th>CPU cores</th>
             <th>HDD size</th>
-            <th>Display Size</th>
-            <th>OS</th>
+            <th>Display Size (inches)</th>
             <th>Battery</th>
+            <th>OS</th>
             <th>Camera</th>
             <th>Touchscreen</th>
             <th class="text-center">Edit</th>
