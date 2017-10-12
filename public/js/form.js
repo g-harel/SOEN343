@@ -5,6 +5,7 @@ var dropDownOptions = {
      * https://www.thetoptens.com/best-television-brands/page1.asp
      * http://www.webopedia.com/TERM/O/operating_system.html
      * https://www.staples.ca/en/
+     * https://en.wikipedia.org/wiki/List_of_computer_hardware_manufacturers
      */
     "computer": {
         "brands": [
@@ -184,6 +185,40 @@ var dropDownOptions = {
         ]
     },
     "monitor": {
+        "brands": [
+            "3M",
+            "Acer",
+            "AOC Monitors",
+            "Asus",
+            "AOpen",
+            "AU Optronics",
+            "BenQ",
+            "Biostar",
+            "Foxconn",
+            "Compaq",
+            "Dell",
+            "Eizo",
+            "Fujitsu",
+            "Gateway",
+            "Hanns-G",
+            "HP",
+            "iZ3D",
+            "LaCie",
+            "Lenovo",
+            "LG",
+            "MAG Innovision",
+            "NEC",
+            "Philips",
+            "Planar Systems",
+            "Samsung",
+            "Sceptre Incorporated",
+            "Sharp",
+            "Shuttle Inc.",
+            "Sony",
+            "Tatung Company",
+            "ViewSonic",
+            "Zalman"
+        ],
         "displaySize": [
             4.3,
             5,
@@ -232,14 +267,17 @@ var FormFunctions = (function () {
     laptopOS_Sel = {};
 
 
-    var
-        tabletBrandSel = {},
+    var tabletBrandSel = {},
     tabletRamSizeSel = {},
     tabletProcessorType = {},
     tabletStorageCapacitySel = {},
     tabletCpuCoresSel = {},
     tabletDisplaySizeSel = {},
     tabletOS_Sel = {};
+
+    // monitor selector
+    var monitorBrandSel = {},
+    monitorDisplaySizeSel = {};
 
     // click Add New redirect to Create Items
     var onClickCreateNewItems = {};
@@ -280,6 +318,10 @@ var FormFunctions = (function () {
             tabletDisplaySizeSel = $('#tablet-display-size');
             tabletOS_Sel = $('#tablet-os');
 
+            // monitor
+            monitorBrandSel = $('#monitor-brand');
+            monitorDisplaySizeSel = $('#monitor-display-size');
+
             onClickCreateNewItems = $('.create-new-items');
 
 
@@ -287,6 +329,8 @@ var FormFunctions = (function () {
             this.createNewItemRedirectFn();
         },
         formFunctions: function () {
+
+            // for computer (laptop, desktop, tablet) drop downs
             (function () {
                 $.each(dropDownOptions.computer.brands, function (key, value) {
                     var computerBrands = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
@@ -333,6 +377,8 @@ var FormFunctions = (function () {
 
 
             }());
+
+            // for tv drop downs
             (function () {
                 $.each(dropDownOptions.tv.brands, function (key, value) {
                     brandTvSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
@@ -341,6 +387,17 @@ var FormFunctions = (function () {
                     tvTypesSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
                 });
             }());
+
+            // for monitor drop downs
+            (function () {
+                $.each(dropDownOptions.monitor.brands, function (key, value) {
+                    monitorBrandSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                });
+                $.each(dropDownOptions.monitor.displaySize, function (key, value) {
+                    monitorDisplaySizeSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                });
+            }());
+
         },
 
         createNewItemRedirectFn: function () {
