@@ -5,6 +5,9 @@
         <li><a href="/items">Items</a></li>
         <li>TVs</li>
     </ol>
+
+    {{-- not for now --}}
+    {{--
     <div class="row margin-btm">
         <div class="col-lg-3">
         <span class="list-group-item">
@@ -27,6 +30,7 @@
         </span>
         </div>
     </div>
+    --}}
 
     <p><a href="../create" class="btn btn-success">Add new</a></p>
 

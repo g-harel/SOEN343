@@ -18,10 +18,31 @@
     background-color: #fff !important;
     /*padding: 1em 0 1em 0;*/
 }
-.panel-title {
+.size-font-30 {
     font-size: 30px !important;
 }
 
 .hide-this-element {
     display: none;
+}
+/* for tables */
+table {
+    width: 100%;
+    /*font-size: 1.2em;*/
+}
+thead th {
+    white-space: nowrap;
+    border-bottom: 1px solid #ccc;
+    color: #888;
+}
+th, td {
+    padding: .5em 1em;
+    text-align: right;
+}
+th:first-child,
+td:first-child {
+    text-align: left;
+}
+tbody th, td {
+    border-bottom: 1px solid #e6e6e6;
 }

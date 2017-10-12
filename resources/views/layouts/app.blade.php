@@ -15,9 +15,6 @@
         @include('inc.navbar')
         <div class='container'>
             <div class="row">
-               {{-- <div class="col-lg-2">
-                    @include('inc.category-sidebar')
-                </div>--}}
                 <div class="col-lg-12">
                     @include('inc.messages')
                     @yield('content')
