@@ -46,3 +46,6 @@ td:first-child {
 tbody th, td {
     border-bottom: 1px solid #e6e6e6;
 }
+.modal-larger {
+    width: 1120px !important;
+}

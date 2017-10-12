@@ -61,8 +61,8 @@
             <td>text</td>
             <td>text</td>
             <td>LED</td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" href="#"><span class="fa fa-scissors"></span></a></p></td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
+            <td class="text-center"><p title="Edit"><a class="btn btn-primary btn-xs" href="#"><span class="fa fa-scissors"></span></a></p></td>
+            <td class="text-center"><p title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
         </tr>
         <tr>
             <th scope="row">2</th>
@@ -92,4 +92,7 @@
         </tr>
         </tbody>
     </table>
+
+
+
 @endsection
