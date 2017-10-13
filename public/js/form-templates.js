@@ -21,20 +21,20 @@ function FormTemplates() {
                     });
                 h += '   </select>  ';
                 h += '</div>  ' +
-                    '   			<div class="form-group">  ' +
+                    '<div class="form-group">  ' +
                     '   				Price:  ' +
                     '   				<input type="text" name="monitor-price" id="monitor-price" class="form-control" value="' + monitorInstance.price + '">  ' +
                     '   			</div>  ' +
                     '   			<div class="form-group">  ' +
                     '   				Display size (inches):  ' +
-                    '   <select name="monitor-display-size" id="monitor-display-size" class="form-control">';
-                    $.each(dropDownOptions.monitor.displaySize, function (key, value) {
-                        if (monitorInstance.displaySize === value.toString()) {
-                            h += '<option value="' + value + '" title="' + value + '" selected>' + monitorInstance.displaySize + '</option>';
-                        } else {
-                            h += '<option value="' + value + '" title="' + value + '">' + value + '</option>';
-                        }
-                    });
+                    '<select name="monitor-display-size" id="monitor-display-size" class="form-control">';
+                        $.each(dropDownOptions.monitor.displaySize, function (key, value) {
+                            if (monitorInstance.displaySize === value.toString()) {
+                                h += '<option value="' + value + '" title="' + value + '" selected>' + monitorInstance.displaySize + '</option>';
+                            } else {
+                                h += '<option value="' + value + '" title="' + value + '">' + value + '</option>';
+                            }
+                        });
                 h += '</select></div>';
                 h += '   			<div class="form-group">  ' +
                     '   				Weight (Kg):  ' +
