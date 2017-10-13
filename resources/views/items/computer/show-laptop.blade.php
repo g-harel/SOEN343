@@ -45,7 +45,13 @@
             <td>--</td>
             <td>Yes</td>
             <td>No</td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Edit"> <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal" data-target=".bs-edit-laptop-modal-lg"></a><span class="fa fa-trash"></span></p></td>
+            <td class="text-center">
+                <p data-placement="top" data-toggle="tooltip" title="Edit">
+                    <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal" data-target=".bs-edit-laptop-modal-lg">
+                        <span class="fa fa-scissors"></span>
+                    </a>
+                </p>
+            </td>
 <span class="fa fa-scissors"></span></a></p></td>
             <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
         </tr>
