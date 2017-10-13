@@ -318,7 +318,9 @@
                                 </div>
                                 <div class="form-group">
                                     Display size (inches):
-                                    <select name="monitor-display-size" id="monitor-display-size" class="form-control"></select>
+                                    <select name="monitor-display-size" id="monitor-display-size" class="form-control">
+                                        <option value="Select display size" title="Select display size" selected disabled>Select display size</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
