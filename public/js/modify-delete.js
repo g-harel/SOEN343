@@ -1,7 +1,5 @@
 
 
-// add your template here
-// use https://codebeautify.org/string-builder to stringtify the html
 
 
 var formTemplates = new FormTemplates();
@@ -35,22 +33,15 @@ var ModifyDelete = (function () {
             editMonitorLink.click(function (event){
                 // returns the table row
                 var tableRow = $(this).parent().parent().parent();
-
                 // contains the text of each td
                 var rowElements = tableRow.find('td');
-
                 // array to hold the elements of this monitor
                 var monitorElements = [];
-
                 // get all the elements of this row
                 // and save it to the array
                 rowElements.each(function () {
                     monitorElements.push($(this).text());
                 });
-
-
-
-                console.log(monitorElements[0]);
 
                 var monitorInstance = {
                     id: monitorElements[0],
@@ -60,7 +51,6 @@ var ModifyDelete = (function () {
                     displaySize: monitorElements[4],
                     weight: monitorElements[5]
                 };
-
                 // check to make sure
                 console.log(monitorInstance);
 
@@ -70,11 +60,6 @@ var ModifyDelete = (function () {
 
                 editMonitorModalBody.empty();
                 editMonitorModalBody.append(html);
-
-                console.log('hello');
-
-
-
 
                 $(editMonitorModal).modal('show');
 

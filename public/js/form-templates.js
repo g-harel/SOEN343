@@ -1,4 +1,6 @@
 function FormTemplates() {
+    // add your template here
+    // use https://codebeautify.org/string-builder to stringtify the html
     this.monitorFormTemplate = function (monitorInstance) {
         return '   <form id="monitor-form" class="form-horizontal" action="">  '  +
             '   	<div class="col-md-12">  '  +
@@ -6,9 +8,7 @@ function FormTemplates() {
             '   		<div class="col-md-7">  '  +
             '   			<div class="form-group">  '  +
             '   				Brand Name:  '  +
-            '   				<select name="monitor-brand" id="monitor-brand" class="form-control">  '  +
-            '   					<option value="'+monitorInstance.brand+'" title="'+monitorInstance.brand+'" selected="">'+monitorInstance.brand+'</option>  '  +
-            '   				</select>  '  +
+            '   				<input readonly type="text" name="monitor-brand" id="monitor-brand" class="form-control" value="'+monitorInstance.brand+'">  '  +
             '   			</div>  '  +
             '   			<div class="form-group">  '  +
             '   				Price:  '  +
@@ -16,9 +16,7 @@ function FormTemplates() {
             '   			</div>  '  +
             '   			<div class="form-group">  '  +
             '   				Display size (inches):  '  +
-            '   				<select name="monitor-display-size" id="monitor-display-size" class="form-control">  '  +
-            '   					<option value="'+monitorInstance.displaySize+'" title="{{displaySize}}" selected="">'+monitorInstance.displaySize+'</option>  '  +
-            '   				</select>  '  +
+            '   				<input readonly type="text" name="monitor-display-size" id="monitor-display-size" class="form-control" value="'+monitorInstance.displaySize+'">  '  +
             '   			</div>  '  +
             '   			<div class="form-group">  '  +
             '   				Weight (Kg):  '  +
