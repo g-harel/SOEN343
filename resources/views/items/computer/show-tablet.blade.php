@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
+            <td scope="row">1</td>
             <td>text</td>
             <td>text</td>
             <td>text</td>

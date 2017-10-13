@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row" id="id-from-database-here">1</th>
+            <td scope="row" id="id-from-database-here">1</td>
             <td>text here</td>
             <td>text here</td>
             <td>text here</td>

@@ -52,7 +52,7 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
+            <td scope="row">1</td>
             <td>Sony</td>
             <td>$1200</td>
             <td>109</td>
@@ -63,32 +63,6 @@
             <td>LED</td>
             <td class="text-center"><p title="Edit"><a class="btn btn-primary btn-xs" href="#"><span class="fa fa-scissors"></span></a></p></td>
             <td class="text-center"><p title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Sony</td>
-            <td>$1200</td>
-            <td>109</td>
-            <td>text</td>
-            <td>text</td>
-            <td>text</td>
-            <td>text</td>
-            <td>Smart</td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" href="#"><span class="fa fa-scissors"></span></a></p></td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Sony</td>
-            <td>$1200</td>
-            <td>109</td>
-            <td>text</td>
-            <td>text</td>
-            <td>text</td>
-            <td>text</td>
-            <td>HD</td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Edit"><a class="btn btn-primary btn-xs" href="#"><span class="fa fa-scissors"></span></a></p></td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
         </tr>
         </tbody>
     </table>

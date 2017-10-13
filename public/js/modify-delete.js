@@ -1,46 +1,18 @@
-var monitorFormTemplate = '   <form id="monitor-form" class="form-horizontal">  '  +
-    '   	<div class="col-md-12">  '  +
-    '   		<div class="2"></div>  '  +
-    '   		<div class="col-md-7">  '  +
-    '   			<div class="form-group">  '  +
-    '   				Brand Name:  '  +
-    '   				<select name="monitor-brand" id="monitor-brand" class="form-control">  '  +
-    '   					<option value="Select brands" title="Select brands" selected="" disabled="">Select brands</option>  '  +
-    '   				</select>  '  +
-    '   			</div>  '  +
-    '   			<div class="form-group">  '  +
-    '   				Price:  '  +
-    '   				<input type="text" name="monitor-price" id="monitor-price" class="form-control" value="">  '  +
-    '   			</div>  '  +
-    '   			<div class="form-group">  '  +
-    '   				Display size (inches):  '  +
-    '   				<select name="monitor-display-size" id="monitor-display-size" class="form-control">  '  +
-    '   				</select>  '  +
-    '   			</div>  '  +
-    '   			<div class="form-group">  '  +
-    '   				Weight (Kg):  '  +
-    '   				<input type="text" name="monitor-weight" id="monitor-weight" class="form-control">  '  +
-    '   			</div>  '  +
-    '   		</div>  '  +
-    '   		<div class="2"></div>  '  +
-    '   	</div>  '  +
-    '   	<div class="row">  '  +
-    '   		<div class="col-md-12">  '  +
-    '   			<div class="col-md-7">  '  +
-    '   				<button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form" id="submit-monitor-form">Submit</button>  '  +
-    '   			</div>  '  +
-    '   		</div>  '  +
-    '   	</div>  '  +
-    '  </form>  ' ;
 
-// var util = new CommonUtil();
+
+// add your template here
+// use https://codebeautify.org/string-builder to stringtify the html
+
+
+var formTemplates = new FormTemplates();
 var ModifyDelete = (function () {
 
-    // var deleteCarSel = {},
-    //     confirmDeleteRecordSel = {},
-    //     deleteConfirmBtnSel = {},
-    //     rowAffectedSuccessSel = {};
-    var editMonitorLink = {};
+    // for monitor
+    var editMonitorLink = {},
+        editMonitorModalBody = {},
+        editMonitorModal = {};
+
+    // create a var for your link here
 
     return {
 
@@ -50,24 +22,70 @@ var ModifyDelete = (function () {
          */
         init: function () {
 
-            // deleteCarSel = $(".dropdown a.delete-vehicle");
-            // confirmDeleteRecordSel = $('#confirm-delete-record');
-            // deleteConfirmBtnSel = $('#delete-yes');
-            // rowAffectedSuccessSel = $('#row-affected-successfully');
-
-            // call the event driven functions here
             editMonitorLink = $('.edit-monitor-link');
+            editMonitorModalBody = $('#edit-monitor-form-body');
+            editMonitorModal = $('.bs-edit-monitor-modal-lg');
+
+            // assigned the var above to the class link here
 
             this.bindModifyDeleteActions();
         },
         bindModifyDeleteActions: function () {
 
             editMonitorLink.click(function (event){
-                console.log($(this));
-                alert('Hello World!');
+                // returns the table row
+                var tableRow = $(this).parent().parent().parent();
+
+                // contains the text of each td
+                var rowElements = tableRow.find('td');
+
+                // array to hold the elements of this monitor
+                var monitorElements = [];
+
+                // get all the elements of this row
+                // and save it to the array
+                rowElements.each(function () {
+                    monitorElements.push($(this).text());
+                });
+
+
+
+                console.log(monitorElements[0]);
+
+                var monitorInstance = {
+                    id: monitorElements[0],
+                    brand: monitorElements[1],
+                    price: monitorElements[2],
+                    quantity: monitorElements[3],
+                    displaySize: monitorElements[4],
+                    weight: monitorElements[5]
+                };
+
+                // check to make sure
+                console.log(monitorInstance);
+
+                // use the template above as parameters of Mustache
+                // see: http://coenraets.org/blog/2011/12/tutorial-html-templates-with-mustache-js/
+                var html = formTemplates.monitorFormTemplate(monitorInstance);
+
+                editMonitorModalBody.empty();
+                editMonitorModalBody.append(html);
+
+                console.log('hello');
+
+
+
+
+                $(editMonitorModal).modal('show');
+
+
                 event.preventDefault();
                 return false; //for good measure
             });
+
+
+            // use the var link for function
+
         }
     }; // end return
 })();

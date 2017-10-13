@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr>
-                <th scope="row" id="1">1</th>
+                <td scope="row" id="1">1</td>
                 <td>Dell</td>
                 <td>1000</td>
                 <td>43</td>
@@ -30,7 +30,7 @@
                 <td>5</td>
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs edit-monitor-link" href="items/monitor/edit/2" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
+                        <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
                             <span class="fa fa-scissors"></span>
                         </a>
                     </p>
@@ -51,42 +51,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Editing Monitor with id#1</h4>
                 </div>
-                <div class="modal-body">
-                    {{-- template for editing / use the same as create --}}
-                    <form id="monitor-form" class="form-horizontal">
-                        <div class="col-md-12">
-                            <div class="2"></div>
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    Brand Name:
-                                    <select name="monitor-brand" id="monitor-brand" class="form-control">
-                                        <option value="Select brands" title="Select brands" selected="" disabled="">Select brands</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    Price:
-                                    <input type="text" name="monitor-price" id="monitor-price" class="form-control" value="">
-                                </div>
-                                <div class="form-group">
-                                    Display size (inches):
-                                    <select name="monitor-display-size" id="monitor-display-size" class="form-control">
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    Weight (Kg):
-                                    <input type="text" name="monitor-weight" id="monitor-weight" class="form-control">
-                                </div>
-                            </div>
-                            <div class="2"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-7">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                <div class="modal-body" id="edit-monitor-form-body">
                 </div>
             </div>
         </div>
