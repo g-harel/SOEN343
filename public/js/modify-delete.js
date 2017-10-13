@@ -1,7 +1,3 @@
-
-
-
-
 var formTemplates = new FormTemplates();
 var ModifyDelete = (function () {
 
@@ -45,24 +41,22 @@ var ModifyDelete = (function () {
 
                 var monitorInstance = {
                     id: monitorElements[0],
-                    brand: monitorElements[1],
+                    brand: monitorElements[1], // brand drop down is not editable to make it simpler
                     price: monitorElements[2],
                     quantity: monitorElements[3],
-                    displaySize: monitorElements[4],
+                    displaySize: monitorElements[4], // display size is also not editable
                     weight: monitorElements[5]
                 };
                 // check to make sure
                 console.log(monitorInstance);
 
-                // use the template above as parameters of Mustache
-                // see: http://coenraets.org/blog/2011/12/tutorial-html-templates-with-mustache-js/
+                // not using mustache
                 var html = formTemplates.monitorFormTemplate(monitorInstance);
-
                 editMonitorModalBody.empty();
                 editMonitorModalBody.append(html);
 
+                // finally show the modal
                 $(editMonitorModal).modal('show');
-
 
                 event.preventDefault();
                 return false; //for good measure

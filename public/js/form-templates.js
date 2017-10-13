@@ -7,6 +7,9 @@ function FormTemplates() {
             '   		<div class="2"></div>  '  +
             '   		<div class="col-md-7">  '  +
             '   			<div class="form-group">  '  +
+            '   				<input type="hidden" name="monitor-id" id="monitor-id" class="hidden" value="'+monitorInstance.id+'">  '  +
+            '   			</div>  '  +
+            '   			<div class="form-group">  '  +
             '   				Brand Name:  '  +
             '   				<input readonly type="text" name="monitor-brand" id="monitor-brand" class="form-control" value="'+monitorInstance.brand+'">  '  +
             '   			</div>  '  +
