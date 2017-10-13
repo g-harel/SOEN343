@@ -20,20 +20,147 @@ SET time_zone = "+00:00";
 -- Database: `soen343`
 --
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS televisions;
+DROP TABLE IF EXISTS monitors;
+DROP TABLE IF EXISTS desktops;
+DROP TABLE IF EXISTS laptops;
+DROP TABLE IF EXISTS tablets;
+DROP TABLE IF EXISTS computers;
+DROP TABLE IF EXISTS items;
 
---
--- Table structure for table `items`
---
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE `items` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `brand` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` int(11) NOT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- -----------------------------------------------------
+-- Table `soen343`.`item`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`items` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(20) NOT NULL,
+  `brand` VARCHAR(100) NOT NULL,
+  `price` FLOAT(10, 2) NOT NULL,
+  `quantity` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`television`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`televisions` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `height` FLOAT(10, 2) NOT NULL,
+  `width` FLOAT(10, 2) NOT NULL,
+  `thickness` FLOAT(10, 2) NOT NULL,
+  `weight` FLOAT(10, 2) NOT NULL,
+  `type` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`monitor`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`monitors` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `display_size` FLOAT(10, 2) NOT NULL,
+  `weight` FLOAT(10, 2) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_monitor_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`computer`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`computers` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `processor_type` VARCHAR(100) NOT NULL,
+  `ram_size` INT UNSIGNED NOT NULL,
+  `cpu_cores` INT UNSIGNED NOT NULL,
+  `weight` FLOAT(10, 2) NOT NULL,
+  `type` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_computer_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`desktop`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`desktops` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `height` FLOAT(10, 2) NOT NULL,
+  `width` FLOAT(10, 2) NOT NULL,
+  `thickness` FLOAT(10, 2) NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_desktop_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`laptop`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`laptops` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `display_size` FLOAT(10, 2) NOT NULL,
+  `os` VARCHAR(100) NOT NULL,
+  `battery` VARCHAR(100) NOT NULL,
+  `camera` VARCHAR(100) NOT NULL,
+  `is_touchscreen` BOOLEAN NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_laptop_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `soen343`.`tablet`
+-- -----------------------------------------------------
+CREATE TABLE `soen343`.`tablets` (
+  `item_id` INT UNSIGNED NOT NULL,
+  `display_size` FLOAT(10, 2) NOT NULL,
+  `width` FLOAT(10, 2) NOT NULL,
+  `height` FLOAT(10, 2) NOT NULL,
+  `thickness` FLOAT(10, 2) NOT NULL,
+  `battery` VARCHAR(100) NOT NULL,
+  `os` VARCHAR(100) NOT NULL,
+  `camera` VARCHAR(100) NOT NULL,
+  `is_touchscreen` BOOLEAN NOT NULL,
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
+  CONSTRAINT `fk_tablet_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `soen343`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 -- --------------------------------------------------------
 
@@ -82,12 +209,6 @@ INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phon
 --
 
 --
--- Indexes for table `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -107,11 +228,6 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `items`
---
-ALTER TABLE `items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `sessions`
 --
