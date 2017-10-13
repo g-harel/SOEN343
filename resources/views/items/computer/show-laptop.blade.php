@@ -60,8 +60,75 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Editing Laptop</h4>
                 </div>
-                <div class="modal-body" id="edit-laptop-form-body">
-                </div>
+                <form id="laptop" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    Brand:
+                                    <select name="laptop-brand" id="laptop-brand" class="form-control">
+                                        <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Processor Type:
+                                    <select name="laptop-processor" id="laptop-processor" class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    RAM Size:
+                                    <select name="laptop-ram-size" id="laptop-ram-size" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Hard Drive Size:
+                                    <select name="laptop-storage-capacity" id="laptop-storage-capacity" class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    Number of Cores:
+                                    <select name="laptop-cpu-cores" id="laptop-cpu-cores" class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    Display size (inches):
+                                    <select name="laptop-display-size" id="laptop-display-size" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    Price:
+                                    <input type="text" name="laptop-price" id="laptop-price"  class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Weight (Kg):
+                                    <input type="text" name="laptop-weight" id="laptop-weight" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Battery:
+                                    <input type="text" name="laptop-battery" id="laptop-battery" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    OS:
+                                    <select name="laptop-os" id="laptop-os" class="form-control"></select>
+                                </div>
+                                <div class="form-group">
+                                    Camera:<br>
+                                    <input type="radio" title="laptop camera" name="laptop-camera" value="Yes" id="laptop-camera">&nbsp;Yes
+                                    <input type="radio" title="laptop camera" name="laptop-camera" value="No" id="laptop-camera">&nbsp;No
+                                </div>
+                                <div class="form-group">
+                                    Touchscreen:<br>
+                                    <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="Yes" id="laptop-camera">&nbsp;Yes
+                                    <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="No" id="laptop-camera">&nbsp;No
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-laptop-form" id="submit-laptop-form">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>
