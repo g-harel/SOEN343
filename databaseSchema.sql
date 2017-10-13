@@ -129,7 +129,7 @@ CREATE TABLE `soen343`.`laptops` (
   `os` VARCHAR(100) NOT NULL,
   `battery` VARCHAR(100) NOT NULL,
   `camera` VARCHAR(100) NOT NULL,
-  `touchscreen` BOOLEAN NOT NULL,
+  `is_touchscreen` BOOLEAN NOT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
   CONSTRAINT `fk_laptop_item_id`
@@ -152,7 +152,7 @@ CREATE TABLE `soen343`.`tablets` (
   `battery` VARCHAR(100) NOT NULL,
   `os` VARCHAR(100) NOT NULL,
   `camera` VARCHAR(100) NOT NULL,
-  `touchscreen` BOOLEAN NOT NULL,
+  `is_touchscreen` BOOLEAN NOT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
   CONSTRAINT `fk_tablet_item_id`

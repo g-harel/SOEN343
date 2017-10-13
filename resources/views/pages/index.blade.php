@@ -1,58 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <?php
-
-        include_once(__DIR__ . "/../../../database/gateway/ItemGateway.php");
-
-        class Item {
-            public $category;
-            public $brand;
-            public $price;
-            public $quantity;
-            public $processor_type;
-            public $display_size;
-            public $ram_size;
-            public $cpu_cores;
-            public $weight;
-            public $type;
-            public $width;
-            public $height;
-            public $thickness;
-            public $battery;
-            public $os;
-            public $camera;
-            public $touchscreen;
-
-            public function __construct() {
-                $this->category = "monitor";
-                $this->brand = "brand";
-                $this->price = 10.0;
-                $this->quantity = 10;
-                $this->processor_type = "ptype";
-                $this->display_size = 10;
-                $this->ram_size = 10;
-                $this->cpu_cores = 10;
-                $this->weight = 10;
-                $this->width = 10;
-                $this->height = 10;
-                $this->thickness = 10;
-                $this->battery = "battery";
-                $this->os = "os";
-                $this->type = "type";
-                $this->camera = "camera";
-                $this->touchscreen = true;
-            }
-        }
-
-        $g = new MonitorGateway();
-
-        $g->insert(new Item());
-        $r = $g->getAll();
-
-        echo '<pre>'; print_r($r); echo '</pre>';
-
-    ?>
     <div class='jumbotron text-center'>
         <h1>{{$title}}</h1>
         <p>This is our new home page</p>

@@ -78,10 +78,15 @@ abstract class ItemGateway
         // the insert on the top level model is done manually because it is
         // different from the rest. (does not have item_id)
         $items = array_shift($ancestry);
-        $queries = "";
-        $queries .= "INSERT INTO ".$items["model"]." (".implode(", ", $items["fields"]).") VALUES ('".implode("', '", cherryPick($items["fields"], $item))."');";
+        $tableName = $items["model"];
+        $columns = implode(", ", $items["fields"]);
+        $values = "'".implode("', '", cherryPick($items["fields"], $item))."'";
+        $queries =  "INSERT INTO $tableName ($columns) VALUES ($values);";
         foreach ($ancestry as $value) {
-            $queries .= "INSERT INTO ".$value["model"]." (item_id, ".implode(", ", $value["fields"]).") VALUES (LAST_INSERT_ID(), '".implode("', '", cherryPick($value["fields"], $item))."');";
+            $tableName = $value["model"];
+            $columns = implode(", ", $value["fields"]);
+            $values = "'".implode("', '", cherryPick($value["fields"], $item))."'";
+            $queries .= "INSERT INTO $tableName (item_id, $columns) VALUES (LAST_INSERT_ID(), $values);";
         }
         $this->gateway->queryDB($queries);
     }
@@ -155,7 +160,7 @@ class TabletGateway extends ComputerGateway
         "battery",
         "os",
         "camera",
-        "touchscreen",
+        "is_touchscreen",
     );
 
     protected function ancestry() {
@@ -172,7 +177,7 @@ class LaptopGateway extends ComputerGateway
         "os",
         "battery",
         "camera",
-        "touchscreen",
+        "is_touchscreen",
     );
 
     protected function ancestry() {

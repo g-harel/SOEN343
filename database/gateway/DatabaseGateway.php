@@ -44,12 +44,12 @@ function transformConditionsToString($connectionsAssociativeArray) {
 
 // pluck the keys from the source object and accumulate them into an array.
 function cherryPick($keys, $source) {
-    $res = array();
+    $result = array();
     $sourceValues = get_object_vars($source);
     foreach ($keys as &$key) {
-        array_push($res, $sourceValues["$key"]);
+        array_push($result, $sourceValues["$key"]);
     }
-    return $res;
+    return $result;
 }
 
 class DatabaseGateway
@@ -79,6 +79,7 @@ class DatabaseGateway
     // returns the result of the last query.
     public function queryDB($sql) {
         $this->openDBConnection();
+        // TODO remove
         console_log($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
@@ -93,10 +94,12 @@ class DatabaseGateway
                 if($result) {
                     $returned[$count] = $result;
                 } else {
+                    // TODO remove
                     console_error($conn->error);
                 }
             }
         } else {
+            // TODO remove
             console_error($conn->error);
         }
         $this->closeDBConnection();
