@@ -86,10 +86,9 @@ var ModifyDelete = (function () {
                     laptopElements.push($(this).text());
                 });
                 var laptopInstance = {
-                     id: laptopElements[0],
-                    brand: laptopElements[1], // brand drop down is not editable to make it simpler
+                    id: laptopElements[0],
+                    brand: laptopElements[1],
                     price: laptopElements[2],
-                    quantity: laptopElements[3],
                     processorType: laptopElements[4],
                     ramSize:laptopElements[5],
                     weight: laptopElements[6],
@@ -101,15 +100,12 @@ var ModifyDelete = (function () {
                     camera: laptopElements[12],
                     touchscreen: laptopElements[13]
                 };
-                // check to make sure
                 console.log(laptopInstance);
 
-                // not using mustache
-                var html = formTemplates.laptopFormTemplate(laptopInstance);
-                editlaptopModalBody.empty();
-                editlaptopModalBody.append(html);
-
-                // finally show the modal
+                editLaptopModal.find('.modal-body > form').empty();
+                editLaptopModal.find('.modal-body > form').append(
+                    formTemplates.laptopForm(laptopInstance)
+                );
                 $(editLaptopModal).modal('show');
 
                 event.preventDefault();

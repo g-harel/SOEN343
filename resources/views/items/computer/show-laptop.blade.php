@@ -54,7 +54,6 @@
             </td>
             <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
         </tr>
-
         </tbody>
     </table>
 </div>
@@ -65,7 +64,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Editing Laptop</h4>
             </div>
-            <form id="laptop" class="form-horizontal"></form>
+            <div class="modal-body">
+                <form id="laptop" class="form-horizontal"></form>
+            </div>
         </div>
     </div>
 </div>
