@@ -39,6 +39,10 @@
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
+                                    Quantity:
+                                    <input type="text" name="this-desktop-qty" id="this-desktop-qty" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Brand:
                                     <select name="computer-brand" id="computer-brand" class="form-control">
                                         <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
@@ -102,6 +106,10 @@
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
+                                    Quantity:
+                                    <input type="text" name="this-laptop-qty" id="this-laptop-qty" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Brand:
                                     <select name="laptop-brand" id="laptop-brand" class="form-control">
                                         <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
@@ -124,13 +132,13 @@
                                     Number of Cores:
                                     <select name="laptop-cpu-cores" id="laptop-cpu-cores" class="form-control"></select>
                                 </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     Display size (inches):
                                     <select name="laptop-display-size" id="laptop-display-size" class="form-control"></select>
                                 </div>
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
                                     <input type="text" name="laptop-price" id="laptop-price"  class="form-control">
@@ -175,6 +183,10 @@
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
+                                    Quantity:
+                                    <input type="text" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Brand:
                                     <select name="tablet-brand" id="tablet-brand" class="form-control">
                                         <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
@@ -201,13 +213,13 @@
                                     Weight (Kg):
                                     <input type="text" name="tablet-weight" id="tablet-weight" class="form-control">
                                 </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
                                     <input type="text" name="tablet-price" id="tablet-price"  class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-5">
                                 <div class="form-group">
                                     Display size (inches):
                                     <select name="tablet-display-size" id="tablet-display-size" class="form-control"></select>
@@ -256,6 +268,10 @@
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
+                                    Quantity:
+                                    <input type="text" name="this-tv-qty" id="this-tv-qty" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Brand Name:
                                     <select name="television-brand" id="television-brand" class="form-control">
                                         <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
@@ -269,13 +285,13 @@
                                     Height (cm):
                                     <input type="text" name="television-height" id="television-height" class="form-control">
                                 </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     Width (cm):
                                     <input type="text" name="television-width" id="television-width" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-5">
                                 <div class="form-group">
                                     Thickness (cm):
                                     <input type="text" name="television-thickness" id="television-thickness" class="form-control">
@@ -306,6 +322,10 @@
                         <div class="col-md-12">
                             <div class="2"></div>
                             <div class="col-md-7">
+                                <div class="form-group">
+                                    Quantity:
+                                    <input type="text" name="this-monitor-qty" id="this-monitor-qty" class="form-control">
+                                </div>
                                 <div class="form-group">
                                     Brand Name:
                                     <select name="monitor-brand" id="monitor-brand" class="form-control">
