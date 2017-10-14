@@ -40,7 +40,7 @@
             <th>#</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Qty</th>
             <th>Height (cm)</th>
             <th>Width (cm)</th>
             <th>Thickness (cm)</th>

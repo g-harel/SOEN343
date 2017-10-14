@@ -1,14 +1,9 @@
 var formTemplates = new FormTemplates();
 var ModifyDelete = (function () {
-    // for monitor
     var editMonitorLink = {}, editMonitorModal = {};
-    // for desktop
     var editDesktopLink = {}, editDesktopModal = {};
-    // for laptop
     var editLaptopLink = {}, editLaptopModal = {};
-    // for tablet
-    var editTabletLink = {}, editTabletModalBody = {}, editTabletModal = {};
-
+    var editTabletLink = {}, editTabletModal = {};
 
     return {
         init: function () {
@@ -19,9 +14,7 @@ var ModifyDelete = (function () {
             editLaptopLink = $('.edit-laptop-link');
             editLaptopModal = $('.bs-edit-laptop-modal-lg');
             editTabletLink = $('.edit-tablet-link');
-            editTabletModalBody = $('#edit-tablet-form-body');
             editTabletModal = $('.bs-edit-tablet-modal-lg');
-
             this.bindModifyDeleteActions();
         },
         bindModifyDeleteActions: function () {
@@ -112,23 +105,16 @@ var ModifyDelete = (function () {
                 return false; //for good measure
             });
             editTabletLink.click(function (event){
-                // returns the table row
-                var tableRow = $(this).parent().parent().parent();
-                // contains the text of each td
+                var tableRow = $(this).parentsUntil('tr').parent().eq(0);
                 var rowElements = tableRow.find('td');
-                // array to hold the elements of this tablet
-                var desktopElements = [];
-                // get all the elements of this row
-                // and save it to the array
+                var tabletElements = [];
                 rowElements.each(function () {
-                    desktopElements.push($(this).text());
+                    tabletElements.push($(this).text());
                 });
-
-                var desktopInstance = {
-                     id: tabletElements[0],
+                var tabletInstance = {
+                    id: tabletElements[0],
                     brand: tabletElements[1], // brand drop down is not editable to make it simpler
                     price: tabletElements[2],
-                    quantity: tabletElements[3],
                     processorType: tabletElements[4],
                     ramSize:tabletElements[5],
                     weight: tabletElements[6],
@@ -142,17 +128,12 @@ var ModifyDelete = (function () {
                     os:tabletElements[14],
                     camera: tabletElements[15],
                     touchscreen: tabletElements[16]
-
                 };
-                // check to make sure
                 console.log(tabletInstance);
 
-                // not using mustache
-                var html = formTemplates.tabletFormTemplate(tabletInstance);
-                editTabletModalBody.empty();
-                editTabletModalBody.append(html);
-
-                // finally show the modal
+                var html = formTemplates.tabletForm(tabletInstance);
+                editTabletModal.find('.modal-body > form').empty();
+                editTabletModal.find('.modal-body > form').append(html);
                 $(editTabletModal).modal('show');
 
                 event.preventDefault();

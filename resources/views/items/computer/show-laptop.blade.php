@@ -14,7 +14,7 @@
             <th>#</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Qty</th>
             <th>Processor type</th>
             <th>Ram size</th>
             <th>Weight</th>
@@ -39,10 +39,10 @@
             <td>12</td>
             <td>5</td>
             <td>4</td>
-            <td>128</td>
+            <td>500</td>
             <td>14</td>
             <td>Li-Ion</td>
-            <td>Microsoft Windows 10</td>
+            <td>Windows 10</td>
             <td>Yes</td>
             <td>No</td>
             <td class="text-center">

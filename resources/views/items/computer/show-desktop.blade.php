@@ -14,7 +14,7 @@
             <th>#</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Quantity</th>
+            <th>Qty</th>
             <th>Processor type</th>
             <th>Ram size (GB)</th>
             <th>CPU cores</th>

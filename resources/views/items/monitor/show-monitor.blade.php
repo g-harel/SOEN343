@@ -13,7 +13,7 @@
                 <th>#</th>
                 <th>Brand</th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>Display Size (inches)</th>
                 <th>Weight (kg)</th>
                 <th class="text-center">Edit</th>
@@ -22,6 +22,7 @@
             </thead>
             <tbody>
             <tr>
+                {{-- please print the id from database here  --}}
                 <td scope="row" id="1">1</td>
                 <td>Dell</td>
                 <td>1000</td>

@@ -28,7 +28,9 @@ var dropDownOptions = {
             "Other"
         ],
         "ramSize": [
+            2,
             4,
+            6,
             8,
             12,
             16,
@@ -57,12 +59,12 @@ var dropDownOptions = {
             [2, "2TB"]
         ],
         "os": [
-            "Microsoft Windows 7",
-            "Microsoft Windows 8",
-            "Microsoft Windows 8.1",
-            "Microsoft Windows 10",
-            "Microsoft Windows XP",
-			"Microsoft Windows RT",
+            "Windows 7",
+            "Windows 8",
+            "Windows 8.1",
+            "Windows 10",
+            "Windows XP",
+			"Windows RT",
             "Mac OS X 10.12",
             "Mac OS X 10.11",
             "Macc OS X 10.10",
