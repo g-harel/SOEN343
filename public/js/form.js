@@ -24,7 +24,7 @@ var dropDownOptions = {
             "Microsoft",
             "IBM",
             "InFocus",
-            "intel®",
+            "Intel",
             "Other"
         ],
         "ramSize": [
@@ -94,7 +94,7 @@ var dropDownOptions = {
             87.1,
             93.5
         ],
-        "cpuCores": [2,3,4,8],
+        "cpuCores": [2,3,4,6,8],
         "displaySize": [
             4.3,
             5,
@@ -247,6 +247,12 @@ var dropDownOptions = {
 
 var FormFunctions = (function () {
 
+    var desktopForm = {};
+    var laptopForm = {};
+    var tabletForm = {};
+    var tvForm = {};
+    var monitorForm = {};
+
     var desktopBrandSel = {},
     desktopRamSizeSel = {},
     desktopStorageCapacitySel = {},
@@ -257,23 +263,23 @@ var FormFunctions = (function () {
     var brandTvSel = {},
     tvTypesSel = {};
 
-    // laptop
-    var laptopBrandSel = {},
-    laptopRamSizeSel = {},
-    laptopProcessorType = {},
-    laptopStorageCapacitySel = {},
-    laptopCpuCoresSel = {},
-    laptopDisplaySizeSel = {},
-    laptopOS_Sel = {};
-
-
-    var tabletBrandSel = {},
-    tabletRamSizeSel = {},
-    tabletProcessorType = {},
-    tabletStorageCapacitySel = {},
-    tabletCpuCoresSel = {},
-    tabletDisplaySizeSel = {},
-    tabletOS_Sel = {};
+    // // laptop
+    // var laptopBrandSel = {},
+    // laptopRamSizeSel = {},
+    // laptopProcessorType = {},
+    // laptopStorageCapacitySel = {},
+    // laptopCpuCoresSel = {},
+    // laptopDisplaySizeSel = {},
+    // laptopOS_Sel = {};
+    //
+    //
+    // var tabletBrandSel = {},
+    // tabletRamSizeSel = {},
+    // tabletProcessorType = {},
+    // tabletStorageCapacitySel = {},
+    // tabletCpuCoresSel = {},
+    // tabletDisplaySizeSel = {},
+    // tabletOS_Sel = {};
 
     // monitor selector
     var monitorBrandSel = {},
@@ -290,33 +296,15 @@ var FormFunctions = (function () {
          */
         init: function () {
 
-            desktopBrandSel = $('#computer-brand');
-            desktopRamSizeSel = $("#desktop-ram-size");
-            desktopStorageCapacitySel = $('#storage-capacity');
-            desktopProcessorSel = $('#desktop-processor');
-            desktopCpuCoresSel = $('#cpu-cores');
+            desktopForm = $('form#desktop');
+            laptopForm = $('form#laptop');
+            tabletForm = $('form#tablet');
+            tvForm = $('form#television');
 
             // tv
             brandTvSel = $('#television-brand');
             tvTypesSel = $('#television-type');
 
-            // laptop
-            laptopBrandSel = $('#laptop-brand');
-            laptopRamSizeSel = $('#laptop-ram-size');
-            laptopCpuCoresSel = $('#laptop-cpu-cores');
-            laptopProcessorType = $('#laptop-processor');
-            laptopStorageCapacitySel = $('#laptop-storage-capacity');
-            laptopDisplaySizeSel = $('#laptop-display-size');
-            laptopOS_Sel = $('#laptop-os');
-
-            // tablet
-            tabletBrandSel = $('#tablet-brand');
-            tabletRamSizeSel = $('#tablet-ram-size');
-            tabletProcessorType = $('#tablet-processor');
-            tabletStorageCapacitySel = $('#tablet-storage-capacity');
-            tabletCpuCoresSel = $('#tablet-cpu-cores');
-            tabletDisplaySizeSel = $('#tablet-display-size');
-            tabletOS_Sel = $('#tablet-os');
 
             // monitor
             monitorBrandSel = $('#monitor-brand');
@@ -334,45 +322,46 @@ var FormFunctions = (function () {
             (function () {
                 $.each(dropDownOptions.computer.brands, function (key, value) {
                     var computerBrands = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
-                    desktopBrandSel.append(computerBrands);
-                    laptopBrandSel.append(computerBrands);
-                    tabletBrandSel.append(computerBrands);
+                    desktopForm.find('#computer-brand').append(computerBrands);
+                    laptopForm.find('#laptop-brand').append(computerBrands);
+                    tabletForm.find('#tablet-brand').append(computerBrands);
                 });
                 $.each(dropDownOptions.computer.ramSize, function (key, value) {
                     var computerRamSize = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
-                    desktopRamSizeSel.append(computerRamSize);
-                    laptopRamSizeSel.append(computerRamSize);
-                    tabletRamSizeSel.append(computerRamSize);
+                    desktopForm.find('#desktop-ram-size').append(computerRamSize);
+                    laptopForm.find('#laptop-ram-size').append(computerRamSize);
+                    tabletForm.find('#tablet-ram-size').append(computerRamSize);
+
                 });
                 $.each(dropDownOptions.computer.storageSize, function (k, v) {
                     var storageCapacity = '<option value="'+v[0]+'" title="'+v[1]+'">'+v[1]+'</option>';
-                    desktopStorageCapacitySel.append(storageCapacity);
-                    laptopStorageCapacitySel.append(storageCapacity);
-                    tabletStorageCapacitySel.append(storageCapacity);
+                    desktopForm.find('#storage-capacity').append(storageCapacity);
+                    laptopForm.find('#laptop-storage-capacity').append(storageCapacity);
+                    tabletForm.find('#tablet-storage-capacity').append(storageCapacity);
                 });
                 $.each(dropDownOptions.computer.processorType, function (k, v) {
                     var processorType = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
-                    desktopProcessorSel.append(processorType);
-                    laptopProcessorType.append(processorType);
-                    tabletProcessorType.append(processorType);
+                    desktopForm.find('#desktop-processor').append(processorType);
+                    laptopForm.find('#laptop-processor').append(processorType);
+                    tabletForm.find('#tablet-processor').append(processorType);
                 });
                 $.each(dropDownOptions.computer.cpuCores, function (k, v) {
                     var cpuCores = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
-                    desktopCpuCoresSel.append(cpuCores);
-                    laptopCpuCoresSel.append(cpuCores);
-                    tabletCpuCoresSel.append(cpuCores);
+                    desktopForm.find('#cpu-cores').append(cpuCores);
+                    laptopForm.find('#laptop-cpu-cores').append(cpuCores);
+                    tabletForm.find('#tablet-cpu-cores').append(cpuCores);
                 });
 
                 $.each(dropDownOptions.computer.displaySize, function (k, v) {
                     var displaySize = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
-                    laptopDisplaySizeSel.append(displaySize);
-                    tabletDisplaySizeSel.append(displaySize);
+                    laptopForm.find('#laptop-display-size').append(displaySize);
+                    tabletForm.find('#tablet-display-size').append(displaySize);
                 });
 
                 $.each(dropDownOptions.computer.os, function (k, v) {
                     var os = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
-                    laptopOS_Sel.append(os);
-                    tabletOS_Sel.append(os);
+                    laptopForm.find('#laptop-os').append(os);
+                    tabletForm.find('#tablet-os').append(os);
                 });
 
 

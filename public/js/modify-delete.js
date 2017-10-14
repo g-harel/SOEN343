@@ -5,7 +5,7 @@ var ModifyDelete = (function () {
     // for desktop
     var editDesktopLink = {}, editDesktopModal = {};
     // for laptop
-    var editLaptopLink = {}, editLaptopModalBody = {}, editLaptopModal = {};
+    var editLaptopLink = {}, editLaptopModal = {};
     // for tablet
     var editTabletLink = {}, editTabletModalBody = {}, editTabletModal = {};
 
@@ -17,7 +17,6 @@ var ModifyDelete = (function () {
             editDesktopLink = $('.edit-desktop-link');
             editDesktopModal = $('.bs-edit-desktop-modal-lg');
             editLaptopLink = $('.edit-laptop-link');
-            editLaptopModalBody = $('#edit-laptop-form-body');
             editLaptopModal = $('.bs-edit-laptop-modal-lg');
             editTabletLink = $('.edit-tablet-link');
             editTabletModalBody = $('#edit-tablet-form-body');
@@ -49,7 +48,6 @@ var ModifyDelete = (function () {
                 event.preventDefault();
                 return false; //for good measure
             });
-
             editDesktopLink.click(function (event){
                 var tableRow = $(this).parent().parent().parent();
                 var rowElements = tableRow.find('td');
@@ -80,7 +78,7 @@ var ModifyDelete = (function () {
                 event.preventDefault();
                 return false; //for good measure
             });
-             editLaptopLink.click(function (event){
+            editLaptopLink.click(function (event){
                 var tableRow = $(this).parent().parent().parent();
                 var rowElements = tableRow.find('td');
                 var laptopElements = [];
@@ -117,7 +115,7 @@ var ModifyDelete = (function () {
                 event.preventDefault();
                 return false; //for good measure
             });
-             editTabletLink.click(function (event){
+            editTabletLink.click(function (event){
                 // returns the table row
                 var tableRow = $(this).parent().parent().parent();
                 // contains the text of each td
@@ -164,10 +162,6 @@ var ModifyDelete = (function () {
                 event.preventDefault();
                 return false; //for good measure
             });
-
-
-           
-
         }
     }; // end return
 })();

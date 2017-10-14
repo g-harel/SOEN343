@@ -152,5 +152,71 @@ function FormTemplates() {
         return h;
     };
 
+    this.laptopForm = function (laptop) {
+        var h =   '<div class="col-md-12">  '  +
+            '   	<div class="col-md-5">  '  +
+            '   		<div class="form-group">  '  +
+            '   			Brand:  '  +
+            '   			<select name="computer-brand" id="computer-brand" class="form-control">  ';
+
+            h += '   			</select>  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Processor Type:  '  +
+            '   			<select name="desktop-processor" id="desktop-processor" class="form-control">';
+
+            h +=    '</select>  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			RAM Size:  '  +
+            '   			<select name="desktop-ram-size" id="desktop-ram-size" class="form-control">  ';
+
+            h +='   			</select>  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Hard Drive Size:  '  +
+            '   			<select name="storage-capacity" id="storage-capacity" class="form-control">';
+            h +=    '</select>  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Number of Cores:  '  +
+            '   			<select name="desktop-cpu-cores" id="cpu-cores" class="form-control">';
+            h +=    '</select>  '  +
+            '   		</div>  '  +
+            '   	</div>  '  +
+            '   	<div class="col-md-2"></div>  '  +
+            '   	<div class="col-md-5">  '  +
+            '   		<div class="form-group">  '  +
+            '   			Price:  '  +
+            '   			<input type="text" name="desktop-price" id="desktop-price" class="form-control">  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Weight (Kg):  '  +
+            '   			<input type="text" name="desktop-weight" id="desktop-weight" class="form-control">  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Height (cm):  '  +
+            '   			<input type="text" name="desktop-height" id="desktop-height" class="form-control">  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Width (cm):  '  +
+            '   			<input type="text" name="desktop-width" id="desktop-width" class="form-control">  '  +
+            '   		</div>  '  +
+            '   		<div class="form-group">  '  +
+            '   			Thickness (cm):  '  +
+            '   			<input type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">  '  +
+            '   		</div>  '  +
+            '   	</div>  '  +
+            '   	</div>  '  +
+            '   <div class="row">  '  +
+            '   	<div class="col-md-12">  '  +
+            '   		<div class="col-md-6">  '  +
+            '   			<button type="submit" class="btn btn-primary btn-lg" name="submit-desktop-form" id="submit-desktop-form">Submit</button>  '  +
+            '   		</div>  '  +
+            '   	</div>  '  +
+            '  </div>  ' ;
+        return h;
+    }
+
 
 }
