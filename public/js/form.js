@@ -246,78 +246,29 @@ var dropDownOptions = {
 
 
 var FormFunctions = (function () {
-
     var desktopForm = {};
     var laptopForm = {};
     var tabletForm = {};
     var tvForm = {};
     var monitorForm = {};
 
-    var desktopBrandSel = {},
-    desktopRamSizeSel = {},
-    desktopStorageCapacitySel = {},
-    desktopProcessorSel = {},
-    desktopCpuCoresSel = {};
-
-    // tv
-    var brandTvSel = {},
-    tvTypesSel = {};
-
-    // // laptop
-    // var laptopBrandSel = {},
-    // laptopRamSizeSel = {},
-    // laptopProcessorType = {},
-    // laptopStorageCapacitySel = {},
-    // laptopCpuCoresSel = {},
-    // laptopDisplaySizeSel = {},
-    // laptopOS_Sel = {};
-    //
-    //
-    // var tabletBrandSel = {},
-    // tabletRamSizeSel = {},
-    // tabletProcessorType = {},
-    // tabletStorageCapacitySel = {},
-    // tabletCpuCoresSel = {},
-    // tabletDisplaySizeSel = {},
-    // tabletOS_Sel = {};
-
-    // monitor selector
-    var monitorBrandSel = {},
-    monitorDisplaySizeSel = {};
-
     // click Add New redirect to Create Items
     var onClickCreateNewItems = {};
 
     return {
 
-        /**
-         * All the elements required before an
-         * event occurred must be in the init function.
-         */
         init: function () {
-
             desktopForm = $('form#desktop');
             laptopForm = $('form#laptop');
             tabletForm = $('form#tablet');
             tvForm = $('form#television');
-
-            // tv
-            brandTvSel = $('#television-brand');
-            tvTypesSel = $('#television-type');
-
-
-            // monitor
-            monitorBrandSel = $('#monitor-brand');
-            monitorDisplaySizeSel = $('#monitor-display-size');
-
+            monitorForm = $('form#monitor-form');
             onClickCreateNewItems = $('.create-new-items');
-
 
             this.formFunctions();
             this.createNewItemRedirectFn();
         },
         formFunctions: function () {
-
             // for computer (laptop, desktop, tablet) drop downs
             (function () {
                 $.each(dropDownOptions.computer.brands, function (key, value) {
@@ -370,20 +321,24 @@ var FormFunctions = (function () {
             // for tv drop downs
             (function () {
                 $.each(dropDownOptions.tv.brands, function (key, value) {
-                    brandTvSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                    tvForm.find('#television-brand').append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
                 });
                 $.each(dropDownOptions.tv.types, function (key, value) {
-                    tvTypesSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                    tvForm.find('#television-type').append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
                 });
             }());
 
             // for monitor drop downs
             (function () {
                 $.each(dropDownOptions.monitor.brands, function (key, value) {
-                    monitorBrandSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                    monitorForm.find('#monitor-brand').append(
+                        '<option value="'+value+'" title="'+value+'">'+value+'</option>'
+                    );
                 });
                 $.each(dropDownOptions.monitor.displaySize, function (key, value) {
-                    monitorDisplaySizeSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                    monitorForm.find('#monitor-display-size').append(
+                        '<option value="'+value+'" title="'+value+'">'+value+'</option>'
+                    );
                 });
             }());
 
