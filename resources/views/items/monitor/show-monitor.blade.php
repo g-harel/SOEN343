@@ -49,6 +49,7 @@
                     <h4 class="modal-title">Editing Monitor</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
+                    <form id="monitor-form" class="form-horizontal" action=""></form>
                 </div>
             </div>
         </div>

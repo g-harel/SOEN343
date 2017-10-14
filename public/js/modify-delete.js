@@ -1,9 +1,9 @@
 var formTemplates = new FormTemplates();
 var ModifyDelete = (function () {
     // for monitor
-    var editMonitorLink = {}, editMonitorModalBody = {}, editMonitorModal = {};
+    var editMonitorLink = {}, editMonitorModal = {};
     // for desktop
-    var editDesktopLink = {}, editDesktopModalBody = {}, editDesktopModal = {};
+    var editDesktopLink = {}, editDesktopModal = {};
     // for laptop
     var editLaptopLink = {}, editLaptopModalBody = {}, editLaptopModal = {};
     // for tablet
@@ -13,10 +13,8 @@ var ModifyDelete = (function () {
     return {
         init: function () {
             editMonitorLink = $('.edit-monitor-link');
-            editMonitorModalBody = $('#edit-monitor-form-body');
             editMonitorModal = $('.bs-edit-monitor-modal-lg');
             editDesktopLink = $('.edit-desktop-link');
-            editDesktopModalBody = $('#edit-desktop-form-body');
             editDesktopModal = $('.bs-edit-desktop-modal-lg');
             editLaptopLink = $('.edit-laptop-link');
             editLaptopModalBody = $('#edit-laptop-form-body');
@@ -39,58 +37,46 @@ var ModifyDelete = (function () {
                     id: monitorElements[0],
                     brand: monitorElements[1], // brand drop down is not editable to make it simpler
                     price: monitorElements[2],
-                    quantity: monitorElements[3],
                     displaySize: monitorElements[4], // display size is also not editable
                     weight: monitorElements[5]
                 };
-                var html = formTemplates.monitorFormTemplate(monitorInstance);
-                editMonitorModalBody.empty();
-                editMonitorModalBody.append(html);
+                editMonitorModal.find('.modal-body > form').empty();
+                editMonitorModal.find('.modal-body > form').append(
+                    formTemplates.monitorForm(monitorInstance)
+                );
                 $(editMonitorModal).modal('show');
 
                 event.preventDefault();
                 return false; //for good measure
             });
+
             editDesktopLink.click(function (event){
-                // returns the table row
                 var tableRow = $(this).parent().parent().parent();
-                // contains the text of each td
                 var rowElements = tableRow.find('td');
-                // array to hold the elements of this desktop
                 var desktopElements = [];
-                // get all the elements of this row
-                // and save it to the array
                 rowElements.each(function () {
                     desktopElements.push($(this).text());
                 });
-
                 var desktopInstance = {
-                     id: desktopElements[0],
-                    brand: desktopElements[1], // brand drop down is not editable to make it simpler
+                    id: desktopElements[0],
+                    brand: desktopElements[1],
                     price: desktopElements[2],
-                    quantity: desktopElements[3],
                     processorType: desktopElements[4],
                     ramSize: desktopElements[5],
-                    storageSize: desktopElements[6],
-                    cpuCores: desktopElements[7], 
-                    price: desktopElements[8],
-                    weight: desktopElements[9],
-                    height:desktopElements[10],
-                    width: desktopElements[11],
-                    thickness: desktopElements[12]
-                    
+                    cpuCores: desktopElements[6],
+                    storageSize: desktopElements[7],
+                    weight: desktopElements[8],
+                    height:desktopElements[9],
+                    width: desktopElements[10],
+                    thickness: desktopElements[11]
                 };
-                // check to make sure
                 console.log(desktopInstance);
 
-                // not using mustache
-                var html = formTemplates.desktopFormTemplate(desktopInstance);
-                editDesktopModalBody.empty();
-                editDesktopModalBody.append(html);
-
-                // finally show the modal
+                editDesktopModal.find('.modal-body > form').empty();
+                editDesktopModal.find('.modal-body > form').append(
+                    formTemplates.desktopForm(desktopInstance)
+                );
                 $(editDesktopModal).modal('show');
-
                 event.preventDefault();
                 return false; //for good measure
             });
@@ -109,14 +95,13 @@ var ModifyDelete = (function () {
                     processorType: laptopElements[4],
                     ramSize:laptopElements[5],
                     weight: laptopElements[6],
-                    cpuCores: laptopElements[7], 
+                    cpuCores: laptopElements[7],
                     storageSize: laptopElements[8],
-                    displaySize: laptopElements[9], 
+                    displaySize: laptopElements[9],
                     battery: laptopElements[10],
                     os:laptopElements[11],
                     camera: laptopElements[12],
                     touchscreen: laptopElements[13]
-                    
                 };
                 // check to make sure
                 console.log(laptopInstance);
@@ -153,9 +138,9 @@ var ModifyDelete = (function () {
                     processorType: tabletElements[4],
                     ramSize:tabletElements[5],
                     weight: tabletElements[6],
-                    cpuCores: tabletElements[7], 
+                    cpuCores: tabletElements[7],
                     storageSize: tabletElements[8],
-                    displaySize: tabletElements[9], 
+                    displaySize: tabletElements[9],
                     height:tabletElements[10],
                     width: tabletElements[11],
                     thickness: tabletElements[12],
@@ -163,7 +148,7 @@ var ModifyDelete = (function () {
                     os:tabletElements[14],
                     camera: tabletElements[15],
                     touchscreen: tabletElements[16]
-                    
+
                 };
                 // check to make sure
                 console.log(tabletInstance);
