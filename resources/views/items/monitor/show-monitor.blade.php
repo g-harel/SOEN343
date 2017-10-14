@@ -36,7 +36,14 @@
                         </a>
                     </p>
                 </td>
-                <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        {{-- please pass the qty here from the db, it is needed for form --}}
+                        <a class="btn btn-danger btn-xs" href="" data-id="1" data-toggle="modal" data-target="#delMonitorLink" >
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -51,6 +58,20 @@
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
                     <form id="monitor-form" class="form-horizontal" action=""></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delMonitorLink" tabindex="-1" role="dialog" aria-labelledby="delMonitorLink">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Delete / Update Qty</h4>
+                </div>
+                <div class="modal-body">
+                    <p>hello</p>
                 </div>
             </div>
         </div>

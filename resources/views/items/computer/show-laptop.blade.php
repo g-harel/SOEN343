@@ -52,7 +52,13 @@
                     </a>
                 </p>
             </td>
-            <td class="text-center"><p data-placement="top" data-toggle="tooltip" title="Delete"><a class="btn btn-danger btn-xs" ><span class="fa fa-trash"></span></a></p></td>
+            <td class="text-center">
+                <p data-placement="top" data-toggle="tooltip" title="Delete">
+                    <a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delLaptopLink">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                </p>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -66,6 +72,19 @@
             </div>
             <div class="modal-body">
                 <form id="laptop" class="form-horizontal"></form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="delLaptopLink" tabindex="-1" role="dialog" aria-labelledby="delLaptopLink">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete / Update Qty</h4>
+            </div>
+            <div class="modal-body">
+                <p>hello</p>
             </div>
         </div>
     </div>

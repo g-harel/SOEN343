@@ -62,7 +62,11 @@
                                 Edit
                             </a>
                         </li>
-                        <li><a href="#">Delete/Update Qty</a></li>
+                        <li>
+                            <a class="del-tablet-link" href="" data-toggle="modal" data-target="#delTabletLink">
+                                Delete/Update Qty
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </td>
@@ -72,17 +76,30 @@
     </table>
 </div>
 
-    <div class="modal fade bs-edit-tablet-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Editing Tablet</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="tablet"  class="form-horizontal"></form>
-                </div>
+<div class="modal fade bs-edit-tablet-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editing Tablet</h4>
+            </div>
+            <div class="modal-body">
+                <form id="tablet"  class="form-horizontal"></form>
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="delTabletLink" tabindex="-1" role="dialog" aria-labelledby="delTabletLink">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Delete / Update Qty</h4>
+            </div>
+            <div class="modal-body">
+                <p>hello</p>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

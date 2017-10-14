@@ -27,15 +27,7 @@ var dropDownOptions = {
             "Intel",
             "Other"
         ],
-        "ramSize": [
-            2,
-            4,
-            6,
-            8,
-            12,
-            16,
-            32
-        ],
+        "ramSize": [2, 4, 6, 8, 12, 16, 32],
         "processorType": [
             "AMD",
             "Intel",

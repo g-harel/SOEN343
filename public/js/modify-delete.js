@@ -1,21 +1,25 @@
 var formTemplates = new FormTemplates();
 var ModifyDelete = (function () {
-    var editMonitorLink = {}, editMonitorModal = {};
-    var editDesktopLink = {}, editDesktopModal = {};
-    var editLaptopLink = {}, editLaptopModal = {};
-    var editTabletLink = {}, editTabletModal = {};
-
+    var editMonitorLink = {}, editMonitorModal = {}, delMonitorLink = {};
+    var editDesktopLink = {}, editDesktopModal = {}, delDesktopLink = {};
+    var editLaptopLink = {}, editLaptopModal = {}, delLaptopLink = {};
+    var editTabletLink = {}, editTabletModal = {}, delTabletLink = {};
     return {
         init: function () {
             editMonitorLink = $('.edit-monitor-link');
             editMonitorModal = $('.bs-edit-monitor-modal-lg');
+            delMonitorLink = $('#delMonitorLink');
             editDesktopLink = $('.edit-desktop-link');
             editDesktopModal = $('.bs-edit-desktop-modal-lg');
+            delDesktopLink = $('#delDesktopLink');
             editLaptopLink = $('.edit-laptop-link');
             editLaptopModal = $('.bs-edit-laptop-modal-lg');
+            delLaptopLink = $('#delLaptopLink');
             editTabletLink = $('.edit-tablet-link');
             editTabletModal = $('.bs-edit-tablet-modal-lg');
+            delTabletLink = $('#delTabletLink');
             this.bindModifyDeleteActions();
+            this.bindDeleteActions();
         },
         bindModifyDeleteActions: function () {
             editMonitorLink.click(function (event){
@@ -139,7 +143,11 @@ var ModifyDelete = (function () {
                 event.preventDefault();
                 return false; //for good measure
             });
+        },
+        bindDeleteActions: function () {
+            // deleteMonitorLink
         }
+        
     }; // end return
 })();
 
