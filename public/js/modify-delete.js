@@ -18,10 +18,10 @@ var ModifyDelete = (function () {
             editTabletLink = $('.edit-tablet-link');
             editTabletModal = $('.bs-edit-tablet-modal-lg');
             delTabletLink = $('#delTabletLink');
-            this.bindModifyDeleteActions();
+            this.bindModifyActions();
             this.bindDeleteActions();
         },
-        bindModifyDeleteActions: function () {
+        bindModifyActions: function () {
             editMonitorLink.click(function (event){
                 var tableRow = $(this).parent().parent().parent();
                 var rowElements = tableRow.find('td');
@@ -145,7 +145,27 @@ var ModifyDelete = (function () {
             });
         },
         bindDeleteActions: function () {
-            // deleteMonitorLink
+
+            // delMonitorLink
+            delLaptopLink.on('show.bs.modal', function (event) {
+                var link = $(event.relatedTarget);
+                var qty = link.data('qty');
+
+                // alert('hello');
+                console.log(qty);
+                var modal = $(this);
+                modal.find('.modal-body input[type=number]').val(qty);
+                modal.find('.modal-body input[type=number]').attr('max', qty);
+
+
+
+
+                // event.preventDefault();
+                // return false; //for good measure
+            });
+            // delDesktopLink
+            // delLaptopLink
+            // delTabletLink
         }
         
     }; // end return
