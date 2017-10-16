@@ -43,6 +43,7 @@
             <td>13</td>
             <td class="text-center">
                 <p title="Edit">
+
                     <a class="btn btn-primary btn-xs edit-desktop-link" href="" data-toggle="modal" data-target=".bs-del-desktop-modal">
                         <span class="fa fa-scissors"></span>
                     </a>
@@ -50,7 +51,8 @@
             </td>
             <td class="text-center">
                 <p title="Delete">
-                    <a class="btn btn-danger btn-xs" href="" data-toggle="modal" data-target="#delDesktopLink">
+                    {{-- please pass the qty in data-qty, this is for deletion of item --}}
+                    <a class="btn btn-danger btn-xs" href="" data-qty="20" data-toggle="modal" data-target="#delDesktopLink">
                         <span class="fa fa-trash"></span>
                     </a>
                 </p>
@@ -83,7 +85,19 @@
                 <h4 class="modal-title">Delete / Update Qty</h4>
             </div>
             <div class="modal-body">
-                <p>hello</p>
+                <p>Please select the number of item to remove from the inventory.</p>
+                <form >
+                    <div class="form-group">
+                        <label for="quantity">Quantity to remove:</label>
+                        <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="form-control btn btn-danger btn-sm" name="submit" value="Confirm">
+                    </div>
+                    <div class="form-group">
+                        <input type="button" data-dismiss="modal" aria-label="Close" class="form-control" value="Cancel" name="submit">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

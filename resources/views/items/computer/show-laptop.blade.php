@@ -88,7 +88,7 @@
                 <p>Please select the number of item to remove from the inventory.</p>
                 <form >
                     <div class="form-group">
-                        <label for="quantity">Quantity:</label>
+                        <label for="quantity">Quantity to remove:</label>
                         <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">
                     </div>
                     <div class="form-group">

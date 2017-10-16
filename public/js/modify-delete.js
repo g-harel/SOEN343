@@ -145,27 +145,23 @@ var ModifyDelete = (function () {
             });
         },
         bindDeleteActions: function () {
-
-            // delMonitorLink
-            delLaptopLink.on('show.bs.modal', function (event) {
-                var link = $(event.relatedTarget);
-                var qty = link.data('qty');
-
-                // alert('hello');
-                console.log(qty);
-                var modal = $(this);
-                modal.find('.modal-body input[type=number]').val(qty);
-                modal.find('.modal-body input[type=number]').attr('max', qty);
-
-
-
-
-                // event.preventDefault();
-                // return false; //for good measure
-            });
-            // delDesktopLink
-            // delLaptopLink
-            // delTabletLink
+            var del_links = [
+                delLaptopLink,
+                delTabletLink,
+                delDesktopLink,
+                delMonitorLink
+            ];
+            for(var i = 0; i < del_links.length; i++) {
+                del_links[i].on('show.bs.modal', function (event) {
+                    var link = $(event.relatedTarget);
+                    var qty = link.data('qty');
+                    // cannot delete the whole item from the db, so (qty - 1)
+                    var modal = $(this);
+                    // default qty to be removed is 1
+                    modal.find('.modal-body input[type=number]').val(1);
+                    modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
+                });
+            }
         }
         
     }; // end return

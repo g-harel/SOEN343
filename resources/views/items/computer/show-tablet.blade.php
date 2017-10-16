@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="del-tablet-link" href="" data-toggle="modal" data-target="#delTabletLink">
+                            <a class="del-tablet-link" href="" data-qty="43" data-toggle="modal" data-target="#delTabletLink">
                                 Delete/Update Qty
                             </a>
                         </li>
@@ -97,7 +97,19 @@
                 <h4 class="modal-title">Delete / Update Qty</h4>
             </div>
             <div class="modal-body">
-                <p>hello</p>
+                <p>Please select the number of item to remove from the inventory.</p>
+                <form >
+                    <div class="form-group">
+                        <label for="quantity">Quantity to remove:</label>
+                        <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="form-control btn btn-danger btn-sm" name="submit" value="Confirm">
+                    </div>
+                    <div class="form-group">
+                        <input type="button" data-dismiss="modal" aria-label="Close" class="form-control" value="Cancel" name="submit">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
