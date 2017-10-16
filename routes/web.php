@@ -18,6 +18,8 @@ Route::get('/register', 'PagesController@register');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
+
 Route::resource('items', 'ItemsController');
 
 // TV
