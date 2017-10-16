@@ -34,7 +34,7 @@
         <tbody>
         <tr>
             {{-- please print the id from database here  --}}
-            <td scope="row" id="2">1</td>
+            <td scope="row" id="31">31</td>
             <td>Dell</td>
             <td>400</td>
             <td>43</td>
@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="del-tablet-link" href="" data-qty="43" data-toggle="modal" data-target="#delTabletLink">
+                            <a class="del-tablet-link" href="" data-qty="43" data-id="31" data-toggle="modal" data-target="#delTabletLink">
                                 Delete/Update Qty
                             </a>
                         </li>
@@ -94,11 +94,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete / Update Qty</h4>
+                <h4 class="modal-title">Removing tablet item(s)</h4>
             </div>
             <div class="modal-body">
                 <p>Please select the number of item to remove from the inventory.</p>
                 <form >
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="item-id" id="item-id">
+                    </div>
                     <div class="form-group">
                         <label for="quantity">Quantity to remove:</label>
                         <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">

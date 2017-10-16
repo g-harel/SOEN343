@@ -7,7 +7,7 @@
     </ol>
     <div class="col-lg-9">
         <p><a href="../create" class="btn btn-success">Add new</a></p>
-        <table class="table table-bordered">
+        <table class="table table-bordered bg-color-white">
             <thead>
             <tr>
                 <th>#</th>
@@ -23,7 +23,7 @@
             <tbody>
             <tr>
                 {{-- please print the id from database here  --}}
-                <td scope="row" id="1">1</td>
+                <td scope="row" id="23">23</td>
                 <td>Dell</td>
                 <td>1000</td>
                 <td>190</td>
@@ -39,7 +39,7 @@
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Delete">
                         {{-- please pass the qty here from the db, needed for modal delete form --}}
-                        <a class="btn btn-danger btn-xs" href="" data-qty="190" data-toggle="modal" data-target="#delMonitorLink" >
+                        <a class="btn btn-danger btn-xs" href="" data-qty="190" data-id="23" data-toggle="modal" data-target="#delMonitorLink" >
                             <span class="fa fa-trash"></span>
                         </a>
                     </p>
@@ -68,11 +68,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Delete / Update Qty</h4>
+                    <h4 class="modal-title">Removing monitor item(s)</h4>
                 </div>
                 <div class="modal-body">
                     <p>Please select the number of item to remove from the inventory.</p>
                     <form >
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="item-id" id="item-id">
+                        </div>
                         <div class="form-group">
                             <label for="quantity">Quantity to remove:</label>
                             <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">

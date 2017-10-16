@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <tr>
-            <td scope="row" id="1">1</td>
+            <td scope="row" id="8">8</td>
             <td>Dell</td>
             <td>1055</td>
             <td>20</td>
@@ -52,7 +52,7 @@
             <td class="text-center">
                 <p title="Delete">
                     {{-- please pass the qty in data-qty, this is for deletion of item --}}
-                    <a class="btn btn-danger btn-xs" href="" data-qty="20" data-toggle="modal" data-target="#delDesktopLink">
+                    <a class="btn btn-danger btn-xs" href="" data-qty="20" data-id="8" data-toggle="modal" data-target="#delDesktopLink">
                         <span class="fa fa-trash"></span>
                     </a>
                 </p>
@@ -82,11 +82,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Delete / Update Qty</h4>
+                <h4 class="modal-title">Removing desktop item(s)</h4>
             </div>
             <div class="modal-body">
                 <p>Please select the number of item to remove from the inventory.</p>
                 <form >
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" name="item-id" id="item-id">
+                    </div>
                     <div class="form-group">
                         <label for="quantity">Quantity to remove:</label>
                         <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">

@@ -155,10 +155,12 @@ var ModifyDelete = (function () {
                 del_links[i].on('show.bs.modal', function (event) {
                     var link = $(event.relatedTarget);
                     var qty = link.data('qty');
+                    var itemId = link.data('id');
                     // cannot delete the whole item from the db, so (qty - 1)
                     var modal = $(this);
                     // default qty to be removed is 1
                     modal.find('.modal-body input[type=number]').val(1);
+                    modal.find('.modal-body input[type=hidden]').val(itemId);
                     modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
                 });
             }
