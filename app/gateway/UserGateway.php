@@ -5,20 +5,32 @@ namespace App\Gateway;
 class UserGateway
 {
     private $db;
+    private $tableName;
 
     public function __construct() {
-        $tableName = "users";
-        $this->db = new SingleTableGateway($tableName);
+        $this->tableName = "users";
+        $this->db = new DatabaseGateway();
+    }
+
+    private function getUserQuery($conditionsAssociativeArray) {
+        $conditions = transformConditionsToString($conditionsAssociativeArray);
+        $sql = "SELECT * FROM $this->tableName WHERE $conditions;";
+        $result = $this->db->queryDB($sql);
+        if ($result !== null) {
+            return parseSelectResult($result);
+        } else {
+            return null;
+        }
     }
 
     public function getUserByEmail($email) {
         $conditionsAssociativeArray = ["email" => $email];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return $this->getUserQuery($conditionsAssociativeArray);
     }
 
     public function getUserById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return $this->getUserQuery($conditionsAssociativeArray);
     }
 
     public function editUser($id, $email, $password, $firstName, $lastName, $phoneNumber,
