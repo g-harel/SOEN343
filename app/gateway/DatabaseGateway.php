@@ -65,10 +65,12 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $this->serverName = "localhost";
-        $this->userName = "root";
-        $this->password = "";
-        $this->databaseName = "soen343";
+        $configPath = dirname( __FILE__, 3 ) . "\databaseConfig.ini";
+        $configArray = parse_ini_file($configPath);
+        $this->serverName = $configArray["serverName"];
+        $this->userName = $configArray["userName"];
+        $this->password = $configArray["password"];
+        $this->databaseName = $configArray["databaseName"];
     }
 
     private function openDBConnection() {
