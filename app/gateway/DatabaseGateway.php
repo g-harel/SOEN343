@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Gateway;
+
+use Mysqli;
+
 class DatabaseGateway
 {
     private $DBConnection;
