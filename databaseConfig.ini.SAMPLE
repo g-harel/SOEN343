@@ -1,9 +1,9 @@
 ; this is the configuration file for the database access
 
-serverName = "localhost"
+serverName = ""
 
-userName = "root"
+userName = ""
 
 password = ""
 
-databaseName = "soen343"
+databaseName = ""
