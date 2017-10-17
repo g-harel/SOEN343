@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/Address.php");
+namespace App\Models;
 
 class User
 {

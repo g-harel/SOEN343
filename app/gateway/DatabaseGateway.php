@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Gateway;
+
+use Mysqli;
+
 // log result in the client console.
 function console_log($str) {
     echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";

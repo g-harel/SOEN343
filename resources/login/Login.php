@@ -1,7 +1,7 @@
 <?php
 
-include_once(__DIR__ . "/../../dataModels/mappers/SessionMapper.php");
-include_once(__DIR__ . "/../../dataModels/mappers/UserMapper.php");
+use App\Mappers\SessionMapper;
+use App\Mappers\UserMapper;
 
 class Login{
 

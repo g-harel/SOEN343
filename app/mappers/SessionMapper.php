@@ -1,8 +1,9 @@
 <?php
 
-include_once(__DIR__ . "/../models/Session.php");
-include_once(__DIR__ . "/../../database/gateway/SessionGateway.php");
-include_once(__DIR__ . "/UserMapper.php");
+namespace App\Mappers;
+
+use App\Models\Session;
+use App\Gateway\SessionGateway;
 
 
 class SessionMapper
