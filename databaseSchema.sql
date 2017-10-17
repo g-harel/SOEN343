@@ -20,7 +20,6 @@ SET time_zone = "+00:00";
 -- Database: `soen343`
 --
 
-DROP TABLE IF EXISTS televisions;
 DROP TABLE IF EXISTS monitors;
 DROP TABLE IF EXISTS desktops;
 DROP TABLE IF EXISTS laptops;
@@ -43,27 +42,6 @@ CREATE TABLE `soen343`.`items` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `soen343`.`television`
--- -----------------------------------------------------
-CREATE TABLE `soen343`.`televisions` (
-  `item_id` INT UNSIGNED NOT NULL,
-  `height` FLOAT(10, 2) NOT NULL,
-  `width` FLOAT(10, 2) NOT NULL,
-  `thickness` FLOAT(10, 2) NOT NULL,
-  `weight` FLOAT(10, 2) NOT NULL,
-  `type` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`item_id`),
-  UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
-  CONSTRAINT `fk_item_id`
-    FOREIGN KEY (`item_id`)
-    REFERENCES `soen343`.`items` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `soen343`.`monitor`
@@ -203,6 +181,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
 (1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1);
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
+(2, 'mikehawk@gmail.com', 'mikey', 'Mike', 'Hawk', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1);
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
+(3, 'munch@gmail.com', 'qwerty', 'Munchma', 'Quchi', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1);
 
 --
 -- Indexes for dumped tables
