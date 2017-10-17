@@ -1,113 +1,7 @@
 <?php
 
-// log result in the client console.
-function console_log($str) {
-    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
-}
+namespace App\Gateway;
 
-// log errors in the client console.
-function console_error($str) {
-    if ($str) {
-        echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
-    }
-}
-
-function implodeAssociativeArray($associativeArray, $connector) {
-    $length = count($associativeArray);
-    $conditions = "";
-    foreach ($associativeArray as $key => $value){
-        $length--;
-        $conditions .= $key . " = '" . $value . "'";
-        if($length) {
-            $conditions .= "$connector";
-        }
-    }
-    return $conditions;
-}
-
-// fetch data from a query result.
-function parseSelectResult($queryResults) {
-    $isQueryResultsExist = $queryResults != null;
-    $result = null;
-    if ($isQueryResultsExist) {
-        while ($row = $queryResults->fetch_assoc()) {
-            $result[] = $row;
-        }
-    }
-    return $result;
-}
-
-function transformConditionsToString($connectionsAssociativeArray) {
-    $separatorStringBetweenConditions = " AND ";
-    return implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
-}
-
-// pluck the keys from the source object and accumulate them into an array.
-function cherryPick($keys, $source) {
-    $result = array();
-    $sourceValues = get_object_vars($source);
-    foreach ($keys as &$key) {
-        array_push($result, $sourceValues["$key"]);
-    }
-    return $result;
-}
-
-class DatabaseGateway
-{
-    private $DBConnection;
-    private $serverName;
-    private $userName;
-    private $password;
-    private $databaseName;
-
-    public function __construct() {
-        $this->serverName = "localhost";
-        $this->userName = "root";
-        $this->password = "";
-        $this->databaseName = "soen343";
-    }
-
-    private function openDBConnection() {
-        $this->DBConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
-    }
-
-    private function closeDBConnection() {
-        mysqli_close($this->DBConnection);
-    }
-
-    // supports multiple queries.
-    // returns the result of the last query.
-    public function queryDB($sql) {
-        $this->openDBConnection();
-        // TODO remove
-        console_log($sql);
-        $conn = $this->DBConnection;
-        $result = $conn->multi_query($sql);
-        $returned = array();
-        if ($result) {
-            $returned[0] = $conn->store_result();
-            $count = 0;
-            while ($conn->more_results()) {
-                $count++;
-                $conn->next_result();
-                $result = $conn->store_result();
-                if($result) {
-                    $returned[$count] = $result;
-                } else {
-                    // TODO remove
-                    console_error($conn->error);
-                }
-            }
-        } else {
-            // TODO remove
-            console_error($conn->error);
-        }
-        $this->closeDBConnection();
-        return $returned[count($returned) - 1];
-    }
-}
-
-// gateway with included helper methods for dealing with a simple table.
 class SingleTableGateway extends DatabaseGateway
 {
     private $tableName;
@@ -148,7 +42,7 @@ class SingleTableGateway extends DatabaseGateway
      * This function returns an array of associative arrays. Every index of the first array represent a row.
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
-     public function selectRows($conditionsAssociativeArray = null) {
+    public function selectRows($conditionsAssociativeArray = null) {
         $selectRows = ["*"];
         return $this->selectFields($selectRows, $conditionsAssociativeArray);
     }
@@ -214,33 +108,33 @@ class SingleTableGateway extends DatabaseGateway
         $values = implode(", ", $valuesArray);
         return $this->queryDB($sql);
     }
-/*
-    SELECT title, m2.txt1 AS teaser, inputdat, db_file.*
-    FROM db_item
-        INNER JOIN db_itemv AS m1 USING(id_item)
-        INNER JOIN db_itemf USING(id_item)
-        INNER JOIN db_itemd USING(id_item)
-        LEFT JOIN  db_itemv AS m2
-            ON db_item.id_item = m2.id_item
-            AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
-    WHERE type=15
-        AND m1.fldnr = '12'
-        AND m1.indik = 'b'
-        AND m1.txt1s = 'en'
-        AND visibility = 0
-        AND inputdat > '2005-11-02'
-    GROUP BY title
-    ORDER BY inputdat DESC
+    /*
+        SELECT title, m2.txt1 AS teaser, inputdat, db_file.*
+        FROM db_item
+            INNER JOIN db_itemv AS m1 USING(id_item)
+            INNER JOIN db_itemf USING(id_item)
+            INNER JOIN db_itemd USING(id_item)
+            LEFT JOIN  db_itemv AS m2
+                ON db_item.id_item = m2.id_item
+                AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
+        WHERE type=15
+            AND m1.fldnr = '12'
+            AND m1.indik = 'b'
+            AND m1.txt1s = 'en'
+            AND visibility = 0
+            AND inputdat > '2005-11-02'
+        GROUP BY title
+        ORDER BY inputdat DESC
 
-    SELECT s.studentname
-        , s.studentid
-        , s.studentdesc
-        , h.hallname
-    FROM students s
-    INNER JOIN hallprefs hp
-        on s.studentid = hp.studentid
-    INNER JOIN halls h
-        on hp.hallid = h.hallid
+        SELECT s.studentname
+            , s.studentid
+            , s.studentdesc
+            , h.hallname
+        FROM students s
+        INNER JOIN hallprefs hp
+            on s.studentid = hp.studentid
+        INNER JOIN halls h
+            on hp.hallid = h.hallid
 
-*/
+    */
 }
