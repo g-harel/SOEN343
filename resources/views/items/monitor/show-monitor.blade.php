@@ -22,8 +22,7 @@
             </thead>
             <tbody>
             <tr>
-                {{-- please print the id from database here  --}}
-                <td scope="row" id="23">23</td>
+                <td scope="row" dataId="23">23</td>
                 <td>Dell</td>
                 <td>1000</td>
                 <td>190</td>
@@ -38,7 +37,6 @@
                 </td>
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Delete">
-                        {{-- please pass the qty here from the db, needed for modal delete form --}}
                         <a class="btn btn-danger btn-xs" href="" data-qty="190" data-id="23" data-toggle="modal" data-target="#delMonitorLink" >
                             <span class="fa fa-trash"></span>
                         </a>

@@ -8,16 +8,6 @@
     color: white;
     background-color: #f0ad4e;
 }
-.margin-btm {
-    margin-bottom: 1em;
-}
-.no-pad {
-    padding: 0;
-}
-.bg-color-white {
-    background-color: #fff !important;
-    /*padding: 1em 0 1em 0;*/
-}
 .size-font-30 {
     font-size: 30px !important;
 }
@@ -25,10 +15,9 @@
 .hide-this-element {
     display: none;
 }
-/* for tables */
 table {
     width: 100%;
-    /*font-size: 1.2em;*/
+    background-color: #ffffff;
 }
 thead th {
     white-space: nowrap;

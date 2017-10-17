@@ -34,7 +34,7 @@
                 </div>
 
                 <!-- Form for Computers -->
-                <div id="nextSetOfComputerOptions" class="row hide-this-element"><hr>
+                <div id="nextSetOfComputerOptions" class="row hidden"><hr>
                     <form id="desktop" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
@@ -101,7 +101,7 @@
                 </div>
 
                 <!-- Form for Laptops -->
-                <div id="nextSetOfLaptopOptions" class="row hide-this-element"><hr>
+                <div id="nextSetOfLaptopOptions" class="row hidden"><hr>
                     <form id="laptop" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
@@ -178,7 +178,7 @@
                 </div>
 
                 <!-- Form for Tablets -->
-                <div id="nextSetOfTabletOptions" class="row hide-this-element"><hr>
+                <div id="nextSetOfTabletOptions" class="row hidden"><hr>
                     <form id="tablet"  class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
@@ -263,7 +263,7 @@
                 </div>
 
                 <!-- Form for Televisions -->
-                <div id="nextSetOfTelevisionOptions" class="row hide-this-element"><hr>
+                <div id="nextSetOfTelevisionOptions" class="row hidden"><hr>
                     <form id="television" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
@@ -317,7 +317,7 @@
                 </div>
 
                 <!-- Form for Monitors -->
-                <div id="nextSetOfMonitorOptions" class="row hide-this-element"><hr>
+                <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
                     <form id="monitor-form" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="2"></div>
@@ -366,36 +366,34 @@
     <!-- trigger onclick depending on which radio button checked -->
     <script type="text/javascript">
         function toggleOptions() {
-            if (document.getElementById('type_Computer').checked) {
-                document.getElementById('nextSetOfTabletOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
-                document.getElementById('nextSetOfComputerOptions').style.display = 'block';
-            } else if (document.getElementById('type_Laptop').checked) {
-                document.getElementById('nextSetOfTabletOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
-                document.getElementById('nextSetOfComputerOptions').style.display = 'none';
-                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = 'block';
-            } else if (document.getElementById('type_Tablet').checked) {
-                document.getElementById('nextSetOfComputerOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
-                document.getElementById('nextSetOfTabletOptions').style.display = 'block';
-            } else if (document.getElementById('type_Television').checked) {
-                document.getElementById('nextSetOfTabletOptions').style.display = 'none';
-                document.getElementById('nextSetOfComputerOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfMonitorOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = 'block';
-            } else if (document.getElementById('type_Monitor').checked) {
-                document.getElementById('nextSetOfTabletOptions').style.display = 'none';
-                document.getElementById('nextSetOfComputerOptions').style.display = 'none';
-                document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
-                document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
-                document.getElementById('nextSetOfMonitorOptions').style.display = 'block';
+            let itemContainer = [{
+                    radio: $("#type_Computer"),
+                    div_id: $("#nextSetOfComputerOptions")
+                },
+                {
+                    radio: $("#type_Laptop"),
+                    div_id: $("#nextSetOfLaptopOptions")
+                },
+                {
+                    radio: $("#type_Tablet"),
+                    div_id: $("#nextSetOfTabletOptions")
+                },
+                {
+                    radio: $("#type_Monitor"),
+                    div_id: $("#nextSetOfMonitorOptions")
+                },
+                {
+                    radio: $("#type_Television"),
+                    div_id: $("#nextSetOfTelevisionOptions")
+                }
+            ];
+
+            for(let i = 0; i < itemContainer.length; i++) {
+                if(itemContainer[i].radio.is(":checked")) {
+                    itemContainer[i].div_id.removeClass("hidden");
+                } else {
+                    itemContainer[i].div_id.addClass("hidden");
+                }
             }
         }
     </script>

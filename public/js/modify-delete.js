@@ -1,58 +1,66 @@
-var formTemplates = new FormTemplates();
-var ModifyDelete = (function () {
-    var editMonitorLink = {}, editMonitorModal = {}, delMonitorLink = {};
-    var editDesktopLink = {}, editDesktopModal = {}, delDesktopLink = {};
-    var editLaptopLink = {}, editLaptopModal = {}, delLaptopLink = {};
-    var editTabletLink = {}, editTabletModal = {}, delTabletLink = {};
+let ft = new FormTemplates();
+let ModifyDelete = (function () {
+    let editDelete_Monitor = null;
+    let editDelete_Desktop = null;
+    let editDelete_Tablet = null;
+    let editDelete_Laptop = null;
     return {
         init: function () {
-            editMonitorLink = $('.edit-monitor-link');
-            editMonitorModal = $('.bs-edit-monitor-modal-lg');
-            delMonitorLink = $('#delMonitorLink');
-            editDesktopLink = $('.edit-desktop-link');
-            editDesktopModal = $('.bs-edit-desktop-modal-lg');
-            delDesktopLink = $('#delDesktopLink');
-            editLaptopLink = $('.edit-laptop-link');
-            editLaptopModal = $('.bs-edit-laptop-modal-lg');
-            delLaptopLink = $('#delLaptopLink');
-            editTabletLink = $('.edit-tablet-link');
-            editTabletModal = $('.bs-edit-tablet-modal-lg');
-            delTabletLink = $('#delTabletLink');
+            editDelete_Monitor = {
+                editLink: $('.edit-monitor-link'),
+                modal: $('.bs-edit-monitor-modal-lg'),
+                deleteLink: $('#delMonitorLink')
+            };
+            editDelete_Desktop = {
+                editLink: $('.edit-desktop-link'),
+                modal: $('.bs-edit-desktop-modal-lg'),
+                deleteLink: $('#delDesktopLink')
+            };
+            editDelete_Tablet = {
+                editLink: $('.edit-tablet-link'),
+                modal: $('.bs-edit-tablet-modal-lg'),
+                deleteLink: $('#delTabletLink')
+            };
+            editDelete_Laptop = {
+                editLink: $('.edit-laptop-link'),
+                modal: $('.bs-edit-laptop-modal-lg'),
+                deleteLink: $('#delLaptopLink')
+            };
             this.bindModifyActions();
             this.bindDeleteActions();
         },
         bindModifyActions: function () {
-            editMonitorLink.click(function (event){
-                var tableRow = $(this).parent().parent().parent();
-                var rowElements = tableRow.find('td');
-                var monitorElements = [];
+            editDelete_Monitor.editLink.click(function (event){
+                let tableRow = $(this).parentsUntil('table');
+                let rowElements = tableRow.find('td');
+                let monitorElements = [];
                 rowElements.each(function () {
                     monitorElements.push($(this).text());
                 });
-                var monitorInstance = {
+                let monitorInstance = {
                     id: monitorElements[0],
-                    brand: monitorElements[1], // brand drop down is not editable to make it simpler
+                    brand: monitorElements[1],
                     price: monitorElements[2],
-                    displaySize: monitorElements[4], // display size is also not editable
+                    displaySize: monitorElements[4],
                     weight: monitorElements[5]
                 };
-                editMonitorModal.find('.modal-body > form').empty();
-                editMonitorModal.find('.modal-body > form').append(
-                    formTemplates.monitorForm(monitorInstance)
+                editDelete_Monitor.modal.find('.modal-body > form').empty();
+                editDelete_Monitor.modal.find('.modal-body > form').append(
+                    ft.monitorForm(monitorInstance)
                 );
-                $(editMonitorModal).modal('show');
-
+                $(editDelete_Monitor.modal).modal('show');
                 event.preventDefault();
-                return false; //for good measure
+                return false;
             });
-            editDesktopLink.click(function (event){
-                var tableRow = $(this).parent().parent().parent();
-                var rowElements = tableRow.find('td');
-                var desktopElements = [];
+
+            editDelete_Desktop.editLink.click(function (event){
+                let tableRow = $(this).parentsUntil('table');
+                let rowElements = tableRow.find('td');
+                let desktopElements = [];
                 rowElements.each(function () {
                     desktopElements.push($(this).text());
                 });
-                var desktopInstance = {
+                let desktopInstance = {
                     id: desktopElements[0],
                     brand: desktopElements[1],
                     price: desktopElements[2],
@@ -65,24 +73,23 @@ var ModifyDelete = (function () {
                     width: desktopElements[10],
                     thickness: desktopElements[11]
                 };
-                console.log(desktopInstance);
-
-                editDesktopModal.find('.modal-body > form').empty();
-                editDesktopModal.find('.modal-body > form').append(
-                    formTemplates.desktopForm(desktopInstance)
+                editDelete_Desktop.modal.find('.modal-body > form').empty();
+                editDelete_Desktop.modal.find('.modal-body > form').append(
+                    ft.desktopForm(desktopInstance)
                 );
-                $(editDesktopModal).modal('show');
+                $(editDelete_Desktop.modal).modal('show');
                 event.preventDefault();
-                return false; //for good measure
+                return false;
             });
-            editLaptopLink.click(function (event){
-                var tableRow = $(this).parent().parent().parent();
-                var rowElements = tableRow.find('td');
-                var laptopElements = [];
+
+            editDelete_Laptop.editLink.click(function (event){
+                let tableRow = $(this).parentsUntil('table');
+                let rowElements = tableRow.find('td');
+                let laptopElements = [];
                 rowElements.each(function () {
                     laptopElements.push($(this).text());
                 });
-                var laptopInstance = {
+                let laptopInstance = {
                     id: laptopElements[0],
                     brand: laptopElements[1],
                     price: laptopElements[2],
@@ -97,27 +104,25 @@ var ModifyDelete = (function () {
                     camera: laptopElements[12],
                     touchscreen: laptopElements[13]
                 };
-                console.log(laptopInstance);
-
-                editLaptopModal.find('.modal-body > form').empty();
-                editLaptopModal.find('.modal-body > form').append(
-                    formTemplates.laptopForm(laptopInstance)
+                editDelete_Laptop.modal.find('.modal-body > form').empty();
+                editDelete_Laptop.modal.find('.modal-body > form').append(
+                    ft.laptopForm(laptopInstance)
                 );
-                $(editLaptopModal).modal('show');
-
+                $(editDelete_Laptop.modal).modal('show');
                 event.preventDefault();
                 return false; //for good measure
             });
-            editTabletLink.click(function (event){
-                var tableRow = $(this).parentsUntil('tr').parent().eq(0);
-                var rowElements = tableRow.find('td');
-                var tabletElements = [];
+
+            editDelete_Tablet.editLink.click(function (event){
+                let tableRow = $(this).parentsUntil('table');
+                let rowElements = tableRow.find('td');
+                let tabletElements = [];
                 rowElements.each(function () {
                     tabletElements.push($(this).text());
                 });
-                var tabletInstance = {
+                let tabletInstance = {
                     id: tabletElements[0],
-                    brand: tabletElements[1], // brand drop down is not editable to make it simpler
+                    brand: tabletElements[1],
                     price: tabletElements[2],
                     processorType: tabletElements[4],
                     ramSize:tabletElements[5],
@@ -133,40 +138,35 @@ var ModifyDelete = (function () {
                     camera: tabletElements[15],
                     touchscreen: tabletElements[16]
                 };
-                console.log(tabletInstance);
-
-                var html = formTemplates.tabletForm(tabletInstance);
-                editTabletModal.find('.modal-body > form').empty();
-                editTabletModal.find('.modal-body > form').append(html);
-                $(editTabletModal).modal('show');
-
+                editDelete_Tablet.modal.find('.modal-body > form').empty();
+                editDelete_Tablet.modal.find('.modal-body > form').append(
+                    ft.tabletForm(tabletInstance)
+                );
+                $(editDelete_Tablet.modal).modal('show');
                 event.preventDefault();
-                return false; //for good measure
+                return false;
             });
         },
         bindDeleteActions: function () {
-            var del_links = [
-                delLaptopLink,
-                delTabletLink,
-                delDesktopLink,
-                delMonitorLink
+            let delete_links = [
+                editDelete_Laptop.deleteLink,
+                editDelete_Tablet.deleteLink,
+                editDelete_Desktop.deleteLink,
+                editDelete_Monitor.deleteLink
             ];
-            for(var i = 0; i < del_links.length; i++) {
-                del_links[i].on('show.bs.modal', function (event) {
-                    var link = $(event.relatedTarget);
-                    var qty = link.data('qty');
-                    var itemId = link.data('id');
-                    // cannot delete the whole item from the db, so (qty - 1)
-                    var modal = $(this);
-                    // default qty to be removed is 1
+            for(let i = 0; i < delete_links.length; i++) {
+                delete_links[i].on('show.bs.modal', function (event) {
+                    let link = $(event.relatedTarget);
+                    let qty = link.data('qty');
+                    let itemId = link.data('id');
+                    let modal = $(this);
                     modal.find('.modal-body input[type=number]').val(1);
                     modal.find('.modal-body input[type=hidden]').val(itemId);
                     modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
                 });
             }
         }
-        
-    }; // end return
+    };
 })();
 
 $(document).ready(function () {

@@ -8,7 +8,7 @@
     </ol>
 <div class="col-lg-9">
     <p><button class="btn btn-success create-new-items">Add new</button></p>
-    <table class="table table-bordered table-responsive bg-color-white">
+    <table class="table table-bordered table-responsive">
         <thead>
         <tr>
             <th>#</th>
