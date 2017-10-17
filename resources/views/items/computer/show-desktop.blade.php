@@ -43,7 +43,6 @@
             <td>13</td>
             <td class="text-center">
                 <p title="Edit">
-
                     <a class="btn btn-primary btn-xs edit-desktop-link" href="" data-toggle="modal" data-target=".bs-del-desktop-modal">
                         <span class="fa fa-scissors"></span>
                     </a>
@@ -51,7 +50,6 @@
             </td>
             <td class="text-center">
                 <p title="Delete">
-                    {{-- please pass the qty in data-qty, this is for deletion of item --}}
                     <a class="btn btn-danger btn-xs" href="" data-qty="20" data-id="8" data-toggle="modal" data-target="#delDesktopLink">
                         <span class="fa fa-trash"></span>
                     </a>

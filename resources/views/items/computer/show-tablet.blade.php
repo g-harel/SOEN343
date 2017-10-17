@@ -33,7 +33,6 @@
         </thead>
         <tbody>
         <tr>
-            {{-- please print the id from database here  --}}
             <td scope="row" id="31">31</td>
             <td>Dell</td>
             <td>400</td>
@@ -71,7 +70,6 @@
                 </div>
             </td>
         </tr>
-
         </tbody>
     </table>
 </div>

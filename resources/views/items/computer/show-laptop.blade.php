@@ -54,7 +54,6 @@
             </td>
             <td class="text-center">
                 <p data-placement="top" data-toggle="tooltip" title="Delete">
-                    {{-- please add the quantity at data-qty --}}
                     <a class="btn btn-danger btn-xs" data-qty="2" data-id="25" data-toggle="modal" data-target="#delLaptopLink">
                         <span class="fa fa-trash"></span>
                     </a>

@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr>
-                <td scope="row" dataId="23">23</td>
+                <td scope="row" id="23">23</td>
                 <td>Dell</td>
                 <td>1000</td>
                 <td>190</td>

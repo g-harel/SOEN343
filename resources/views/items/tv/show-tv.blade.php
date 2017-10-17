@@ -52,7 +52,7 @@
         </thead>
         <tbody>
         <tr>
-            <td scope="row">1</td>
+            <td scope="row" id="1">1</td>
             <td>Sony</td>
             <td>$1200</td>
             <td>109</td>
