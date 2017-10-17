@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/User.php");
+namespace App\Models;
 
 /**
 *   NOTE: THIS CLASS IS MADE TO BE INSTANCIATED ONLY WHEN A USER HAS ALREADY BEEN REGISTERED AKA GOT INTO THE DATABASE.

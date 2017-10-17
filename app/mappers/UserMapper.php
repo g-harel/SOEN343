@@ -1,7 +1,9 @@
 <?php
 
-include_once(__DIR__ . "/../models/User.php");
-include_once(__DIR__ . "/../../database/gateway/UserGateway.php");
+namespace App\Mappers;
+
+use App\Models\User;
+use App\Gateway\UserGateway;
 
 
 class UserMapper
@@ -47,7 +49,7 @@ class UserMapper
             $isAdmin = $recordUser["isAdmin"];
     
             $user = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false)->setId($id);
+            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
             $this->user = $user;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/DatabaseGateway.php");
+namespace App\Gateway;
 
 class SessionGateway
 {
@@ -8,7 +8,7 @@ class SessionGateway
 
     public function __construct() {
         $tableName = "sessions";
-        $this->db = new DatabaseGateway($tableName);
+        $this->db = new SingleTableGateway($tableName);
     }
 
     public function getSessionById($id) {
@@ -27,7 +27,7 @@ class SessionGateway
             "user_id" => $userId,
             "login_time_stamp" => $loginTimeStamp
         ];
-        return $this->db->insert($columnValueAssociativeArraysql);        
+        return $this->db->insert($columnValueAssociativeArraysql);
     }
 
     public function deleteSessionById($email) {
