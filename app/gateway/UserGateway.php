@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/DatabaseGateway.php");
+namespace App\Gateway;
 
 class UserGateway
 {
@@ -8,7 +8,7 @@ class UserGateway
 
     public function __construct() {
         $tableName = "users";
-        $this->db = new SingleTableGateway($tableName);
+        $this->db = new DatabaseGateway($tableName);
     }
 
     public function getUserByEmail($email) {
@@ -58,7 +58,7 @@ class UserGateway
             "postal_code" => $postalCode,
             "isAdmin" => $isAdmin
         ];
-        return $this->db->insert($columnValueAssociativeArray);
+        return $this->db->insert($columnValueAssociativeArray);        
     }
 
     public function deleteUserByEmail($email) {

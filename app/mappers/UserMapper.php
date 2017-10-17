@@ -1,7 +1,9 @@
 <?php
 
-include_once(__DIR__ . "/../models/User.php");
-include_once(__DIR__ . "/../../database/gateway/UserGateway.php");
+namespace App\Mappers;
+
+use App\Models\User;
+use App\Gateway\UserGateway;
 
 
 class UserMapper

@@ -1,56 +1,8 @@
 <?php
 
-// log result in the client console.
-function console_log($str) {
-    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
-}
+namespace App\Gateway;
 
-// log errors in the client console.
-function console_error($str) {
-    if ($str) {
-        echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
-    }
-}
-
-function implodeAssociativeArray($associativeArray, $connector) {
-    $length = count($associativeArray);
-    $conditions = "";
-    foreach ($associativeArray as $key => $value){
-        $length--;
-        $conditions .= $key . " = '" . $value . "'";
-        if($length) {
-            $conditions .= "$connector";
-        }
-    }
-    return $conditions;
-}
-
-// fetch data from a query result.
-function parseSelectResult($queryResults) {
-    $isQueryResultsExist = $queryResults != null;
-    $result = null;
-    if ($isQueryResultsExist) {
-        while ($row = $queryResults->fetch_assoc()) {
-            $result[] = $row;
-        }
-    }
-    return $result;
-}
-
-function transformConditionsToString($connectionsAssociativeArray) {
-    $separatorStringBetweenConditions = " AND ";
-    return implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
-}
-
-// pluck the keys from the source object and accumulate them into an array.
-function cherryPick($keys, $source) {
-    $result = array();
-    $sourceValues = get_object_vars($source);
-    foreach ($keys as &$key) {
-        array_push($result, $sourceValues["$key"]);
-    }
-    return $result;
-}
+use Mysqli;
 
 class DatabaseGateway
 {
@@ -59,12 +11,14 @@ class DatabaseGateway
     private $userName;
     private $password;
     private $databaseName;
+    private $tableName;
 
-    public function __construct() {
+    public function __construct($tableName) {
         $this->serverName = "localhost";
         $this->userName = "root";
         $this->password = "";
         $this->databaseName = "soen343";
+        $this->tableName = $tableName;
     }
 
     private function openDBConnection() {
@@ -75,46 +29,40 @@ class DatabaseGateway
         mysqli_close($this->DBConnection);
     }
 
-    // supports multiple queries.
-    // returns the result of the last query.
-    public function queryDB($sql) {
+    private function queryDB($sql) {
         $this->openDBConnection();
-        // TODO remove
-        console_log($sql);
-        $conn = $this->DBConnection;
-        $result = $conn->multi_query($sql);
-        $returned = array();
-        if ($result) {
-            $returned[0] = $conn->store_result();
-            $count = 0;
-            while ($conn->more_results()) {
-                $count++;
-                $conn->next_result();
-                $result = $conn->store_result();
-                if($result) {
-                    $returned[$count] = $result;
-                } else {
-                    // TODO remove
-                    console_error($conn->error);
-                }
-            }
-        } else {
-            // TODO remove
-            console_error($conn->error);
-        }
+        $query = $this->DBConnection->query($sql);
         $this->closeDBConnection();
-        return $returned[count($returned) - 1];
+        return $query;
     }
-}
 
-// gateway with included helper methods for dealing with a simple table.
-class SingleTableGateway extends DatabaseGateway
-{
-    private $tableName;
+    private static function implodeAssociativeArray($associativeArray, $connector) {
+        $length = count($associativeArray);
+        $conditions = "";
+        foreach ($associativeArray as $key => $value){
+            $length--;
+            $conditions .= $key . " = '" . $value . "'";
+            if($length) {
+                $conditions .= "$connector";
+            }
+        }
+        return $conditions;
+    }
 
-    public function __construct($tableName) {
-        parent::__construct();
-        $this->tableName = $tableName;
+    private static function parseSelectResult($queryResults) {
+        $isQueryResultsExist = $queryResults != null;
+        $result = null;
+        if ($isQueryResultsExist) {
+            while ($row = $queryResults->fetch_assoc()) {
+                $result[] = $row;
+            }
+        }
+        return $result;
+    }
+
+    private static function transformConditionsToString($connectionsAssociativeArray) {
+        $separatorStringBetweenConditions = " AND ";
+        return self::implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
     }
 
     /**
@@ -123,7 +71,7 @@ class SingleTableGateway extends DatabaseGateway
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
-     * This function returns an array of associative arrays. Every index of the first array represent a row.
+     * This function returns an array of associative arrays. Every index of the first array represent a row. 
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
     public function selectFields($selectFieldsArray, $conditionsAssociativeArray = null) {
@@ -131,13 +79,13 @@ class SingleTableGateway extends DatabaseGateway
         $sql = "";
         $isConditionPresent = $conditionsAssociativeArray != null;
         if ($isConditionPresent) {
-            $conditions = transformConditionsToString($conditionsAssociativeArray);
+            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
             $sql = "SELECT $fields FROM $this->tableName WHERE $conditions;";
         } else {
             $sql = "SELECT $fields FROM $this->tableName;";
         }
         $result = $this->queryDB($sql);
-        return parseSelectResult($result);
+        return $this::parseSelectResult($result);
     }
 
     /**
@@ -145,7 +93,7 @@ class SingleTableGateway extends DatabaseGateway
      * $conditionsAssociativeArray = Associative array where [key => value]  ==> key is the first condition and value is what
      * this condition needs to equal to.
      *
-     * This function returns an array of associative arrays. Every index of the first array represent a row.
+     * This function returns an array of associative arrays. Every index of the first array represent a row. 
      * Every columns of a row are represented in the associative array under the convention "COLUMN_NAME" => "VALUE"
      */
      public function selectRows($conditionsAssociativeArray = null) {
@@ -163,11 +111,11 @@ class SingleTableGateway extends DatabaseGateway
      * This function returns a boolean of whether it worked or not.
      */
     public function update($columnValuePairsAssociativeArray, $conditionsAssociativeArray = null) {
-        $valuePairs = implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
+        $valuePairs = $this::implodeAssociativeArray($columnValuePairsAssociativeArray, ", ");
         $sql = "";
-        $isConditionPresent = $conditionsAssociativeArray != null;
+        $isConditionPresent = $conditionsAssociativeArray != null;        
         if ($isConditionPresent) {
-            $conditions = transformConditionsToString($conditionsAssociativeArray);
+            $conditions = $this::transformConditionsToString($conditionsAssociativeArray);            
             $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
         } else {
             $sql = "UPDATE $this->tableName SET $valuePairs;";
@@ -183,7 +131,7 @@ class SingleTableGateway extends DatabaseGateway
      * This function returns a boolean of whether it worked or not.
      */
     public function delete($conditionsAssociativeArray = null) {
-        $conditions = transformConditionsToString($conditionsAssociativeArray);
+        $conditions = $this::transformConditionsToString($conditionsAssociativeArray);
         $sql = $sql = "DELETE FROM $this->tableName WHERE $conditions;";
         return $this->queryDB($sql);
     }
@@ -215,32 +163,48 @@ class SingleTableGateway extends DatabaseGateway
         return $this->queryDB($sql);
     }
 /*
+    public function innerJoin($tableArray, $selectFieldsArray) {
+        // Concatenates all the columns to a string separated by ,
+        $fields = implode(", ", array_keys($selectFieldsArray));
+        // Gets all the values into an array
+        $valuesArray = array_values($columnValueAssociativeArray)
+        // Add ' ' in front of each values for SQL syntax
+        foreach ($valuesArray as $value){
+            $value = "'$value'";
+        }
+        $values = implode(", ", $valuesArray);
+        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+        return this->DBConnection->query($sql);
+    }
+
+
+
     SELECT title, m2.txt1 AS teaser, inputdat, db_file.*
-    FROM db_item
-        INNER JOIN db_itemv AS m1 USING(id_item)
-        INNER JOIN db_itemf USING(id_item)
-        INNER JOIN db_itemd USING(id_item)
-        LEFT JOIN  db_itemv AS m2
-            ON db_item.id_item = m2.id_item
-            AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
-    WHERE type=15
-        AND m1.fldnr = '12'
+    FROM db_item 
+        INNER JOIN db_itemv AS m1 USING(id_item) 
+        INNER JOIN db_itemf USING(id_item) 
+        INNER JOIN db_itemd USING(id_item) 
+        LEFT JOIN  db_itemv AS m2 
+          ON db_item.id_item = m2.id_item
+          AND ( m2.fldnr = '123' OR m2.fldnr IS NULL )
+    WHERE type=15 
+        AND m1.fldnr = '12' 
         AND m1.indik = 'b'
         AND m1.txt1s = 'en'
-        AND visibility = 0
-        AND inputdat > '2005-11-02'
+        AND visibility = 0 
+        AND inputdat > '2005-11-02' 
     GROUP BY title
     ORDER BY inputdat DESC
 
     SELECT s.studentname
-        , s.studentid
-        , s.studentdesc
-        , h.hallname
-    FROM students s
-    INNER JOIN hallprefs hp
-        on s.studentid = hp.studentid
-    INNER JOIN halls h
-        on hp.hallid = h.hallid
+    , s.studentid
+    , s.studentdesc
+    , h.hallname
+FROM students s
+INNER JOIN hallprefs hp
+    on s.studentid = hp.studentid
+INNER JOIN halls h
+    on hp.hallid = h.hallid
 
 */
 }
