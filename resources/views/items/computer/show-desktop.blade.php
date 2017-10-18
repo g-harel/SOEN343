@@ -33,7 +33,7 @@
             <td>Lenovo</td>
             <td>1055</td>
             <td>20</td>
-            <td>AMD</td>
+            <td>Rockchip</td>
             <td>16</td>
             <td>6</td>
             <td>500</td>

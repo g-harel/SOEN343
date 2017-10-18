@@ -42,7 +42,7 @@
             <td>500</td>
             <td>14</td>
             <td>Li-Ion</td>
-            <td>Windows 10</td>
+            <td>Windows XP</td>
             <td>Yes</td>
             <td>No</td>
             <td class="text-center">

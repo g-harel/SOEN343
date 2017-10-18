@@ -34,7 +34,7 @@
         <tbody>
         <tr>
             <td scope="row" id="31">31</td>
-            <td>Dell</td>
+            <td>Acer</td>
             <td>900</td>
             <td>43</td>
             <td>AMD</td>
@@ -47,7 +47,7 @@
             <td>3</td>
             <td>6</td>
             <td>Mac</td>
-            <td>Linux</td>
+            <td>Windows 8</td>
             <td>Yes</td>
             <td>No</td>
             <td class="text-center">
