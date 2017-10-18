@@ -92,11 +92,15 @@ class DatabaseGateway
         $this->databaseName = $configArray["databaseName"];
     }
 
-    private function openDBConnection() {
+    public function getDBConnection() {
+        return $this->DBConnection;
+    }
+
+    public function openDBConnection() {
         $this->DBConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
     }
 
-    private function closeDBConnection() {
+    public function closeDBConnection() {
         mysqli_close($this->DBConnection);
     }
 
@@ -104,7 +108,12 @@ class DatabaseGateway
     // returns the result of the last query.
     public function queryDB($sql) {
         $this->openDBConnection();
-        // TODO remove
+        $toReturn = $this->manualQueryDB($sql);
+        $this->closeDBConnection();
+        return $toReturn;
+    }
+
+    public function manualQueryDB($sql) {
         console_log($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
@@ -126,7 +135,6 @@ class DatabaseGateway
             }
             $toReturn = $returned[count($returned) - 1];
         }
-        $this->closeDBConnection();
         return $toReturn;
     }
 }
