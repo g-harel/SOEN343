@@ -5,18 +5,37 @@ namespace App\Gateway;
 use Mysqli;
 
 // log result in the client console.
-function console_log($str) {
+Function console_log($str) {
     echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
 }
 
 // log errors in the client console.
-function console_error($str) {
+Function console_error($str) {
     if ($str) {
         echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
     }
 }
 
-function implodeAssociativeArray($associativeArray, $connector) {
+Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
+    $conditions = transformConditionsToString($conditionsAssociativeArray);
+    $sql = "SELECT * FROM $tableName WHERE $conditions;";
+    $db = new DatabaseGateway();    
+    $result = $db->queryDB($sql);
+    if ($result !== null) {
+        return parseSelectResult($result);
+    } else {
+        return null;
+    }
+}
+
+Function singleTableDeleteUserQuery($conditionsAssociativeArray, $tableName) {
+    $conditions = transformConditionsToString($conditionsAssociativeArray);        
+    $sql = "DELETE FROM $tableName WHERE $conditions;";
+    $db = new DatabaseGateway();
+    return $db->queryDB($sql);
+}
+
+Function implodeAssociativeArray($associativeArray, $connector) {
     $length = count($associativeArray);
     $conditions = "";
     foreach ($associativeArray as $key => $value){
@@ -30,7 +49,7 @@ function implodeAssociativeArray($associativeArray, $connector) {
 }
 
 // fetch data from a query result.
-function parseSelectResult($queryResults) {
+Function parseSelectResult($queryResults) {
     $isQueryResultsExist = $queryResults != null;
     $result = null;
     if ($isQueryResultsExist) {
@@ -41,13 +60,13 @@ function parseSelectResult($queryResults) {
     return $result;
 }
 
-function transformConditionsToString($connectionsAssociativeArray) {
+Function transformConditionsToString($connectionsAssociativeArray) {
     $separatorStringBetweenConditions = " AND ";
     return implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
 }
 
 // pluck the keys from the source object and accumulate them into an array.
-function cherryPick($keys, $source) {
+Function cherryPick($keys, $source) {
     $result = array();
     $sourceValues = get_object_vars($source);
     foreach ($keys as &$key) {
@@ -90,6 +109,7 @@ class DatabaseGateway
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
         $returned = array();
+        $toReturn = null;
         if ($result) {
             $returned[0] = $conn->store_result();
             $count = 0;
@@ -104,12 +124,10 @@ class DatabaseGateway
                     console_error($conn->error);
                 }
             }
-        } else {
-            // TODO remove
-            console_error($conn->error);
+            $toReturn = $returned[count($returned) - 1];
         }
         $this->closeDBConnection();
-        return $returned[count($returned) - 1];
+        return $toReturn;
     }
 }
 
