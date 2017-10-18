@@ -49,7 +49,7 @@
             <td>Mac</td>
             <td>Google Android</td>
             <td>Yes</td>
-            <td>Yes</td>
+            <td>No</td>
             <td class="text-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,7 +82,95 @@
                 <h4 class="modal-title">Editing Tablet</h4>
             </div>
             <div class="modal-body">
-                <form id="tablet"  class="form-horizontal"></form>
+                <form id="tablet"  class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                            <div class="form-group">
+                                Brand:
+                                <select name="tablet-brand" id="tablet-brand" class="form-control">
+                                    <option title="Select brands" selected disabled>Select brands</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Processor Type:
+                                <select name="tablet-processor" id="tablet-processor" class="form-control">
+                                    <option title="Select processor" selected disabled>Select processor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                RAM Size:
+                                <select name="tablet-ram-size" id="tablet-ram-size" class="form-control">
+                                    <option title="Select ram size" selected disabled>Select ram size</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Hard Drive Size:
+                                <select name="tablet-storage-capacity" id="tablet-storage-capacity" class="form-control">
+                                    <option title="Select storage capacity" selected disabled>Select storage capacity</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Number of Cores:
+                                <select name="tablet-cpu-cores" id="tablet-cpu-cores" class="form-control">
+                                    <option title="Select cpu cores" selected disabled>Select cpu cores</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                OS:
+                                <select name="tablet-os" id="tablet-os" class="form-control">
+                                    <option title="Select OS" selected disabled>Select OS</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Display size (inches):
+                                <select name="tablet-display-size" id="tablet-display-size" class="form-control">
+                                    <option title="Select display size" selected disabled>Select display size</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                Price:
+                                <input type="text" name="tablet-price" id="tablet-price"  class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Thickness (cm):
+                                <input type="text" name="tablet-thickness" id="tablet-thickness" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Weight (Kg):
+                                <input type="text" name="tablet-weight" id="tablet-weight" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Height (cm):
+                                <input type="text" name="tablet-height" id="tablet-height" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Battery:
+                                <input type="text" name="tablet-battery" id="tablet-battery" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Camera:<br>
+                                <input type="radio" title="tablet camera" name="tablet-camera" value="Yes">&nbsp;Yes
+                                <input type="radio" title="tablet camera" name="tablet-camera" value="No">&nbsp;No
+                            </div>
+                            <div class="form-group">
+                                Touchscreen:<br>
+                                <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="Yes">&nbsp;Yes
+                                <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No">&nbsp;No
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-lg" name="submit-tablet-form" id="submit-tablet-form">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

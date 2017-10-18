@@ -36,7 +36,7 @@
             <td>Intel</td>
             <td>16</td>
             <td>6</td>
-            <td>600</td>
+            <td>500</td>
             <td>13.2</td>
             <td>43</td>
             <td>24</td>
@@ -70,7 +70,73 @@
                 <h4 class="modal-title">Editing Desktop</h4>
             </div>
             <div class="modal-body" id="edit-desktop-form-body">
-                <form id="desktop" class="form-horizontal"></form>
+                <form id="desktop" class="form-horizontal">
+                    <div class="col-md-12">
+                        <div class="col-md-5">
+                            <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                            <div class="form-group">
+                                Brand:
+                                <select name="computer-brand" id="computer-brand" class="form-control">
+                                    <option value="Select brands" title="Select brands" selected disabled>Select brands</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Processor Type:
+                                <select name="desktop-processor" id="desktop-processor" class="form-control">
+                                    <option value="Select processor" title="Select processor" selected disabled>Select processor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                RAM Size:
+                                <select name="desktop-ram-size" id="desktop-ram-size" class="form-control">
+                                    <option value="Select ram size" title="Select ram size" selected disabled>Select ram size</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Hard Drive Size:
+                                <select name="storage-capacity" id="storage-capacity" class="form-control">
+                                    <option value="Select hdd size" title="Select hdd size" selected disabled>Select HDD size</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                Number of Cores:
+                                <select name="desktop-cpu-cores" id="cpu-cores" class="form-control">
+                                    <option value="Select number of cores" title="Select number of cores" selected disabled>Select cpu cores</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                Price:
+                                <input type="text" name="desktop-price" id="desktop-price" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Weight (Kg):
+                                <input type="text" name="desktop-weight" id="desktop-weight" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Height (cm):
+                                <input type="text" name="desktop-height" id="desktop-height" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Width (cm):
+                                <input type="text" name="desktop-width" id="desktop-width" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                Thickness (cm):
+                                <input type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary btn-lg" name="submit-desktop-form" id="submit-desktop-form">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
