@@ -30,10 +30,10 @@
         <tbody>
         <tr>
             <td scope="row" id="8">8</td>
-            <td>Dell</td>
+            <td>Lenovo</td>
             <td>1055</td>
             <td>20</td>
-            <td>Intel</td>
+            <td>AMD</td>
             <td>16</td>
             <td>6</td>
             <td>500</td>

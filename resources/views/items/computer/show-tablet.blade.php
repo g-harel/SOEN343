@@ -35,10 +35,10 @@
         <tr>
             <td scope="row" id="31">31</td>
             <td>Dell</td>
-            <td>400</td>
+            <td>900</td>
             <td>43</td>
-            <td>Intel</td>
-            <td>6</td>
+            <td>AMD</td>
+            <td>32</td>
             <td>1</td>
             <td>4</td>
             <td>16</td>
@@ -47,7 +47,7 @@
             <td>3</td>
             <td>6</td>
             <td>Mac</td>
-            <td>Google Android</td>
+            <td>Linux</td>
             <td>Yes</td>
             <td>No</td>
             <td class="text-center">

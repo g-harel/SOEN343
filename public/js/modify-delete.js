@@ -4,6 +4,7 @@ let ModifyDelete = (function () {
     let editDeleteTablet = null;
     let editDeleteLaptop = null;
     let radioCheckerFn = null;
+    let genericOptionSelector = null;
     return {
         init: function () {
             editDeleteMonitor = {
@@ -30,13 +31,29 @@ let ModifyDelete = (function () {
             this.bindDeleteActions();
         },
         bindModifyActions: function () {
+            // its checked the radio button checked by the admin
             radioCheckerFn = function (adminChoice, choices) {
                 if(adminChoice === "Yes") {
                     choices.eq(0).prop("checked", "checked"); // Yes
                 } else {
                     choices.eq(1).prop("checked", "checked"); // No
                 }
-            } ;
+            };
+            // for select drop downs
+            // it adds "selected" in option item based
+            genericOptionSelector = function (form, idSelector, adminSelected) {
+                $.each(form.find(idSelector), function () {
+                    let brandOption = $(this).find("option");
+                    for (let i = 0; i < brandOption.length; i++) {
+                        if (brandOption.eq(i).attr("title") === adminSelected) {
+                            brandOption.eq(i).prop("selected", "selected");
+                        }
+                        if (brandOption.eq(i).val() === adminSelected) {
+                            brandOption.eq(i).prop("selected", "selected");
+                        }
+                    }
+                });
+            };
             editDeleteMonitor.editLink.click(function (event){
                 let tableRow = $(this).parentsUntil('table');
                 let rowElements = tableRow.find('td');
@@ -45,22 +62,8 @@ let ModifyDelete = (function () {
                     monitorElements.push($(this).text());
                 });
                 let form = editDeleteMonitor.modal.find('.modal-body > form');
-                $.each(form.find("#monitor-brand"), function () {
-                    let brandOption = $(this).find("option");
-                    for (let i = 0; i < brandOption.length; i++) {
-                        if (brandOption.eq(i).attr("title") === monitorElements[1]) {
-                            brandOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#monitor-display-size"), function () {
-                    let displaySizeOption = $(this).find("option");
-                    for (let i = 0; i < displaySizeOption.length; i++) {
-                        if (displaySizeOption.eq(i).attr("title") === monitorElements[4]) {
-                            displaySizeOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
+                genericOptionSelector(form, "#monitor-brand", monitorElements[1]);
+                genericOptionSelector(form, "#monitor-display-size", monitorElements[4]);
                 form.find("#monitor-id").val(monitorElements[0]);
                 form.find("#monitor-price").val(monitorElements[2]);
                 form.find("#monitor-weight").val(monitorElements[5]);
@@ -76,46 +79,11 @@ let ModifyDelete = (function () {
                     desktopElements.push($(this).text());
                 });
                 let form = editDeleteDesktop.modal.find('.modal-body > form');
-                $.each(form.find("#computer-brand"), function () {
-                    let brandOption = $(this).find("option");
-                    for(let i = 0; i < brandOption.length; i++) {
-                        if(brandOption.eq(i).attr("title")===desktopElements[1]) {
-                            brandOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#desktop-processor"), function () {
-                    let desktopProcessorOption = $(this).find("option");
-                    for(let i = 0; i < desktopProcessorOption.length; i++) {
-                        if(desktopProcessorOption.eq(i).attr("title") === desktopElements[4]) {
-                            desktopProcessorOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#desktop-ram-size"), function () {
-                    let desktopRamSizeOption = $(this).find("option");
-                    for(let i = 0; i < desktopRamSizeOption.length; i++) {
-                        if(desktopRamSizeOption.eq(i).attr("title") === desktopElements[5]) {
-                            desktopRamSizeOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#storage-capacity"), function () {
-                    let desktopStorageSizeOption = $(this).find("option");
-                    for(let i = 0; i < desktopStorageSizeOption.length; i++) {
-                        if(desktopStorageSizeOption.eq(i).val() === desktopElements[7]) {
-                            desktopStorageSizeOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#cpu-cores"), function () {
-                    let desktopCpuOption = $(this).find("option");
-                    for(let i = 0; i < desktopCpuOption.length; i++) {
-                        if(desktopCpuOption.eq(i).attr("title") === desktopElements[6]) {
-                            desktopCpuOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
+                genericOptionSelector(form, "#computer-brand", desktopElements[1]);
+                genericOptionSelector(form, "#desktop-processor", desktopElements[4]);
+                genericOptionSelector(form, "#desktop-ram-size", desktopElements[5]);
+                genericOptionSelector(form, "#storage-capacity", desktopElements[7]);
+                genericOptionSelector(form, "#cpu-cores", desktopElements[6]);
                 form.find("#desktop-price").val(desktopElements[2]);
                 form.find("#desktop-weight").val(desktopElements[8]);
                 form.find("#desktop-height").val(desktopElements[9]);
@@ -135,62 +103,13 @@ let ModifyDelete = (function () {
                 });
                 console.log(tabletElements);
                 let form = editDeleteTablet.modal.find('.modal-body > form');
-                $.each(form.find("#tablet-brand"), function () {
-                    let brandOption = $(this).find("option");
-                    for (let i = 0; i < brandOption.length; i++) {
-                        if (brandOption.eq(i).attr("title") === tabletElements[1]) {
-                            brandOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-processor"), function () {
-                    let processorOption = $(this).find("option");
-                    for (let i = 0; i < processorOption.length; i++) {
-                        if (processorOption.eq(i).attr("title") === tabletElements[4]) {
-                            processorOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-ram-size"), function () {
-                    let ramOption = $(this).find("option");
-                    for (let i = 0; i < ramOption.length; i++) {
-                        if (ramOption.eq(i).attr("title") === tabletElements[5]) {
-                            ramOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-storage-capacity"), function () {
-                    let storageOption = $(this).find("option");
-                    for (let i = 0; i < storageOption.length; i++) {
-                        if (storageOption.eq(i).val() === tabletElements[8]) {
-                            storageOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-cpu-cores"), function () {
-                    let cpuOption = $(this).find("option");
-                    for (let i = 0; i < cpuOption.length; i++) {
-                        if (cpuOption.eq(i).attr("title") === tabletElements[7]) {
-                            cpuOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-os"), function () {
-                    let osOption = $(this).find("option");
-                    for (let i = 0; i < osOption.length; i++) {
-                        if (osOption.eq(i).attr("title") === tabletElements[14]) {
-                            osOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#tablet-display-size"), function () {
-                    let displayOption = $(this).find("option");
-                    for (let i = 0; i < displayOption.length; i++) {
-                        if (displayOption.eq(i).attr("title") === tabletElements[9]) {
-                            displayOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
+                genericOptionSelector(form, "#tablet-brand", tabletElements[1]);
+                genericOptionSelector(form, "#tablet-processor", tabletElements[4]);
+                genericOptionSelector(form, "#tablet-ram-size", tabletElements[5]);
+                genericOptionSelector(form, "#tablet-storage-capacity", tabletElements[8]);
+                genericOptionSelector(form, "#tablet-cpu-cores", tabletElements[7]);
+                genericOptionSelector(form, "#tablet-os", tabletElements[14]);
+                genericOptionSelector(form, "#tablet-display-size", tabletElements[9]);
                 let cameraChoice = form.find("[name=tablet-camera]");
                 radioCheckerFn(tabletElements[15], cameraChoice);
                 let touchscreenChoice = form.find("[name=tablet-touchscreen]");
@@ -214,62 +133,13 @@ let ModifyDelete = (function () {
                     laptopElements.push($(this).text());
                 });
                 let form = editDeleteLaptop.modal.find('.modal-body > form');
-                $.each(form.find("#laptop-brand"), function () {
-                    let brandOption = $(this).find("option");
-                    for (let i = 0; i < brandOption.length; i++) {
-                        if (brandOption.eq(i).attr("title") === laptopElements[1]) {
-                            brandOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-processor"), function () {
-                    let processorOption = $(this).find("option");
-                    for (let i = 0; i < processorOption.length; i++) {
-                        if (processorOption.eq(i).attr("title") === laptopElements[4]) {
-                            processorOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-ram-size"), function () {
-                    let ramOption = $(this).find("option");
-                    for (let i = 0; i < ramOption.length; i++) {
-                        if (ramOption.eq(i).attr("title") === laptopElements[5]) {
-                            ramOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-cpu-cores"), function () {
-                    let cpuOption = $(this).find("option");
-                    for (let i = 0; i < cpuOption.length; i++) {
-                        if (cpuOption.eq(i).attr("title") === laptopElements[7]) {
-                            cpuOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-storage-capacity"), function () {
-                    let storageOption = $(this).find("option");
-                    for (let i = 0; i < storageOption.length; i++) {
-                        if (storageOption.eq(i).val() === laptopElements[8]) {
-                            storageOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-display-size"), function () {
-                    let displayOption = $(this).find("option");
-                    for (let i = 0; i < displayOption.length; i++) {
-                        if (displayOption.eq(i).attr("title") === laptopElements[9]) {
-                            displayOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
-                $.each(form.find("#laptop-os"), function () {
-                    let osOption = $(this).find("option");
-                    for (let i = 0; i < osOption.length; i++) {
-                        if (osOption.eq(i).attr("title") === laptopElements[11]) {
-                            osOption.eq(i).prop("selected", "selected");
-                        }
-                    }
-                });
+                genericOptionSelector(form, "#laptop-brand", laptopElements[1]);
+                genericOptionSelector(form, "#laptop-processor", laptopElements[4]);
+                genericOptionSelector(form, "#laptop-ram-size", laptopElements[5]);
+                genericOptionSelector(form, "#laptop-cpu-cores", laptopElements[7]);
+                genericOptionSelector(form, "#laptop-storage-capacity", laptopElements[8]);
+                genericOptionSelector(form, "#laptop-display-size", laptopElements[9]);
+                genericOptionSelector(form, "#laptop-os", laptopElements[11]);
                 let cameraChoice = form.find("[name=laptop-camera]");
                 radioCheckerFn(laptopElements[12], cameraChoice);
                 let touchscreenChoice = form.find("[name=laptop-touchscreen]");
