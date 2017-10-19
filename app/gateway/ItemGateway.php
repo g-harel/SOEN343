@@ -61,10 +61,15 @@ abstract class ItemGateway implements iItemCategory {
         return parseSelectResult($result);
     }
 
-    public function getById($id) {
+    public function getByCondition($condition) {
         $sql = $this->buildSelect();
-        $result = $this->gateway->queryDB($sql." WHERE id = $id;");
+        $conditionString = transformConditionsToString($condition);
+        $result = $this->gateway->queryDB($sql." WHERE $conditionString;");
         return parseSelectResult($result);
+    }
+
+    public function getById($id) {
+        return $this->getByCondition(array("id" => $id));
     }
 
     public function insert($item) {
