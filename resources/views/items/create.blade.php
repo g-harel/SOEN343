@@ -35,7 +35,7 @@
 
                 <!-- Form for Computers -->
                 <div id="nextSetOfComputerOptions" class="row hidden"><hr>
-                    <form id="desktop" class="form-horizontal">
+                    <form id="desktop-form" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -73,7 +73,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
@@ -109,7 +109,7 @@
 
                 <!-- Form for Laptops -->
                 <div id="nextSetOfLaptopOptions" class="row hidden"><hr>
-                    <form id="laptop" class="form-horizontal">
+                    <form id="laptop-form" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -147,7 +147,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     OS:
@@ -197,7 +197,7 @@
 
                 <!-- Form for Tablets -->
                 <div id="nextSetOfTabletOptions" class="row hidden"><hr>
-                    <form id="tablet"  class="form-horizontal">
+                    <form id="tablet-form"  class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -235,20 +235,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    OS:
-                                    <select name="tablet-os" id="tablet-os" class="form-control">
-                                        <option title="Select OS" selected disabled>Select OS</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     Display size (inches):
                                     <select name="tablet-display-size" id="tablet-display-size" class="form-control">
                                         <option title="Select display size" selected disabled>Select display size</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-5">
+                                <div class="form-group">
+                                    OS:
+                                    <select name="tablet-os" id="tablet-os" class="form-control">
+                                        <option title="Select OS" selected disabled>Select OS</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     Price:
                                     <input type="text" name="tablet-price" id="tablet-price"  class="form-control">
@@ -293,7 +293,7 @@
 
                 <!-- Form for Televisions -->
                 <div id="nextSetOfTelevisionOptions" class="row hidden"><hr>
-                    <form id="television" class="form-horizontal">
+                    <form id="television-form" class="form-horizontal">
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -315,7 +315,7 @@
                                     <input type="text" name="television-height" id="television-height" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Width (cm):
@@ -331,7 +331,9 @@
                                 </div>
                                 <div class="form-group">
                                     Type:
-                                    <select name="television-type" title="television-type" id="television-type" class="form-control"></select>
+                                    <select name="television-type" title="television-type" id="television-type" class="form-control">
+                                        <option title="Select tv type" selected disabled>Select television type</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

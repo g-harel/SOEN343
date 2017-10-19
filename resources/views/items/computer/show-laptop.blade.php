@@ -39,7 +39,7 @@
             <td>12</td>
             <td>5</td>
             <td>4</td>
-            <td>500</td>
+            <td>500GB</td>
             <td>14</td>
             <td>Li-Ion</td>
             <td>Windows XP</td>

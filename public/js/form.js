@@ -28,28 +28,9 @@ let dropDownOptions = {
             "Other"
         ],
         "ramSize": [2, 4, 6, 8, 12, 16, 32],
-        "processorType": [
-            "AMD",
-            "Intel",
-            "Rockchip",
-            "Other"
+        "processorType": ["AMD", "Intel", "Rockchip", "Other"
         ],
-        "storageSize": [
-            [512, "512MB"],
-            [4, "4GB"],
-            [8, "8GB"],
-            [16, "16GB"],
-            [32, "32GB"],
-            [64, "64GB"],
-            [120, "120GB"],
-            [128, "128GB"],
-            [180, "180GB"],
-            [240, "240GB"],
-            [480, "480GB"],
-            [500, "500GB"],
-            [1, "1TB"],
-            [2, "2TB"]
-        ],
+        "storageSize": ["512MB", "4GB", "8GB", "16GB", "32GB", "64GB", "120GB", "128GB", "180GB", "240GB", "480GB", "500GB", "1TB", "2TB"],
         "os": [
             "Windows 7",
             "Windows 8",
@@ -66,50 +47,10 @@ let dropDownOptions = {
 			"Amazon Fire OS",
 			"Other"
         ],
-        "width": [
-            70.9,
-            88.6,
-            95.3,
-            110.7,
-            121.7,
-            132.8,
-            144.0,
-            154.9,
-            166.1
-        ],
-        "height": [
-            39.9,
-            49.8,
-            53.6,
-            62.2,
-            68.6,
-            74.7,
-            81.0,
-            87.1,
-            93.5
-        ],
+        "width": [70.9, 88.6, 95.3, 110.7, 121.7, 132.8, 144.0, 154.9, 166.1],
+        "height": [39.9, 49.8, 53.6, 62.2, 68.6, 74.7, 81.0, 87.1, 93.5],
         "cpuCores": [2, 3, 4, 6, 8],
-        "displaySize": [
-            4.3,
-            5,
-            7,
-            7.9,
-            8,
-            12,
-            13.3,
-            14,
-            15,
-            15.4,
-            15.7,
-            19.5,
-            21.5,
-            23,
-            23.8,
-            27,
-            28,
-            34,
-            57
-        ]
+        "displaySize": [4.3, 5, 7, 7.9, 8, 12, 13.3, 14, 15, 15.4, 15.7, 19.5, 21.5, 23, 23.8, 27, 28, 34, 57]
     },
     "tv": {
         "brands": [
@@ -155,28 +96,8 @@ let dropDownOptions = {
             "Funai"
         ],
         "types": ["LCD", "LED", "OLED"],
-        "width": [
-            70.9,
-            88.6,
-            95.3,
-            110.7,
-            121.7,
-            132.8,
-            144.0,
-            154.9,
-            166.1
-        ],
-        "height": [
-            39.9,
-            49.8,
-            53.6,
-            62.2,
-            68.6,
-            74.7,
-            81.0,
-            87.1,
-            93.5
-        ]
+        "width": [70.9, 88.6, 95.3, 110.7, 121.7, 132.8, 144.0, 154.9, 166.1],
+        "height": [39.9, 49.8, 53.6, 62.2, 68.6, 74.7, 81.0, 87.1, 93.5]
     },
     "monitor": {
         "brands": [
@@ -239,173 +160,114 @@ let dropDownOptions = {
 };
 
 let FormDropDownFields = (function () {
-    let desktopForm = {};
-    let laptopForm = {};
-    let tabletForm = {};
-    let tvForm = {};
-    let monitorForm = {};
+
+    let formsObj = null;
+    let forBrandDropDown = null;
+    let forRamSizeDropDown = null;
+    let forStorageSizeDropDown = null;
+    let forProcessorTypeDropDown = null;
+    let forCpuCoresDropDown = null;
+    let forDisplaySizeDropDown = null;
+    let forOsDropDown = null;
 
     return {
         init: function () {
-            desktopForm = $('form#desktop');
-            laptopForm = $('form#laptop');
-            tabletForm = $('form#tablet');
-            tvForm = $('form#television');
-            monitorForm = $('form#monitor-form');
+            formsObj = {
+                desktopFormSelector: $("form#desktop-form"),
+                laptopFormSelector: $("form#laptop-form"),
+                tabletFormSelector: $("form#tablet-form"),
+                tvFormSelector: $("form#television-form"),
+                monitorFormSelector: $("form#monitor-form")
+            };
+            forBrandDropDown = [
+                formsObj.desktopFormSelector.find("select#computer-brand"),
+                formsObj.laptopFormSelector.find("select#laptop-brand"),
+                formsObj.tabletFormSelector.find("select#tablet-brand")
+            ];
+            forRamSizeDropDown = [
+                formsObj.desktopFormSelector.find("select#desktop-ram-size"),
+                formsObj.laptopFormSelector.find("select#laptop-ram-size"),
+                formsObj.tabletFormSelector.find("select#tablet-ram-size")
+            ];
+            forStorageSizeDropDown = [
+                formsObj.desktopFormSelector.find("select#storage-capacity"),
+                formsObj.laptopFormSelector.find("select#laptop-storage-capacity"),
+                formsObj.tabletFormSelector.find("select#tablet-storage-capacity")
+            ];
+            forProcessorTypeDropDown = [
+                formsObj.desktopFormSelector.find("select#desktop-processor"),
+                formsObj.laptopFormSelector.find("select#laptop-processor"),
+                formsObj.tabletFormSelector.find("select#tablet-processor")
+            ];
+            forCpuCoresDropDown = [
+                formsObj.desktopFormSelector.find("select#cpu-cores"),
+                formsObj.laptopFormSelector.find("select#laptop-cpu-cores"),
+                formsObj.tabletFormSelector.find("select#tablet-cpu-cores")
+            ];
+            forDisplaySizeDropDown = [
+                formsObj.laptopFormSelector.find("select#laptop-display-size"),
+                formsObj.tabletFormSelector.find("select#tablet-display-size")
+            ];
+            forOsDropDown = [
+                formsObj.laptopFormSelector.find("select#laptop-os"),
+                formsObj.tabletFormSelector.find("select#tablet-os")
+            ];
+
             this.bindFormDropDownFns();
         },
         bindFormDropDownFns: function () {
-            computerDropDowns.brandsFn(
-                [desktopForm.find('#computer-brand'),
-                    laptopForm.find('#laptop-brand'),
-                    tabletForm.find('#tablet-brand')]
+            populateDropDownWithOptions(dropDownOptions.computer.brands, forBrandDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.ramSize, forRamSizeDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.storageSize, forStorageSizeDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.processorType, forProcessorTypeDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.cpuCores, forCpuCoresDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.displaySize, forDisplaySizeDropDown);
+            populateDropDownWithOptions(dropDownOptions.computer.os, forOsDropDown);
+            populateDropDownWithOptions(
+                dropDownOptions.monitor.brands,
+                [formsObj.monitorFormSelector.find("select#monitor-brand")]
             );
-            computerDropDowns.ramSizeFn(
-                [desktopForm.find('#desktop-ram-size'),
-                laptopForm.find('#laptop-ram-size'),
-                tabletForm.find('#tablet-ram-size')]
+            populateDropDownWithOptions(
+                dropDownOptions.monitor.displaySize,
+                [formsObj.monitorFormSelector.find("select#monitor-display-size")]
             );
-            computerDropDowns.storageSizeFn(
-                [desktopForm.find('#storage-capacity'),
-                laptopForm.find('#laptop-storage-capacity'),
-                tabletForm.find('#tablet-storage-capacity')]
+            populateDropDownWithOptions(
+                dropDownOptions.tv.brands,
+                [formsObj.tvFormSelector.find("select#television-brand")]
             );
-            computerDropDowns.processorTypeFn(
-                [desktopForm.find('#desktop-processor'),
-                laptopForm.find('#laptop-processor'),
-                tabletForm.find('#tablet-processor')]
+            populateDropDownWithOptions(
+                dropDownOptions.tv.types,
+                [formsObj.tvFormSelector.find("select#television-type")]
             );
-            computerDropDowns.cpuCoresFn(
-                [desktopForm.find('#cpu-cores'),
-                laptopForm.find('#laptop-cpu-cores'),
-                tabletForm.find('#tablet-cpu-cores')]
-            );
-            computerDropDowns.displaySizeFn(
-                [laptopForm.find('#laptop-display-size'),
-                tabletForm.find('#tablet-display-size')]
-            );
-            computerDropDowns.osFn(
-                [laptopForm.find('#laptop-os'),
-                tabletForm.find('#tablet-os')]
-            );
-            monitorDropDowns.brandsFn([monitorForm.find("#monitor-brand")]);
-            monitorDropDowns.displaySizeFn([monitorForm.find("#monitor-display-size")]);
-            tvDropDowns.brandsFn(tvForm);
-            tvDropDowns.typesFn(tvForm);
+
         },
     };
 })();
 
-// for computer drop downs
-let computerDropDowns = {
-    brandsFn: function (formsArray) {
-        $.each(dropDownOptions.computer.brands, function (key, value) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+value+'" title="'+value+'">'+value+'</option>'
-                );
-            }
-        });
-    },
-    ramSizeFn: function (formsArray) {
-        $.each(dropDownOptions.computer.ramSize, function (key, value) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+value+'" title="'+value+'">'+value+'</option>'
-                );
-            }
-
-        });
-    },
-    storageSizeFn: function (formsArray) {
-        $.each(dropDownOptions.computer.storageSize, function (k, v) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+v[0]+'" title="'+v[1]+'">'+v[1]+'</option>'
-                );
-            }
-        });
-    },
-    processorTypeFn: function (formsArray) {
-        $.each(dropDownOptions.computer.processorType, function (k, v) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+v+'" title="'+v+'">'+v+'</option>'
-                );
-            }
-        });
-    },
-    cpuCoresFn: function (formsArray) {
-        $.each(dropDownOptions.computer.cpuCores, function (k, v) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+v+'" title="'+v+'">'+v+'</option>'
-                );
-            }
-        });
-    },
-    displaySizeFn: function (formsArray) {
-        $.each(dropDownOptions.computer.displaySize, function (k, v) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+v+'" title="'+v+'">'+v+'</option>'
-                );
-            }
-        });
-    },
-    osFn: function (formsArray) {
-        $.each(dropDownOptions.computer.os, function (k, v) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+v+'" title="'+v+'">'+v+'</option>'
-                );
-            }
-        });
-    }
+/**
+ * Populate select drop down field
+ * @param dropDownOptionType
+ * @param selectOptionType
+ */
+let populateDropDownWithOptions = function (dropDownOptionType, selectOptionType) {
+    $.each(dropDownOptionType, function (key, value) {
+        for(let i = 0; i < selectOptionType.length; i++) {
+            selectOptionType[i].append(
+                '<option value="'+value+'" title="'+value+'">'+value+'</option>'
+            );
+        }
+    });
 };
 
-// for monitor drop downs [only brands, and display size]
-let monitorDropDowns = {
-    brandsFn: function (formsArray) {
-        $.each(dropDownOptions.monitor.brands, function (key, value) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+value+'" title="'+value+'">'+value+'</option>'
-                );
-            }
-        });
-    },
-    displaySizeFn: function (formsArray) {
-        $.each(dropDownOptions.monitor.displaySize, function (key, value) {
-            for(let i = 0; i < formsArray.length; i++) {
-                formsArray[i].append(
-                    '<option value="'+value+'" title="'+value+'">'+value+'</option>'
-                );
-            }
-        });
-    }
-};
-
-// for tv drop downs
-let tvDropDowns = {
-    brandsFn: function (tvForm) {
-        $.each(dropDownOptions.tv.brands, function (key, value) {
-            tvForm.find('#television-brand').append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
-        });
-    },
-    typesFn: function (tvForm) {
-        $.each(dropDownOptions.tv.types, function (key, value) {
-            tvForm.find('#television-type').append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
-        });
-    }
-};
 
 $(document).ready(function () {
     FormDropDownFields.init();
 });
 
 
-<!-- trigger onclick depending on which radio button checked -->
+/**
+ * trigger onclick depending on which radio button checked
+ */
 function toggleOptions() {
     let itemContainer = [
         {radio: $("#type_Computer"), div_id: $("#nextSetOfComputerOptions")},

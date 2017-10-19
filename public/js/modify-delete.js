@@ -43,17 +43,15 @@ let ModifyDelete = (function () {
             // it adds "selected" in option item based
             genericOptionSelector = function (form, idSelector, adminSelected) {
                 $.each(form.find(idSelector), function () {
-                    let brandOption = $(this).find("option");
-                    for (let i = 0; i < brandOption.length; i++) {
-                        if (brandOption.eq(i).attr("title") === adminSelected) {
-                            brandOption.eq(i).prop("selected", "selected");
-                        }
-                        if (brandOption.eq(i).val() === adminSelected) {
-                            brandOption.eq(i).prop("selected", "selected");
+                    let option = $(this).find("option");
+                    for (let i = 0; i < option.length; i++) {
+                        if (option.eq(i).attr("title") === adminSelected) {
+                            option.eq(i).prop("selected", "selected");
                         }
                     }
                 });
             };
+
             editDeleteMonitor.editLink.click(function (event){
                 let tableRow = $(this).parentsUntil('table');
                 let rowElements = tableRow.find('td');
@@ -61,7 +59,7 @@ let ModifyDelete = (function () {
                 rowElements.each(function () {
                     monitorElements.push($(this).text());
                 });
-                let form = editDeleteMonitor.modal.find('.modal-body > form');
+                let form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
                 genericOptionSelector(form, "#monitor-brand", monitorElements[1]);
                 genericOptionSelector(form, "#monitor-display-size", monitorElements[4]);
                 form.find("#monitor-id").val(monitorElements[0]);
@@ -71,6 +69,7 @@ let ModifyDelete = (function () {
                 event.preventDefault();
                 return false;
             });
+
             editDeleteDesktop.editLink.click(function (event){
                 let tableRow = $(this).parentsUntil('table');
                 let rowElements = tableRow.find('td');

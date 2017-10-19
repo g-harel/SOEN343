@@ -18,7 +18,7 @@
             <th>Processor type</th>
             <th>Ram size (GB)</th>
             <th>CPU cores</th>
-            <th>HDD size (GB)</th>
+            <th>HDD size</th>
             <th>Weight</th>
             <th>Height (cm)</th>
             <th>Width (cm)</th>
@@ -36,7 +36,7 @@
             <td>Rockchip</td>
             <td>16</td>
             <td>6</td>
-            <td>500</td>
+            <td>500GB</td>
             <td>13.2</td>
             <td>43</td>
             <td>24</td>
