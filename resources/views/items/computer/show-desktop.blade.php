@@ -7,7 +7,7 @@
         <li class="active">Desktop</li>
     </ol>
  <div class="col-lg-9">
-    <p><button class="btn btn-success create-new-items" >Add new</button></p>
+    <p><a class="btn btn-success" href="/items/create">Add new</a></p>
     <table class="table table-bordered table-responsive">
         <thead>
         <tr>

@@ -401,14 +401,6 @@ let tvDropDowns = {
 };
 
 $(document).ready(function () {
-    let onClick_CreateNewItems = $('.create-new-items');
-    let createNewItemRedirectFn = function () {
-        let itemsCreateLoc = '/items/create';
-        onClick_CreateNewItems.click(function () {
-            location.href = itemsCreateLoc;
-        });
-    };
-    createNewItemRedirectFn();
     FormDropDownFields.init();
 });
 
