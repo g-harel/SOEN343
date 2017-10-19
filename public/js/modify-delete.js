@@ -5,27 +5,46 @@ let ModifyDelete = (function () {
     let editDeleteLaptop = null;
     let radioCheckerFn = null;
     let genericOptionSelector = null;
+    let dataAttr = {
+            id: "[data-id]",
+            brand: "[data-brand]",
+            price: "[data-price]",
+            qty: "[data-qty]",
+            processor: "[data-processor]",
+            ramSize: "[data-ramSize]",
+            weight: "[data-weight]",
+            cpuCores: "[data-cpuCores]",
+            capacity: "[data-hddSize]",
+            displaySize: "[data-displaySize]",
+            height: "[data-height]",
+            width: "[data-width]",
+            thickness: "[data-thickness]",
+            battery: "[data-battery]",
+            os: "[data-os]",
+            camera: "[data-camera]",
+            touchscreen: "[data-touchscreen]"
+        };
     return {
         init: function () {
             editDeleteMonitor = {
-                editLink: $('.edit-monitor-link'),
-                modal: $('.bs-edit-monitor-modal-lg'),
-                deleteLink: $('#delMonitorLink')
+                editLink: $(".edit-monitor-link"),
+                modal: $(".bs-edit-monitor-modal-lg"),
+                deleteLink: $("#delMonitorLink")
             };
             editDeleteDesktop = {
-                editLink: $('.edit-desktop-link'),
-                modal: $('.bs-edit-desktop-modal-lg'),
-                deleteLink: $('#delDesktopLink')
+                editLink: $(".edit-desktop-link"),
+                modal: $(".bs-edit-desktop-modal-lg"),
+                deleteLink: $("#delDesktopLink")
             };
             editDeleteTablet = {
-                editLink: $('.edit-tablet-link'),
-                modal: $('.bs-edit-tablet-modal-lg'),
-                deleteLink: $('#delTabletLink')
+                editLink: $(".edit-tablet-link"),
+                modal: $(".bs-edit-tablet-modal-lg"),
+                deleteLink: $("#delTabletLink")
             };
             editDeleteLaptop = {
-                editLink: $('.edit-laptop-link'),
-                modal: $('.bs-edit-laptop-modal-lg'),
-                deleteLink: $('#delLaptopLink')
+                editLink: $(".edit-laptop-link"),
+                modal: $(".bs-edit-laptop-modal-lg"),
+                deleteLink: $("#delLaptopLink")
             };
             this.bindModifyActions();
             this.bindDeleteActions();
@@ -61,21 +80,14 @@ let ModifyDelete = (function () {
             };
 
             editDeleteMonitor.editLink.click(function (event) {
-                let tableRow = $(this).parentsUntil('table');
-                // get field text from clicked table row
-                let id = tableRow.find("[data-id]").text();
-                let brand = tableRow.find("[data-brand]").text();
-                let price = tableRow.find("[data-price]").text();
-                let weight = tableRow.find("[data-weight]").text();
-                let displaySize = tableRow.find("[data-displaySize]").text();
-
-                // populate the form modal with the obtained text above
+                let tr = $(this).parentsUntil("table");
                 let form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
-                genericOptionSelector(form, "#monitor-brand", brand);
-                genericOptionSelector(form, "#monitor-display-size", displaySize);
-                form.find("#monitor-id").val(id);
-                form.find("#monitor-price").val(price);
-                form.find("#monitor-weight").val(weight);
+
+                genericOptionSelector(form, "#monitor-brand", tr.find(dataAttr.brand).text());
+                genericOptionSelector(form, "#monitor-display-size", tr.find(dataAttr.displaySize).text());
+                form.find("#monitor-id").val(tr.find(dataAttr.id).text());
+                form.find("#monitor-price").val(tr.find(dataAttr.price).text());
+                form.find("#monitor-weight").val(tr.find(dataAttr.weight).text());
 
                 // finally show the modal
                 $(editDeleteMonitor.modal).modal('show');
@@ -117,84 +129,62 @@ let ModifyDelete = (function () {
             });
 
             editDeleteTablet.editLink.click(function (event){
-                let tableRow = $(this).parentsUntil("table");
-                // get field text from clicked table row
-                let id = tableRow.find("[data-id]").text();
-                let brand = tableRow.find("[data-brand]").text();
-                let price = tableRow.find("[data-price]").text();
-                let qty = tableRow.find("[data-qty]").text();
-                let processor = tableRow.find("[data-processor]").text();
-                let ramSize = tableRow.find("[data-ramSize]").text();
-                let weight = tableRow.find("[data-weight]").text();
-                let cpuCores = tableRow.find("[data-cpuCores]").text();
-                let capacity = tableRow.find("[data-hddSize]").text();
-                let displaySize = tableRow.find("[data-displaySize]").text();
-                let height = tableRow.find("[data-height]").text();
-                let width = tableRow.find("[data-width]").text();
-                let thickness = tableRow.find("[data-thickness]").text();
-                let battery = tableRow.find("[data-battery]").text();
-                let os = tableRow.find("[data-os]").text();
-                let camera = tableRow.find("[data-camera]").text();
-                let touchscreen = tableRow.find("[data-touchscreen]").text();
-
+                let tr = $(this).parentsUntil("table");
                 let form = editDeleteTablet.modal.find(".modal-body > form#tablet-form");
-                genericOptionSelector(form, "#tablet-brand", brand);
-                genericOptionSelector(form, "#tablet-processor", processor);
-                genericOptionSelector(form, "#tablet-ram-size", ramSize);
-                genericOptionSelector(form, "#tablet-storage-capacity", capacity);
-                genericOptionSelector(form, "#tablet-cpu-cores", cpuCores);
-                genericOptionSelector(form, "#tablet-os", os);
-                genericOptionSelector(form, "#tablet-display-size", displaySize);
-                let cameraChoice = form.find("[name=tablet-camera]");
-                radioCheckerFn(camera, cameraChoice);
-                let touchscreenChoice = form.find("[name=tablet-touchscreen]");
-                radioCheckerFn(touchscreen, touchscreenChoice);
-                form.find("#tablet-id").val(id);
-                form.find("#tablet-price").val(price);
-                form.find("#tablet-weight").val(weight);
-                form.find("#tablet-height").val(height);
-                form.find("#tablet-thickness").val(thickness);
-                form.find("#tablet-battery").val(battery);
 
-                $(editDeleteTablet.modal).modal('show');
+                // tablet drop downs
+                genericOptionSelector(form, "#tablet-brand", tr.find(dataAttr.brand).text());
+                genericOptionSelector(form, "#tablet-processor", tr.find(dataAttr.processor).text());
+                genericOptionSelector(form, "#tablet-ram-size", tr.find(dataAttr.ramSize).text());
+                genericOptionSelector(form, "#tablet-storage-capacity", tr.find(dataAttr.capacity).text());
+                genericOptionSelector(form, "#tablet-cpu-cores", tr.find(dataAttr.cpuCores).text());
+                genericOptionSelector(form, "#tablet-os", tr.find(dataAttr.os).text());
+                genericOptionSelector(form, "#tablet-display-size", tr.find(dataAttr.displaySize).text());
+
+                // tablet radio buttons
+                let cameraChoice = form.find("[name=tablet-camera]");
+                radioCheckerFn(tr.find(dataAttr.camera).text(), cameraChoice);
+                let touchscreenChoice = form.find("[name=tablet-touchscreen]");
+                radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
+
+                // tablet input fields
+                form.find("#tablet-id").val(tr.find(dataAttr.id).text());
+                form.find("#tablet-price").val(tr.find(dataAttr.price).text());
+                form.find("#tablet-weight").val(tr.find(dataAttr.weight).text());
+                form.find("#tablet-height").val(tr.find(dataAttr.height).text());
+                form.find("#tablet-thickness").val(tr.find(dataAttr.thickness).text());
+                form.find("#tablet-battery").val(tr.find(dataAttr.battery).text());
+
+                $(editDeleteTablet.modal).modal("show");
                 event.preventDefault();
                 return false;
             });
 
             editDeleteLaptop.editLink.click(function (event){
-                let tableRow = $(this).parentsUntil('table');
-                let id =  tableRow.find("[data-id]").text();
-                let brand =  tableRow.find("[data-brand]").text();
-                let price =  tableRow.find("[data-price]").text();
-                let qty =  tableRow.find("[data-qty]").text();
-                let processor =  tableRow.find("[data-processor]").text();
-                let ramSize =  tableRow.find("[data-ramSize]").text();
-                let weight =  tableRow.find("[data-weight]").text();
-                let cpuCores =  tableRow.find("[data-cpuCores]").text();
-                let capacity =  tableRow.find("[data-hddSize]").text();
-                let displaySize =  tableRow.find("[data-displaySize]").text();
-                let battery =  tableRow.find("[data-battery]").text();
-                let os =  tableRow.find("[data-os]").text();
-                let camera =  tableRow.find("[data-camera]").text();
-                let touchscreen =  tableRow.find("[data-touchscreen]").text();
+                let tr = $(this).parentsUntil("table");
+                let form = editDeleteLaptop.modal.find(".modal-body > form#laptop-form");
 
-                let form = editDeleteLaptop.modal.find('.modal-body > form#laptop-form');
-                genericOptionSelector(form, "#laptop-brand", brand);
-                genericOptionSelector(form, "#laptop-processor", processor);
-                genericOptionSelector(form, "#laptop-ram-size", ramSize);
-                genericOptionSelector(form, "#laptop-cpu-cores", cpuCores);
-                genericOptionSelector(form, "#laptop-storage-capacity", capacity);
-                genericOptionSelector(form, "#laptop-display-size", displaySize);
-                genericOptionSelector(form, "#laptop-os", os);
+                // laptop drop down fields
+                genericOptionSelector(form, "#laptop-brand", tr.find(dataAttr.brand).text());
+                genericOptionSelector(form, "#laptop-processor", tr.find(dataAttr.processor).text());
+                genericOptionSelector(form, "#laptop-ram-size", tr.find(dataAttr.ramSize).text());
+                genericOptionSelector(form, "#laptop-cpu-cores", tr.find(dataAttr.cpuCores).text());
+                genericOptionSelector(form, "#laptop-storage-capacity", tr.find(dataAttr.capacity).text());
+                genericOptionSelector(form, "#laptop-display-size", tr.find(dataAttr.displaySize).text());
+                genericOptionSelector(form, "#laptop-os", tr.find(dataAttr.os).text());
+
+                // laptop radio buttons
                 let cameraChoice = form.find("[name=laptop-camera]");
-                radioCheckerFn(camera, cameraChoice);
+                radioCheckerFn(tr.find(dataAttr.camera).text(), cameraChoice);
                 let touchscreenChoice = form.find("[name=laptop-touchscreen]");
-                radioCheckerFn(touchscreen, touchscreenChoice);
-                form.find("#laptop-price").val(price);
-                form.find("#laptop-weight").val(weight);
-                form.find("#laptop-battery").val(battery);
+                radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
 
-                $(editDeleteLaptop.modal).modal('show');
+                // laptop input fields
+                form.find("#laptop-price").val(tr.find(dataAttr.price).text());
+                form.find("#laptop-weight").val(tr.find(dataAttr.weight).text());
+                form.find("#laptop-battery").val(tr.find(dataAttr.battery).text());
+
+                $(editDeleteLaptop.modal).modal("show");
                 event.preventDefault();
                 return false;
             });
