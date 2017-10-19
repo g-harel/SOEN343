@@ -31,20 +31,20 @@
         </thead>
         <tbody>
         <tr>
-            <td scope="row" id="25">25</td>
-            <td>Lenovo</td>
-            <td>1500</td>
-            <td>2</td>
-            <td>Intel</td>
-            <td>12</td>
-            <td>5</td>
-            <td>4</td>
-            <td>500GB</td>
-            <td>14</td>
-            <td>Li-Ion</td>
-            <td>Windows XP</td>
-            <td>Yes</td>
-            <td>No</td>
+            <td data-id="25">25</td>
+            <td data-brand="IBM">IBM</td>
+            <td data-price="1500">1500</td>
+            <td data-qty="2">2</td>
+            <td data-processor="Intel">Intel</td>
+            <td data-ramSize="12">12</td>
+            <td data-weight="5">5</td>
+            <td data-cpuCores="4">4</td>
+            <td data-hddSize="128GB">128GB</td>
+            <td data-displaySize="14">14</td>
+            <td data-battery="Li-ion">Li-Ion</td>
+            <td data-os="Windows XP">Windows XP</td>
+            <td data-camera="Yes">Yes</td>
+            <td data-touchscreen="No">No</td>
             <td class="text-center">
                 <p data-placement="top" data-toggle="tooltip" title="Edit">
                     <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal" data-target=".bs-edit-laptop-modal-lg">
@@ -71,7 +71,7 @@
                 <h4 class="modal-title">Editing Laptop</h4>
             </div>
             <div class="modal-body">
-                <form id="laptop" class="form-horizontal">
+                <form id="laptop-form" class="form-horizontal">
                     <div class="col-md-12">
                         <div class="col-md-5">
                             <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">

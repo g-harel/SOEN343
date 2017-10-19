@@ -29,18 +29,18 @@
         </thead>
         <tbody>
         <tr>
-            <td scope="row" id="8">8</td>
-            <td>Lenovo</td>
-            <td>1055</td>
-            <td>20</td>
-            <td>Rockchip</td>
-            <td>16</td>
-            <td>6</td>
-            <td>500GB</td>
-            <td>13.2</td>
-            <td>43</td>
-            <td>24</td>
-            <td>13</td>
+            <td data-id="8">8</td>
+            <td data-brand="Dell">Dell</td>
+            <td data-price="1055">1055</td>
+            <td data-qty="20">20</td>
+            <td data-processor="Rockchip">Rockchip</td>
+            <td data-ramSize="16">16</td>
+            <td data-cpuCores="6">6</td>
+            <td data-hddSize="1TB">1TB</td>
+            <td data-weight="13.2">13.2</td>
+            <td data-height="43">43</td>
+            <td data-width="24">24</td>
+            <td data-thickness="13">13</td>
             <td class="text-center">
                 <p title="Edit">
                     <a class="btn btn-primary btn-xs edit-desktop-link" href="" data-toggle="modal" data-target=".bs-del-desktop-modal">
@@ -70,7 +70,7 @@
                 <h4 class="modal-title">Editing Desktop</h4>
             </div>
             <div class="modal-body" id="edit-desktop-form-body">
-                <form id="desktop" class="form-horizontal">
+                <form id="desktop-form" class="form-horizontal">
                     <div class="col-md-12">
                         <div class="col-md-5">
                             <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">

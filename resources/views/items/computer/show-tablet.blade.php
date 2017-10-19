@@ -33,23 +33,23 @@
         </thead>
         <tbody>
         <tr>
-            <td scope="row" id="31">31</td>
-            <td>Acer</td>
-            <td>900</td>
-            <td>43</td>
-            <td>AMD</td>
-            <td>2</td>
-            <td>1</td>
-            <td>4</td>
-            <td>16GB</td>
-            <td>7</td>
-            <td>2</td>
-            <td>3</td>
-            <td>6</td>
-            <td>Mac</td>
-            <td>Windows 8</td>
-            <td>Yes</td>
-            <td>No</td>
+            <td data-id="31">31</td>
+            <td data-brand="Apple">Apple</td>
+            <td data-price="900">900</td>
+            <td data-qty="43">43</td>
+            <td data-processor="AMD">AMD</td>
+            <td data-ramSize="2">2</td>
+            <td data-weight="1">1</td>
+            <td data-cpuCores="4">4</td>
+            <td data-hddSize="2TB">2TB</td>
+            <td data-displaySize="7">7</td>
+            <td data-height="2">2</td>
+            <td data-width="3">3</td>
+            <td data-thickness="6">6</td>
+            <td data-battery="Mac">Mac</td>
+            <td data-os="Windows 8">Windows 8</td>
+            <td data-camera="Yes">Yes</td>
+            <td data-touchscreen="No">No</td>
             <td class="text-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,7 +82,7 @@
                 <h4 class="modal-title">Editing Tablet</h4>
             </div>
             <div class="modal-body">
-                <form id="tablet"  class="form-horizontal">
+                <form id="tablet-form"  class="form-horizontal">
                     <div class="col-md-12">
                         <div class="col-md-5">
                             <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">

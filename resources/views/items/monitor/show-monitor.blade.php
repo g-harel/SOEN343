@@ -22,12 +22,12 @@
             </thead>
             <tbody>
             <tr>
-                <td scope="row" id="23">23</td>
-                <td>Fujitsu</td>
-                <td>1000</td>
-                <td>190</td>
-                <td>8</td>
-                <td>5</td>
+                <td data-id="23">23</td>
+                <td data-brand="Fujitsu">Fujitsu</td>
+                <td data-price="1000">1000</td>
+                <td data-qty="190">190</td>
+                <td data-displaySize="8">8</td>
+                <td data-weight="5">5</td>
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                         <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
