@@ -3,11 +3,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
-use App\Gateway\DesktopGateway;
-
-Function console_log($str) {
-    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
-}
 
 class ItemsController extends Controller
 {
@@ -18,34 +13,6 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $t = new DesktopGateway();
-
-        $I = array(
-            "id" => 0,
-            "category" => "monitor",
-            "brand" => "brand",
-            "price" => 10.0,
-            "quantity" => 10,
-            "processor_type" => "ptype",
-            "display_size" => 10,
-            "ram_size" => 10,
-            "cpu_cores" => 10,
-            "weight" => 10,
-            "width" => 10,
-            "height" => 10,
-            "thickness" => 10,
-            "battery" => "battery",
-            "os" => "os",
-            "type" => "type",
-            "camera" => "camera",
-            "touchscreen" => true,
-        );
-
-        console_log($t->getAll());
-        console_log($t->getById(1));
-        console_log($t->insert($I));
-        console_log($t->update($I));
-
         $items = Item::all();
         return view('items.index')->with('items', $items);
     }
