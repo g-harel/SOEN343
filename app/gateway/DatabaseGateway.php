@@ -68,9 +68,11 @@ Function transformConditionsToString($connectionsAssociativeArray) {
 // pluck the keys from the source object and accumulate them into an array.
 Function cherryPick($keys, $source) {
     $result = array();
-    $sourceValues = get_object_vars($source);
+    if (is_object($source)) {
+        $source = get_object_vars($source);
+    }
     foreach ($keys as &$key) {
-        array_push($result, $sourceValues["$key"]);
+        array_push($result, $source["$key"]);
     }
     return $result;
 }
@@ -113,37 +115,38 @@ class DatabaseGateway
         return $toReturn;
     }
 
-    public function manualQueryDB($sql, $returnIndex) {
+    public function manualQueryDB($sql, $returnIndex = null) {
         console_log($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
         $returned = array();
-        $toReturn = null;
-        if ($result) {
-            $returned[0] = $conn->store_result();
-            $count = 0;
-            while ($conn->more_results()) {
-                $count++;
-                $conn->next_result();
-                $result = $conn->store_result();
-                if($result) {
-                    $returned[$count] = $result;
-                } else {
-                    // TODO remove
-                    console_error($conn->error);
-                }
-            }
-            // if the return index is not a number or if it is larger than the
-            // number of results, the last result is returned.
-            if (!is_int($returnIndex) || $returnIndex > count($returned)) {
-                $returnIndex = count($returned) - 1;
-            }
-            if ($returnIndex < 0) {
-                $returnIndex = 0;
-            }
-            $toReturn = $returned[$returnIndex];
+        if (!$result) {
+            // TODO remove
+            console_error($conn->error);
+            return null;
         }
-        return $toReturn;
+        $returned[0] = $conn->store_result();
+        $count = 0;
+        while ($conn->more_results()) {
+            $count++;
+            $conn->next_result();
+            $result = $conn->store_result();
+            if($result) {
+                $returned[$count] = $result;
+            } else {
+                // TODO remove
+                console_error($conn->error);
+            }
+        }
+        // if the return index is not a number or if it is larger than the
+        // number of results, the last result is returned.
+        if (!is_int($returnIndex) || $returnIndex > count($returned)) {
+            $returnIndex = count($returned) - 1;
+        }
+        if ($returnIndex < 0) {
+            $returnIndex = 0;
+        }
+        return $returned[$returnIndex];
     }
 }
 
