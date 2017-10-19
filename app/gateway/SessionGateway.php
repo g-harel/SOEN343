@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Gateway;
+
 use App\Gateway\DatabaseGateway;
 
 class SessionGateway
 {
     private $db;
-    private $tableName;    
+    private $tableName;
 
     public function __construct() {
         $this->tableName = "sessions";
@@ -25,7 +26,7 @@ class SessionGateway
 
     public function addSession($userId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `users`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";        
+        $sql = "INSERT INTO `users`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 

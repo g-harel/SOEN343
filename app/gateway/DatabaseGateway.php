@@ -19,7 +19,7 @@ Function console_error($str) {
 Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "SELECT * FROM $tableName WHERE $conditions;";
-    $db = new DatabaseGateway();    
+    $db = new DatabaseGateway();
     $result = $db->queryDB($sql);
     if ($result !== null) {
         return parseSelectResult($result);
@@ -29,7 +29,7 @@ Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
 }
 
 Function singleTableDeleteUserQuery($conditionsAssociativeArray, $tableName) {
-    $conditions = transformConditionsToString($conditionsAssociativeArray);        
+    $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "DELETE FROM $tableName WHERE $conditions;";
     $db = new DatabaseGateway();
     return $db->queryDB($sql);
@@ -84,7 +84,7 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $configPath = dirname( __FILE__, 3 ) . "\databaseConfig.ini";
+        $configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];
@@ -113,7 +113,7 @@ class DatabaseGateway
         return $toReturn;
     }
 
-    public function manualQueryDB($sql) {
+    public function manualQueryDB($sql, $returnIndex) {
         console_log($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
@@ -133,7 +133,15 @@ class DatabaseGateway
                     console_error($conn->error);
                 }
             }
-            $toReturn = $returned[count($returned) - 1];
+            // if the return index is not a number or if it is larger than the
+            // number of results, the last result is returned.
+            if (!is_int($returnIndex) || $returnIndex > count($returned)) {
+                $returnIndex = count($returned) - 1;
+            }
+            if ($returnIndex < 0) {
+                $returnIndex = 0;
+            }
+            $toReturn = $returned[$returnIndex];
         }
         return $toReturn;
     }

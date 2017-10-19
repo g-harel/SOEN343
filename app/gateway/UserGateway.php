@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Gateway;
+
 use App\Gateway\DatabaseGateway;
 
 class UserGateway
@@ -47,7 +48,7 @@ class UserGateway
         $result = null;
         if ($isInsertSuccessful) {
             $conditionsAssociativeArray = ["email" => $email];
-            $conditions = transformConditionsToString($conditionsAssociativeArray);        
+            $conditions = transformConditionsToString($conditionsAssociativeArray);
             $sql = "SELECT * FROM $this->tableName WHERE $conditions;";
             $result = $this->db->manualQueryDB($sql);
             $this->db->closeDBConnection();
