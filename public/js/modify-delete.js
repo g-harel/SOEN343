@@ -51,6 +51,8 @@ let ModifyDelete = (function () {
         },
         bindModifyActions: function () {
             /**
+             * Checked radio button based on the value
+             * of Touchscreen and Camera clicked row
              * @param adminChoice - text from the clicked row
              * @param choices
              */
@@ -62,7 +64,7 @@ let ModifyDelete = (function () {
                 }
             };
             /**
-             * Adds "selected" in select drop down based
+             * Adds "selected" in select drop down option item based
              * on the text value in clicked row
              * @param form
              * @param idSelector
@@ -82,46 +84,34 @@ let ModifyDelete = (function () {
             editDeleteMonitor.editLink.click(function (event) {
                 let tr = $(this).parentsUntil("table");
                 let form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
-
+                // monitor drop downs
                 genericOptionSelector(form, "#monitor-brand", tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, "#monitor-display-size", tr.find(dataAttr.displaySize).text());
+                // monitor input fields
                 form.find("#monitor-id").val(tr.find(dataAttr.id).text());
                 form.find("#monitor-price").val(tr.find(dataAttr.price).text());
                 form.find("#monitor-weight").val(tr.find(dataAttr.weight).text());
 
-                // finally show the modal
                 $(editDeleteMonitor.modal).modal('show');
                 event.preventDefault();
                 return false;
             });
 
             editDeleteDesktop.editLink.click(function (event){
-                let tableRow = $(this).parentsUntil('table');
-                // get field text from clicked table row
-                let id = tableRow.find("[data-id]").text();
-                let brand = tableRow.find("[data-brand]").text();
-                let processor = tableRow.find("[data-processor]").text();
-                let ramSize = tableRow.find("[data-ramSize]").text();
-                let capacity = tableRow.find("[data-hddSize]").text();
-                let cpuCores = tableRow.find("[data-cpuCores]").text();
-                let price = tableRow.find("[data-price]").text();
-                let weight = tableRow.find("[data-weight]").text();
-                let height = tableRow.find("[data-height]").text();
-                let width = tableRow.find("[data-width]").text();
-                let thickness = tableRow.find("[data-thickness]").text();
-
-                // populate the form modal with the obtained text above
+                let tr = $(this).parentsUntil('table');
                 let form = editDeleteDesktop.modal.find('.modal-body > form#desktop-form');
-                genericOptionSelector(form, "#computer-brand", brand);
-                genericOptionSelector(form, "#desktop-processor", processor);
-                genericOptionSelector(form, "#desktop-ram-size", ramSize);
-                genericOptionSelector(form, "#storage-capacity", capacity);
-                genericOptionSelector(form, "#cpu-cores", cpuCores);
-                form.find("#desktop-price").val(price);
-                form.find("#desktop-weight").val(weight);
-                form.find("#desktop-height").val(height);
-                form.find("#desktop-width").val(width);
-                form.find("#desktop-thickness").val(thickness);
+                // desktop drop downs
+                genericOptionSelector(form, "#computer-brand", tr.find(dataAttr.brand).text());
+                genericOptionSelector(form, "#desktop-processor", tr.find(dataAttr.processor).text());
+                genericOptionSelector(form, "#desktop-ram-size", tr.find(dataAttr.ramSize).text());
+                genericOptionSelector(form, "#storage-capacity", tr.find(dataAttr.capacity).text());
+                genericOptionSelector(form, "#cpu-cores", tr.find(dataAttr.cpuCores).text());
+                // desktop input fields
+                form.find("#desktop-price").val(tr.find(dataAttr.price).text());
+                form.find("#desktop-weight").val(tr.find(dataAttr.weight).text());
+                form.find("#desktop-height").val(tr.find(dataAttr.height).text());
+                form.find("#desktop-width").val(tr.find(dataAttr.width).text());
+                form.find("#desktop-thickness").val(tr.find(dataAttr.thickness).text());
 
                 $(editDeleteDesktop.modal).modal('show');
                 event.preventDefault();
@@ -131,7 +121,6 @@ let ModifyDelete = (function () {
             editDeleteTablet.editLink.click(function (event){
                 let tr = $(this).parentsUntil("table");
                 let form = editDeleteTablet.modal.find(".modal-body > form#tablet-form");
-
                 // tablet drop downs
                 genericOptionSelector(form, "#tablet-brand", tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, "#tablet-processor", tr.find(dataAttr.processor).text());
@@ -140,13 +129,11 @@ let ModifyDelete = (function () {
                 genericOptionSelector(form, "#tablet-cpu-cores", tr.find(dataAttr.cpuCores).text());
                 genericOptionSelector(form, "#tablet-os", tr.find(dataAttr.os).text());
                 genericOptionSelector(form, "#tablet-display-size", tr.find(dataAttr.displaySize).text());
-
                 // tablet radio buttons
                 let cameraChoice = form.find("[name=tablet-camera]");
                 radioCheckerFn(tr.find(dataAttr.camera).text(), cameraChoice);
                 let touchscreenChoice = form.find("[name=tablet-touchscreen]");
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
-
                 // tablet input fields
                 form.find("#tablet-id").val(tr.find(dataAttr.id).text());
                 form.find("#tablet-price").val(tr.find(dataAttr.price).text());
@@ -163,7 +150,6 @@ let ModifyDelete = (function () {
             editDeleteLaptop.editLink.click(function (event){
                 let tr = $(this).parentsUntil("table");
                 let form = editDeleteLaptop.modal.find(".modal-body > form#laptop-form");
-
                 // laptop drop down fields
                 genericOptionSelector(form, "#laptop-brand", tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, "#laptop-processor", tr.find(dataAttr.processor).text());
@@ -172,13 +158,11 @@ let ModifyDelete = (function () {
                 genericOptionSelector(form, "#laptop-storage-capacity", tr.find(dataAttr.capacity).text());
                 genericOptionSelector(form, "#laptop-display-size", tr.find(dataAttr.displaySize).text());
                 genericOptionSelector(form, "#laptop-os", tr.find(dataAttr.os).text());
-
                 // laptop radio buttons
                 let cameraChoice = form.find("[name=laptop-camera]");
                 radioCheckerFn(tr.find(dataAttr.camera).text(), cameraChoice);
                 let touchscreenChoice = form.find("[name=laptop-touchscreen]");
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
-
                 // laptop input fields
                 form.find("#laptop-price").val(tr.find(dataAttr.price).text());
                 form.find("#laptop-weight").val(tr.find(dataAttr.weight).text());
