@@ -38,7 +38,7 @@
             <td>900</td>
             <td>43</td>
             <td>AMD</td>
-            <td>32</td>
+            <td>2</td>
             <td>1</td>
             <td>4</td>
             <td>16</td>

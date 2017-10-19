@@ -391,26 +391,4 @@
             </div>
         </div>
     </div>
-
-    <!-- trigger onclick depending on which radio button checked -->
-    <script type="text/javascript">
-        function toggleOptions() {
-            let itemContainer = [
-                {radio: $("#type_Computer"), div_id: $("#nextSetOfComputerOptions")},
-                {radio: $("#type_Laptop"),div_id: $("#nextSetOfLaptopOptions")},
-                {radio: $("#type_Tablet"),div_id: $("#nextSetOfTabletOptions")},
-                {radio: $("#type_Monitor"),div_id: $("#nextSetOfMonitorOptions")},
-                {radio: $("#type_Television"), div_id: $("#nextSetOfTelevisionOptions")}
-            ];
-            for(let i = 0; i < itemContainer.length; i++) {
-                if(itemContainer[i].radio.is(":checked")) {
-                    itemContainer[i].div_id.removeClass("hidden");
-                } else {
-                    itemContainer[i].div_id.addClass("hidden");
-                }
-            }
-        }
-    </script>
-
-
 @endsection

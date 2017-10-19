@@ -101,7 +101,6 @@ let ModifyDelete = (function () {
                 rowElements.each(function () {
                     tabletElements.push($(this).text());
                 });
-                console.log(tabletElements);
                 let form = editDeleteTablet.modal.find('.modal-body > form');
                 genericOptionSelector(form, "#tablet-brand", tabletElements[1]);
                 genericOptionSelector(form, "#tablet-processor", tabletElements[4]);
