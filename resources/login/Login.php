@@ -10,16 +10,16 @@ class Login{
     private $email;
     private $password;
 
-    public function __construct($email, $password) {
-
-        $this->userMapper = new UserMapper();
+    public function __construct($email, $password) 
+    {
+        UserMapperManager.addUserMapper($email, new UserMapper());
         $this->email = $email;
         $this->password = $password;
     }
 
     public function validate()
 	{ 
-		$user = $this->userMapper->setUserFromRecordByEmail($this->email)->getUser();
+        $user = UserMapperManager.getUserMapper($this->email)->setUserFromRecordByEmail($this->email)->getUser();
 	
 		if($user){;
             $password = $user->getPassword();
@@ -45,9 +45,9 @@ class Login{
         
     }
 
-    public function logout(){
-        
-        
+    public function logout()
+    {
+        UserMapperManager.removeUserMapper($this->email);
     }
 }
 
