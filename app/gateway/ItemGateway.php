@@ -84,6 +84,20 @@ abstract class ItemGateway implements iItemCategory {
         return parseSelectResult($result);
     }
 
+    public function deleteByCondition($condition) {
+        $conditionString = transformConditionsToString($condition);
+        $result = $this->gateway->queryDB("DELETE FROM items WHERE $conditionString;");
+        return parseSelectResult($result);
+    }
+
+    public function deleteById($id) {
+        return $this->deleteByCondition(array("id" => $id));
+    }
+
+    public function delete($item) {
+        return $this->deleteByCondition(array("id" => $item["id"]));
+    }
+
     // the following values should be overwritten by children
 
     public static $fields = array(
