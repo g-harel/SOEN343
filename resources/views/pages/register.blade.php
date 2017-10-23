@@ -42,6 +42,36 @@
 	background-color: #53A3CD;
 	border-color: #53A3CD;
 }
+       
+#door_number{
+    width: 80px;
+    display: inline;
+}    
+       
+#street{
+   display: inline;
+   width: 340px;
+
+}       
+#appartment{
+    display: inline;
+   width: 90px;
+}
+       
+#city, #province, #country{
+   width: 170;
+   display: inline;
+   margin-top: 5px;
+}
+#phone1,#phone2,#phone3{
+   width: 100px;
+   display: inline;
+}
+#postalCode{
+    margin-top: 5px;
+    width: auto;
+}
+       
 </style>
 @section('content')
 <div class="container">
@@ -52,9 +82,8 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form id="register-form" action="" method="post" role="form" style="display: block;">
+                        <form id="register-form" action="registerVerification" method="post" role="form" style="display: block;">
                             
-
                             <div class="form-group">
                                 <label for="firstName">
                                     First name
@@ -70,17 +99,32 @@
                             </div>
 
                             <div class="form-group">
-                                 <label for="address">
+                                 <label for="door_number">
                                     Home address
-                                </label>
-                                <input type="text" name="address" id="address" tabindex="1" class="form-control" placeholder="" value="" required>
+                                </label><br>
+                                <input type="text" name="door_number" id="door_number" tabindex="1" class="form-control" placeholder="#" value="" required>
+                                
+                                <input type="text" name="street" id="street" tabindex="1" class="form-control" placeholder="Street" value="" required>
+                                
+                                <input type="text" name="appartment" id="appartment" tabindex="1" class="form-control" placeholder="Appt." value="">
+                                
+                                <input type="text" name="city" id="city" tabindex="1" class="form-control" placeholder="City" value="" required>
+                                
+                                <input type="text" name="province" id="province" tabindex="1" class="form-control" placeholder="Province" value="" required>
+                                
+                                <input type="text" name="country" id="country" tabindex="1" class="form-control" placeholder="Country" value="" required>
+                                
+                                <input type="text" name="postalCode" id="postalCode" tabindex="1" class="form-control" placeholder="Postal Code" value="" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="phone">
                                     Phone number
-                                </label>
-                                <input type="text" name="phone" id="phone" tabindex="1" class="form-control" placeholder="" value="" required>
+                                </label><br>
+                                <input type="text" name="phone1" id="phone1" tabindex="1" class="form-control" placeholder="" value="" maxlength="3" required>-
+                                <input type="text" name="phone2" id="phone2" tabindex="1" class="form-control" placeholder="" value="" maxlength="3" required>-
+                                <input type="text" name="phone3" id="phone3" tabindex="1" class="form-control" placeholder="" value="" maxlength="4" required>
+                                
                             </div>
                             
                             <div class="form-group">
@@ -94,7 +138,7 @@
                                 <label for="password">
                                     Password
                                 </label>
-                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" required>
+                                <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" maxlength="16" required>
                                  <small id="passwordHelp" class="form-text text-muted">Between 2 and 16 characters.</small>
                             </div>
                             
