@@ -93,7 +93,8 @@
                     <td>   </td>
                     <td>
                         <button type="button" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                            <span class="glyphicon glyphicon-shopping-cart"></span><a href="/items" style="color:white">Continue Shopping</a>
+
                         </button>
                     </td>
                     <td>
