@@ -2,7 +2,7 @@
 
 namespace App\Gateway;
 
-use App\Gateway\ItemGateway;
+use Illuminate\Support\Facades\DB;
 
 class MonitorGateway extends ItemGateway implements iItemCategory {
   public static $fields = array(
@@ -24,5 +24,10 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
       $id = $item["id"];
       $values = $this->updateList(self::$fields, $item);
       return parent::buildUpdate($item)."UPDATE monitors SET $values WHERE item_id = $id;";
+  }
+
+  public function getAll()
+  {
+      return DB::select($this->buildSelect());
   }
 }
