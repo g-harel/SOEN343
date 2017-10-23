@@ -43,6 +43,14 @@ CREATE TABLE `soen343`.`items` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
+(1, 'test', 'test', 12.00, 1),
+(2, 'test2', 'test2', 99.00, 99);
+
 -- -----------------------------------------------------
 -- Table `soen343`.`monitor`
 -- -----------------------------------------------------
@@ -58,6 +66,15 @@ CREATE TABLE `soen343`.`monitors` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+--
+-- Dumping data for table `monitors`
+--
+
+INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
+(1, 12.00, 12.00),
+(2, 77.00, 77.00);
+
 
 
 -- -----------------------------------------------------

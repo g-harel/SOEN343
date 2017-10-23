@@ -2,9 +2,32 @@
 
 namespace App\Mappers;
 
+use App\Gateway\MonitorGateway;
+
 class MonitorMapper extends ItemMapper{
 
     private $monitor;
+    private $gateway;
+
+    public function __construct()
+    {
+        $this->gateway = new MonitorGateway();
+    }
+
+    public function getMonitor()
+    {
+        return $this->monitor;
+    }
+
+    public function setMonitor($monitor)
+    {
+        $this->monitor = $monitor;
+    }
+
+    public function getMonitors()
+    {
+        return $this->gateway->buildSelect();
+    }
 
     //Getters
     public function getDisplaySize() {
