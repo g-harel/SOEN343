@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mappers\LaptopMapper;
 
 class ComputerController extends Controller
 {
@@ -18,7 +19,11 @@ class ComputerController extends Controller
     }
 
     public function showLaptop() {
-        return view('items.computer.show-laptop');
+
+        $laptopMapper = new LaptopMapper();
+        $laptops = $laptopMapper->getAllLaptops();
+
+        return view('items.computer.show-laptop', ['laptops' => $laptops]);
     }
 
     public function showTablet() {

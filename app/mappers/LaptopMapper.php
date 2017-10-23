@@ -2,11 +2,29 @@
 
 namespace App\Mappers;
 
+use App\Gateway\LaptopGateway;
+
 class LaptopMapper extends ItemMapper{
 
     private $laptop;
+    private $gateway;
+
+    public function __construct()
+    {
+        $this->gateway = new LaptopGateway();
+    }
+
+    public function getAllLaptops()
+    {
+        return $this->gateway->getAll();
+    }
 
     //Getters
+    public function getLaptop()
+    {
+        return $this->laptop;
+    }
+
     public function getDisplaySize() {
         return $this->laptop->getDisplaySize();
     }
@@ -28,6 +46,11 @@ class LaptopMapper extends ItemMapper{
     }
 
     //Setters
+    public function setLaptop($laptop)
+    {
+        $this->laptop = $laptop;
+    }
+
     public function setDisplaySize($displaySize) {
         return $this->laptop->setDisplaySize($displaySize);
     }

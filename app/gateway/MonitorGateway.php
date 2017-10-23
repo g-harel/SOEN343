@@ -11,7 +11,7 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
   );
 
   public function buildSelect() {
-      return parent::buildSelect()." LEFT JOIN monitors ON items.id = monitors.item_id";
+      return parent::buildSelect()." INNER JOIN monitors ON items.id = monitors.item_id";
   }
 
   public function buildInsert($item) {

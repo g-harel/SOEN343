@@ -17,7 +17,7 @@ class TabletGateway extends ComputerGateway implements iItemCategory {
     );
 
     public function buildSelect() {
-        return parent::buildSelect()." LEFT JOIN tablets ON items.id = tablets.item_id";
+        return parent::buildSelect()." INNER JOIN tablets ON items.id = tablets.item_id";
     }
 
     public function buildInsert($item) {

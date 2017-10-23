@@ -24,7 +24,7 @@ class MonitorMapper extends ItemMapper{
         $this->monitor = $monitor;
     }
 
-    public function getMonitors()
+    public function getAllMonitors()
     {
         return $this->gateway->getAll();
     }

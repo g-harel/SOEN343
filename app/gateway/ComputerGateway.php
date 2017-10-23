@@ -14,7 +14,7 @@ class ComputerGateway extends ItemGateway implements iItemCategory {
     );
 
     public function buildSelect() {
-        return parent::buildSelect()." LEFT JOIN computers ON items.id = computers.item_id";
+        return parent::buildSelect()." INNER JOIN computers ON items.id = computers.item_id";
     }
 
     public function buildInsert($item) {

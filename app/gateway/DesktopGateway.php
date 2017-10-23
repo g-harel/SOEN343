@@ -12,7 +12,7 @@ class DesktopGateway extends ComputerGateway implements iItemCategory {
     );
 
     public function buildSelect() {
-        return parent::buildSelect()." LEFT JOIN desktops ON items.id = desktops.item_id";
+        return parent::buildSelect()." INNER JOIN desktops ON items.id = desktops.item_id";
     }
 
     public function buildInsert($item) {
