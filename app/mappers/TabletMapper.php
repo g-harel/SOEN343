@@ -2,9 +2,32 @@
 
 namespace App\Mappers;
 
+use App\Gateway\TabletGateway;
+
 class TabletMapper extends ItemMapper{
 
     private $tablet;
+    private $gateway;
+
+    public function __construct()
+    {
+        $this->gateway = new TabletGateway();
+    }
+
+    public function getTablet()
+    {
+        return $this->tablet;
+    }
+
+    public function setTablet($tablet)
+    {
+        $this->tablet = $tablet;
+    }
+
+    public function getAllTablets()
+    {
+        return $this->gateway->getAll();
+    }
 
     //Getters
     public function getDisplaySize() {

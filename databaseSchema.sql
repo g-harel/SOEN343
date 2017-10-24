@@ -50,8 +50,11 @@ ENGINE = InnoDB;
 INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
 (1, 'test', 'test', 12.00, 1),
 (2, 'test2', 'test2', 99.00, 99),
-(3, 'Laptop', 'IBM', 1500.00, 2),
-(4, 'desktop', 'Dell', 1055.00, 20);
+(3, 'laptop', 'IBM', 1500.00, 2),
+(4, 'desktop', 'Dell', 1055.00, 20),
+(5, 'tablet', 'Apple', 900.00, 43),
+(6, 'laptop', 'Apple', 9999.00, 9);
+
 
 -- -----------------------------------------------------
 -- Table `soen343`.`monitor`
@@ -104,7 +107,9 @@ ENGINE = InnoDB;
 
 INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `weight`, `hdd_size`) VALUES
 (3, 'Intel', 12, 4, 5.00, 128),
-(4, 'Rockchip', 16, 6, 13.20, 1000);
+(4, 'Rockchip', 16, 6, 13.20, 1000),
+(5, 'AMD', 2, 4, 1.00, 2000),
+(6, 'Intel', 8, 2, 3.00, 256);
 
 
 -- -----------------------------------------------------
@@ -156,7 +161,8 @@ ENGINE = InnoDB;
 --
 
 INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is_touchscreen`) VALUES
-(3, 14.00, 'Windows XP', 'Li-Ion', 'Yes', 0);
+(3, 14.00, 'Windows XP', 'Li-Ion', 'Yes', 0),
+(6, 13.30, 'macOS', 'Mac', 'Yes', 0);
 
 
 -- -----------------------------------------------------
@@ -180,6 +186,13 @@ CREATE TABLE `soen343`.`tablets` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+--
+-- Dumping data for table `tablets`
+--
+
+INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`, `battery`, `os`, `camera`, `is_touchscreen`) VALUES
+(5, 7.00, 3.00, 2.00, 6.00, 'Mac', 'iOS', 'Yes', 0);
 
 -- --------------------------------------------------------
 

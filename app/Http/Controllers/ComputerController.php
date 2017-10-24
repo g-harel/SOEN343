@@ -20,7 +20,7 @@ class ComputerController extends Controller
         $desktopMapper = new DesktopMapper();
         $desktops = $desktopMapper->getAllDesktops();
 
-        return view('items.computer.show-desktop', ['desktops'=> $desktops]);
+        return view('items.computer.show-desktop', ['desktops' => $desktops]);
     }
 
     public function showLaptop() {
@@ -32,6 +32,10 @@ class ComputerController extends Controller
     }
 
     public function showTablet() {
-        return view('items.computer.show-tablet');
+
+        $tabletMapper = new TabletMapper();
+        $tablets = $tabletMapper->getAllTablets();
+
+        return view('items.computer.show-tablet', ['tablets' => $tablets]);
     }
 }
