@@ -139,7 +139,7 @@
                                     Password
                                 </label>
                                 <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" maxlength="16" required>
-                                 <small id="passwordHelp" class="form-text text-muted">Between 2 and 16 characters.</small>
+                                 <small id="passwordHelp" class="form-text text-muted">Maximum 16 characters.</small>
                             </div>
                             
                             <div class="form-group">

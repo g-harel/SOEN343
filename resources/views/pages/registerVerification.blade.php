@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . "/../../../app/gateway/UserGateway.php");
+include_once(__DIR__ . "/../../../resources/login/Register.php");
 
 
 $firstName = $_POST['firstname'];
@@ -19,19 +19,12 @@ $province = $_POST['province'];
 $country = $_POST['country'];
 $postalCode = $_POST['postalCode'];
 
-$TDG = new UserGateway();
 
-$result=$TDG->addUser($email,$password,$firstName,$lastName,$phoneNumber,$doorNumber,$appt,$street,$city,$province,$country,$postalCode,$is_Admin);
-
-
-
-
-
+$register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
+$result = $register->createUser();
 
 /*
-$login = new Login($email, $password);
-$result = $login->validate();
-
+If registration is successful, login user 
 if($result == 1){
     $_SESSION['isAdmin'] = $result;
     header("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin");
