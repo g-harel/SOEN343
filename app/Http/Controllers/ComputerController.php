@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mappers\LaptopMapper;
+use App\Mappers\DesktopMapper;
+use App\Mappers\TabletMapper;
 
 class ComputerController extends Controller
 {
@@ -15,7 +17,10 @@ class ComputerController extends Controller
     public function showDesktop() {
         // syntax:
         // folderName.folderName.fileName.php
-        return view('items.computer.show-desktop');
+        $desktopMapper = new DesktopMapper();
+        $desktops = $desktopMapper->getAllDesktops();
+
+        return view('items.computer.show-desktop', ['desktops'=> $desktops]);
     }
 
     public function showLaptop() {

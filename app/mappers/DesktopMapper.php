@@ -2,9 +2,32 @@
 
 namespace App\Mappers;
 
+use App\Gateway\DesktopGateway;
+
 class DesktopMapper extends ItemMapper{
 
     private $desktop;
+    private $gateway;
+
+    public function __construct()
+    {
+        $this->gateway = new DesktopGateway();
+    }
+
+    public function getDesktop()
+    {
+        return $this->desktop;
+    }
+
+    public function setDesktop($desktop)
+    {
+        $this->desktop = $desktop;
+    }
+
+    public function getAllDesktops()
+    {
+        return $this->gateway->getAllDesktops();
+    }
 
     //Getters
     public function getHeight() {
@@ -20,7 +43,6 @@ class DesktopMapper extends ItemMapper{
     }
 
     //Setters
-
     public function setHeight($height) {
         return $this->desktop->setHeight($height);
     }

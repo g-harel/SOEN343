@@ -50,7 +50,8 @@ ENGINE = InnoDB;
 INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
 (1, 'test', 'test', 12.00, 1),
 (2, 'test2', 'test2', 99.00, 99),
-(3, 'Laptop', 'IBM', 1500.00, 2);
+(3, 'Laptop', 'IBM', 1500.00, 2),
+(4, 'desktop', 'Dell', 1055.00, 20);
 
 -- -----------------------------------------------------
 -- Table `soen343`.`monitor`
@@ -87,7 +88,7 @@ CREATE TABLE `soen343`.`computers` (
   `ram_size` INT UNSIGNED NOT NULL,
   `cpu_cores` INT UNSIGNED NOT NULL,
   `weight` FLOAT(10, 2) NOT NULL,
-  `hdd_size` int(11) NOT NULL,
+  `hdd_size` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE INDEX `id_UNIQUE` (`item_id` ASC),
   CONSTRAINT `fk_computer_item_id`
@@ -102,7 +103,8 @@ ENGINE = InnoDB;
 --
 
 INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `weight`, `hdd_size`) VALUES
-(3, 'Intel', 12, 4, 5.00, 128);
+(3, 'Intel', 12, 4, 5.00, 128),
+(4, 'Rockchip', 16, 6, 13.20, 1000);
 
 
 -- -----------------------------------------------------
@@ -121,6 +123,13 @@ CREATE TABLE `soen343`.`desktops` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+--
+-- Dumping data for table `desktops`
+--
+
+INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
+(4, 43.00, 24.00, 13.00);
 
 
 -- -----------------------------------------------------
