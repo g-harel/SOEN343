@@ -18,7 +18,7 @@ class ComputerController extends Controller
         // syntax:
         // folderName.folderName.fileName.php
         $desktopMapper = new DesktopMapper();
-        $desktops = $desktopMapper->getAllDesktops();
+        $desktops = $desktopMapper->getAll();
 
         return view('items.computer.show-desktop', ['desktops' => $desktops]);
     }
@@ -26,7 +26,7 @@ class ComputerController extends Controller
     public function showLaptop() {
 
         $laptopMapper = new LaptopMapper();
-        $laptops = $laptopMapper->getAllLaptops();
+        $laptops = $laptopMapper->getAll();
 
         return view('items.computer.show-laptop', ['laptops' => $laptops]);
     }
@@ -34,7 +34,7 @@ class ComputerController extends Controller
     public function showTablet() {
 
         $tabletMapper = new TabletMapper();
-        $tablets = $tabletMapper->getAllTablets();
+        $tablets = $tabletMapper->getAll();
 
         return view('items.computer.show-tablet', ['tablets' => $tablets]);
     }

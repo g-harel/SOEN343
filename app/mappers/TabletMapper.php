@@ -24,7 +24,7 @@ class TabletMapper extends ItemMapper{
         $this->tablet = $tablet;
     }
 
-    public function getAllTablets()
+    public function getAll()
     {
         return $this->gateway->getAll();
     }

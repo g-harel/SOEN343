@@ -14,7 +14,7 @@ class LaptopMapper extends ItemMapper{
         $this->gateway = new LaptopGateway();
     }
 
-    public function getAllLaptops()
+    public function getAll()
     {
         return $this->gateway->getAll();
     }

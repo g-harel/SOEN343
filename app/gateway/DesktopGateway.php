@@ -27,7 +27,7 @@ class DesktopGateway extends ComputerGateway implements iItemCategory {
         return parent::buildUpdate($item)."UPDATE desktops SET $values WHERE item_id = $id;";
     }
 
-    public function getAllDesktops()
+    public function getAll()
     {
         return DB::select($this->buildSelect());
     }

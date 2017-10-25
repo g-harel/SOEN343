@@ -24,9 +24,9 @@ class DesktopMapper extends ItemMapper{
         $this->desktop = $desktop;
     }
 
-    public function getAllDesktops()
+    public function getAll()
     {
-        return $this->gateway->getAllDesktops();
+        return $this->gateway->getAll();
     }
 
     //Getters
