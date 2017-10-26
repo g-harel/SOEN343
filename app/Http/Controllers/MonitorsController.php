@@ -22,14 +22,17 @@ class MonitorsController extends Controller
         $price = $_POST['monitor-price'];
         $display_size = $_POST['monitor-display-size'];
         $monitor_weight = $_POST['monitor-weight'];
+
+        $monitor_array = [$quantity,$brand,$price,$display_size,$monitor_weight];
+
         $monitor = new MonitorGateway();
         $item = [
             "category" => "monitor",
-            "brand" => "apple",
-            "price" => 200,
-            "quantity" => $_POST['this-monitor-qty'],
-            "display_size" => 12,
-            "weight" => 2
+            "brand" => $brand,
+            "price" => $price,
+            "quantity" => $quantity,
+            "display_size" => $display_size,
+            "weight" => $monitor_weight
         ];
         $monitor->insert($item);
         echo "inserted";
