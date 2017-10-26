@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-@section('content')
    <style>
 .panel-register {
     border-color: #ccc;
@@ -83,19 +81,19 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form id="register-form" action="registerVerification" method="post" role="form" style="display: block;">
-                            
+                        {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="firstName">
+                                <label for="first_name">
                                     First name
                                 </label>
-                                <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="" value="" required>
+                                <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="lastName">
+                                <label for="last_name">
                                     Last name
                                 </label>
-                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="" value="" required>
+                                <input type="text" name="last_name" id="last_name" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
 
                             <div class="form-group">
@@ -114,7 +112,7 @@
                                 
                                 <input type="text" name="country" id="country" tabindex="1" class="form-control" placeholder="Country" value="" required>
                                 
-                                <input type="text" name="postalCode" id="postalCode" tabindex="1" class="form-control" placeholder="Postal Code" value="" required>
+                                <input type="text" name="postal_code" id="postal_code" tabindex="1" class="form-control" placeholder="Postal Code" value="" style="margin-top:5px;" required>
                             </div>
                             
                             <div class="form-group">
