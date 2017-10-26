@@ -356,27 +356,27 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="text" name="this-monitor-qty" id="this-monitor-qty" class="form-control">
+                                    <input type="number" name="this-monitor-qty" id="this-monitor-qty" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Brand Name:
-                                    <select name="monitor-brand" id="monitor-brand" class="form-control">
-                                        <option title="Select brands" selected disabled>Select brands</option>
+                                    <select name="monitor-brand" id="monitor-brand" class="form-control" required>
+                                        <option title="Select brands" value="">Select Brand</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="monitor-price" id="monitor-price" class="form-control">
+                                    <input type="text" name="monitor-price" id="monitor-price" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Display size (inches):
-                                    <select name="monitor-display-size" id="monitor-display-size" class="form-control">
+                                    <select name="monitor-display-size" id="monitor-display-size" class="form-control" required>
                                         <option title="Select display size" selected disabled>Select display size</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input type="text" name="monitor-weight" id="monitor-weight" class="form-control">
+                                    <input type="text" name="monitor-weight" id="monitor-weight" class="form-control" required>
                                 </div>
                             </div>
                             <div class="2"></div>
