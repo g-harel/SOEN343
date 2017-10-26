@@ -67,7 +67,7 @@ class DatabaseGateway
     public function __construct() {
         $this->serverName = "localhost";
         $this->userName = "root";
-        $this->password = "root";
+        $this->password = "";
         $this->databaseName = "soen343";
     }
 
