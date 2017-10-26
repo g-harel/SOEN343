@@ -41,7 +41,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" required min="1" name="this-desktop-qty" id="this-desktop-qty" class="form-control">
+                                    <input type="number" required name="this-desktop-qty" id="this-desktop-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -199,6 +199,7 @@
                 <!-- Form for Tablets -->
                 <div id="nextSetOfTabletOptions" class="row hidden"><hr>
                     <form id="tablet-form"  class="form-horizontal" action="/items/computer/tablet/insert" method="POST">
+                        {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
@@ -208,7 +209,7 @@
                                 <div class="form-group">
                                     Brand:
                                     <select required name="tablet-brand" id="tablet-brand" class="form-control">
-                                        <option title="Select brands" value=""Select brands</option>
+                                        <option title="Select brands" value="">Select brands</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
