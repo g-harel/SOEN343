@@ -349,7 +349,8 @@
 
                 <!-- Form for Monitors -->
                 <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
-                    <form id="monitor-form" class="form-horizontal">
+                    <form id="monitor-form" class="form-horizontal" action="monitor/insert" method="post">
+                        {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="2"></div>
                             <div class="col-md-7">

@@ -40,3 +40,5 @@ Route::get('/admin/view', 'AdminController@showItems');//Login pages
 Route::get('/login', 'PagesController@login');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
+
+Route::post('items/monitor/insert', 'MonitorsController@insert');
