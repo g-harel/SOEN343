@@ -13,4 +13,8 @@ class MonitorsController extends Controller
     public function showMonitor() {
         return view('items.monitor.show-monitor');
     }
+
+    public function insert() {
+        // new branch 
+    }
 }
