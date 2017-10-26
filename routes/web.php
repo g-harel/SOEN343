@@ -26,9 +26,14 @@ Route::resource('items', 'ItemsController');
 Route::get('items/tv/showTv', 'TelevisionsController@showTv');
 
 // Computer
+// TODO group routes together
 Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
 Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
 Route::get('items/computer/showTablet', 'ComputerController@showTablet');
+Route::post('items/computer/desktop/insert', 'ComputerController@insertDesktop');
+Route::post('items/computer/tablet/insert', 'ComputerController@insertTablet');
+///
+
 
 
 // Monitor

@@ -35,41 +35,42 @@
 
                 <!-- Form for Computers -->
                 <div id="nextSetOfComputerOptions" class="row hidden"><hr>
-                    <form id="desktop-form" class="form-horizontal">
+                    <form id="desktop-form" class="form-horizontal" action="/items/computer/desktop/insert" method="POST">
+                        {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="text" name="this-desktop-qty" id="this-desktop-qty" class="form-control">
+                                    <input type="number" required min="1" name="this-desktop-qty" id="this-desktop-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
-                                    <select name="computer-brand" id="computer-brand" class="form-control">
-                                        <option title="Select brands" selected disabled>Select brands</option>
+                                    <select required name="computer-brand" id="computer-brand" class="form-control">
+                                        <option title="Select brands" value="">Select brands</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
-                                    <select name="desktop-processor" id="desktop-processor" class="form-control">
-                                        <option title="Select processor" selected disabled>Select processor</option>
+                                    <select required name="desktop-processor" id="desktop-processor" class="form-control">
+                                        <option title="Select processor" value="">Select processor</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     RAM Size:
-                                    <select name="desktop-ram-size" id="desktop-ram-size" class="form-control">
-                                        <option title="Select ram size" selected disabled>Select ram size</option>
+                                    <select required name="desktop-ram-size" id="desktop-ram-size" class="form-control">
+                                        <option title="Select ram size" value="">Select ram size</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Hard Drive Size:
-                                    <select name="storage-capacity" id="storage-capacity" class="form-control">
-                                        <option title="Select storage qty" selected disabled>Select storage size</option>
+                                    <select required name="storage-capacity" id="storage-capacity" class="form-control">
+                                        <option title="Select storage qty" value="">Select storage size</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Number of Cores:
-                                    <select name="desktop-cpu-cores" id="cpu-cores" class="form-control">
-                                        <option title="Select cpu cores" selected disabled>Select cpu cores size</option>
+                                    <select required name="desktop-cpu-cores" id="cpu-cores" class="form-control">
+                                        <option title="Select cpu cores" value="">Select cpu cores</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,23 +78,23 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="desktop-price" id="desktop-price" class="form-control">
+                                    <input required type="text" name="desktop-price" id="desktop-price" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input type="text" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    <input required type="number" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input type="text" name="desktop-height" id="desktop-height" class="form-control">
+                                    <input required type="text" name="desktop-height" id="desktop-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Width (cm):
-                                    <input type="text" name="desktop-width" id="desktop-width" class="form-control">
+                                    <input required type="text" name="desktop-width" id="desktop-width" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                                    <input required type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -197,47 +198,47 @@
 
                 <!-- Form for Tablets -->
                 <div id="nextSetOfTabletOptions" class="row hidden"><hr>
-                    <form id="tablet-form"  class="form-horizontal">
+                    <form id="tablet-form"  class="form-horizontal" action="/items/computer/tablet/insert" method="POST">
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="text" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
+                                    <input required type="number" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
-                                    <select name="tablet-brand" id="tablet-brand" class="form-control">
-                                        <option title="Select brands" selected disabled>Select brands</option>
+                                    <select required name="tablet-brand" id="tablet-brand" class="form-control">
+                                        <option title="Select brands" value=""Select brands</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
-                                    <select name="tablet-processor" id="tablet-processor" class="form-control">
-                                        <option title="Select processor" selected disabled>Select processor</option>
+                                    <select required name="tablet-processor" id="tablet-processor" class="form-control">
+                                        <option title="Select processor" value="">Select processor</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     RAM Size:
-                                    <select name="tablet-ram-size" id="tablet-ram-size" class="form-control">
-                                        <option title="Select ram size" selected disabled>Select ram size</option>
+                                    <select required name="tablet-ram-size" id="tablet-ram-size" class="form-control">
+                                        <option title="Select ram size" value="">Select ram size</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Hard Drive Size:
-                                    <select name="tablet-storage-capacity" id="tablet-storage-capacity" class="form-control">
-                                        <option title="Select storage capacity" selected disabled>Select storage capacity</option>
+                                    <select required name="tablet-storage-capacity" id="tablet-storage-capacity" class="form-control">
+                                        <option title="Select storage capacity" value="">Select storage capacity</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Number of Cores:
-                                    <select name="tablet-cpu-cores" id="tablet-cpu-cores" class="form-control">
-                                        <option title="Select cpu cores" selected disabled>Select cpu cores</option>
+                                    <select required name="tablet-cpu-cores" id="tablet-cpu-cores" class="form-control">
+                                        <option title="Select cpu cores" value="">Select cpu cores</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Display size (inches):
-                                    <select name="tablet-display-size" id="tablet-display-size" class="form-control">
-                                        <option title="Select display size" selected disabled>Select display size</option>
+                                    <select required name="tablet-display-size" id="tablet-display-size" class="form-control">
+                                        <option title="Select display size" value="">Select display size</option>
                                     </select>
                                 </div>
                             </div>
@@ -245,39 +246,39 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     OS:
-                                    <select name="tablet-os" id="tablet-os" class="form-control">
-                                        <option title="Select OS" selected disabled>Select OS</option>
+                                    <select required name="tablet-os" id="tablet-os" class="form-control">
+                                        <option title="Select OS" value="">Select OS</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="tablet-price" id="tablet-price"  class="form-control">
+                                    <input required type="text" name="tablet-price" id="tablet-price"  class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input type="text" name="tablet-weight" id="tablet-weight" class="form-control">
+                                    <input required type="number" name="tablet-weight" id="tablet-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input type="text" name="tablet-thickness" id="tablet-thickness" class="form-control">
+                                    <input required type="text" name="tablet-thickness" id="tablet-thickness" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input type="text" name="tablet-height" id="tablet-height" class="form-control">
+                                    <input required type="text" name="tablet-height" id="tablet-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Battery:
-                                    <input type="text" name="tablet-battery" id="tablet-battery" class="form-control">
+                                    <input required type="text" name="tablet-battery" id="tablet-battery" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Camera:<br>
-                                    <input type="radio" title="tablet camera" name="tablet-camera" value="Yes" id="tablet-camera">&nbsp;Yes
-                                    <input type="radio" title="tablet camera" name="tablet-camera" value="No" id="tablet-camera">&nbsp;No
+                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="Yes" id="tablet-camera">&nbsp;Yes
+                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="No" id="tablet-camera">&nbsp;No
                                 </div>
                                 <div class="form-group">
                                     Touchscreen:<br>
-                                    <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="Yes" id="tablet-camera">&nbsp;Yes
-                                    <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No" id="tablet-camera">&nbsp;No
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="Yes" id="tablet-camera">&nbsp;Yes
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No" id="tablet-camera">&nbsp;No
                                 </div>
                             </div>
                         </div>
