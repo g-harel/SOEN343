@@ -6,7 +6,6 @@ php:
 before_install:
   - cp .env.travis .env
   - mysql -e 'CREATE DATABASE soen343;'
-  - mysql -u root -p soen343 < ./databaseSchema.sql
 
 install:
   - composer install
