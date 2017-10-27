@@ -3,7 +3,7 @@
 use App\Mappers\UserMapper;
 use App\Models\User;
 
-class Register{
+class Register {
 
     private $userMapper;
     /*account info*/
@@ -24,18 +24,14 @@ class Register{
     public function __construct($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode) {
         $this->userMapper = new UserMapper();
         $newUser = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-    $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin=false);
+        $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin=false);
         $result = $this->userMapper->setUser($newUser);
-        
     }
     
     public function createUser(){
         $result= $this->userMapper->saveUserInRecord();
         return $result;
         
-    }
-    
+    } 
 }
-
-
 ?>
