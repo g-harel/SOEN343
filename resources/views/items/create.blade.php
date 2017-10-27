@@ -9,6 +9,21 @@
     </div>
 
     <div class="row">
+        @if(!empty($inputErrors))
+            @foreach($inputErrors as $value)
+                <div class='alert alert-{{$alertType}}'>
+                    <p>Invalid {{str_replace('-', ' ', $value)}}!</p>
+                </div>
+            @endforeach
+        @endif
+        @if(isset($insertedSuccessfully))
+        <div class='alert alert-success'>
+            <p>{{$insertedSuccessfully}}</p>
+        </div>
+        @endif
+    </div>
+
+    <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h2 class="size-font-30">Create Items</h2>
@@ -41,7 +56,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" required name="this-desktop-qty" id="this-desktop-qty" class="form-control">
+                                    <input type="number" min="1" required name="desktop-qty" id="this-desktop-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -78,23 +93,23 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input required type="text" name="desktop-price" id="desktop-price" class="form-control">
+                                    <input required type="number" min="1" max="99999" step="any" name="desktop-price" id="desktop-price" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input required type="number" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    <input required type="number" min="1" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input required type="text" name="desktop-height" id="desktop-height" class="form-control">
+                                    <input required type="number" step="any" name="desktop-height" id="desktop-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Width (cm):
-                                    <input required type="text" name="desktop-width" id="desktop-width" class="form-control">
+                                    <input required type="number" step="any" name="desktop-width" id="desktop-width" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input required type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                                    <input required type="number" step="any" name="desktop-thickness" id="desktop-thickness" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -116,7 +131,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" name="this-laptop-qty" id="this-laptop-qty" class="form-control" required>
+                                    <input type="number" min="1" name="this-laptop-qty" id="this-laptop-qty" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -205,7 +220,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input required type="number" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
+                                    <input required type="number" min="1" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -258,7 +273,7 @@
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input required type="number" name="tablet-weight" id="tablet-weight" class="form-control">
+                                    <input required type="number" min="1" name="tablet-weight" id="tablet-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
@@ -359,7 +374,7 @@
                             <div class="col-md-7">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" name="this-monitor-qty" id="this-monitor-qty" class="form-control" required>
+                                    <input type="number" min="1" name="this-monitor-qty" id="this-monitor-qty" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Brand Name:
