@@ -12,7 +12,7 @@
         @foreach($inputErrors as $value)
             <div class="row">
                 <div class='alert alert-{{$alertType}}'>
-                    <p>Invalid {{str_replace('-', ' ', $value)}}!</p>
+                    <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
                 </div>
             </div>
         @endforeach
@@ -20,7 +20,7 @@
     @if(isset($insertedSuccessfully) && $insertedSuccessfully)
         <div class="row">
             <div class='alert alert-success'>
-                <p>Successfully inserted!</p>
+                <p>You have successfully added a new {{$for}} item.</p>
             </div>
         </div>
     @endif
@@ -127,13 +127,13 @@
 
                 <!-- Form for Laptops -->
                 <div id="nextSetOfLaptopOptions" class="row hidden"><hr>
-                    <form id="laptop-form" class="form-horizontal" method="post" action="laptop/insert">
+                    <form id="laptop-form" class="form-horizontal" method="post" action="/items/computer/laptop/insert">
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" min="1" name="this-laptop-qty" id="this-laptop-qty" class="form-control" required>
+                                    <input type="number" min="1" name="laptop-qty" id="this-laptop-qty" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -194,13 +194,13 @@
                                 </div>
                                 <div class="form-group">
                                     Camera:<br>
-                                    <input type="radio" title="laptop-camera" name="laptop-camera" value="Yes" id="laptop-camera" required>&nbsp;Yes
-                                    <input type="radio" title="laptop-camera" name="laptop-camera" value="No" id="laptop-camera" required>&nbsp;No
+                                    <input type="radio" title="laptop-camera" name="laptop-camera" value="yes" id="laptop-camera" required>&nbsp;Yes
+                                    <input type="radio" title="laptop-camera" name="laptop-camera" value="no" id="laptop-camera" required>&nbsp;No
                                 </div>
                                 <div class="form-group">
                                     Touchscreen:<br>
-                                    <input type="radio" title="laptop-touchscreen" name="laptop-touchscreen" value="Yes" id="laptop-camera" required>&nbsp;Yes
-                                    <input type="radio" title="laptop-touchscreen" name="laptop-touchscreen" value="No" id="laptop-camera" required>&nbsp;No
+                                    <input type="radio" title="laptop-touchscreen" name="laptop-touchscreen" value="1" id="laptop-touchscreen" required>&nbsp;Yes
+                                    <input type="radio" title="laptop-touchscreen" name="laptop-touchscreen" value="0" id="laptop-touchscreen" required>&nbsp;No
                                 </div>
                             </div>
                         </div>

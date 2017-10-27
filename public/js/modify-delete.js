@@ -57,7 +57,7 @@ let ModifyDelete = (function () {
              * @param choices
              */
             radioCheckerFn = function (adminChoice, choices) {
-                if(adminChoice === "Yes") {
+                if(adminChoice.toLowerCase() === "yes" || adminChoice === 1 || adminChoice === "1") {
                     choices.eq(0).prop("checked", "checked"); // Yes
                 } else {
                     choices.eq(1).prop("checked", "checked"); // No
