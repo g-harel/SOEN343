@@ -176,7 +176,6 @@ let FormDropDownFields = (function () {
                 desktopFormSelector: $("form#desktop-form"),
                 laptopFormSelector: $("form#laptop-form"),
                 tabletFormSelector: $("form#tablet-form"),
-                tvFormSelector: $("form#television-form"),
                 monitorFormSelector: $("form#monitor-form")
             };
             forBrandDropDown = [
@@ -231,14 +230,6 @@ let FormDropDownFields = (function () {
                 dropDownOptions.monitor.displaySize,
                 [formsObj.monitorFormSelector.find("select#monitor-display-size")]
             );
-            populateDropDownWithOptions(
-                dropDownOptions.tv.brands,
-                [formsObj.tvFormSelector.find("select#television-brand")]
-            );
-            populateDropDownWithOptions(
-                dropDownOptions.tv.types,
-                [formsObj.tvFormSelector.find("select#television-type")]
-            );
 
         },
     };
@@ -274,7 +265,6 @@ function toggleOptions() {
         {radio: $("#type_Laptop"),div_id: $("#nextSetOfLaptopOptions")},
         {radio: $("#type_Tablet"),div_id: $("#nextSetOfTabletOptions")},
         {radio: $("#type_Monitor"),div_id: $("#nextSetOfMonitorOptions")},
-        {radio: $("#type_Television"), div_id: $("#nextSetOfTelevisionOptions")}
     ];
     for(let i = 0; i < itemContainer.length; i++) {
         if(itemContainer[i].radio.is(":checked")) {

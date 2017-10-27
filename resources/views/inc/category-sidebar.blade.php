@@ -1,14 +1,5 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-                <a href="/items/tv/showTv">
-                    Televisions
-                </a>
-            </h4>
-        </div>
-    </div>
-    <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
