@@ -183,7 +183,7 @@ let ModifyDelete = (function () {
             for(let i = 0; i < delete_links.length; i++) {
                 delete_links[i].on('show.bs.modal', function (event) {
                     let link = $(event.relatedTarget);
-                    let qty = link.data('qty');
+                    let qty = link.data('qty'); // from table
                     let itemId = link.data('id');
                     let modal = $(this);
                     modal.find('.modal-body input[type=number]').val(1);

@@ -32,7 +32,7 @@ Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
 Route::get('items/computer/showTablet', 'ComputerController@showTablet');
 Route::post('items/computer/desktop/insert', 'ComputerController@insertDesktop');
 Route::post('items/computer/tablet/insert', 'ComputerController@insertTablet');
-///
+Route::post('items/computer/desktop/delete', 'ComputerController@deleteDesktop');
 
 
 

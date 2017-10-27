@@ -29,10 +29,10 @@
         </thead>
         <tbody>
         <tr>
-            <td data-id="8">8</td>
+            <td data-id="21">21</td>
             <td data-brand="Dell">Dell</td>
             <td data-price="1055">1055</td>
-            <td data-qty="20">20</td>
+            <td data-qty="99">99</td>
             <td data-processor="Rockchip">Rockchip</td>
             <td data-ramSize="16">16</td>
             <td data-cpuCores="6">6</td>
@@ -50,7 +50,7 @@
             </td>
             <td class="text-center">
                 <p title="Delete">
-                    <a class="btn btn-danger btn-xs" href="" data-qty="20" data-id="8" data-toggle="modal" data-target="#delDesktopLink">
+                    <a class="btn btn-danger btn-xs" href="" data-qty="99" data-id="21" data-toggle="modal" data-target="#delDesktopLink">
                         <span class="fa fa-trash"></span>
                     </a>
                 </p>
@@ -150,7 +150,8 @@
             </div>
             <div class="modal-body">
                 <p>Please select the number of item to remove from the inventory.</p>
-                <form >
+                <form action="/items/computer/desktop/delete" method="post">
+                    {{ csrf_token() }}
                     <div class="form-group">
                         <input type="hidden" class="form-control" name="item-id" id="item-id">
                     </div>
