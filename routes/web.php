@@ -33,7 +33,7 @@ Route::get('items/computer/showTablet', 'ComputerController@showTablet');
 Route::post('items/computer/desktop/insert', 'ComputerController@insertDesktop');
 Route::post('items/computer/tablet/insert', 'ComputerController@insertTablet');
 Route::post('items/computer/desktop/delete', 'ComputerController@deleteDesktop');
-
+Route::post('items/computer/laptop/insert', 'ComputerController@insertLaptop');
 
 
 // Monitor
@@ -46,5 +46,5 @@ Route::get('/login', 'PagesController@login');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
 
-Route::post('items/monitor/insert', 'MonitorsController@insert');
-Route::post('items/laptop/insert', 'ComputerController@insertLaptop');
+Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+

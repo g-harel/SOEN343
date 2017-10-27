@@ -15,26 +15,34 @@ class MonitorsController extends Controller
     }
 
 
-    public function insert(){
-
-        $quantity = $_POST['this-monitor-qty'];
-        $brand = $_POST['monitor-brand'];
-        $price = $_POST['monitor-price'];
-        $display_size = $_POST['monitor-display-size'];
-        $monitor_weight = $_POST['monitor-weight'];
-
-        $monitor_array = [$quantity,$brand,$price,$display_size,$monitor_weight];
-
-        $monitor = new MonitorGateway();
-        $item = [
-            "category" => "monitor",
-            "brand" => $brand,
-            "price" => $price,
-            "quantity" => $quantity,
-            "display_size" => $display_size,
-            "weight" => $monitor_weight
+    public function insertMonitor(){
+        $args = [ // backend validation
+            'monitor-qty' => array('filter' => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 1, 'max_range' => 100)
+            ),
+            'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'monitor-price' => FILTER_SANITIZE_NUMBER_FLOAT,
+            'monitor-display-size' => FILTER_VALIDATE_FLOAT,
+            'monitor-weight' => FILTER_VALIDATE_FLOAT
         ];
-        $monitor->insert($item);
-        echo "inserted";
+        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
+        // returns the key of empty index (eg. monitor-brand => "")
+        $emptyArrayKeys = array_keys($sanitizedInputs, "");
+        if(!empty($emptyArrayKeys)) {
+            return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+        } else {
+            $monitorGateway = new MonitorGateway();
+            $item = [
+                "category" => "monitor",
+                "brand" => $sanitizedInputs['monitor-brand'],
+                "price" => $sanitizedInputs['monitor-price'],
+                "quantity" => $sanitizedInputs['monitor-qty'],
+                "display_size" => $sanitizedInputs['monitor-display-size'],
+                "weight" => $sanitizedInputs['monitor-weight']
+            ];
+            $monitorGateway->insert($item);
+                return view('items.create', ['insertedSuccessfully' => true]);
+        }
+
     }
 }

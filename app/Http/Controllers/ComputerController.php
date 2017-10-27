@@ -44,7 +44,7 @@ class ComputerController extends Controller
             'storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
             'desktop-price' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'desktop-weight' => FILTER_VALIDATE_INT,
+            'desktop-weight' => FILTER_VALIDATE_FLOAT,
             'desktop-height' => FILTER_VALIDATE_FLOAT,
             'desktop-width'  => FILTER_VALIDATE_FLOAT,
             'desktop-thickness'  => FILTER_VALIDATE_FLOAT
@@ -73,7 +73,7 @@ class ComputerController extends Controller
             ];
             $desktopGateway = new DesktopGateway();
             $desktopGateway->insert($desktopItem);
-            return view('items.create', ['insertedSuccessfully' => 'Successfully inserted!']);
+            return view('items.create', ['insertedSuccessfully' => true]);
         }
     }
 

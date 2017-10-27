@@ -8,20 +8,22 @@
         </ol>
     </div>
 
-    <div class="row">
-        @if(!empty($inputErrors))
-            @foreach($inputErrors as $value)
+    @if(!empty($inputErrors))
+        @foreach($inputErrors as $value)
+            <div class="row">
                 <div class='alert alert-{{$alertType}}'>
                     <p>Invalid {{str_replace('-', ' ', $value)}}!</p>
                 </div>
-            @endforeach
-        @endif
-        @if(isset($insertedSuccessfully))
-        <div class='alert alert-success'>
-            <p>{{$insertedSuccessfully}}</p>
+            </div>
+        @endforeach
+    @endif
+    @if(isset($insertedSuccessfully) && $insertedSuccessfully)
+        <div class="row">
+            <div class='alert alert-success'>
+                <p>Successfully inserted!</p>
+            </div>
         </div>
-        @endif
-    </div>
+    @endif
 
     <div class="row">
         <div class="panel panel-success">
@@ -97,7 +99,7 @@
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input required type="number" min="1" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    <input required type="number" step="any" min="1" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
@@ -367,14 +369,14 @@
 
                 <!-- Form for Monitors -->
                 <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
-                    <form id="monitor-form" class="form-horizontal" action="monitor/insert" method="post">
+                    <form id="monitor-form" class="form-horizontal" action="/items/monitor/insert" method="post">
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="2"></div>
                             <div class="col-md-7">
                                 <div class="form-group">
                                     Quantity:
-                                    <input type="number" min="1" name="this-monitor-qty" id="this-monitor-qty" class="form-control" required>
+                                    <input type="number" min="1" name="monitor-qty" id="this-monitor-qty" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Brand Name:
@@ -384,7 +386,7 @@
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="monitor-price" id="monitor-price" class="form-control" required>
+                                    <input type="number" step="any" min="1" max="99999" name="monitor-price" id="monitor-price" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Display size (inches):
@@ -394,7 +396,7 @@
                                 </div>
                                 <div class="form-group">
                                     Weight (Kg):
-                                    <input type="text" name="monitor-weight" id="monitor-weight" class="form-control" required>
+                                    <input type="number" step="any" name="monitor-weight" id="monitor-weight" class="form-control" required>
                                 </div>
                             </div>
                             <div class="2"></div>
