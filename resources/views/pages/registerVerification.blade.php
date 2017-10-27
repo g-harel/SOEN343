@@ -24,7 +24,7 @@ $register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doo
 $result = $register->createUser();
 
 header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
-
+exit();
 /*alert("Inside registerVerification");
 
 if($result == 1){
