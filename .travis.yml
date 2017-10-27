@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - 7.1.9
+
+install:
+  - composer install
+  - composer update
+#  - php artisan key:generate
+
+script:
+  - vendor/bin/phpunit
+
+services:
+  - mysql
+
+notifications:
+  email: false
