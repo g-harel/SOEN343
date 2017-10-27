@@ -7,6 +7,13 @@
             <li>Create Items</li>
         </ol>
     </div>
+    @if(Session::has('succeedInsertingItem'))
+        <div class="row">
+            <div class="alert alert-success">
+                <p>You have successfully added a new <b>{{Session::get('for')}}</b> item.</p>
+            </div>
+        </div>
+    @endif
 
     @if(!empty($inputErrors))
         @foreach($inputErrors as $value)
@@ -16,13 +23,6 @@
                 </div>
             </div>
         @endforeach
-    @endif
-    @if(isset($insertedSuccessfully) && $insertedSuccessfully)
-        <div class="row">
-            <div class='alert alert-success'>
-                <p>You have successfully added a new <b>{{$for}}</b> item.</p>
-            </div>
-        </div>
     @endif
 
     <div class="row">

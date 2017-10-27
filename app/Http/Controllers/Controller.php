@@ -24,6 +24,12 @@ class Controller extends BaseController
         'options' => array('min_range' => 1, 'max_range' => 999)
     );
 
+    /**
+     * Used for validating desktop form
+     * in PHP, adding and modifying function
+     * can use this function
+     * @return array
+     */
     public function desktopValidationFormInputs() {
         return [
             'desktop-qty' => $this->filterIntInputQty,
@@ -40,6 +46,12 @@ class Controller extends BaseController
         ];
     }
 
+    /**
+     * Used for validating laptop form
+     * in PHP, adding and modifying function
+     * can use this function
+     * @return array
+     */
     public function laptopValidationFormInputs() {
         return [
             'laptop-qty' => $this->filterIntInputQty,
@@ -58,6 +70,12 @@ class Controller extends BaseController
         ];
     }
 
+    /**
+     * Used for validating monitor form
+     * in PHP, adding and modifying function
+     * can use this function
+     * @return array
+     */
     public function monitorValidationFormInputs() {
         return [
             'monitor-qty' => $this->filterIntInputQty,
@@ -68,6 +86,12 @@ class Controller extends BaseController
         ];
     }
 
+    /**
+     * Used for validating tablet form
+     * in PHP, adding and modifying function
+     * can use this function
+     * @return array
+     */
     public function tabletValidationFormInputs() {
         return [
             'tablet-qty' => $this->filterIntInputQty,

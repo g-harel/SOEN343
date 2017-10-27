@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Gateway\MonitorGateway;
 use Illuminate\Http\Request;
 
-require __DIR__ . '../../../gateway/MonitorGateway.php';
 
 class MonitorsController extends Controller
 {
@@ -18,7 +17,6 @@ class MonitorsController extends Controller
     {
         return view('items.monitor.show-monitor');
     }
-
 
     public function insertMonitor()
     {
@@ -39,7 +37,8 @@ class MonitorsController extends Controller
                 ];
                 $monitorGateway = new MonitorGateway();
                 $monitorGateway->insert($item);
-                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'monitor']);
+                // do not use render, use redirect, this prevent resubmitting
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
             }
         } else {
             return view('items.create');

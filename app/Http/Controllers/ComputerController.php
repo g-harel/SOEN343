@@ -1,14 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-require __DIR__ . '../../../gateway/ItemGateway.php';
-require __DIR__ . '../../../gateway/DatabaseGateway.php';
-require __DIR__ . '../../../gateway/DesktopGateway.php';
-require __DIR__ . '../../../gateway/TabletGateway.php';
 
 use App\Gateway;
-use App\Models;
-use App\Gateway\DatabaseGateway;
 use App\Gateway\DesktopGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\LaptopGateway;
@@ -41,7 +35,8 @@ class ComputerController extends Controller
 
     public function insertDesktop()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if($this->isFormSubmitted($_POST) && $_POST['_token']) {
+
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
@@ -63,7 +58,7 @@ class ComputerController extends Controller
                 ];
                 $desktopGateway = new DesktopGateway();
                 $desktopGateway->insert($desktopItem);
-                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'desktop']);
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'desktop']);
             }
         } else {
             return view('items.create');
@@ -96,7 +91,7 @@ class ComputerController extends Controller
                 ];
                 $laptopGateway = new LaptopGateway();
                 $laptopGateway->insert($laptopItem);
-                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'laptop']);
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'laptop']);
             }
         } else {
             return view('items.create');
@@ -133,7 +128,7 @@ class ComputerController extends Controller
                 ];
                 $tabletGateWay = new TabletGateway();
                 $tabletGateWay->insert($tabletItem);
-                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'tablet']);
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'tablet']);
             }
         } else {
             return view('items.create');
