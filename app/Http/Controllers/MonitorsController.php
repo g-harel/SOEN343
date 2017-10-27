@@ -27,9 +27,9 @@ class MonitorsController extends Controller
                 'options' => array('min_range' => 1, 'max_range' => 100)
             ),
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'monitor-price' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'monitor-display-size' => FILTER_VALIDATE_FLOAT,
-            'monitor-weight' => FILTER_VALIDATE_FLOAT
+            'monitor-price' => $this->filterInputFloatArr,
+            'monitor-display-size' => $this->filterInputFloatArr,
+            'monitor-weight' => $this->filterInputFloatArr
         ];
         $sanitizedInputs = filter_input_array(INPUT_POST, $args);
         // returns the key of empty index (eg. monitor-brand => "")

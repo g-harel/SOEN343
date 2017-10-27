@@ -95,23 +95,23 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input required type="number" min="1" max="99999" step="any" name="desktop-price" id="desktop-price" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
-                                    <input required type="number" step="any" min="1" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    Weight (kg):
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input required type="number" step="any" name="desktop-height" id="desktop-height" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-height" id="desktop-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Width (cm):
-                                    <input required type="number" step="any" name="desktop-width" id="desktop-width" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-width" id="desktop-width" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input required type="number" step="any" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-thickness" id="desktop-thickness" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -182,11 +182,11 @@
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="laptop-price" id="laptop-price"  class="form-control" required>
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" name="laptop-price" id="laptop-price"  class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
-                                    <input type="text" name="laptop-weight" id="laptop-weight" class="form-control" required>
+                                    Weight (kg):
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" name="laptop-weight" id="laptop-weight" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Battery:
@@ -222,7 +222,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Quantity:
-                                    <input required type="number" min="1" name="this-tablet-qty" id="this-tablet-qty" class="form-control">
+                                    <input required type="number" min="1" name="tablet-qty" id="this-tablet-qty" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Brand:
@@ -271,19 +271,19 @@
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input required type="text" name="tablet-price" id="tablet-price"  class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-price" id="tablet-price"  class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
-                                    <input required type="number" min="1" name="tablet-weight" id="tablet-weight" class="form-control">
+                                    Weight (kg):
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-weight" id="tablet-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input required type="text" name="tablet-thickness" id="tablet-thickness" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-thickness" id="tablet-thickness" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input required type="text" name="tablet-height" id="tablet-height" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-height" id="tablet-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Battery:
@@ -291,13 +291,13 @@
                                 </div>
                                 <div class="form-group">
                                     Camera:<br>
-                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="Yes" id="tablet-camera">&nbsp;Yes
-                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="No" id="tablet-camera">&nbsp;No
+                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="yes" id="tablet-camera">&nbsp;Yes
+                                    <input required type="radio" title="tablet camera" name="tablet-camera" value="no" id="tablet-camera">&nbsp;No
                                 </div>
                                 <div class="form-group">
                                     Touchscreen:<br>
-                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="Yes" id="tablet-camera">&nbsp;Yes
-                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No" id="tablet-camera">&nbsp;No
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="1" id="tablet-touchscreen">&nbsp;Yes
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="0" id="tablet-touchscreen">&nbsp;No
                                 </div>
                             </div>
                         </div>
@@ -346,7 +346,7 @@
                                     <input type="text" name="television-thickness" id="television-thickness" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
+                                    Weight (kg):
                                     <input type="text" name="television-weight" id="television-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
@@ -386,7 +386,7 @@
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="number" step="any" min="1" max="99999" name="monitor-price" id="monitor-price" class="form-control" required>
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="monitor-price" id="monitor-price" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Display size (inches):
@@ -395,8 +395,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
-                                    <input type="number" step="any" name="monitor-weight" id="monitor-weight" class="form-control" required>
+                                    Weight (kg):
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" name="monitor-weight" id="monitor-weight" class="form-control" required>
                                 </div>
                             </div>
                             <div class="2"></div>

@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public $filterInputFloatArr = array('filter' => FILTER_VALIDATE_FLOAT,
+        'options' => "decimal"
+    );
+
+    public $filterIntInputQty = array('filter' => FILTER_VALIDATE_INT,
+        'options' => array('min_range' => 1, 'max_range' => 100)
+    );
 }

@@ -43,8 +43,8 @@
             <td data-displaySize="14">14</td>
             <td data-battery="Li-ion">Li-Ion</td>
             <td data-os="Windows XP">Windows XP</td>
-            <td data-camera="Yes">Yes</td>
-            <td data-touchscreen="No">No</td>
+            <td data-camera="yes">Yes</td>
+            <td data-touchscreen="0">No</td>
             <td class="text-center">
                 <p data-placement="top" data-toggle="tooltip" title="Edit">
                     <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal" data-target=".bs-edit-laptop-modal-lg">

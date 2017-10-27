@@ -40,19 +40,17 @@ class ComputerController extends Controller
     public function insertDesktop()
     {
         $args = [ // backend validation
-            'desktop-qty' => array('filter' => FILTER_VALIDATE_INT,
-                'options' => array('min_range' => 1, 'max_range' => 100)
-            ),
+            'desktop-qty' => $this->filterIntInputQty,
             'computer-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-ram-size' => FILTER_VALIDATE_INT,
             'storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
-            'desktop-price' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'desktop-weight' => FILTER_VALIDATE_FLOAT,
-            'desktop-height' => FILTER_VALIDATE_FLOAT,
-            'desktop-width' => FILTER_VALIDATE_FLOAT,
-            'desktop-thickness' => FILTER_VALIDATE_FLOAT
+            'desktop-price' => $this->filterInputFloatArr,
+            'desktop-weight' => $this->filterInputFloatArr,
+            'desktop-height' => $this->filterInputFloatArr,
+            'desktop-width' => $this->filterInputFloatArr,
+            'desktop-thickness' => $this->filterInputFloatArr
         ];
         $sanitizedInputs = filter_input_array(INPUT_POST, $args);
         // if one of the element values of $sanitizedInputs is empty,
@@ -85,18 +83,16 @@ class ComputerController extends Controller
     public function insertLaptop()
     {
         $args = [
-            'laptop-qty' => array('filter' => FILTER_VALIDATE_INT,
-                'options' => array('min_range' => 1, 'max_range' => 100)
-            ),
+            'laptop-qty' => $this->filterIntInputQty,
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-ram-size' => FILTER_VALIDATE_INT,
             'laptop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-cpu-cores' => FILTER_VALIDATE_INT,
             'laptop-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-display-size' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'laptop-price' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'laptop-weight' => FILTER_VALIDATE_FLOAT,
+            'laptop-display-size' => $this->filterInputFloatArr,
+            'laptop-price' => $this->filterInputFloatArr,
+            'laptop-weight' => $this->filterInputFloatArr,
             'laptop-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
             'laptop-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
@@ -131,24 +127,33 @@ class ComputerController extends Controller
 
     public function insertTablet()
     {
-//        $args = [ // backend validation
-//            'desktop-qty' => array('filter' => FILTER_VALIDATE_INT,
-//                'options' => array('min_range' => 1, 'max_range' => 100)
-//            ),
-//            'computer-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-//            'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-//            'desktop-ram-size' => FILTER_VALIDATE_INT,
-//            'storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-//            'desktop-cpu-cores' => FILTER_VALIDATE_INT,
-//            'desktop-price' => FILTER_SANITIZE_NUMBER_FLOAT,
-//            'desktop-weight' => FILTER_VALIDATE_FLOAT,
-//            'desktop-height' => FILTER_VALIDATE_FLOAT,
-//            'desktop-width'  => FILTER_VALIDATE_FLOAT,
-//            'desktop-thickness'  => FILTER_VALIDATE_FLOAT
-//        ];
+
+        $args = [
+            'tablet-qty' => array('filter' => FILTER_VALIDATE_INT,
+                // cannot insert more than 100 qty at a time? max=?
+                'options' => array('min_range' => 1, 'max_range' => 100)
+            ),
+            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-ram-size' => FILTER_VALIDATE_INT,
+            'tablet-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
+            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-display-size' => FILTER_SANITIZE_NUMBER_FLOAT,
+            'tablet-price' => array('filter' => FILTER_VALIDATE_FLOAT,
+                'options' => "decimal"
+            ),
+            'tablet-weight' => FILTER_VALIDATE_FLOAT,
+            'tablet-height' => FILTER_VALIDATE_FLOAT,
+            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-camera' => FILTER_VALIDATE_BOOLEAN,
+            'tablet-touchscreen' => FILTER_VALIDATE_BOOLEAN
+        ];
+        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
+        echo '<pre>';
+        print_r($sanitizedInputs);
 
 
-//        $tabletGateWay = new TabletGateway();
 //        $tabletItem = [
 //            "processor_type" => "Intel",
 //            "ram_size" => 4,
@@ -164,10 +169,11 @@ class ComputerController extends Controller
 //            "height" => 13,
 //            "thickness" => 12,
 //            "battery" => "hello",
-//            "os" => "hello agian",
-//            "camera" => "camera",
+//            "os" => "hello again",
+//            "camera" => "yes",
 //            "is_touchscreen" => 1
 //        ];
+//        $tabletGateWay = new TabletGateway();
 //        $tabletGateWay->insert($tabletItem);
 //        echo 'inserted';
     }

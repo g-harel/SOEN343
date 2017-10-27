@@ -48,13 +48,11 @@
             <td data-thickness="6">6</td>
             <td data-battery="Mac">Mac</td>
             <td data-os="Windows 8">Windows 8</td>
-            <td data-camera="Yes">Yes</td>
-            <td data-touchscreen="No">No</td>
-            <td class="text-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select <span class="caret"></span>
-                    </button>
+            <td data-camera="yes">Yes</td>
+            <td data-touchscreen="0">0</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Select <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="edit-tablet-link" href="" data-toggle="modal" data-target=".bs-edit-tablet-modal-lg">
