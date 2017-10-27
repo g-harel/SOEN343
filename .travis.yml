@@ -3,10 +3,15 @@ language: php
 php:
   - 7.1.9
 
+before_install:
+  - cp .env.travis .env
+  - mysql -e 'CREATE DATABASE soen343;'
+  - mysql -u root -p soen343 < ./databaseSchema.sql
+
 install:
   - composer install
   - composer update
-#  - php artisan key:generate
+  - php artisan key:generate
 
 script:
   - vendor/bin/phpunit
