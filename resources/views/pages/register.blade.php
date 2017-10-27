@@ -1,5 +1,49 @@
 @extends('layouts.app')
-   <style>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+ $(document).ready(function() {
+    $(".number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl/cmd+A
+            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+C
+            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+X
+            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+});
+    
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+    
+$(document).ready(function() {
+  $('form').on('submit', function(e){
+      // validation code 
+      $("#result").text("");
+      var email = $("#email").val();
+      if (!validateEmail(email)) {
+        $("#emailHelp").text(email + " is not a valid email.");
+        $("#emailHelp").css("color", "red");
+        e.preventDefault();
+      }
+  });
+});
+</script>
+
+<style>
 .panel-register {
     border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -100,7 +144,7 @@
                                  <label for="door_number">
                                     Home address
                                 </label><br>
-                                <input type="text" name="door_number" id="door_number" tabindex="1" class="form-control" placeholder="#" value="" required>
+                                <input type="text" name="door_number" id="door_number" tabindex="1" class="form-control number" placeholder="#" value="" required>
                                 
                                 <input type="text" name="street" id="street" tabindex="1" class="form-control" placeholder="Street" value="" required>
                                 
@@ -119,9 +163,9 @@
                                 <label for="phone">
                                     Phone number
                                 </label><br>
-                                <input type="text" name="phone1" id="phone1" tabindex="1" class="form-control" placeholder="" value="" maxlength="3" required>-
-                                <input type="text" name="phone2" id="phone2" tabindex="1" class="form-control" placeholder="" value="" maxlength="3" required>-
-                                <input type="text" name="phone3" id="phone3" tabindex="1" class="form-control" placeholder="" value="" maxlength="4" required>
+                                <input type="text" name="phone1" id="phone1" tabindex="1" class="form-control number" placeholder="" value="" maxlength="3" required>-
+                                <input type="text" name="phone2" id="phone2" tabindex="1" class="form-control number" placeholder="" value="" maxlength="3" required>-
+                                <input type="text" name="phone3" id="phone3" tabindex="1" class="form-control number" placeholder="" value="" maxlength="4" required>
                                 
                             </div>
                             
@@ -130,6 +174,7 @@
                                     Email
                                 </label>
                                 <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
                             
                             <div class="form-group">
