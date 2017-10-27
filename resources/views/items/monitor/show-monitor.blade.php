@@ -21,28 +21,32 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td data-id="23">23</td>
-                <td data-brand="Fujitsu">Fujitsu</td>
-                <td data-price="1000">1000</td>
-                <td data-qty="190">190</td>
-                <td data-displaySize="8">8</td>
-                <td data-weight="5">5</td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal" data-target=".bs-edit-monitor-modal-lg">
-                            <span class="fa fa-scissors"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Delete">
-                        <a class="btn btn-danger btn-xs" href="" data-qty="190" data-id="23" data-toggle="modal" data-target="#delMonitorLink" >
-                            <span class="fa fa-trash"></span>
-                        </a>
-                    </p>
-                </td>
-            </tr>
+            @foreach($monitors as $monitor)
+                <tr>
+                    <td data-id="{{ $monitor->id }}">{{ $monitor->id }}</td>
+                    <td data-brand="{{ $monitor->brand }}">{{ $monitor->brand }}</td>
+                    <td data-price="{{ $monitor->price }}">{{ $monitor->price }}</td>
+                    <td data-qty="{{ $monitor->quantity }}">{{ $monitor->quantity }}</td>
+                    <td data-displaySize="{{ $monitor->display_size }}">{{ $monitor->display_size }}</td>
+                    <td data-weight="{{ $monitor->weight }}">{{ $monitor->weight }}</td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal"
+                               data-target=".bs-edit-monitor-modal-lg">
+                                <span class="fa fa-scissors"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Delete">
+                            <a class="btn btn-danger btn-xs" href="" data-qty="190" data-id="23" data-toggle="modal"
+                               data-target="#delMonitorLink">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -51,7 +55,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Editing Monitor</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
@@ -73,7 +78,8 @@
                                 <div class="form-group">
                                     Display size (inches):
                                     <select name="monitor-display-size" id="monitor-display-size" class="form-control">
-                                        <option title="Select display size" selected disabled>Select display size</option>
+                                        <option title="Select display size" selected disabled>Select display size
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -86,7 +92,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-7">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form"
+                                            id="submit-monitor-form">Submit
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -100,24 +108,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Removing monitor item(s)</h4>
                 </div>
                 <div class="modal-body">
                     <p>Please select the number of item to remove from the inventory.</p>
-                    <form >
+                    <form>
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>
                         <div class="form-group">
                             <label for="quantity">Quantity to remove:</label>
-                            <input type="number" max="" min="1" class="form-control" name="qty-to-remove" id="qty-to-remove">
+                            <input type="number" max="" min="1" class="form-control" name="qty-to-remove"
+                                   id="qty-to-remove">
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="form-control btn btn-danger btn-sm" name="submit" value="Confirm">
+                            <input type="submit" class="form-control btn btn-danger btn-sm" name="submit"
+                                   value="Confirm">
                         </div>
                         <div class="form-group">
-                            <input type="button" data-dismiss="modal" aria-label="Close" class="form-control" value="Cancel" name="submit">
+                            <input type="button" data-dismiss="modal" aria-label="Close" class="form-control"
+                                   value="Cancel" name="submit">
                         </div>
                     </form>
                 </div>

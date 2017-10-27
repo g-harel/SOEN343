@@ -3,6 +3,7 @@
 namespace App\Gateway;
 
 use App\Gateway\ComputerGateway;
+use Illuminate\Support\Facades\DB;
 
 class LaptopGateway extends ComputerGateway implements iItemCategory {
     public static $fields = array(
@@ -14,7 +15,7 @@ class LaptopGateway extends ComputerGateway implements iItemCategory {
     );
 
     public function buildSelect() {
-        return parent::buildSelect()." LEFT JOIN laptops ON items.id = laptops.item_id";
+        return parent::buildSelect()." INNER JOIN laptops ON items.id = laptops.item_id";
     }
 
     public function buildInsert($item) {
@@ -27,5 +28,10 @@ class LaptopGateway extends ComputerGateway implements iItemCategory {
         $id = $item["id"];
         $values = $this->updateList(self::$fields, $item);
         return parent::buildUpdate($item)."UPDATE laptops SET $values WHERE item_id = $id;";
+    }
+
+    public function getAll()
+    {
+        return DB::select($this->buildSelect());
     }
 }
