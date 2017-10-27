@@ -105,56 +105,39 @@ class ComputerController extends Controller
 
     public function insertTablet()
     {
-        $args = [
-            'tablet-qty' => $this->filterIntInputQty,
-            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-ram-size' => FILTER_VALIDATE_INT,
-            'tablet-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
-            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-display-size' => $this->filterInputFloatArr,
-            'tablet-price' => $this->filterInputFloatArr,
-            'tablet-weight' => $this->filterInputFloatArr,
-            'tablet-height' => $this->filterInputFloatArr,
-            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
-        ];
-//        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
-        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
-        $emptyArrayKeys = array_keys($sanitizedInputs, "");
-        if (!empty($emptyArrayKeys)) {
-            return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+
+        if($this->isFormSubmitted($_POST)) {
+            $sanitizedInputs = filter_input_array(INPUT_POST, $this->tabletValidationFormInputs());
+            $emptyArrayKeys = array_keys($sanitizedInputs, "");
+            if (!empty($emptyArrayKeys)) {
+                return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            } else {
+                $tabletItem = [
+                    "processor_type" => $sanitizedInputs['tablet-processor'],
+                    "ram_size" => $sanitizedInputs['tablet-ram-size'],
+                    "type" => "tablet",
+                    "category" => "tablet",
+                    "brand" => $sanitizedInputs['tablet-brand'],
+                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "cpu_cores" => $sanitizedInputs['tablet-cpu-cores'],
+                    "os" => $sanitizedInputs['tablet-os'],
+                    "display_size" => $sanitizedInputs['tablet-display-size'],
+                    "price" => $sanitizedInputs['tablet-price'],
+                    "weight" => $sanitizedInputs['tablet-weight'],
+                    "height" => $sanitizedInputs['tablet-height'],
+                    "width" => $sanitizedInputs['tablet-width'],
+                    "thickness" => $sanitizedInputs['tablet-thickness'],
+                    "battery" => $sanitizedInputs['tablet-battery'],
+                    "camera" => $sanitizedInputs['tablet-camera'],
+                    "is_touchscreen" => $sanitizedInputs['tablet-touchscreen']
+                ];
+                $tabletGateWay = new TabletGateway();
+                $tabletGateWay->insert($tabletItem);
+                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'tablet']);
+            }
         } else {
-
+            return view('items.create');
         }
-        echo '<pre>';
-        print_r($sanitizedInputs);
-
-
-//        $tabletItem = [
-//            "processor_type" => "Intel",
-//            "ram_size" => 4,
-//            "cpu_cores" => 4,
-//            "weight" => 12,
-//            "type" => "tablet", // important
-//            "category" => "tablet", // important
-//            "brand" => "apple",
-//            "price" => 200,
-//            "quantity" => 19,
-//            "display_size" => 14,
-//            "width" => 13,
-//            "height" => 13,
-//            "thickness" => 12,
-//            "battery" => "hello",
-//            "os" => "hello again",
-//            "camera" => "yes",
-//            "is_touchscreen" => 1
-//        ];
-//        $tabletGateWay = new TabletGateway();
-//        $tabletGateWay->insert($tabletItem);
-//        echo 'inserted';
     }
 
     public function deleteDesktop()

@@ -20,7 +20,7 @@
     @if(isset($insertedSuccessfully) && $insertedSuccessfully)
         <div class="row">
             <div class='alert alert-success'>
-                <p>You have successfully added a new {{$for}} item.</p>
+                <p>You have successfully added a new <b>{{$for}}</b> item.</p>
             </div>
         </div>
     @endif
@@ -260,6 +260,11 @@
                                         <option title="Select display size" value="">Select display size</option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    Touchscreen:<br>
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="1" id="tablet-touchscreen">&nbsp;Yes
+                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="0" id="tablet-touchscreen">&nbsp;No
+                                </div>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-5">
@@ -286,6 +291,10 @@
                                     <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-height" id="tablet-height" class="form-control">
                                 </div>
                                 <div class="form-group">
+                                    Width (cm):
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-width" id="tablet-width" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Battery:
                                     <input required type="text" name="tablet-battery" id="tablet-battery" class="form-control">
                                 </div>
@@ -293,11 +302,6 @@
                                     Camera:<br>
                                     <input required type="radio" title="tablet camera" name="tablet-camera" value="yes" id="tablet-camera">&nbsp;Yes
                                     <input required type="radio" title="tablet camera" name="tablet-camera" value="no" id="tablet-camera">&nbsp;No
-                                </div>
-                                <div class="form-group">
-                                    Touchscreen:<br>
-                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="1" id="tablet-touchscreen">&nbsp;Yes
-                                    <input required type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="0" id="tablet-touchscreen">&nbsp;No
                                 </div>
                             </div>
                         </div>
