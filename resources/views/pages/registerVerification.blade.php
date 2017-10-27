@@ -25,29 +25,5 @@ $result = $register->createUser();
 
 header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
 exit();
-/*alert("Inside registerVerification");
-
-if($result == 1){
-    $_SESSION['isAdmin'] = $result;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin");
-    exit();
-}
-else{
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
-    exit();
-}*/
-
-/*
-If registration is successful, login user 
-if($result == 1){
-    $_SESSION['isAdmin'] = $result;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/admin");
-    exit();
-}
-else{
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
-    exit();
-}*/
-
 
 ?>
