@@ -6,13 +6,13 @@ use Mysqli;
 
 // log result in the client console.
 function console_log($str) {
-    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
+    echo "<script>console.log('".addslashes(json_encode($str))."');</script>\n";
 }
 
 // log errors in the client console.
 function console_error($str) {
     if ($str) {
-        echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
+        echo "<script>console.error('".addslashes(json_encode($str))."');</script>\n";
     }
 }
 

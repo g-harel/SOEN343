@@ -6,14 +6,17 @@ php:
 before_install:
   - cp .env.travis .env
   - mysql -e 'CREATE DATABASE soen343;'
+  - nvm install
 
 install:
   - composer install
   - composer update
+  - npm install
   - php artisan key:generate
 
 script:
   - vendor/bin/phpunit
+  - npm run eslint
 
 services:
   - mysql

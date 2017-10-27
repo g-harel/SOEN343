@@ -307,20 +307,17 @@
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
                 document.getElementById('nextSetOfComputerOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Laptop').checked) {
+            } else if (document.getElementById('type_Laptop').checked) {
                 document.getElementById('nextSetOfTabletOptions').style.display = 'none';
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Tablet').checked) {
+            } else if (document.getElementById('type_Tablet').checked) {
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
                 document.getElementById('nextSetOfTelevisionOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';
                 document.getElementById('nextSetOfTabletOptions').style.display = '';
-            }
-            else if (document.getElementById('type_Television').checked) {
+            } else if (document.getElementById('type_Television').checked) {
                 document.getElementById('nextSetOfTabletOptions').style.display = 'none';
                 document.getElementById('nextSetOfComputerOptions').style.display = 'none';
                 document.getElementById('nextSetOfLaptopOptions').style.display = 'none';

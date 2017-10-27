@@ -1,4 +1,4 @@
-var dropDownOptions = {
+const dropDownOptions = {
     /**
      * Where do I get these data
      * http://www.rtings.com/tv/reviews/by-size/size-to-distance-relationship
@@ -6,72 +6,72 @@ var dropDownOptions = {
      * http://www.webopedia.com/TERM/O/operating_system.html
      * https://www.staples.ca/en/
      */
-    "computer": {
-        "brands": [
-            "Hewlett Packard",
-            "Dell",
-            "Acer",
-            "Lenovo",
-            "ASUS",
-            "CyberPowerPC",
-            "Apple",
-            "iBUYPOWER",
-            "MSI",
-            "ZOTAC",
-            "Alienware",
-            "Microcad",
-            "Microsoft",
-            "IBM",
-            "InFocus",
-            "intel®",
-            "Other"
+    computer: {
+        brands: [
+            'Hewlett Packard',
+            'Dell',
+            'Acer',
+            'Lenovo',
+            'ASUS',
+            'CyberPowerPC',
+            'Apple',
+            'iBUYPOWER',
+            'MSI',
+            'ZOTAC',
+            'Alienware',
+            'Microcad',
+            'Microsoft',
+            'IBM',
+            'InFocus',
+            'intel®',
+            'Other',
         ],
-        "ramSize": [
+        ramSize: [
             4,
             8,
             12,
             16,
-            32
+            32,
         ],
-        "processorType": [
-            "AMD",
-            "Intel",
-            "Rockchip",
-            "Other"
+        processorType: [
+            'AMD',
+            'Intel',
+            'Rockchip',
+            'Other',
         ],
-        "storageSize": [
-            [512, "512MB"],
-            [4, "4GB"],
-            [8, "8GB"],
-            [16, "16GB"],
-            [32, "32GB"],
-            [64, "64GB"],
-            [120, "120GB"],
-            [128, "128GB"],
-            [180, "180GB"],
-            [240, "240GB"],
-            [480, "480GB"],
-            [500, "500GB"],
-            [1, "1TB"],
-            [2, "2TB"]
+        storageSize: [
+            [512, '512MB'],
+            [4, '4GB'],
+            [8, '8GB'],
+            [16, '16GB'],
+            [32, '32GB'],
+            [64, '64GB'],
+            [120, '120GB'],
+            [128, '128GB'],
+            [180, '180GB'],
+            [240, '240GB'],
+            [480, '480GB'],
+            [500, '500GB'],
+            [1, '1TB'],
+            [2, '2TB'],
         ],
-        "os": [
-            "Microsoft Windows 7",
-            "Microsoft Windows 8",
-            "Microsoft Windows 8.1",
-            "Microsoft Windows 10",
-            "Microsoft Windows XP",
-			"Microsoft Windows RT",
-            "Mac OS X 10.12",
-            "Mac OS X 10.11",
-            "Macc OS X 10.10",
-            "Apple iOS",
-            "Linux",
-			"Google Android",
-			"Amazon Fire OS",
-			"Other"
+        os: [
+            'Microsoft Windows 7',
+            'Microsoft Windows 8',
+            'Microsoft Windows 8.1',
+            'Microsoft Windows 10',
+            'Microsoft Windows XP',
+            'Microsoft Windows RT',
+            'Mac OS X 10.12',
+            'Mac OS X 10.11',
+            'Macc OS X 10.10',
+            'Apple iOS',
+            'Linux',
+            'Google Android',
+            'Amazon Fire OS',
+            'Other',
         ],
-        "width": [
+        width: [
             70.9,
             88.6,
             95.3,
@@ -80,9 +80,9 @@ var dropDownOptions = {
             132.8,
             144.0,
             154.9,
-            166.1
+            166.1,
         ],
-        "height": [
+        height: [
             39.9,
             49.8,
             53.6,
@@ -91,10 +91,10 @@ var dropDownOptions = {
             74.7,
             81.0,
             87.1,
-            93.5
+            93.5,
         ],
-        "cpuCores": [2,3,4,8],
-        "displaySize": [
+        cpuCores: [2, 3, 4, 8],
+        displaySize: [
             4.3,
             5,
             7,
@@ -113,54 +113,54 @@ var dropDownOptions = {
             27,
             28,
             34,
-            57
-        ]
-    },
-    "tv": {
-        "brands": [
-            "Sony ",
-            "Samsung",
-            "LG",
-            "Panasonic",
-            "Toshiba",
-            "Philips",
-            "Sharp",
-            "Vizio",
-            "Mitsubishi ",
-            "Hisense",
-            "Sanyo",
-            "RCA",
-            "Hitachi",
-            "TCL",
-            "JVC",
-            "Micromax",
-            "Hyundai",
-            "Alba",
-            "Logik",
-            "Insignia",
-            "Maxwell",
-            "Skyworth",
-            "Pensonic",
-            "Coby",
-            "Pioneer",
-            "Haier",
-            "Westinghouse",
-            "Onida",
-            "Vu",
-            "Emerson",
-            "Lloyd",
-            "Devant",
-            "Sansui",
-            "BPL",
-            "Seiki",
-            "Element",
-            "Changhong",
-            "Videocon",
-            "Sylvania",
-            "Funai"
+            57,
         ],
-        "types": ["LCD", "LED", "OLED"],
-        "width": [
+    },
+    tv: {
+        brands: [
+            'Sony ',
+            'Samsung',
+            'LG',
+            'Panasonic',
+            'Toshiba',
+            'Philips',
+            'Sharp',
+            'Vizio',
+            'Mitsubishi ',
+            'Hisense',
+            'Sanyo',
+            'RCA',
+            'Hitachi',
+            'TCL',
+            'JVC',
+            'Micromax',
+            'Hyundai',
+            'Alba',
+            'Logik',
+            'Insignia',
+            'Maxwell',
+            'Skyworth',
+            'Pensonic',
+            'Coby',
+            'Pioneer',
+            'Haier',
+            'Westinghouse',
+            'Onida',
+            'Vu',
+            'Emerson',
+            'Lloyd',
+            'Devant',
+            'Sansui',
+            'BPL',
+            'Seiki',
+            'Element',
+            'Changhong',
+            'Videocon',
+            'Sylvania',
+            'Funai',
+        ],
+        types: ['LCD', 'LED', 'OLED'],
+        width: [
             70.9,
             88.6,
             95.3,
@@ -169,9 +169,9 @@ var dropDownOptions = {
             132.8,
             144.0,
             154.9,
-            166.1
+            166.1,
         ],
-        "height": [
+        height: [
             39.9,
             49.8,
             53.6,
@@ -180,11 +180,11 @@ var dropDownOptions = {
             74.7,
             81.0,
             87.1,
-            93.5
-        ]
+            93.5,
+        ],
     },
-    "monitor": {
-        "displaySize": [
+    monitor: {
+        displaySize: [
             4.3,
             5,
             7,
@@ -203,46 +203,43 @@ var dropDownOptions = {
             27,
             28,
             34,
-            57
-        ]
-    }
+            57,
+        ],
+    },
 
 };
 
 
-var FormFunctions = (function () {
-
-    var desktopBrandSel = {},
-    desktopRamSizeSel = {},
-    desktopStorageCapacitySel = {},
-    desktopProcessorSel = {},
-    desktopCpuCoresSel = {};
+const FormFunctions = (() => {
+    let desktopBrandSel = {};
+    let desktopRamSizeSel = {};
+    let desktopStorageCapacitySel = {};
+    let desktopProcessorSel = {};
+    let desktopCpuCoresSel = {};
 
     // tv
-    var brandTvSel = {},
-    tvTypesSel = {};
+    let brandTvSel = {};
+    let tvTypesSel = {};
 
     // laptop
-    var laptopBrandSel = {},
-    laptopRamSizeSel = {},
-    laptopProcessorType = {},
-    laptopStorageCapacitySel = {},
-    laptopCpuCoresSel = {},
-    laptopDisplaySizeSel = {},
-    laptopOS_Sel = {};
+    let laptopBrandSel = {};
+    let laptopRamSizeSel = {};
+    let laptopProcessorType = {};
+    let laptopStorageCapacitySel = {};
+    let laptopCpuCoresSel = {};
+    let laptopDisplaySizeSel = {};
+    let laptopOSSel = {};
 
-
-    var
-        tabletBrandSel = {},
-    tabletRamSizeSel = {},
-    tabletProcessorType = {},
-    tabletStorageCapacitySel = {},
-    tabletCpuCoresSel = {},
-    tabletDisplaySizeSel = {},
-    tabletOS_Sel = {};
+    let tabletBrandSel = {};
+    let tabletRamSizeSel = {};
+    let tabletProcessorType = {};
+    let tabletStorageCapacitySel = {};
+    let tabletCpuCoresSel = {};
+    let tabletDisplaySizeSel = {};
+    let tabletOSSel = {};
 
     // click Add New redirect to Create Items
-    var onClickCreateNewItems = {};
+    let onClickCreateNewItems = {};
 
     return {
 
@@ -250,10 +247,9 @@ var FormFunctions = (function () {
          * All the elements required before an
          * event occurred must be in the init function.
          */
-        init: function () {
-
+        init() {
             desktopBrandSel = $('#computer-brand');
-            desktopRamSizeSel = $("#desktop-ram-size");
+            desktopRamSizeSel = $('#desktop-ram-size');
             desktopStorageCapacitySel = $('#storage-capacity');
             desktopProcessorSel = $('#desktop-processor');
             desktopCpuCoresSel = $('#cpu-cores');
@@ -269,7 +265,7 @@ var FormFunctions = (function () {
             laptopProcessorType = $('#laptop-processor');
             laptopStorageCapacitySel = $('#laptop-storage-capacity');
             laptopDisplaySizeSel = $('#laptop-display-size');
-            laptopOS_Sel = $('#laptop-os');
+            laptopOSSel = $('#laptop-os');
 
             // tablet
             tabletBrandSel = $('#tablet-brand');
@@ -278,7 +274,7 @@ var FormFunctions = (function () {
             tabletStorageCapacitySel = $('#tablet-storage-capacity');
             tabletCpuCoresSel = $('#tablet-cpu-cores');
             tabletDisplaySizeSel = $('#tablet-display-size');
-            tabletOS_Sel = $('#tablet-os');
+            tabletOSSel = $('#tablet-os');
 
             onClickCreateNewItems = $('.create-new-items');
 
@@ -286,73 +282,70 @@ var FormFunctions = (function () {
             this.formFunctions();
             this.createNewItemRedirectFn();
         },
-        formFunctions: function () {
-            (function () {
-                $.each(dropDownOptions.computer.brands, function (key, value) {
-                    var computerBrands = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
+        formFunctions() {
+            (() => {
+                $.each(dropDownOptions.computer.brands, (key, value) => {
+                    const computerBrands = `<option value="${value}" title="${value}">${value}</option>`;
                     desktopBrandSel.append(computerBrands);
                     laptopBrandSel.append(computerBrands);
                     tabletBrandSel.append(computerBrands);
                 });
-                $.each(dropDownOptions.computer.ramSize, function (key, value) {
-                    var computerRamSize = '<option value="'+value+'" title="'+value+'">'+value+'</option>';
+                $.each(dropDownOptions.computer.ramSize, (key, value) => {
+                    const computerRamSize = `<option value="${value}" title="${value}">${value}</option>`;
                     desktopRamSizeSel.append(computerRamSize);
                     laptopRamSizeSel.append(computerRamSize);
                     tabletRamSizeSel.append(computerRamSize);
                 });
-                $.each(dropDownOptions.computer.storageSize, function (k, v) {
-                    var storageCapacity = '<option value="'+v[0]+'" title="'+v[1]+'">'+v[1]+'</option>';
+                $.each(dropDownOptions.computer.storageSize, (k, v) => {
+                    const storageCapacity = `<option value="${v[0]}" title="${v[1]}">${v[1]}</option>`;
                     desktopStorageCapacitySel.append(storageCapacity);
                     laptopStorageCapacitySel.append(storageCapacity);
                     tabletStorageCapacitySel.append(storageCapacity);
                 });
-                $.each(dropDownOptions.computer.processorType, function (k, v) {
-                    var processorType = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
+                $.each(dropDownOptions.computer.processorType, (k, v) => {
+                    const processorType = `<option value="${v}" title="${v}">${v}</option>`;
                     desktopProcessorSel.append(processorType);
                     laptopProcessorType.append(processorType);
                     tabletProcessorType.append(processorType);
                 });
-                $.each(dropDownOptions.computer.cpuCores, function (k, v) {
-                    var cpuCores = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
+                $.each(dropDownOptions.computer.cpuCores, (k, v) => {
+                    const cpuCores = `<option value="${v}" title="${v}">${v}</option>`;
                     desktopCpuCoresSel.append(cpuCores);
                     laptopCpuCoresSel.append(cpuCores);
                     tabletCpuCoresSel.append(cpuCores);
                 });
-
-                $.each(dropDownOptions.computer.displaySize, function (k, v) {
-                    var displaySize = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
+                $.each(dropDownOptions.computer.displaySize, (k, v) => {
+                    const displaySize = `<option value="${v}" title="${v}">${v}</option>`;
                     laptopDisplaySizeSel.append(displaySize);
                     tabletDisplaySizeSel.append(displaySize);
                 });
-
-                $.each(dropDownOptions.computer.os, function (k, v) {
-                    var os = '<option value="'+v+'" title="'+v+'">'+v+'</option>';
-                    laptopOS_Sel.append(os);
-                    tabletOS_Sel.append(os);
+                $.each(dropDownOptions.computer.os, (k, v) => {
+                    const os = `<option value="${v}" title="${v}">${v}</option>`;
+                    laptopOSSel.append(os);
+                    tabletOSSel.append(os);
                 });
+            })();
 
-
-            }());
-            (function () {
-                $.each(dropDownOptions.tv.brands, function (key, value) {
-                    brandTvSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+            (() => {
+                $.each(dropDownOptions.tv.brands, (key, value) => {
+                    brandTvSel.append(`<option value="${value}" title="${value}">${value}</option>`);
                 });
-                $.each(dropDownOptions.tv.types, function (key, value) {
-                    tvTypesSel.append('<option value="'+value+'" title="'+value+'">'+value+'</option>');
+                $.each(dropDownOptions.tv.types, (key, value) => {
+                    tvTypesSel.append(`<option value="${value}" title="${value}">${value}</option>`);
                 });
-            }());
+            })();
         },
 
-        createNewItemRedirectFn: function () {
-            var itemsCreateLoc = '/items/create';
-            onClickCreateNewItems.click(function () {
-               location.href = itemsCreateLoc;
+        createNewItemRedirectFn() {
+            const itemsCreateLoc = '/items/create';
+            onClickCreateNewItems.click(() => {
+                location.href = itemsCreateLoc;
             });
-        }
+        },
     }; // end return
 })();
 
 
-$(document).ready(function () {
+$(document).ready(() => {
     FormFunctions.init();
 });
