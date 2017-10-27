@@ -2,45 +2,45 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
- $(document).ready(function() {
-    $(".number").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape, enter and .
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-             // Allow: Ctrl/cmd+A
-            (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-             // Allow: Ctrl/cmd+C
-            (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-             // Allow: Ctrl/cmd+X
-            (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-             // Allow: home, end, left, right
-            (e.keyCode >= 35 && e.keyCode <= 39)) {
+    $(document).ready(function() {
+        $(".number").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl/cmd+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+C
+                (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+X
+                (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
                  // let it happen, don't do anything
-                 return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
+                    return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
     });
-});
     
-function validateEmail(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
-}
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
     
-$(document).ready(function() {
-  $('form').on('submit', function(e){
-      // validation code 
-      $("#result").text("");
-      var email = $("#email").val();
-      if (!validateEmail(email)) {
-        $("#emailHelp").text(email + " is not a valid email.");
-        $("#emailHelp").css("color", "red");
-        e.preventDefault();
-      }
-  });
-});
+    $(document).ready(function() {
+        $('form').on('submit', function(e){
+            // validation code 
+            $("#result").text("");
+            var email = $("#email").val();
+            if (!validateEmail(email)) {
+                $("#emailHelp").text(email + " is not a valid email.");
+                $("#emailHelp").css("color", "red");
+                e.preventDefault();
+            }
+        });
+    });
 </script>
 
 <style>
@@ -51,7 +51,9 @@ $(document).ready(function() {
 	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 }
 
-.panel-register input[type="text"],.panel-register input[type="email"],.panel-register input[type="password"] {
+.panel-register input[type="text"],
+.panel-register input[type="email"],
+.panel-register input[type="password"] {
 	height: 45px;
 	border: 1px solid #ddd;
 	font-size: 16px;
@@ -59,6 +61,7 @@ $(document).ready(function() {
 	-moz-transition: all 0.1s linear;
 	transition: all 0.1s linear;
 }
+
 .panel-register input:hover,
 .panel-register input:focus {
 	outline:none;
@@ -67,6 +70,7 @@ $(document).ready(function() {
 	box-shadow: none;
 	border-color: #ccc;
 }
+
 .btn-register {
 	background-color: #59B2E0;
 	outline: none;
@@ -78,6 +82,7 @@ $(document).ready(function() {
 	text-transform: uppercase;
 	border-color: #59B2E6;
 }
+
 .btn-register:hover,
 .btn-register:focus {
 	color: #fff;
@@ -85,31 +90,37 @@ $(document).ready(function() {
 	border-color: #53A3CD;
 }
        
-#door_number{
+#door_number {
     width: 80px;
     display: inline;
 }    
        
-#street{
-   display: inline;
-   width: 340px;
-
-}       
-#appartment{
+#street {
     display: inline;
-   width: 90px;
+    width: 340px;
+}
+
+#appartment {
+    display: inline;
+    width: 90px;
 }
        
-#city, #province, #country{
+#city, 
+#province, 
+#country {
    width: 170;
    display: inline;
    margin-top: 5px;
 }
-#phone1,#phone2,#phone3{
+
+#phone1,
+#phone2,
+#phone3 {
    width: 100px;
    display: inline;
 }
-#postalCode{
+
+#postalCode {
     margin-top: 5px;
     width: auto;
 }
