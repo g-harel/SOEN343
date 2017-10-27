@@ -8,7 +8,7 @@ $lastName = $_POST['last_name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $is_Admin = false;
-$phoneNumber = $_POST['phone1'].$_POST['phone2'].$_POST['phone3'];
+$phoneNumber = $_POST['phone_number'];
 
 
 $doorNumber = $_POST['door_number'];

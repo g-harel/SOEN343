@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="dist/jquery.masked-input.js"></script>
+
 <script>
     $(document).ready(function() {
         $(".number").keydown(function (e) {
@@ -174,10 +176,7 @@
                                 <label for="phone">
                                     Phone number
                                 </label><br>
-                                <input type="text" name="phone1" id="phone1" tabindex="1" class="form-control number" placeholder="" value="" maxlength="3" required>-
-                                <input type="text" name="phone2" id="phone2" tabindex="1" class="form-control number" placeholder="" value="" maxlength="3" required>-
-                                <input type="text" name="phone3" id="phone3" tabindex="1" class="form-control number" placeholder="" value="" maxlength="4" required>
-                                
+                                <input type="text" name="phone_number" id="phone_number" class="form-control number" data-masked-input="999-999-9999" placeholder="XXX-XXX-XXXX" maxlength="12">
                             </div>
                             
                             <div class="form-group">
