@@ -16,6 +16,8 @@ use App\Gateway\LaptopGateway;
 
 class ComputerController extends Controller
 {
+//    ValidateFormAddingModifying->
+
     public function index()
     {
     }
@@ -39,117 +41,94 @@ class ComputerController extends Controller
 
     public function insertDesktop()
     {
-        $args = [ // backend validation
-            'desktop-qty' => $this->filterIntInputQty,
-            'computer-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'desktop-ram-size' => FILTER_VALIDATE_INT,
-            'storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'desktop-cpu-cores' => FILTER_VALIDATE_INT,
-            'desktop-price' => $this->filterInputFloatArr,
-            'desktop-weight' => $this->filterInputFloatArr,
-            'desktop-height' => $this->filterInputFloatArr,
-            'desktop-width' => $this->filterInputFloatArr,
-            'desktop-thickness' => $this->filterInputFloatArr
-        ];
-        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
-        // if one of the element values of $sanitizedInputs is empty,
-        // then at least one or more values entered are invalid
-        // display a message in view, otherwise continue inserting
-        $emptyArrayKeys = array_keys($sanitizedInputs, "");
-        if (!empty($emptyArrayKeys)) {
-            return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+        if($this->isFormSubmitted($_POST)) {
+            $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
+            $emptyArrayKeys = array_keys($sanitizedInputs, "");
+            if (!empty($emptyArrayKeys)) {
+                return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            } else {
+                $desktopItem = [ // it is assumed all the values are good here, can now insert
+                    "processor_type" => $sanitizedInputs["desktop-processor"],
+                    "ram_size" => $sanitizedInputs["desktop-ram-size"],
+                    "cpu_cores" => $sanitizedInputs["desktop-cpu-cores"],
+                    "weight" => $sanitizedInputs["desktop-weight"],
+                    "type" => "desktop",
+                    "category" => "desktop",
+                    "brand" => $sanitizedInputs["computer-brand"],
+                    "price" => $sanitizedInputs["desktop-price"],
+                    "quantity" => $sanitizedInputs["desktop-qty"],
+                    "height" => $sanitizedInputs["desktop-height"],
+                    "width" => $sanitizedInputs["desktop-width"],
+                    "thickness" => $sanitizedInputs["desktop-thickness"]
+                ];
+                $desktopGateway = new DesktopGateway();
+                $desktopGateway->insert($desktopItem);
+                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'desktop']);
+            }
         } else {
-            $desktopItem = [ // it is assumed all the values are good here, can now insert
-                "processor_type" => $sanitizedInputs["desktop-processor"],
-                "ram_size" => $sanitizedInputs["desktop-ram-size"],
-                "cpu_cores" => $sanitizedInputs["desktop-cpu-cores"],
-                "weight" => $sanitizedInputs["desktop-weight"],
-                "type" => "desktop",
-                "category" => "desktop",
-                "brand" => $sanitizedInputs["computer-brand"],
-                "price" => $sanitizedInputs["desktop-price"],
-                "quantity" => $sanitizedInputs["desktop-qty"],
-                "height" => $sanitizedInputs["desktop-height"],
-                "width" => $sanitizedInputs["desktop-width"],
-                "thickness" => $sanitizedInputs["desktop-thickness"]
-            ];
-            $desktopGateway = new DesktopGateway();
-            $desktopGateway->insert($desktopItem);
-            return view('items.create', ['insertedSuccessfully' => true, 'for' => 'desktop']);
+            return view('items.create');
         }
     }
 
     public function insertLaptop()
     {
-        $args = [
-            'laptop-qty' => $this->filterIntInputQty,
-            'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-ram-size' => FILTER_VALIDATE_INT,
-            'laptop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-cpu-cores' => FILTER_VALIDATE_INT,
-            'laptop-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-display-size' => $this->filterInputFloatArr,
-            'laptop-price' => $this->filterInputFloatArr,
-            'laptop-weight' => $this->filterInputFloatArr,
-            'laptop-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'laptop-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'laptop-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
-        ];
-        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
-        $emptyArrayKeys = array_keys($sanitizedInputs, "");
-        if (!empty($emptyArrayKeys)) {
-            return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+        if($this->isFormSubmitted($_POST)) {
+            $sanitizedInputs = filter_input_array(INPUT_POST, $this->laptopValidationFormInputs());
+            $emptyArrayKeys = array_keys($sanitizedInputs, "");
+            if (!empty($emptyArrayKeys)) {
+                return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            } else {
+                $laptopItem = [
+                    "processor_type" => $sanitizedInputs['laptop-processor'],
+                    "ram_size" => $sanitizedInputs['laptop-ram-size'],
+                    "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
+                    "weight" => $sanitizedInputs['laptop-weight'],
+                    "type" => "laptop",
+                    "category" => "laptop",
+                    "brand" => $sanitizedInputs['laptop-brand'],
+                    "price" => $sanitizedInputs['laptop-price'],
+                    "quantity" => $sanitizedInputs['laptop-qty'],
+                    "display_size" => $sanitizedInputs['laptop-display-size'],
+                    "os" => $sanitizedInputs['laptop-os'],
+                    "battery" => $sanitizedInputs['laptop-battery'],
+                    "camera" => $sanitizedInputs['laptop-camera'],
+                    "is_touchscreen" => $sanitizedInputs['laptop-touchscreen'],
+                ];
+                $laptopGateway = new LaptopGateway();
+                $laptopGateway->insert($laptopItem);
+                return view('items.create', ['insertedSuccessfully' => true, 'for' => 'laptop']);
+            }
         } else {
-            $laptopItem = [
-                "processor_type" => $sanitizedInputs['laptop-processor'],
-                "ram_size" => $sanitizedInputs['laptop-ram-size'],
-                "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
-                "weight" => $sanitizedInputs['laptop-weight'],
-                "type" => "laptop",
-                "category" => "laptop",
-                "brand" => $sanitizedInputs['laptop-brand'],
-                "price" => $sanitizedInputs['laptop-price'],
-                "quantity" => $sanitizedInputs['laptop-qty'],
-                "display_size" => $sanitizedInputs['laptop-display-size'],
-                //hard drive column not in database right now
-                "os" => $sanitizedInputs['laptop-os'],
-                "battery" => $sanitizedInputs['laptop-battery'],
-                "camera" => $sanitizedInputs['laptop-camera'],
-                "is_touchscreen" => $sanitizedInputs['laptop-touchscreen'],
-            ];
-            $laptopGateway = new LaptopGateway();
-            $laptopGateway->insert($laptopItem);
-            return view('items.create', ['insertedSuccessfully' => true, 'for' => 'laptop']);
+            return view('items.create');
         }
     }
 
     public function insertTablet()
     {
-
         $args = [
-            'tablet-qty' => array('filter' => FILTER_VALIDATE_INT,
-                // cannot insert more than 100 qty at a time? max=?
-                'options' => array('min_range' => 1, 'max_range' => 100)
-            ),
+            'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-ram-size' => FILTER_VALIDATE_INT,
             'tablet-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-cpu-cores' => FILTER_VALIDATE_INT,
             'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-display-size' => FILTER_SANITIZE_NUMBER_FLOAT,
-            'tablet-price' => array('filter' => FILTER_VALIDATE_FLOAT,
-                'options' => "decimal"
-            ),
-            'tablet-weight' => FILTER_VALIDATE_FLOAT,
-            'tablet-height' => FILTER_VALIDATE_FLOAT,
+            'tablet-display-size' => $this->filterInputFloatArr,
+            'tablet-price' => $this->filterInputFloatArr,
+            'tablet-weight' => $this->filterInputFloatArr,
+            'tablet-height' => $this->filterInputFloatArr,
             'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-camera' => FILTER_VALIDATE_BOOLEAN,
-            'tablet-touchscreen' => FILTER_VALIDATE_BOOLEAN
+            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
         ];
+//        $sanitizedInputs = filter_input_array(INPUT_POST, $args);
         $sanitizedInputs = filter_input_array(INPUT_POST, $args);
+        $emptyArrayKeys = array_keys($sanitizedInputs, "");
+        if (!empty($emptyArrayKeys)) {
+            return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+        } else {
+
+        }
         echo '<pre>';
         print_r($sanitizedInputs);
 
