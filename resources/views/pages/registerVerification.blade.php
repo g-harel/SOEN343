@@ -23,7 +23,15 @@ $postalCode = $_POST['postal_code'];
 $register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
 $result = $register->createUser();
 
-header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
-exit();
+if($result >= 0) {
+    $_SESSION['isAdmin'] = $result;
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
+    exit();
+}
+
+else {
+    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/register");
+    exit();
+}
 
 ?>
