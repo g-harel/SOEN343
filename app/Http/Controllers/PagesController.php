@@ -38,9 +38,13 @@ class PagesController extends Controller
 	public function loginClientVerification(){
         return view('pages.loginClientVerification');
     }
-
+  
     public function registerVerification(){
         return view('pages.registerVerification');
+}
+
+    public function shoppingCart(){
+        return view('pages.shoppingCart');
     }
 }
 

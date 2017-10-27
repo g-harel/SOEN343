@@ -1,0 +1,9 @@
+; this is the configuration file for the database access
+
+serverName = ""
+
+userName = ""
+
+password = ""
+
+databaseName = ""

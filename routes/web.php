@@ -19,6 +19,8 @@ Route::post('registerVerification', 'PagesController@registerVerification');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
+
 Route::resource('items', 'ItemsController');
 
 // TV

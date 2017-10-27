@@ -2,41 +2,41 @@
 
 namespace App\Gateway;
 
+use App\Gateway\DatabaseGateway;
+
 class SessionGateway
 {
     private $db;
+    private $tableName;
 
     public function __construct() {
-        $tableName = "sessions";
-        $this->db = new SingleTableGateway($tableName);
+        $this->tableName = "sessions";
+        $this->db = new DatabaseGateway();
     }
 
     public function getSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function getSessionByUserId($userId) {
         $conditionsAssociativeArray = ["user_id" => $userId];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function addSession($userId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $columnValueAssociativeArraysql = [
-            "user_id" => $userId,
-            "login_time_stamp" => $loginTimeStamp
-        ];
-        return $this->db->insert($columnValueAssociativeArraysql);
+        $sql = "INSERT INTO `users`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
+        return $this->db->queryDB($sql);
     }
 
     public function deleteSessionById($email) {
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->delete($conditionsAssociativeArray);
+        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function deleteSessionByUserId($userId) {
         $conditionsAssociativeArray = ["user_id" => $userId];
-        return $this->db->delete($conditionsAssociativeArray);
+        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 }

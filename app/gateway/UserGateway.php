@@ -2,72 +2,67 @@
 
 namespace App\Gateway;
 
+use App\Gateway\DatabaseGateway;
+
 class UserGateway
 {
     private $db;
+    private $tableName;
 
     public function __construct() {
-        $tableName = "users";
-        $this->db = new SingleTableGateway($tableName);
+        $this->tableName = "users";
+        $this->db = new DatabaseGateway();
     }
 
     public function getUserByEmail($email) {
         $conditionsAssociativeArray = ["email" => $email];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function getUserById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->selectRows($conditionsAssociativeArray);
+        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function editUser($id, $email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode) {
-        $columnValuePairsAssociativeArray = [
-            "email" => $email,
-            "password" => $password,
-            "first_name" => $firstName,
-            "last_name" => $lastName,
-            "phone_number" => $phoneNumber,
-            "door_number" => $doorNumber,
-            "appartement" => $appartement,
-            "street" => $street,
-            "city" => $city,
-            "province" => $province,
-            "country" => $country,
-            "postal_code" => $postalCode,
-        ];
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->update($columnValuePairsAssociativeArray, $conditionsAssociativeArray);
+        $conditions = transformConditionsToString($conditionsAssociativeArray);
+
+        $valuePairs = "email = '$email', password = '$password', first_name = '$firstName', last_name = '$lastName',
+        phone_number = $phoneNumber, door_number = $doorNumber, appartement = '$appartement', street = '$street',
+        city = '$city', province = '$province', country = '$country', postal_code = '$postalCode'";
+
+        $isConditionPresent = $conditionsAssociativeArray != null;
+
+        $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
+
+        return $this->db->queryDB($sql);
     }
 
     public function addUser($email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
-        $columnValueAssociativeArray = [
-            "email" => $email,
-            "password" => $password,
-            "first_name" => $firstName,
-            "last_name" => $lastName,
-            "phone_number" => $phoneNumber,
-            "door_number" => $doorNumber,
-            "appartement" => $appartement,
-            "street" => $street,
-            "city" => $city,
-            "province" => $province,
-            "country" => $country,
-            "postal_code" => $postalCode,
-            "isAdmin" => $isAdmin
-        ];
-        return $this->db->insert($columnValueAssociativeArray);
+        $sql = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode', $isAdmin);";
+        $this->db->openDBConnection();
+        $isInsertSuccessful = $this->db->manualQueryDB($sql) !== null;
+        $result = null;
+        if ($isInsertSuccessful) {
+            $conditionsAssociativeArray = ["email" => $email];
+            $conditions = transformConditionsToString($conditionsAssociativeArray);
+            $sql = "SELECT * FROM $this->tableName WHERE $conditions;";
+            $result = $this->db->manualQueryDB($sql);
+            $this->db->closeDBConnection();
+        }
+        return $result;
     }
 
     public function deleteUserByEmail($email) {
         $conditionsAssociativeArray = ["email" => $email];
-        return $this->db->delete($conditionsAssociativeArray);
+        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function deleteUserById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return $this->db->delete($conditionsAssociativeArray);
+        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 }
