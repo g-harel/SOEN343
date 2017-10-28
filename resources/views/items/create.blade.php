@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title')
-    Create Item
+    Crear
 @endsection
 @section('content')
     <div class="row">
@@ -96,23 +96,23 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input required type="text" name="desktop-price" id="desktop-price" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Weight (kg):
-                                    <input required type="text" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input required type="text" name="desktop-height" id="desktop-height" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-height" id="desktop-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Width (cm):
-                                    <input required type="text" name="desktop-width" id="desktop-width" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-width" id="desktop-width" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input required type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-thickness" id="desktop-thickness" class="form-control">
                                 </div>
                             </div>
                         </div>
