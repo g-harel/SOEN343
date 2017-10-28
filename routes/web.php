@@ -22,17 +22,16 @@ Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 Route::resource('items', 'ItemsController');
 
-
 // Computer
-// TODO group routes together
-Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
-Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
-Route::get('items/computer/showTablet', 'ComputerController@showTablet');
-Route::post('items/computer/desktop/insert', 'ComputerController@insertDesktop');
-Route::post('items/computer/tablet/insert', 'ComputerController@insertTablet');
-Route::post('items/computer/desktop/delete', 'ComputerController@deleteDesktop');
-Route::post('items/computer/laptop/insert', 'ComputerController@insertLaptop');
-
+Route::prefix('items/computer/')->group(function () {
+    Route::get('showDesktop', 'ComputerController@showDesktop');
+    Route::get('showLaptop', 'ComputerController@showLaptop');
+    Route::get('showTablet', 'ComputerController@showTablet');
+    Route::post('desktop/insert', 'ComputerController@insertDesktop');
+    Route::post('tablet/insert', 'ComputerController@insertTablet');
+    Route::post('desktop/delete', 'ComputerController@deleteDesktop');
+    Route::post('laptop/insert', 'ComputerController@insertLaptop');
+});
 
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');

@@ -19,8 +19,6 @@ class ComputerController extends Controller
     }
 
     public function showDesktop() {
-        // syntax:
-        // folderName.folderName.fileName.php
         $desktopMapper = new DesktopMapper();
         $desktops = $desktopMapper->getAll();
 

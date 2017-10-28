@@ -75,6 +75,7 @@ let ModifyDelete = (function () {
                     let option = $(this).find("option");
                     for (let i = 0; i < option.length; i++) {
                         if (option.eq(i).attr("title") === adminSelected) {
+                            console.log('yess ****');
                             option.eq(i).prop("selected", "selected");
                         }
                     }
@@ -82,7 +83,7 @@ let ModifyDelete = (function () {
             };
 
             editDeleteMonitor.editLink.click(function (event) {
-                let tr = $(this).parentsUntil("table");
+                let tr = $(this).parentsUntil("tbody");
                 let form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
                 // monitor drop downs
                 genericOptionSelector(form, "#monitor-brand", tr.find(dataAttr.brand).text());
@@ -98,7 +99,7 @@ let ModifyDelete = (function () {
             });
 
             editDeleteDesktop.editLink.click(function (event){
-                let tr = $(this).parentsUntil('table');
+                let tr = $(this).parentsUntil('tbody');
                 let form = editDeleteDesktop.modal.find('.modal-body > form#desktop-form');
                 // desktop drop downs
                 genericOptionSelector(form, "#computer-brand", tr.find(dataAttr.brand).text());
@@ -119,7 +120,7 @@ let ModifyDelete = (function () {
             });
 
             editDeleteTablet.editLink.click(function (event){
-                let tr = $(this).parentsUntil("table");
+                let tr = $(this).parentsUntil("tbody");
                 let form = editDeleteTablet.modal.find(".modal-body > form#tablet-form");
                 // tablet drop downs
                 genericOptionSelector(form, "#tablet-brand", tr.find(dataAttr.brand).text());
@@ -148,9 +149,10 @@ let ModifyDelete = (function () {
             });
 
             editDeleteLaptop.editLink.click(function (event){
-                let tr = $(this).parentsUntil("table");
+                let tr = $(this).parentsUntil("tbody");
                 let form = editDeleteLaptop.modal.find(".modal-body > form#laptop-form");
                 // laptop drop down fields
+                console.log(tr);
                 genericOptionSelector(form, "#laptop-brand", tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, "#laptop-processor", tr.find(dataAttr.processor).text());
                 genericOptionSelector(form, "#laptop-ram-size", tr.find(dataAttr.ramSize).text());

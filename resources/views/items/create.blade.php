@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Create Item
+@endsection
 @section('content')
     <div class="row">
         <ol class="breadcrumb">
@@ -76,7 +78,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Hard Drive Size:
+                                    Hard Drive Size (GB):
                                     <select required name="storage-capacity" id="storage-capacity" class="form-control">
                                         <option title="Select storage qty" value="">Select storage size</option>
                                     </select>
@@ -151,7 +153,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Hard Drive Size:
+                                    Hard Drive Size (GB):
                                     <select name="laptop-storage-capacity" id="laptop-storage-capacity" class="form-control" required>
                                         <option title="Select storage capacity" value="">Select storage capacity</option>
                                     </select>
@@ -240,7 +242,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Hard Drive Size:
+                                    Hard Drive Size (GB):
                                     <select required name="tablet-storage-capacity" id="tablet-storage-capacity" class="form-control">
                                         <option title="Select storage capacity" value="">Select storage capacity</option>
                                     </select>
