@@ -22,8 +22,6 @@ Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 Route::resource('items', 'ItemsController');
 
-// TV
-Route::get('items/tv/showTv', 'TelevisionsController@showTv');
 
 // Computer
 // TODO group routes together

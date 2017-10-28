@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Gateway\MonitorGateway;
 use Illuminate\Http\Request;
-
+use App\Mappers\MonitorMapper;
 
 class MonitorsController extends Controller
 {
-    public function index()
-    {
+    public function index(){
 
     }
 
-    public function showMonitor()
-    {
-        return view('items.monitor.show-monitor');
+    public function showMonitor() {
+
+        $monitorMapper = new MonitorMapper();
+        $monitors = $monitorMapper->getAll();
+
+        return view('items.monitor.show-monitor', ['monitors' => $monitors]);
     }
 
     public function insertMonitor()

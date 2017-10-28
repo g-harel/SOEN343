@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mappers\LaptopMapper;
+use App\Mappers\DesktopMapper;
+use App\Mappers\TabletMapper;
 use App\Gateway;
 use App\Gateway\DesktopGateway;
 use App\Gateway\TabletGateway;
@@ -10,27 +13,34 @@ use App\Gateway\LaptopGateway;
 
 class ComputerController extends Controller
 {
-//    ValidateFormAddingModifying->
 
-    public function index()
-    {
+    public function index() {
+
     }
 
-    public function showDesktop()
-    {
+    public function showDesktop() {
         // syntax:
         // folderName.folderName.fileName.php
-        return view('items.computer.show-desktop');
+        $desktopMapper = new DesktopMapper();
+        $desktops = $desktopMapper->getAll();
+
+        return view('items.computer.show-desktop', ['desktops' => $desktops]);
     }
 
-    public function showLaptop()
-    {
-        return view('items.computer.show-laptop');
+    public function showLaptop() {
+
+        $laptopMapper = new LaptopMapper();
+        $laptops = $laptopMapper->getAll();
+
+        return view('items.computer.show-laptop', ['laptops' => $laptops]);
     }
 
-    public function showTablet()
-    {
-        return view('items.computer.show-tablet');
+    public function showTablet() {
+
+        $tabletMapper = new TabletMapper();
+        $tablets = $tabletMapper->getAll();
+
+        return view('items.computer.show-tablet', ['tablets' => $tablets]);
     }
 
     public function insertDesktop()

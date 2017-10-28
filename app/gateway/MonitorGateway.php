@@ -2,7 +2,7 @@
 
 namespace App\Gateway;
 
-use App\Gateway\ItemGateway;
+use Illuminate\Support\Facades\DB;
 
 class MonitorGateway extends ItemGateway implements iItemCategory {
   public static $fields = array(
@@ -11,7 +11,7 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
   );
 
   public function buildSelect() {
-      return parent::buildSelect()." LEFT JOIN monitors ON items.id = monitors.item_id";
+      return parent::buildSelect()." INNER JOIN monitors ON items.id = monitors.item_id";
   }
 
   public function buildInsert($item) {
@@ -24,5 +24,10 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
       $id = $item["id"];
       $values = $this->updateList(self::$fields, $item);
       return parent::buildUpdate($item)."UPDATE monitors SET $values WHERE item_id = $id;";
+  }
+
+  public function getAll()
+  {
+      return DB::select($this->buildSelect());
   }
 }

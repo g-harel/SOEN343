@@ -32,8 +32,9 @@
         </tr>
         </thead>
         <tbody>
+        @foreach($tablets as $tablet)
         <tr>
-            <td data-id="31">31</td>
+            <td data-id="31">{{ $tablet->id }}</td>
             <td data-brand="Apple">Apple</td>
             <td data-price="900">900</td>
             <td data-qty="43">43</td>
@@ -67,7 +68,7 @@
                     </ul>
                 </div>
             </td>
-        </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
