@@ -12,6 +12,7 @@
     @if(Session::has('succeedInsertingItem'))
         <div class="row">
             <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <p>You have successfully added a new <b>{{Session::get('for')}}</b> item.</p>
             </div>
         </div>
@@ -21,6 +22,7 @@
         @foreach($inputErrors as $value)
             <div class="row">
                 <div class='alert alert-{{$alertType}}'>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
                 </div>
             </div>
@@ -94,23 +96,23 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input required type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control">
+                                    <input required type="text" name="desktop-price" id="desktop-price" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Weight (kg):
-                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-weight" id="desktop-weight" class="form-control">
+                                    <input required type="text" name="desktop-weight" id="desktop-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-height" id="desktop-height" class="form-control">
+                                    <input required type="text" name="desktop-height" id="desktop-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Width (cm):
-                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-width" id="desktop-width" class="form-control">
+                                    <input required type="text" name="desktop-width" id="desktop-width" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="desktop-thickness" id="desktop-thickness" class="form-control">
+                                    <input required type="text" name="desktop-thickness" id="desktop-thickness" class="form-control">
                                 </div>
                             </div>
                         </div>
