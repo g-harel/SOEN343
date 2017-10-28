@@ -43,7 +43,5 @@ class MonitorsController extends Controller
         } else {
             return view('items.create');
         }
-
-
     }
 }

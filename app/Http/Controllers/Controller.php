@@ -71,6 +71,33 @@ class Controller extends BaseController
     }
 
     /**
+     * Used for validating tablet form
+     * in PHP, adding and modifying function
+     * can use this function
+     * @return array
+     */
+    public function tabletValidationFormInputs() {
+        return [
+            'tablet-qty' => $this->filterIntInputQty,
+            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-ram-size' => FILTER_VALIDATE_INT,
+            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
+            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-display-size' => $this->filterInputFloatArr,
+            'tablet-price' => $this->filterInputFloatArr,
+            'tablet-weight' => $this->filterInputFloatArr,
+            'tablet-height' => $this->filterInputFloatArr,
+            'tablet-width' => $this->filterInputFloatArr,
+            'tablet-thickness' => $this->filterInputFloatArr,
+            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
+        ];
+    }
+
+    /**
      * Used for validating monitor form
      * in PHP, adding and modifying function
      * can use this function
@@ -86,31 +113,6 @@ class Controller extends BaseController
         ];
     }
 
-    /**
-     * Used for validating tablet form
-     * in PHP, adding and modifying function
-     * can use this function
-     * @return array
-     */
-    public function tabletValidationFormInputs() {
-        return [
-            'tablet-qty' => $this->filterIntInputQty,
-            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-ram-size' => FILTER_VALIDATE_INT,
-            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
-            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-display-size' => $this->filterInputFloatArr,
-            'tablet-price' => $this->filterInputFloatArr,
-            'tablet-weight' => $this->filterInputFloatArr,
-            'tablet-height' => $this->filterInputFloatArr,
-            'tablet-width' => $this->filterInputFloatArr,
-            'tablet-thickness' => $this->filterInputFloatArr,
-            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
-        ];
-    }
 
     public function isFormSubmitted($method) {
         if($method == $_POST) {

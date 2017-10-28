@@ -35,7 +35,7 @@ class ComputerController extends Controller
 
     public function insertDesktop()
     {
-        if($this->isFormSubmitted($_POST) && $_POST['_token']) {
+        if($this->isFormSubmitted($_POST)) {
 
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
@@ -47,7 +47,7 @@ class ComputerController extends Controller
                     "ram_size" => $sanitizedInputs["desktop-ram-size"],
                     "cpu_cores" => $sanitizedInputs["desktop-cpu-cores"],
                     "weight" => $sanitizedInputs["desktop-weight"],
-                    "type" => "desktop",
+                    "hdd_size" => $sanitizedInputs["storage-capacity"],
                     "category" => "desktop",
                     "brand" => $sanitizedInputs["computer-brand"],
                     "price" => $sanitizedInputs["desktop-price"],
@@ -78,7 +78,7 @@ class ComputerController extends Controller
                     "ram_size" => $sanitizedInputs['laptop-ram-size'],
                     "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
                     "weight" => $sanitizedInputs['laptop-weight'],
-                    "type" => "laptop",
+                    "hdd_size" => $sanitizedInputs["laptop-storage-capacity"],
                     "category" => "laptop",
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
@@ -110,19 +110,19 @@ class ComputerController extends Controller
                 $tabletItem = [
                     "processor_type" => $sanitizedInputs['tablet-processor'],
                     "ram_size" => $sanitizedInputs['tablet-ram-size'],
-                    "type" => "tablet",
+                    "cpu_cores" => $sanitizedInputs['tablet-cpu-cores'],
+                    "weight" => $sanitizedInputs['tablet-weight'],
+                    "hdd_size" => $sanitizedInputs["tablet-storage-capacity"],
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
-                    "quantity" => $sanitizedInputs['tablet-qty'],
-                    "cpu_cores" => $sanitizedInputs['tablet-cpu-cores'],
-                    "os" => $sanitizedInputs['tablet-os'],
-                    "display_size" => $sanitizedInputs['tablet-display-size'],
                     "price" => $sanitizedInputs['tablet-price'],
-                    "weight" => $sanitizedInputs['tablet-weight'],
-                    "height" => $sanitizedInputs['tablet-height'],
+                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "display_size" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
+                    "height" => $sanitizedInputs['tablet-height'],
                     "thickness" => $sanitizedInputs['tablet-thickness'],
                     "battery" => $sanitizedInputs['tablet-battery'],
+                    "os" => $sanitizedInputs['tablet-os'],
                     "camera" => $sanitizedInputs['tablet-camera'],
                     "is_touchscreen" => $sanitizedInputs['tablet-touchscreen']
                 ];
