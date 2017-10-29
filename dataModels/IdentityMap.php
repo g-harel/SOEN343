@@ -15,8 +15,8 @@ class IdentityMap
     
     public function __construct()
     {
-        $this->$idToObject = new ArrayObject();
-        $this->$objectToId = new SplObjectStorage();
+        $this->idToObject = new ArrayObject();
+        $this->objectToId = new SplObjectStorage();
     }
 
     public function set($id, $object)
