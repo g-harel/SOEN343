@@ -15,7 +15,7 @@ $ npm run eslint
 ### Autoformat js
 
 ```shell
-$ npm run elsint -- --fix
+$ npm run eslint -- --fix
 ```
 
 ### Run php linting (after `composer install`)
