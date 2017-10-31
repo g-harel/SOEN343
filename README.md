@@ -1,24 +1,31 @@
 # SOEN343
 
-### Commands
-
-##### Setup
-
-Requirements
-- bash shell
-- xampp (php/apache/mysql)
-- npm/node
-
-```shell
-$ cp .env.travis .env
-$ mysql -e 'CREATE DATABASE soen343;'
-$ composer install
-$ composer update
-$ php artisan key:generate
-```
-
-##### Test
+### Run php tests
 
 ```shell
 $ vendor/bin/phpunit
+```
+
+### Run js linting (after `npm install`)
+
+```shell
+$ npm run eslint
+```
+
+### Autoformat js
+
+```shell
+$ npm run elsint -- --fix
+```
+
+### Run php linting (after `composer install`)
+
+```shell
+$ vendor/bin/phpcs **/*.php --standard=ruleset.xml
+```
+
+### Autoformat php
+
+```shell
+$ vendor/bin/phpcbf **/*.php --standard=ruleset.xml
 ```

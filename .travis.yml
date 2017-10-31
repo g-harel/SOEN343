@@ -15,8 +15,9 @@ install:
   - php artisan key:generate
 
 script:
-  - vendor/bin/phpunit
   - npm run eslint
+  - vendor/bin/phpcs **/*.php --standard=ruleset.xml
+  - vendor/bin/phpunit
 
 services:
   - mysql
