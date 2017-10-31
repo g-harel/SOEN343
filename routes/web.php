@@ -23,12 +23,16 @@ Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 Route::resource('items', 'ItemsController');
 
-
 // Computer
-Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');
-Route::get('items/computer/showLaptop', 'ComputerController@showLaptop');
-Route::get('items/computer/showTablet', 'ComputerController@showTablet');
-
+Route::prefix('items/computer/')->group(function () {
+    Route::get('showDesktop', 'ComputerController@showDesktop');
+    Route::get('showLaptop', 'ComputerController@showLaptop');
+    Route::get('showTablet', 'ComputerController@showTablet');
+    Route::post('desktop/insert', 'ComputerController@insertDesktop');
+    Route::post('tablet/insert', 'ComputerController@insertTablet');
+    Route::post('desktop/delete', 'ComputerController@deleteDesktop');
+    Route::post('laptop/insert', 'ComputerController@insertLaptop');
+});
 
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
@@ -39,3 +43,6 @@ Route::get('/admin/view', 'AdminController@showItems');//Login pages
 Route::get('/login', 'PagesController@login');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
+
+Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+

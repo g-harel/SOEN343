@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Laptop Items
+@endsection
 @section('content')
     <ol class="breadcrumb">
         <li><a href="/items">Items</a></li>
@@ -56,7 +58,7 @@
                     </td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Delete">
-                            <a class="btn btn-danger btn-xs" data-qty="2" data-id="25" data-toggle="modal"
+                            <a class="btn btn-danger btn-xs" data-qty="{{ $laptop->quantity }}" data-id="{{ $laptop->id }}" data-toggle="modal"
                                data-target="#delLaptopLink">
                                 <span class="fa fa-trash"></span>
                             </a>
