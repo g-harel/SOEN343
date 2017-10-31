@@ -57,16 +57,19 @@ class UserMapper
     }
 
     public function saveUserInRecord() {
-        $success = $this->gateway->addUser(
+        $result = $this->gateway->addUser(
             $this->user->getEmail(), $this->user->getPassword(), $this->user->getFirstName(), $this->user->getLastName(),
             $this->user->getPhoneNumber(), $this->user->getDoorNumber(), $this->user->getAppartement(),
             $this->user->getStreet(), $this->user->getCity(), $this->user->getProvince(), $this->user->getCountry(),
             $this->user->getPostalCode(), $this->user->getIsAdmin()
         );
-        $recordUser = $this->gateway->getUserByEmail($this->user->getEmail());
-        $id = $recordUser[0]["id"];
-        $this->user->setId($id);
-        return $success;
+        $isSuccessful = false;
+        if ($result !== null) {
+            $id = $result[0]["id"];
+            $this->user->setId($id);
+            $isSuccessful = true;
+        }
+        return $isSuccessful;
     }
 
     public function editUserInRecord() {

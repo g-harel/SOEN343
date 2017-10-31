@@ -5,18 +5,37 @@ namespace App\Gateway;
 use Mysqli;
 
 // log result in the client console.
-function console_log($str) {
+Function console_log($str) {
     echo "<script>console.log('".addslashes(json_encode($str))."');</script>\n";
 }
 
 // log errors in the client console.
-function console_error($str) {
+Function console_error($str) {
     if ($str) {
         echo "<script>console.error('".addslashes(json_encode($str))."');</script>\n";
     }
 }
 
-function implodeAssociativeArray($associativeArray, $connector) {
+Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
+    $conditions = transformConditionsToString($conditionsAssociativeArray);
+    $sql = "SELECT * FROM $tableName WHERE $conditions;";
+    $db = new DatabaseGateway();
+    $result = $db->queryDB($sql);
+    if ($result !== null) {
+        return parseSelectResult($result);
+    } else {
+        return null;
+    }
+}
+
+Function singleTableDeleteUserQuery($conditionsAssociativeArray, $tableName) {
+    $conditions = transformConditionsToString($conditionsAssociativeArray);
+    $sql = "DELETE FROM $tableName WHERE $conditions;";
+    $db = new DatabaseGateway();
+    return $db->queryDB($sql);
+}
+
+Function implodeAssociativeArray($associativeArray, $connector) {
     $length = count($associativeArray);
     $conditions = "";
     foreach ($associativeArray as $key => $value){
@@ -30,7 +49,7 @@ function implodeAssociativeArray($associativeArray, $connector) {
 }
 
 // fetch data from a query result.
-function parseSelectResult($queryResults) {
+Function parseSelectResult($queryResults) {
     $isQueryResultsExist = $queryResults != null;
     $result = null;
     if ($isQueryResultsExist) {
@@ -41,17 +60,19 @@ function parseSelectResult($queryResults) {
     return $result;
 }
 
-function transformConditionsToString($connectionsAssociativeArray) {
+Function transformConditionsToString($connectionsAssociativeArray) {
     $separatorStringBetweenConditions = " AND ";
     return implodeAssociativeArray($connectionsAssociativeArray, $separatorStringBetweenConditions);
 }
 
 // pluck the keys from the source object and accumulate them into an array.
-function cherryPick($keys, $source) {
+Function cherryPick($keys, $source) {
     $result = array();
-    $sourceValues = get_object_vars($source);
+    if (is_object($source)) {
+        $source = get_object_vars($source);
+    }
     foreach ($keys as &$key) {
-        array_push($result, $sourceValues["$key"]);
+        array_push($result, $source["$key"]);
     }
     return $result;
 }
@@ -65,17 +86,23 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $this->serverName = "localhost";
-        $this->userName = "root";
-        $this->password = "";
-        $this->databaseName = "soen343";
+        /*$configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
+        $configArray = parse_ini_file($configPath);
+        $this->serverName = $configArray["serverName"];
+        $this->userName = $configArray["userName"];
+        $this->password = $configArray["password"];
+        $this->databaseName = $configArray["databaseName"];*/
     }
 
-    private function openDBConnection() {
+    public function getDBConnection() {
+        return $this->DBConnection;
+    }
+
+    public function openDBConnection() {
         $this->DBConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
     }
 
-    private function closeDBConnection() {
+    public function closeDBConnection() {
         mysqli_close($this->DBConnection);
     }
 
@@ -83,31 +110,43 @@ class DatabaseGateway
     // returns the result of the last query.
     public function queryDB($sql) {
         $this->openDBConnection();
-        // TODO remove
+        $toReturn = $this->manualQueryDB($sql);
+        $this->closeDBConnection();
+        return $toReturn;
+    }
+
+    public function manualQueryDB($sql, $returnIndex = null) {
         console_log($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
         $returned = array();
-        if ($result) {
-            $returned[0] = $conn->store_result();
-            $count = 0;
-            while ($conn->more_results()) {
-                $count++;
-                $conn->next_result();
-                $result = $conn->store_result();
-                if($result) {
-                    $returned[$count] = $result;
-                } else {
-                    // TODO remove
-                    console_error($conn->error);
-                }
-            }
-        } else {
+        if (!$result) {
             // TODO remove
             console_error($conn->error);
+            return null;
         }
-        $this->closeDBConnection();
-        return $returned[count($returned) - 1];
+        $returned[0] = $conn->store_result();
+        $count = 0;
+        while ($conn->more_results()) {
+            $count++;
+            $conn->next_result();
+            $result = $conn->store_result();
+            if($result) {
+                $returned[$count] = $result;
+            } else {
+                // TODO remove
+                console_error($conn->error);
+            }
+        }
+        // if the return index is not a number or if it is larger than the
+        // number of results, the last result is returned.
+        if (!is_int($returnIndex) || $returnIndex > count($returned)) {
+            $returnIndex = count($returned) - 1;
+        }
+        if ($returnIndex < 0) {
+            $returnIndex = 0;
+        }
+        return $returned[$returnIndex];
     }
 }
 

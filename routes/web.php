@@ -15,13 +15,14 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/register', 'PagesController@register');
+Route::post('registerVerification', 'PagesController@registerVerification');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
+
 Route::resource('items', 'ItemsController');
 
-// TV
-Route::get('items/tv/showTv', 'TelevisionsController@showTv');
 
 // Computer
 Route::get('items/computer/showDesktop', 'ComputerController@showDesktop');

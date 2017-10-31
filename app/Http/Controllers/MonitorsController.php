@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mappers\MonitorMapper;
 
 class MonitorsController extends Controller
 {
@@ -11,6 +12,10 @@ class MonitorsController extends Controller
     }
 
     public function showMonitor() {
-        return view('items.monitor.show-monitor');
+
+        $monitorMapper = new MonitorMapper();
+        $monitors = $monitorMapper->getAll();
+
+        return view('items.monitor.show-monitor', ['monitors' => $monitors]);
     }
 }

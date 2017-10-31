@@ -8,13 +8,33 @@
     color: white;
     background-color: #f0ad4e;
 }
-.margin-btm {
-    margin-bottom: 1em;
+.size-font-30 {
+    font-size: 30px !important;
 }
-.no-pad {
-    padding: 0;
+
+.hide-this-element {
+    display: none;
 }
-.bg-color-white {
-    background-color: #fff;
-    padding: 1em 0 1em 0;
+table {
+    width: 100%;
+    background-color: #ffffff;
+}
+thead th {
+    white-space: nowrap;
+    border-bottom: 1px solid #ccc;
+    color: #888;
+}
+th, td {
+    padding: .5em 1em;
+    text-align: right;
+}
+th:first-child,
+td:first-child {
+    text-align: left;
+}
+tbody th, td {
+    border-bottom: 1px solid #e6e6e6;
+}
+.modal-larger {
+    width: 1120px !important;
 }

@@ -2,12 +2,9 @@
 
 namespace App\Gateway;
 
-/*
+use App\Gateway\DatabaseGateway;
 
--- example insert queries
-INSERT INTO items (brand, price, quantity) VALUES ("brand", 12.0, 1);
-INSERT INTO computers (item_id, processor_type, ram_size, cpu_cores, weight, type) VALUES (LAST_INSERT_ID(), "ptype", 1, 2, 12.0, "type");
-INSERT INTO desktops (item_id, height, width, thickness) VALUES (LAST_INSERT_ID(), 1.0, 2.0, 3.0);
+/*
 
 -- example select query
 SELECT * FROM desktops
@@ -15,187 +12,114 @@ LEFT JOIN computers ON computers.item_id = desktops.item_id
 LEFT JOIN items ON items.id = desktops.item_id
 WHERE id = 1;
 
+-- example insert queries
+INSERT INTO items (brand, price, quantity) VALUES ("brand", 12.0, 1);
+INSERT INTO computers (item_id, processor_type, ram_size, cpu_cores, weight, type) VALUES (LAST_INSERT_ID(), "ptype", 1, 2, 12.0, "type");
+INSERT INTO desktops (item_id, height, width, thickness) VALUES (LAST_INSERT_ID(), 1.0, 2.0, 3.0);
+
+-- example update queries
+UPDATE items SET brand = samsung, price = 42.00;
+UPDATE computers SET weight = 32;
+
 */
 
-abstract class ItemGateway
-{
+Interface iItemCategory {
+    public function buildSelect();
+    public function buildInsert($id);
+    public function buildUpdate($id);
+}
+
+abstract class ItemGateway implements iItemCategory {
     private $gateway;
 
-    public $model = "items";
-    public $idColumnName = "id";
-    public $fields = array(
+    public function __construct() {
+        $this->gateway = new DatabaseGateway();
+    }
+
+    protected function fieldsList($fields) {
+        return implode(", ", $fields);
+    }
+
+    protected function valueList($fields, $item) {
+        return "'".implode("', '", cherryPick($fields, $item))."'";
+    }
+
+    protected function updateList($fields, $item) {
+        $values = cherryPick($fields, $item);
+        $list = array();
+        for ($i = 0; $i < count($values); ++$i) {
+            $field = $fields[$i];
+            $value = $values[$i];
+            array_push($list, "$field = '$value'");
+        }
+        return implode(", ", $list);
+    }
+
+    public function getAll() {
+        $sql = $this->buildSelect();
+        $result = $this->gateway->queryDB($sql.";");
+        return parseSelectResult($result);
+    }
+
+    public function getByCondition($condition) {
+        $sql = $this->buildSelect();
+        $conditionString = transformConditionsToString($condition);
+        $result = $this->gateway->queryDB($sql." WHERE $conditionString;");
+        return parseSelectResult($result);
+    }
+
+    public function getById($id) {
+        return $this->getByCondition(array("id" => $id));
+    }
+
+    public function insert($item) {
+        $sql = $this->buildInsert($item);
+        $result = $this->gateway->queryDB($sql);
+        return parseSelectResult($result);
+    }
+
+    public function update($item) {
+        $sql = $this->buildUpdate($item);
+        $result = $this->gateway->queryDB($sql);
+        return parseSelectResult($result);
+    }
+
+    public function deleteByCondition($condition) {
+        $conditionString = transformConditionsToString($condition);
+        $result = $this->gateway->queryDB("DELETE FROM items WHERE $conditionString;");
+        return parseSelectResult($result);
+    }
+
+    public function deleteById($id) {
+        return $this->deleteByCondition(array("id" => $id));
+    }
+
+    public function delete($item) {
+        return $this->deleteByCondition(array("id" => $item["id"]));
+    }
+
+    // the following values should be overwritten by children
+
+    public static $fields = array(
         "category",
         "brand",
         "price",
         "quantity",
     );
 
-    public function __construct() {
-        $this->gateway = new DatabaseGateway();
+    public function buildSelect() {
+        return "SELECT * FROM items";
     }
 
-    protected static function generation($className, $pastAncestry) {
-        return array_merge(array(get_class_vars($className)), $pastAncestry);
+    public function buildInsert($item) {
+        $fields = $this->fieldsList(self::$fields);
+        $values = $this->valueList(self::$fields, $item);
+        return "INSERT INTO items ($fields) VALUES ($values);";
     }
 
-    protected function ancestry() {
-        return array(get_class_vars("ItemGateway"));
-    }
-
-    private function selectRows($condition) {
-        // return $this->ancestry();
-        $ancestry = $this->ancestry();
-        array_shift($ancestry);
-        // base query on the current model's table
-        $query = "SELECT * FROM $this->model ";
-        // for each layer of inheritance, a join must be added
-        foreach ($ancestry as $value) {
-            $query .= "LEFT JOIN ".$value["model"]." ON ".$value["model"].".".$value["idColumnName"]." = ".$this->model.".".$this->idColumnName." ";
-        }
-        // add a condition if one is given
-        if ($condition) {
-            $query .= "WHERE ".transformConditionsToString($condition);
-        }
-        $query .= ";";
-        // query the db and return the result
-        return parseSelectResult($this->gateway->queryDB($query));
-    }
-
-    public function getAll() {
-        return $this->selectRows(null);
-    }
-
-    public function getById($id) {
-        $row = $this->selectRows(array("id" => $id));
-        if ($row != null) {
-            return $row[0];
-        }
-        return null;
-    }
-
-    public function insert($item) {
-        $ancestry = array_reverse($this->ancestry());
-        // the insert on the top level model is done manually because it is
-        // different from the rest. (does not have item_id)
-        $items = array_shift($ancestry);
-        $tableName = $items["model"];
-        $columns = implode(", ", $items["fields"]);
-        $values = "'".implode("', '", cherryPick($items["fields"], $item))."'";
-        $queries =  "INSERT INTO $tableName ($columns) VALUES ($values);";
-        foreach ($ancestry as $value) {
-            $tableName = $value["model"];
-            $columns = implode(", ", $value["fields"]);
-            $values = "'".implode("', '", cherryPick($value["fields"], $item))."'";
-            $queries .= "INSERT INTO $tableName (item_id, $columns) VALUES (LAST_INSERT_ID(), $values);";
-        }
-        $this->gateway->queryDB($queries);
-    }
-}
-
-// any descendant class from ItemGateway should define its model, the idColumnName
-// and its fields as public attributes. these values are used to build the select
-// and the insert statements. it should also define a public function named
-// ancestry which returns an array of the current class and all its ancestor's
-// data. example implementations below. note that this pattern will work for any
-// amount of levels of inheritance (ex. Item -> Computer -> Laptop -> Chromebook)
-// as long as it is consistent with the database structure.
-
-class TelevisionGateway extends ItemGateway
-{
-    public $model = "televisions";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "height",
-        "width",
-        "thickness",
-        "weight",
-        "type",
-    );
-
-    protected function ancestry() {
-        return $this->generation("TelevisionGateway", parent::ancestry());
-    }
-}
-
-class MonitorGateway extends ItemGateway
-{
-    public $model = "monitors";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "display_size",
-        "weight",
-    );
-
-    protected function ancestry() {
-        return $this->generation("MonitorGateway", parent::ancestry());
-    }
-}
-
-class ComputerGateway extends ItemGateway
-{
-    public $model = "computers";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "processor_type",
-        "ram_size",
-        "cpu_cores",
-        "weight",
-        "type",
-    );
-
-    protected function ancestry() {
-        return $this->generation("ComputerGateway", parent::ancestry());
-    }
-}
-
-class TabletGateway extends ComputerGateway
-{
-    public $model = "tablets";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "display_size",
-        "width",
-        "height",
-        "thickness",
-        "battery",
-        "os",
-        "camera",
-        "is_touchscreen",
-    );
-
-    protected function ancestry() {
-        return $this->generation("TabletGateway", parent::ancestry());
-    }
-}
-
-class LaptopGateway extends ComputerGateway
-{
-    public $model = "laptops";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "display_size",
-        "os",
-        "battery",
-        "camera",
-        "is_touchscreen",
-    );
-
-    protected function ancestry() {
-        return $this->generation("LaptopGateway", parent::ancestry());
-    }
-}
-
-class DesktopGateway extends ComputerGateway
-{
-    public $model = "desktops";
-    public $idColumnName = "item_id";
-    public $fields = array(
-        "height",
-        "width",
-        "thickness",
-    );
-
-    protected function ancestry() {
-        return $this->generation("DesktopGateway", parent::ancestry());
+    public function buildUpdate($item) {
+        $id = $item["id"];
+        $values = $this->updateList(self::$fields, $item);
+        return "UPDATE items SET $values WHERE id = $id;";
     }
 }
