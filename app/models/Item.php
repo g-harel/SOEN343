@@ -8,6 +8,7 @@ class Item
     private $brand;
     private $price;
     private $quantity;
+    private $category;
 
     public function __construct($id, $category, $brand, $price, $quantity) {
         $this->id = $id;

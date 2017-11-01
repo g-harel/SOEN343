@@ -43,16 +43,7 @@ class UserGateway
     public function addUser($email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
         $sql = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode', $isAdmin);";
-        $this->db->openDBConnection();
-        $isInsertSuccessful = $this->db->manualQueryDB($sql) !== null;
-        $result = null;
-        if ($isInsertSuccessful) {
-            $conditionsAssociativeArray = ["email" => $email];
-            $conditions = transformConditionsToString($conditionsAssociativeArray);
-            $sql = "SELECT * FROM $this->tableName WHERE $conditions;";
-            $result = $this->db->manualQueryDB($sql);
-            $this->db->closeDBConnection();
-        }
+        $result = $this->db->queryDB($sql);
         return $result;
     }
 

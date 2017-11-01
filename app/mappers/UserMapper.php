@@ -65,7 +65,7 @@ class UserMapper
         );
         $isSuccessful = false;
         if ($result !== null) {
-            $id = $result[0]["id"];
+            $id = $result;
             $this->user->setId($id);
             $isSuccessful = true;
         }
