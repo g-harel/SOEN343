@@ -1,4 +1,7 @@
 <?php 
+
+namespace App\IdentityMap;
+
 class IdentityMap
 {
     protected $idToObject;

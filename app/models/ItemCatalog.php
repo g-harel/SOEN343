@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\ItemType;
+
 class ItemCatalog {
 
     private $catalog;

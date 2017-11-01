@@ -2,6 +2,17 @@
 
 namespace App\Mappers;
 
+use App\Models\ItemCatalog;
+use App\Models\ItemType;
+use App\UnitOfWork\UnitOfWork;
+use App\IdentityMap\IdentityMap;
+use App\Gateway\ItemGateway;
+use App\Gateway\ComputerGateway;
+use App\Gateway\DesktopGateway;
+use App\Gateway\LaptopGateway;
+use App\Gateway\TabletGateway;
+use App\Gateway\MonitorGateway;
+
 abstract class ItemCatalogMapper {
 
     private const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
