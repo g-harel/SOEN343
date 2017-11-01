@@ -154,7 +154,7 @@ class DatabaseGateway
     }
 
     private function isInsert($statement) {
-        return substr($statement, 0, 6) === "INSERT"
+        return substr($statement, 0, 6) === "INSERT";
     }
 }
 
