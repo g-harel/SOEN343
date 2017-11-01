@@ -288,7 +288,6 @@
                     </form>
                 </div>
 
-
                 <!-- Form for Monitors -->
                 <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
                     <form id="monitor-form" class="form-horizontal">

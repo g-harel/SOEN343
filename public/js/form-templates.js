@@ -1,6 +1,5 @@
-function FormTemplates() {
-    this.monitorForm = function (monitor) {
-        return `<div class="col-md-12">
+const FormTemplates = () => {
+    this.monitorForm = monitor => `<div class="col-md-12">
                 <div class="2"></div>
                 <div class="col-md-7">
                     <div class="form-group">
@@ -33,10 +32,8 @@ function FormTemplates() {
                     </div>
                 </div>
             </div>`;
-    };
 
-    this.desktopForm = function (desktop) {
-        return `<div class="col-md-12">
+    this.desktopForm = desktop => `<div class="col-md-12">
                     <div class="col-md-5">
                         <div class="form-group">
                             Brand:
@@ -94,10 +91,7 @@ function FormTemplates() {
                     </div>
                 </div>`;
 
-    };
-
-    this.laptopForm = function (laptop) {
-        return `<div class="col-md-12">
+    this.laptopForm = laptop => `<div class="col-md-12">
                 <div class="col-md-5">
                     <div class="form-group">
                         Brand:
@@ -164,10 +158,8 @@ function FormTemplates() {
                     </div>
                 </div>
             </div>`;
-    };
 
-    this.tabletForm = function (tablet) {
-        return`<div class="col-md-12">
+    this.tabletForm = tablet => `<div class="col-md-12">
                 <div class="col-md-5">
                     <div class="form-group">
                         Brand:
@@ -242,5 +234,4 @@ function FormTemplates() {
                     </div>
                 </div>
             </div>`;
-    };
-}
+};
