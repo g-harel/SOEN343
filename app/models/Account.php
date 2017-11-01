@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class User
+class Account
 {
     private $id;
     private $email;
