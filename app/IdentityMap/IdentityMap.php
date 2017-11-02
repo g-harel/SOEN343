@@ -1,8 +1,12 @@
 <?php 
+
+namespace App\IdentityMap;
+
 class IdentityMap
 {
     protected $idToObject;
     protected $objectToId;
+    private $instance;
 
     /*
      * The SplObjectStorage class provides a map from objects to data or, by ignoring data, 
@@ -13,10 +17,17 @@ class IdentityMap
      * 
      */
     
-    public function __construct()
+    private function __construct()
     {
         $this->idToObject = new ArrayObject();
         $this->objectToId = new SplObjectStorage();
+    }
+
+    public static function getInstance() {
+        if ($this->instance === null) {
+            $this->instance = new IdentityMap();
+        }
+        return $this->instance;
     }
 
     public function set($id, $object)
@@ -49,6 +60,16 @@ class IdentityMap
             throw new OutOfBoudsException();
         }
         return $this->idToObject[$id];
+    }
+
+    public function removeObject($id)
+    {
+        if (false === $this->hasId($id)){
+            throw new OutOfBoundsException();
+        }
+        $object = $this->getObject($id);
+        unset($this->idToObject[$id]);
+        unset($this->objectToId[$object]);
     }
 }
 ?>
