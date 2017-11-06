@@ -43,6 +43,22 @@ class PagesController extends Controller
         return view('pages.viewTablet');
     }
 
+    public function monitorDetails($id){
+        return view('pages.viewMonitor')->with('id',$id);
+    }
+
+    public function desktopDetails($id){
+        return view('pages.viewDesktop')->with('id',$id);
+    }
+
+    public function laptopDetails($id){
+        return view('pages.viewLaptop')->with('id',$id);
+    }
+
+    public function tabletDetails($id){
+        return view('pages.viewTablet')->with('id',$id);
+    }
+
     public function login(){
         $title = 'Login';
         return view('pages.login')->with('title', $title);

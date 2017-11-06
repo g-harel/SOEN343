@@ -25,6 +25,11 @@ Route::prefix('/view')->group(function () {
     Route::get('/desktop', 'PagesController@viewDesktop');
     Route::get('/laptop', 'PagesController@viewLaptop');
     Route::get('/tablet', 'PagesController@viewTablet');
+
+    Route::get('/monitor/{id}',['uses' => 'PagesController@monitorDetails']);
+    Route::get('/desktop/{id}',['uses' => 'PagesController@desktopDetails']);
+    Route::get('/laptop/{id}',['uses' => 'PagesController@laptopDetails']);
+    Route::get('/tablet/{id}',['uses' => 'PagesController@tabletDetails']);
 });
 Route::get('/view', 'PagesController@view');
 
