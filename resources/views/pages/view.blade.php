@@ -98,8 +98,8 @@
 
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
-            <a href="#" class="list-group-item">Monitor</a>
-            <a href="#" class="list-group-item">Desktop</a>
+            <a href="/viewMonitor" class="list-group-item">Monitor</a>
+            <a href="" class="list-group-item">Desktop</a>
             <a href="#" class="list-group-item">Laptop</a>
             <a href="#" class="list-group-item">Tablet</a>
         </div>
