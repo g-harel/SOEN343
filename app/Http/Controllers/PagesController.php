@@ -31,16 +31,16 @@ class PagesController extends Controller
     }
 
     public function viewDesktop(){
-        return view('pages.view');
+        return view('pages.viewDesktop');
     }
     public function viewLaptop(){
-        return view('pages.view');
+        return view('pages.viewLaptop');
     }
     public function viewMonitor(){
-        return view('pages.view');
+        return view('pages.viewMonitor');
     }
     public function viewTablet(){
-        return view('pages.view');
+        return view('pages.viewTablet');
     }
 
     public function login(){
