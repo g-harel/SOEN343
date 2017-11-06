@@ -122,9 +122,41 @@
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
             <a href="/view/monitor" class="list-group-item">Monitor</a>
-            <a href="/view/desktop" class="list-group-item">Desktop</a>
+            <a href="/view/desktop" class="list-group-item active">Desktop</a>
             <a href="/view/laptop" class="list-group-item">Laptop</a>
             <a href="/view/tablet" class="list-group-item">Tablet</a>
+        </div>
+        <!-- advanced search -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Advanced Search</h3>
+            </div>
+            <div class="panel-body">
+                <form id="desktop-form" class="form-horizontal" action="" method="POST">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            Brand:
+                            <select required="" name="computer-brand" id="computer-brand" class="form-control">
+                                <option title="Select brands" value="">Select brands</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Hard Drive Size (GB):
+                            <select required="" name="storage-capacity" id="storage-capacity" class="form-control">
+                                <option title="Select storage qty" value="">Select storage size</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Price: <br>
+                            min:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control">
+                            max:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-sm" name="search-desktop-form" id="search-desktop-form">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div><!--/.sidebar-offcanvas-->
 </div>
