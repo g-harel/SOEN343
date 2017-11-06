@@ -4,20 +4,20 @@
 <script src="dist/jquery.masked-input.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $(".number").keydown(function (e) {
+    $(document).ready(() => {
+        $('.number').keydown((e) => {
             // Allow: backspace, delete, tab, escape, enter and .
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                // Allow: Ctrl/cmd+A
-                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                // Allow: Ctrl/cmd+C
-                (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-                // Allow: Ctrl/cmd+X
-                (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-                // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                 // let it happen, don't do anything
-                    return;
+            // Allow: Ctrl/cmd+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+C
+            (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: Ctrl/cmd+X
+            (e.keyCode === 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
             }
             // Ensure that it is a number and stop the keypress
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
@@ -25,20 +25,20 @@
             }
         });
     });
-    
+
     function validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
-    
-    $(document).ready(function() {
-        $('form').on('submit', function(e){
-            // validation code 
-            $("#result").text("");
-            var email = $("#email").val();
+
+    $(document).ready(() => {
+        $('form').on('submit', (e) => {
+        // validation code
+            $('#result').text('');
+            const email = $('#email').val();
             if (!validateEmail(email)) {
-                $("#emailHelp").text(email + " is not a valid email.");
-                $("#emailHelp").css("color", "red");
+                $('#emailHelp').text(`${email} is not a valid email.`);
+                $('#emailHelp').css('color', 'red');
                 e.preventDefault();
             }
         });
@@ -91,12 +91,12 @@
 	background-color: #53A3CD;
 	border-color: #53A3CD;
 }
-       
+
 #door_number {
     width: 80px;
     display: inline;
-}    
-       
+}
+
 #street {
     display: inline;
     width: 340px;
@@ -106,9 +106,9 @@
     display: inline;
     width: 90px;
 }
-       
-#city, 
-#province, 
+
+#city,
+#province,
 #country {
    width: 170;
    display: inline;
@@ -126,7 +126,7 @@
     margin-top: 5px;
     width: auto;
 }
-       
+
 </style>
 @section('content')
 <div class="container">
@@ -145,7 +145,7 @@
                                 </label>
                                 <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="" value="" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="last_name">
                                     Last name
@@ -158,27 +158,27 @@
                                     Home address
                                 </label><br>
                                 <input type="text" name="door_number" id="door_number" tabindex="1" class="form-control number" placeholder="#" value="" required>
-                                
+
                                 <input type="text" name="street" id="street" tabindex="1" class="form-control" placeholder="Street" value="" required>
-                                
+
                                 <input type="text" name="appartment" id="appartment" tabindex="1" class="form-control" placeholder="Appt." value="">
-                                
+
                                 <input type="text" name="city" id="city" tabindex="1" class="form-control" placeholder="City" value="" required>
-                                
+
                                 <input type="text" name="province" id="province" tabindex="1" class="form-control" placeholder="Province" value="" required>
-                                
+
                                 <input type="text" name="country" id="country" tabindex="1" class="form-control" placeholder="Country" value="" required>
-                                
+
                                 <input type="text" name="postal_code" id="postal_code" tabindex="1" class="form-control" placeholder="Postal Code" value="" style="margin-top:5px;" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="phone">
                                     Phone number
                                 </label><br>
                                 <input type="text" name="phone_number" id="phone_number" class="form-control number" data-masked-input="999-999-9999" placeholder="XXX-XXX-XXXX" maxlength="12">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="email">
                                     Email
@@ -186,7 +186,7 @@
                                 <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
                                 <small id="emailHelp" class="form-text text-muted"></small>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="password">
                                     Password
@@ -194,7 +194,7 @@
                                 <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" maxlength="16" required>
                                  <small id="passwordHelp" class="form-text text-muted">Maximum 16 characters.</small>
                             </div>
-                            
+
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">

@@ -14,6 +14,10 @@ class SessionGateway
         $this->db = new DatabaseGateway();
     }
 
+    public function getSessionCatalog(){
+        return getAllSessions($this->tableName);
+    }
+
     public function getSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);

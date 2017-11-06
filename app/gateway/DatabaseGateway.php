@@ -6,14 +6,20 @@ use Mysqli;
 
 // log result in the client console.
 Function console_log($str) {
-    echo "<script>console.log('".addslashes(json_encode($str))."')</script>\n";
+    echo "<script>console.log('".addslashes(json_encode($str))."');</script>\n";
 }
 
 // log errors in the client console.
 Function console_error($str) {
     if ($str) {
-        echo "<script>console.error('".addslashes(json_encode($str))."')</script>\n";
+        echo "<script>console.error('".addslashes(json_encode($str))."');</script>\n";
     }
+}
+
+Function getAllSessions($tableName) {
+    $sql = "SELECT * FROM $this->tableName;";
+    $db = new DatabaseGateway();
+    return $this->db->queryDB($sql);
 }
 
 Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
