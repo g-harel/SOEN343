@@ -32,6 +32,7 @@ Route::prefix('/view')->group(function () {
     Route::get('/tablet/{id}',['uses' => 'PagesController@tabletDetails']);
 });
 Route::get('/view', 'PagesController@view');
+Route::get('/logout', 'PagesController@logout');
 
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
 

@@ -93,7 +93,7 @@
 </style>
 @section('content')
 <div class="container">
-	<h1 class="text-center">{{$title}}</h1>
+	<h1 class="text-center"></h1>
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="panel panel-login">

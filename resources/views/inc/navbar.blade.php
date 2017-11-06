@@ -7,17 +7,23 @@
 
       <li><a href="/">Home</a></li>
       <li><a href="/about">About </a></li>
-      
-      @if(isset($_SESSION))
+
+      @if(isset($_SESSION) && !empty($_SESSION))
+        {{$_SESSION['isAdmin']}}
         @if($_SESSION['isAdmin'] == 1)
           <li><a href="/items">Items</a></li>
         @endif
       @endif
-      @if(isset($_SESSION))
+
+      @if(isset($_SESSION)  && !empty($_SESSION))
         @if($_SESSION['isAdmin'] != 1)
           <li><a href="/view">Products</a></li>
         @endif
       @endif
+      @if(empty($_SESSION))
+        <li><a href="/view">Products</a></li>
+      @endif
+
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -25,15 +31,15 @@
       <li><a href="/login">Login</a></li>
 
 
-      @if(isset($_SESSION))
-        @if($_SESSION['isAdmin'] != 1)
-          <li><a href="/shoppingCart">
-              <span class="glyphicon glyphicon-shopping-cart"></span>
-            </a>
-          </li>
-        @endif
-      @endif
-      <li><a href="">asdsd</a></li>
+      {{--@if(isset($_SESSION))--}}
+        {{--@if($_SESSION['isAdmin'] != 1)--}}
+          {{--<li><a href="/shoppingCart">--}}
+              {{--<span class="glyphicon glyphicon-shopping-cart"></span>--}}
+            {{--</a>--}}
+          {{--</li>--}}
+        {{--@endif--}}
+      {{--@endif--}}
+      <li><a href="/logout">logout</a></li>
 
     </ul>
   </div>

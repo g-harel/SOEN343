@@ -13,7 +13,6 @@ use App\Mappers\SessionMapper;
 
 class PagesController extends Controller
 {
-
     public function index(){
         $adminId = $isAdmin = null;
         $gateway = new SessionGateway();
@@ -39,7 +38,9 @@ class PagesController extends Controller
   
     public function admin(){
         $title = 'Welcome admin page';
-        return view('pages.admin')->with('title',$title);
+//        print_r($_SESSION);
+        echo 'admin id ='. $_SESSION['adminId'];
+//        return view('pages.admin')->with('title',$title);
     }
 
     public function view(){
@@ -80,6 +81,14 @@ class PagesController extends Controller
         return view('pages.login')->with('title', $title);
     }
 
+    public function logout()
+    {
+        // Unset all of the session variables.
+        $_SESSION = array();
+        session_destroy();
+        return view('pages.login');
+    }
+
     public function loginAdminVerification(){
         return view('pages.loginAdminVerification');
     }
@@ -106,8 +115,8 @@ class PagesController extends Controller
             if($userGateway->getUserByEmail($email)) {
                 $_SESSION['adminId'] = $userGateway->getUserByEmail($email)[0]['id'];
                 $_SESSION['isAdmin'] = $userGateway->getUserByEmail($email)[0]['isAdmin'];
-                echo $_SESSION['adminId'];
-
+//                echo $_SESSION['adminId'];
+                print_r($_SESSION);
             } else {
                 echo 'cannot access';
             }
