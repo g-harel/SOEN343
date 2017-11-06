@@ -19,6 +19,15 @@ Route::post('registerVerification', 'PagesController@registerVerification');
 
 Route::get('/admin', 'PagesController@admin');
 
+Route::prefix('/view')->group(function () {
+    Route::get('/', 'PagesController@view');
+    Route::get('/monitor', 'PagesController@viewMonitor');
+    Route::get('/desktop', 'PagesController@viewDesktop');
+    Route::get('/laptop', 'PagesController@viewLaptop');
+    Route::get('/tablet', 'PagesController@viewTablet');
+});
+Route::get('/view', 'PagesController@view');
+
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 Route::resource('items', 'ItemsController');

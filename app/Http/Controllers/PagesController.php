@@ -26,6 +26,23 @@ class PagesController extends Controller
         return view('pages.admin')->with('title',$title);
     }
 
+    public function view(){
+        return view('pages.view');
+    }
+
+    public function viewDesktop(){
+        return view('pages.view');
+    }
+    public function viewLaptop(){
+        return view('pages.view');
+    }
+    public function viewMonitor(){
+        return view('pages.view');
+    }
+    public function viewTablet(){
+        return view('pages.view');
+    }
+
     public function login(){
         $title = 'Login';
         return view('pages.login')->with('title', $title);
