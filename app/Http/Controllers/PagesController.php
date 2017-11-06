@@ -13,16 +13,18 @@ use App\Mappers\SessionMapper;
 
 class PagesController extends Controller
 {
+
     public function index(){
-        $gateway = new SessionGateway();
         $adminId = $isAdmin = null;
+        $gateway = new SessionGateway();
         if(isset($_SESSION['adminId']) && isset($_SESSION['isAdmin'])) {
             $adminId = $_SESSION['adminId'];
             $isAdmin = $_SESSION['isAdmin'];
         }
         $adminSession = $gateway->getSessionById($adminId);
         $adminSession['isAdmin'] = $isAdmin;
-        return view('pages.index')->with('session', $adminSession);
+        $title = 'Welcome';
+        return view('pages.index')->with('title', $title);
     }
 
     public function about(){
@@ -36,7 +38,7 @@ class PagesController extends Controller
     }
   
     public function admin(){
-        $title = 'Welcome to the Admin page';
+        $title = 'Welcome admin page';
         return view('pages.admin')->with('title',$title);
     }
 
