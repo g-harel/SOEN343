@@ -55,6 +55,8 @@ Route::resource('items', 'ItemsController');
 
 Route::get('/admin/view', 'AdminController@showItems');//Login pages
 Route::get('/login', 'PagesController@login');
+Route::post('/login/admin', 'PagesController@loginVerifyAdmin');
+Route::post('/login/client', 'PagesController@loginVerifyClient');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
 

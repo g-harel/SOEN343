@@ -111,8 +111,9 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
-							<form id="admin-form" action="loginAdminVerification" method="post" role="form" style="display: block;">
-								{{ csrf_field() }}
+							<form id="admin-form" action="/login/admin" method="post" role="form" style="display: block;">
+                                {{--<form id="admin-form" action="loginAdminVerification" method="post" role="form" style="display: block;">--}}
+									{{ csrf_field() }}
 								<div class="form-group">
 									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" required>
 								</div>

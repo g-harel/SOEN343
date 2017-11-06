@@ -20,6 +20,17 @@ class SessionGateway
 
     public function getSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
+
+//        $conditions = transformConditionsToString($conditionsAssociativeArray);
+//        $sql = "SELECT * FROM sessions WHERE id=2;";
+//        $db = new DatabaseGateway();
+//        $result = $db->queryDB($sql);
+//        if ($result !== null) {
+//            return parseSelectResult($result);
+//        } else {
+//            return null;
+//        }
+
         return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 

@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 use Illuminate\Http\Request;
+use App\Gateway\SessionGateway;
+use App\Gateway\UserGateway;
+use App\Mappers\SessionMapper;
 
 class PagesController extends Controller
 {
     public function index(){
-        $title = 'Welcome to Soen 343';
-        return view('pages.index')->with('title', $title);
+        $gateway = new SessionGateway();
+        $adminId = $isAdmin = null;
+        if(isset($_SESSION['adminId']) && isset($_SESSION['isAdmin'])) {
+            $adminId = $_SESSION['adminId'];
+            $isAdmin = $_SESSION['isAdmin'];
+        }
+        $adminSession = $gateway->getSessionById($adminId);
+        $adminSession['isAdmin'] = $isAdmin;
+        return view('pages.index')->with('session', $adminSession);
     }
 
     public function about(){
@@ -78,6 +92,25 @@ class PagesController extends Controller
 
     public function shoppingCart(){
         return view('pages.shoppingCart');
+    }
+
+    public function loginVerifyAdmin() {
+        // use gate way for now
+        // validate if this admin exist
+        if(!empty($_POST)) {
+            $email = $_POST['username'];
+            $password = $_POST['password'];
+            $userGateway = new UserGateway();
+            if($userGateway->getUserByEmail($email)) {
+                $_SESSION['adminId'] = $userGateway->getUserByEmail($email)[0]['id'];
+                $_SESSION['isAdmin'] = $userGateway->getUserByEmail($email)[0]['isAdmin'];
+                echo $_SESSION['adminId'];
+
+            } else {
+                echo 'cannot access';
+            }
+
+        }
     }
 }
 
