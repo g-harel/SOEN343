@@ -7,10 +7,6 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        <div class="jumbotron">
-            <h1>Hello, dear user!</h1>
-            <p>You may select a category using the links on the side</p>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                <h1> <small>Here are some weekly hot sellers!</small></h1>
@@ -42,14 +38,14 @@
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->
             <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-success">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Asus Desktop</h3>
+                        <h3 class="panel-title">Dell Monitor</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                <i class="fa fa-desktop fa-5x"></i>
+                                <i class="fa fa-television fa-5x"></i>
                             </div>
                             <div class="col-md-6">
                                 <p >Price: $199.99</p>
@@ -68,14 +64,14 @@
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->
             <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-info">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Samsung Tablet</h3>
+                        <h3 class="panel-title">Dell Monitor</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                <i class="fa fa-tablet fa-5x"></i>
+                                <i class="fa fa-television fa-5x"></i>
                             </div>
                             <div class="col-md-6">
                                 <p >Price: $199.99</p>
@@ -98,10 +94,10 @@
 
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
-            <a href="#" class="list-group-item">Monitor</a>
-            <a href="#" class="list-group-item">Desktop</a>
-            <a href="#" class="list-group-item">Laptop</a>
-            <a href="#" class="list-group-item">Tablet</a>
+            <a href="/view/monitor" class="list-group-item">Monitor</a>
+            <a href="/view/desktop" class="list-group-item">Desktop</a>
+            <a href="/view/laptop" class="list-group-item">Laptop</a>
+            <a href="/view/tablet" class="list-group-item">Tablet</a>
         </div>
     </div><!--/.sidebar-offcanvas-->
 </div>
