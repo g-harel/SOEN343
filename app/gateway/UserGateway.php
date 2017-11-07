@@ -47,7 +47,7 @@ class UserGateway
 
     public function addUser($email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
-        $sql = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode', $isAdmin);";
+        $sql = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode');";
         $this->db->openDBConnection();
         $isInsertSuccessful = $this->db->manualQueryDB($sql) !== null;
         $result = null;

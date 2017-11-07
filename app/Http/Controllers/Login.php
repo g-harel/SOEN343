@@ -21,7 +21,6 @@ class Login {
     public function validate()
     {
         if ($this->userMapper->isUserExist($this->email, $this->password)) {
-
             $_SESSION['isAdmin'] = $this->userMapper->setUserFromRecordByEmail($this->email)->getIsAdmin();
             $_SESSION['currentLoggedInId'] = $this->userMapper->setUserFromRecordByEmail($this->email)->getId();
             $userId = $this->userMapper->setUserFromRecordByEmail($this->email)->getId();

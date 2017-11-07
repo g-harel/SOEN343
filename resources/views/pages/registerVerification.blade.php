@@ -9,8 +9,6 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $is_Admin = false;
 $phoneNumber = $_POST['phone_number'];
-
-
 $doorNumber = $_POST['door_number'];
 $street = $_POST['street'];
 $appt = $_POST['appartment'];

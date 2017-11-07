@@ -98,6 +98,19 @@ class Controller extends BaseController
     }
 
     public function registerValidateFormInputs() {
+//        $firstName = $_POST['first_name'];
+//        $lastName = $_POST['last_name'];
+//        $email = $_POST['email'];
+//        $password = $_POST['password'];
+////        $is_Admin = false;
+//        $phoneNumber = $_POST['phone_number'];
+//        $doorNumber = $_POST['door_number'];
+//        $street = $_POST['street'];
+//        $appt = $_POST['appartment'];
+//        $city = $_POST['city'];
+//        $province = $_POST['province'];
+//        $country = $_POST['country'];
+//        $postalCode = $_POST['postal_code'];
         return [
             'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,

@@ -15,7 +15,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/register', 'PagesController@register');
-Route::post('registerVerification', 'PagesController@registerVerification');
+Route::post('registerUser', 'PagesController@registerUser');
 
 Route::get('/admin', 'PagesController@admin');
 

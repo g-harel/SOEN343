@@ -127,5 +127,33 @@ class PagesController extends Controller
         return view('pages.index');
     }
 
+    public function registerUser() {
+        // check if email exist
+        // if not then you can add this user
+        // return confirm message or error message
+
+        $firstName = $_POST['first_name'];
+        $lastName = $_POST['last_name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $phoneNumber = $_POST['phone_number'];
+        $doorNumber = $_POST['door_number'];
+        $street = $_POST['street'];
+        $appt = $_POST['appartment'];
+        $city = $_POST['city'];
+        $province = $_POST['province'];
+        $country = $_POST['country'];
+        $postalCode = $_POST['postal_code'];
+
+        $registerThis = new Register($firstName, $lastName, $email, $password, $phoneNumber,
+            $doorNumber, $street, $appt, $city, $province, $country, $postalCode);
+
+        echo '<pre>';
+        $registerThis->createUser();
+
+        print_r($registerThis);
+
+
+    }
 }
 

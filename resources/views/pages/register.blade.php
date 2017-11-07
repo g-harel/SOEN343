@@ -138,7 +138,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form id="register-form" action="registerVerification" method="post" role="form" style="display: block;">
+                        <form id="register-form" action="/registerUser" method="post" role="form" style="display: block;">
                         {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="first_name">
