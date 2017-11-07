@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Registration page
+@endsection
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="dist/jquery.masked-input.js"></script>
 
@@ -130,7 +132,6 @@
 </style>
 @section('content')
 <div class="container">
-<h1 class="text-center">{{$title}}</h1>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-register">

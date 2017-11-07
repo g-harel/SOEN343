@@ -1,7 +1,8 @@
 @extends('layouts.app')
+@section('page-title')
+    Browse Products
+@endsection
 @section('content')
-
-
 <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-xs-12 col-sm-9">
         <p class="pull-right visible-xs">

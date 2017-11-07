@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title')
-    Crear
+    Create
 @endsection
 @section('content')
     <div class="row">

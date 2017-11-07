@@ -91,6 +91,14 @@ class UserMapper
         return $this->user;
     }
 
+    public function isUserExist($email, $password) {
+        return $this->gateway->getUserByEmailPassword($email, $password);
+    }
+
+    public function getUserByEmail($email) {
+        return $this->gateway->getUserByEmail($email);
+    }
+
     public function getId() {
         return $this->user->getId();
     }

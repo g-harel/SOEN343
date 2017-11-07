@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Admin page
+@endsection
 @section('content')
     <div class='jumbotron text-center'>
         <h1>Welcome to the Admin page</h1>

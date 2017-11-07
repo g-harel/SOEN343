@@ -19,6 +19,11 @@ class UserGateway
         return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
+    public function getUserByEmailPassword($email, $password) {
+        $conditionsAssociativeArray = ["email" => $email, "password" => $password];
+        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
+    }
+
     public function getUserById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);

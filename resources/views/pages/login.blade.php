@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('page-title')
+    Login page
+@endsection
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script>
     $(() => {
@@ -95,7 +98,16 @@
 <div class="container">
 	<h1 class="text-center"></h1>
 	<div class="row">
+
 		<div class="col-md-6 col-md-offset-3">
+            @if(Session::has('loginError'))
+                <div class="row">
+                    <div class="alert alert-warning">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p>{{Session::get('loginError')}}</p>
+                    </div>
+                </div>
+            @endif
 			<div class="panel panel-login">
 				<div class="panel-heading">
 					<div class="row">

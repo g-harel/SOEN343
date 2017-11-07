@@ -20,17 +20,6 @@ class SessionGateway
 
     public function getSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-
-//        $conditions = transformConditionsToString($conditionsAssociativeArray);
-//        $sql = "SELECT * FROM sessions WHERE id=2;";
-//        $db = new DatabaseGateway();
-//        $result = $db->queryDB($sql);
-//        if ($result !== null) {
-//            return parseSelectResult($result);
-//        } else {
-//            return null;
-//        }
-
         return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
     }
 
@@ -41,7 +30,7 @@ class SessionGateway
 
     public function addSession($userId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `users`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
+        $sql = "INSERT INTO `sessions`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 

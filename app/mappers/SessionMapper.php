@@ -38,9 +38,16 @@ class SessionMapper
         return $instance;
     }
 
-    public function closeSession()
+    public function openSession2($userId) {
+        if($this->gateway->addSession($userId)) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
+
+    public function closeSession($userId)
     {
-        $userId = $this->session->getUserId();
         $success = $this->gateway->deleteSessionByUserId($userId);
         return $success;
     }
