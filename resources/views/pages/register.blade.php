@@ -145,6 +145,24 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @if(!empty($inputErrors))
+                @foreach($inputErrors as $value)
+                    <div class="row">
+                        <div class='alert alert-{{$alertType}}'>
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+                @if(Session::has('emailExists'))
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>The email you have entered already exists</p>
+                        </div>
+                    </div>
+                @endif
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-register">
                     <div class="panel-body">
@@ -170,7 +188,7 @@
                                         <label for="door_number">
                                             Home address
                                         </label><br>
-                                        <input type="number" name="door_number" id="door_number" tabindex="1" class="form-control number" placeholder="#" value="" required>
+                                        <input type="number" name="door_number" id="door_number" tabindex="1" class="form-control number" placeholder="#" value="" required min="1">
 
                                         <input type="text" name="street" id="street" tabindex="1" class="form-control" placeholder="Street" value="" required>
 

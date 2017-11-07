@@ -53,4 +53,11 @@ class Register
         return $result;
 
     }
+
+    public function checkExistingEmail(){
+
+        $email = $this->email;
+
+        return $this->userMapper->getUserByEmail($email) ;
+    }
 }

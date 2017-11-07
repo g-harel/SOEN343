@@ -98,37 +98,20 @@ class Controller extends BaseController
     }
 
     public function registerValidateFormInputs() {
-//        $firstName = $_POST['first_name'];
-//        $lastName = $_POST['last_name'];
-//        $email = $_POST['email'];
-//        $password = $_POST['password'];
-////        $is_Admin = false;
-//        $phoneNumber = $_POST['phone_number'];
-//        $doorNumber = $_POST['door_number'];
-//        $street = $_POST['street'];
-//        $appt = $_POST['appartment'];
-//        $city = $_POST['city'];
-//        $province = $_POST['province'];
-//        $country = $_POST['country'];
-//        $postalCode = $_POST['postal_code'];
-        return [
-            'tablet-qty' => $this->filterIntInputQty,
-            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-ram-size' => FILTER_VALIDATE_INT,
-            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
-            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-storage-capacity' => FILTER_VALIDATE_INT,
-            'tablet-display-size' => $this->filterInputFloatArr,
-            'tablet-price' => $this->filterInputFloatArr,
-            'tablet-weight' => $this->filterInputFloatArr,
-            'tablet-height' => $this->filterInputFloatArr,
-            'tablet-width' => $this->filterInputFloatArr,
-            'tablet-thickness' => $this->filterInputFloatArr,
-            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
+        $args = [
+            'first_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'last_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'email' => FILTER_VALIDATE_EMAIL,
+            'password' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'phone_number' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'door_number' => FILTER_VALIDATE_INT,
+            'street' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'city' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'province' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'country' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'postal_code' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
         ];
+        return $args;
     }
 
     /**

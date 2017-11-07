@@ -132,27 +132,28 @@ class PagesController extends Controller
         // if not then you can add this user
         // return confirm message or error message
 
-        $firstName = $_POST['first_name'];
-        $lastName = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $phoneNumber = $_POST['phone_number'];
-        $doorNumber = $_POST['door_number'];
-        $street = $_POST['street'];
-        $appt = $_POST['appartment'];
-        $city = $_POST['city'];
-        $province = $_POST['province'];
-        $country = $_POST['country'];
-        $postalCode = $_POST['postal_code'];
+        $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
+        $emptyArrayKeys = array_keys($sanitizedInputs, "");
 
-        $registerThis = new Register($firstName, $lastName, $email, $password, $phoneNumber,
-            $doorNumber, $street, $appt, $city, $province, $country, $postalCode);
 
-        echo '<pre>';
-        $registerThis->createUser();
+        if (!empty($emptyArrayKeys)) {
+            return view('pages.register', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+        } else {
+            $registerThis = new Register($sanitizedInputs['first_name'], $sanitizedInputs['last_name'], $sanitizedInputs['email'],
+                $sanitizedInputs['password'], $sanitizedInputs['phone_number'],
+                $sanitizedInputs['door_number'], $sanitizedInputs['street'], $_POST['appartment'], $sanitizedInputs['city'],
+                $sanitizedInputs['province'], $sanitizedInputs['country'], $sanitizedInputs['postal_code']);
 
-        print_r($registerThis);
+            $exists = $registerThis->checkExistingEmail();
 
+            if($exists){
+                return redirect()->back()->with(['emailExists' => true, 'for' => 'laptop']);
+            }
+            else{
+                $registerThis->createUser();
+            }
+            return view('pages.view');
+        }
 
     }
 }
