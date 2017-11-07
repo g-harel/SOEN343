@@ -19,19 +19,30 @@ $province = $_POST['province'];
 $country = $_POST['country'];
 $postalCode = $_POST['postal_code'];
 
+$con = mysqli_connect("localhost", "root", "root", "soen343");
+$query = mysqli_query($con, "SELECT * FROM users WHERE email='$email'");
 
-$register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
-$result = $register->createUser();
+if(mysqli_num_rows($query)>0){
+    echo 'Error: there already exists an account with this email.';
+}
+else{
+    $register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
+    $result = $register->createUser();
 
-if($result >= 0) {
-    $_SESSION['isAdmin'] = $result;
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
-    exit();
+    if($result >= 0) {
+        $_SESSION['isAdmin'] = $result;
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/login");
+        exit();
+    }
+
+    else {
+        header("Location: http://" . $_SERVER['SERVER_NAME'] . "/register");
+        exit();
+    }
 }
 
-else {
-    header("Location: http://" . $_SERVER['SERVER_NAME'] . "/register");
-    exit();
-}
+
+
+
 
 ?>

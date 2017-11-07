@@ -184,7 +184,7 @@
                                     Email
                                 </label>
                                 <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
-                                <small id="emailHelp" class="form-text text-muted"></small>
+                                <small name="emailHelp" id="emailHelp" class="form-text text-muted"></small>
                             </div>
                             
                             <div class="form-group">
