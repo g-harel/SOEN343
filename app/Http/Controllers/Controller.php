@@ -97,6 +97,27 @@ class Controller extends BaseController
         ];
     }
 
+    public function registerValidateFormInputs() {
+        return [
+            'tablet-qty' => $this->filterIntInputQty,
+            'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-ram-size' => FILTER_VALIDATE_INT,
+            'tablet-cpu-cores' => FILTER_VALIDATE_INT,
+            'tablet-os' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-storage-capacity' => FILTER_VALIDATE_INT,
+            'tablet-display-size' => $this->filterInputFloatArr,
+            'tablet-price' => $this->filterInputFloatArr,
+            'tablet-weight' => $this->filterInputFloatArr,
+            'tablet-height' => $this->filterInputFloatArr,
+            'tablet-width' => $this->filterInputFloatArr,
+            'tablet-thickness' => $this->filterInputFloatArr,
+            'tablet-battery' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-camera' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'tablet-touchscreen' => FILTER_SANITIZE_SPECIAL_CHARS
+        ];
+    }
+
     /**
      * Used for validating monitor form
      * in PHP, adding and modifying function
@@ -113,12 +134,21 @@ class Controller extends BaseController
         ];
     }
 
-
     public function isFormSubmitted($method) {
         if($method == $_POST) {
             return ($_SERVER['REQUEST_METHOD'] == 'POST');
         } else {
             return ($_SERVER['REQUEST_METHOD'] == 'GET');
         }
+    }
+
+    /**
+     * Return true if the user
+     * currently logged is an
+     * admin
+     * @return bool
+     */
+    public function isAdminLoggedIn() {
+        return isset($_SESSION) && !empty($_SESSION) && $_SESSION['isAdmin'] == 1;
     }
 }

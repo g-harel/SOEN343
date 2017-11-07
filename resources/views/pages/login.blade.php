@@ -99,12 +99,12 @@
 	<h1 class="text-center"></h1>
 	<div class="row">
 
-		<div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-md-offset-3">
             @if(Session::has('loginError'))
                 <div class="row">
                     <div class="alert alert-warning">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <p>{{Session::get('loginError')}}</p>
+                        <p>Password or email is incorrect. Please try again or <a href="/register">register</a> a new account.</p>
                     </div>
                 </div>
             @endif
@@ -121,8 +121,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<form id="admin-form" action="/login/verify" method="post" role="form" style="display: block;">
-                                {{--<form id="admin-form" action="loginAdminVerification" method="post" role="form" style="display: block;">--}}
-									{{ csrf_field() }}
+                                {{ csrf_field() }}
 								<div class="form-group">
 									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email" value="" required>
 								</div>

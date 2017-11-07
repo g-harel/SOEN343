@@ -108,40 +108,24 @@ class PagesController extends Controller
 
     public function loginVerify()
     {
-        if (!empty($_POST)) {
-            $email = $_POST['username'];
-            $password = $_POST['password'];
-            $userMapper = new UserMapper();
-            if ($userMapper->isUserExist($email, $password)) {
-                // set the session
-                $_SESSION['isAdmin'] = $userMapper->getUserByEmail($email)[0]['isAdmin'];
-                $_SESSION['currentLoggedInId'] = $userMapper->getUserByEmail($email)[0]['id'];
-                $userId = $_SESSION['currentLoggedInId'];
-                // and populate session table
-                $sessionMapper = new SessionMapper();
-                $sessionMapper->openSession2($userId);
-                if ($this->isAdminLoggedIn()) {
-                    return view('pages.admin');
-                } else {
-                    return view('pages.view');
-                }
+        if ($this->isFormSubmitted($_POST)) {
+            $email = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+            $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+            $login = new Login($email, $password);
+            if ($login->validate() && $this->isAdminLoggedIn()) {
+                // for admin redirection
+                return view('pages.admin');
+            } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
+                // for client redirection
+                return view('pages.view');
             } else {
                 return redirect()->back()->with(
-                    'loginError', 'Password or email is not correct. Please try again or register a new account.'
+                    'loginError', true
                 );
             }
         }
         return view('pages.index');
     }
 
-    /**
-     * Return true if the user
-     * currently logged is an
-     * admin
-     * @return bool
-     */
-    public function isAdminLoggedIn() {
-        return isset($_SESSION) && !empty($_SESSION) && $_SESSION['isAdmin'] == 1;
-    }
 }
 
