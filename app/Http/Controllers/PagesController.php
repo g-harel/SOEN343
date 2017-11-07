@@ -37,10 +37,14 @@ class PagesController extends Controller
     }
   
     public function admin(){
-        $title = 'Welcome admin page';
-//        print_r($_SESSION);
-        echo 'admin id ='. $_SESSION['adminId'];
-//        return view('pages.admin')->with('title',$title);
+
+        if(isset($_SESSION) && !empty($_SESSION)){
+            if($_SESSION['isAdmin'] == 1){
+                return view('pages.admin');
+            }
+        }
+            return view('pages.index');
+
     }
 
     public function view(){
@@ -102,10 +106,16 @@ class PagesController extends Controller
 }
 
     public function shoppingCart(){
+
+        if(isset($_SESSION) && !empty($_SESSION)){
+            if($_SESSION['isAdmin'] == 1){
+                return view('pages.admin');
+            }
+        }
         return view('pages.shoppingCart');
     }
 
-    public function loginVerifyAdmin() {
+    public function loginVerify() {
         // use gate way for now
         // validate if this admin exist
         if(!empty($_POST)) {
@@ -115,8 +125,9 @@ class PagesController extends Controller
             if($userGateway->getUserByEmail($email)) {
                 $_SESSION['adminId'] = $userGateway->getUserByEmail($email)[0]['id'];
                 $_SESSION['isAdmin'] = $userGateway->getUserByEmail($email)[0]['isAdmin'];
-//                echo $_SESSION['adminId'];
-                print_r($_SESSION);
+
+                return view('pages.admin');
+
             } else {
                 echo 'cannot access';
             }

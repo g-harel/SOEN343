@@ -25,6 +25,9 @@
 </script>
 @section('content')
 <div class="container">
+    @if(!(isset($_SESSION))  ||  empty($_SESSION))
+        <h1>Your shopping cart is empty. Please Sign in and try again!</h1>
+    @else
 <div class="row">
     <div class="col-sm-12 col-md-10 col-md-offset-1">
         <table class="table table-hover">
@@ -105,5 +108,6 @@
         </table>
     </div>
 </div>
+    @endif
 </div>
 @endsection
