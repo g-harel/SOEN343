@@ -82,7 +82,7 @@ const ModifyDelete = (() => {
             };
 
             editDeleteMonitor.editLink.click((event) => {
-                const tr = $(this).parentsUntil('table');
+                const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
                 // monitor drop downs
                 genericOptionSelector(form, '#monitor-brand', tr.find(dataAttr.brand).text());
@@ -98,7 +98,7 @@ const ModifyDelete = (() => {
             });
 
             editDeleteDesktop.editLink.click((event) => {
-                const tr = $(this).parentsUntil('table');
+                const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteDesktop.modal.find('.modal-body > form#desktop-form');
                 // desktop drop downs
                 genericOptionSelector(form, '#computer-brand', tr.find(dataAttr.brand).text());
@@ -119,7 +119,7 @@ const ModifyDelete = (() => {
             });
 
             editDeleteTablet.editLink.click((event) => {
-                const tr = $(this).parentsUntil('table');
+                const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteTablet.modal.find('.modal-body > form#tablet-form');
                 // tablet drop downs
                 genericOptionSelector(form, '#tablet-brand', tr.find(dataAttr.brand).text());
@@ -148,7 +148,7 @@ const ModifyDelete = (() => {
             });
 
             editDeleteLaptop.editLink.click((event) => {
-                const tr = $(this).parentsUntil('table');
+                const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteLaptop.modal.find('.modal-body > form#laptop-form');
                 // laptop drop down fields
                 genericOptionSelector(form, '#laptop-brand', tr.find(dataAttr.brand).text());
