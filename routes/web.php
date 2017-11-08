@@ -31,12 +31,9 @@ Route::prefix('/view')->group(function () {
     Route::get('/laptop/{id}',['uses' => 'PagesController@laptopDetails']);
     Route::get('/tablet/{id}',['uses' => 'PagesController@tabletDetails']);
 });
-Route::get('/view', 'PagesController@view');
+
 Route::get('/logout', 'PagesController@logout');
-
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
-
-Route::resource('items', 'ItemsController');
 
 // Computer
 Route::prefix('items/computer/')->group(function () {
@@ -51,14 +48,14 @@ Route::prefix('items/computer/')->group(function () {
 
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
+Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
 Route::resource('items', 'ItemsController');
-
 
 Route::get('/admin/view', 'AdminController@showItems');//Login pages
 Route::get('/login', 'PagesController@login');
 Route::post('/login/verify', 'PagesController@loginVerify');
-Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
-Route::post('loginClientVerification', 'PagesController@loginClientVerification');
+//Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
+//Route::post('loginClientVerification', 'PagesController@loginClientVerification');
 
-Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+
 

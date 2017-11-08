@@ -113,11 +113,9 @@ class PagesController extends Controller
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             $login = new Login($email, $password);
             if ($login->validate() && $this->isAdminLoggedIn()) {
-                // for admin redirection
-                return view('pages.admin');
+                return redirect('admin');
             } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
-                // for client redirection
-                return view('pages.view');
+                return redirect('view');
             } else {
                 return redirect()->back()->with(
                     'loginError', true
@@ -127,32 +125,24 @@ class PagesController extends Controller
         return view('pages.index');
     }
 
-    public function registerUser() {
-        // check if email exist
-        // if not then you can add this user
-        // return confirm message or error message
-
+    public function registerUser()
+    {
         $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
         $emptyArrayKeys = array_keys($sanitizedInputs, "");
-
-
         if (!empty($emptyArrayKeys)) {
             return view('pages.register', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
         } else {
-            $registerThis = new Register($sanitizedInputs['first_name'], $sanitizedInputs['last_name'], $sanitizedInputs['email'],
-                $sanitizedInputs['password'], $sanitizedInputs['phone_number'],
-                $sanitizedInputs['door_number'], $sanitizedInputs['street'], $_POST['appartment'], $sanitizedInputs['city'],
-                $sanitizedInputs['province'], $sanitizedInputs['country'], $sanitizedInputs['postal_code']);
-
-            $exists = $registerThis->checkExistingEmail();
-
-            if($exists){
-                return redirect()->back()->with(['emailExists' => true, 'for' => 'laptop']);
-            }
-            else{
+            $registerThis = new Register($sanitizedInputs['first_name'], $sanitizedInputs['last_name'],
+                $sanitizedInputs['email'], $sanitizedInputs['password'], $sanitizedInputs['phone_number'],
+                $sanitizedInputs['door_number'], $sanitizedInputs['street'], $_POST['appartment'],
+                $sanitizedInputs['city'], $sanitizedInputs['province'], $sanitizedInputs['country'],
+                $sanitizedInputs['postal_code']);
+            if ($registerThis->checkExistingEmail()) {
+                return redirect()->back()->with(['emailExists' => true]);
+            } else {
                 $registerThis->createUser();
             }
-            return view('pages.view');
+            return redirect('view');
         }
 
     }
