@@ -14,7 +14,7 @@ class UnitOfWork{
     const ACTION_DELETE = "DELETEOBJECT";
     const ACTION_MODIFY = "MODIFY";
 
-    private $unitOfWork;
+    private static $unitOfWork;
     private $storage;
 
     private function __construct() {
@@ -24,10 +24,10 @@ class UnitOfWork{
     }
 
     public static function getInstance() {
-        if ($this->unitOfWork == null) {
-            $this->unitOfWork = new UnitOfWork();
+        if (self::$unitOfWork == null) {
+            self::$unitOfWork = new UnitOfWork();
         }
-        return $this->unitOfWork;
+        return self::$unitOfWork;
     }
 
     private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null) {
