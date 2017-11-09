@@ -89,6 +89,26 @@ abstract class ItemCatalogMapper {
         }
     }
 
+    public function selectAllItems() {
+        $this->updateCatalog();
+        $items = $this->itemCatalog->getAllItems();
+        return $this->mapItemArrayToDomainArrays($items);
+    }
+
+    // Used by the controllers. Here the item type is a code where:
+    // item = 0;
+    // monitor = 1;
+    // computer = 2;
+    // desktop = 3;
+    // laptop = 4;
+    // tablet = 5;
+    // Since we have a server rendered app, I suggest using the ItemType enum directly from the controllers to generate the item type.
+    public function selectAllItemType($itemType) {
+        $this->updateCatalog();
+        $items = $this->itmeCatalog->getAllItemsType($itemType);
+        return $this->mapItemArrayToDomainArrays($items);
+    }
+
     // Used by the unitofwork when commit happens
     public function add($item) {
         $gateway = $this->getGateway($item);
@@ -140,7 +160,7 @@ abstract class ItemCatalogMapper {
         $this->itemCatalog->editItem($item.getId(), $domainArray);
     }
 
-    public function updateCatalog() {
+    private function updateCatalog() {
 
         // GENERATING AN ARRAY OF ALL THE ITEMS IN THE DATABASE
         $itemsArray = array();
@@ -206,6 +226,14 @@ abstract class ItemCatalogMapper {
             default:
             return null;
         }
+    }
+
+    private function mapItemArrayToDomainArrays($itemArray) {
+        $arrayToReturn = array();
+        foreach($itemArray as $item) {
+            $arrayToReturn[] = $this->mapItemToDomainArray($item);
+        }
+        return $arrayToReturn;
     }
 
     private function mapItemToDomainArray($item) {

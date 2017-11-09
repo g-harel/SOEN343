@@ -10,7 +10,7 @@ class ItemCatalog {
     private static $instance;
 
     private function __constructor() {
-        $this->catalog = array();
+        self::$catalog = array();
     }
 
     public function getInstance() {
@@ -24,7 +24,7 @@ class ItemCatalog {
         if ($this->isItemInCatalog($item)) {
             return false;
         } else {
-            $this->catalog[$item->getId()] = $item;
+            self::$catalog[$item->getId()] = $item;
             return true;
         }
     }
@@ -51,7 +51,7 @@ class ItemCatalog {
 
     public function removeItem($itemId) {
         if ($this->isItemIdInCatalog($itemId)) {
-            unset($this->catalog[$itemId]);
+            unset(self::$catalog[$itemId]);
             return true;
         } else {
             return false;
@@ -60,10 +60,24 @@ class ItemCatalog {
 
     public function getItem($itemId) {
         if ($this->isItemIdInCatalog($itemId)) {
-            return $this->catalog[$itemId];
+            return self::$catalog[$itemId];
         } else {
             return null;
         }
+    }
+
+    public function getAllItems() {
+        return self::$catalog;
+    }
+
+    public function getAllItemsType($type) {
+        $arrayToReturn = array();
+        foreach(self::$catalog as $item) {
+            if(ItemType::getItemTypeEnum($item) === $type) {
+                $arrayToReturn[] = $item;
+            }
+        }
+        return $arrayToReturn;
     }
 
     public function editItem($itemId, $itemParam) {
@@ -99,7 +113,7 @@ class ItemCatalog {
     }
 
     public function clearCatalog() {
-        $this->catalog = array();
+        self::$catalog = array();
     }
 
     private function isItemInCatalog($item) {
@@ -108,14 +122,14 @@ class ItemCatalog {
 
     public function isItemIdInCatalog($itemId) {
         if ($itemId !== null) {
-            return array_key_exists($itemId, $this->catalog);
+            return array_key_exists($itemId, self::$catalog);
         } else {
             return false;
         }
     }
 
     public function getCatalogKeys() {
-        $keys = array_keys($this->catalog);
+        $keys = array_keys(self::$catalog);
         return array_fill_keys($keys, array());
     }
 
