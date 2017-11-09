@@ -3,6 +3,7 @@
 namespace App\Gateway;
 
 use App\Gateway\DatabaseGateway;
+use App\Models\Session;
 
 class SessionGateway
 {
@@ -14,8 +15,13 @@ class SessionGateway
         $this->db = new DatabaseGateway();
     }
 
-    public function getSessionCatalog(){
-        return getAllSessions($this->tableName);
+//    public function getSessionCatalog(){
+//	   return getAllSessions($this->tableName);
+//    }
+
+    public function getAllSession(){
+        $sql = "SELECT * FROM $this->tableName;";
+        return $this->db->queryDB($sql);
     }
 
     public function getSessionById($id) {
@@ -30,11 +36,11 @@ class SessionGateway
 
     public function addSession($userId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `sessions`(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
+        $sql = "INSERT INTO $this->tableName(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 
-    public function deleteSessionById($email) {
+    public function deleteSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
     }

@@ -16,11 +16,13 @@ Function console_error($str) {
     }
 }
 
+/*
 Function getAllSessions($tableName) {
     $sql = "SELECT * FROM $this->tableName;";
     $db = new DatabaseGateway();
     return $this->db->queryDB($sql);
 }
+*/
 
 Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
