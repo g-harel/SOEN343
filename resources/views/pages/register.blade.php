@@ -40,7 +40,7 @@
 
     $(document).ready(() => {
         $('form').on('submit', (e) => {
-            // validation code
+        // validation code
             $('#result').text('');
             const email = $('#email').val();
             if (!validateEmail(email)) {
@@ -140,7 +140,6 @@
         margin-top: 5px;
         width: auto;
     }
-
 </style>
 @section('content')
     <div class="container">

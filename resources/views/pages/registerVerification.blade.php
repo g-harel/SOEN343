@@ -19,7 +19,7 @@ $postalCode = $_POST['postal_code'];
 
 
 $register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
-$result = $register->createUser();
+$result = $register->createAccount();
 
 if($result >= 0) {
     $_SESSION['isAdmin'] = $result;
