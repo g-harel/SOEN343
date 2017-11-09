@@ -58,8 +58,8 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 --
 -- Structure de la table `carts`
 --
-DROP TABLE IF EXISTS cart;
-CREATE TABLE `cart` (
+DROP TABLE IF EXISTS carts;
+CREATE TABLE `carts` (
   `id` int(10) UNSIGNED NOT NULL,
   `item1_id` int(10) UNSIGNED DEFAULT NULL,
   `item2_id` int(10) UNSIGNED DEFAULT NULL,
