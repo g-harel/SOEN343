@@ -136,7 +136,6 @@ class UnitOfWork{
     }
 
     public function commit($transactionId, $objectId = null) {
-        echo "IN COMMITTT FUNCTION ";
         $sessionId = "0" . $transactionId;
         $actionToPerform = null;
         foreach ($this->storage as $key => $array) {
