@@ -56,10 +56,10 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cart`
+-- Structure de la table `carts`
 --
-DROP TABLE IF EXISTS cart;
-CREATE TABLE `cart` (
+DROP TABLE IF EXISTS carts;
+CREATE TABLE `carts` (
   `id` int(10) UNSIGNED NOT NULL,
   `item1_id` int(10) UNSIGNED DEFAULT NULL,
   `item2_id` int(10) UNSIGNED DEFAULT NULL,
@@ -235,9 +235,9 @@ ALTER TABLE `accounts`
   ADD UNIQUE KEY `cart_id` (`cart_id`);
 
 --
--- Index pour la table `cart`
+-- Index pour la table `carts`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `item1_id` (`item1_id`),
   ADD KEY `item2_id` (`item2_id`),
@@ -307,9 +307,9 @@ ALTER TABLE `tablets`
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `cart`
+-- AUTO_INCREMENT pour la table `carts`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `items`
@@ -329,12 +329,12 @@ ALTER TABLE `sessions`
 -- Contraintes pour la table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `cart`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item1_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`item2_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`item3_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
