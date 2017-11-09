@@ -75,7 +75,7 @@ abstract class ItemGateway implements iItemCategory {
     public function insert($item) {
         $sql = $this->buildInsert($item);
         $result = $this->gateway->queryDB($sql);
-        return parseSelectResult($result);
+        return $result;
     }
 
     public function update($item) {
