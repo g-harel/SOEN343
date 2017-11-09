@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `accounts`
 --
-
+DROP TABLE IF EXISTS accounts;
 CREATE TABLE `accounts` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(100) CHARACTER SET latin1 NOT NULL,
@@ -58,7 +58,7 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 --
 -- Structure de la table `cart`
 --
-
+DROP TABLE IF EXISTS cart;
 CREATE TABLE `cart` (
   `id` int(10) UNSIGNED NOT NULL,
   `item1_id` int(10) UNSIGNED DEFAULT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE `cart` (
 --
 -- Structure de la table `computers`
 --
-
+DROP TABLE IF EXISTS computers;
 CREATE TABLE `computers` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `processor_type` varchar(100) NOT NULL,
@@ -100,7 +100,7 @@ INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `
 --
 -- Structure de la table `desktops`
 --
-
+DROP TABLE IF EXISTS desktops;
 CREATE TABLE `desktops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `height` float(10,2) NOT NULL,
@@ -120,7 +120,7 @@ INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
 --
 -- Structure de la table `items`
 --
-
+DROP TABLE IF EXISTS items;
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
   `category` varchar(20) NOT NULL,
@@ -146,7 +146,7 @@ INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
 --
 -- Structure de la table `laptops`
 --
-
+DROP TABLE IF EXISTS laptops;
 CREATE TABLE `laptops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -169,7 +169,7 @@ INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is
 --
 -- Structure de la table `monitors`
 --
-
+DROP TABLE IF EXISTS monitors;
 CREATE TABLE `monitors` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -189,7 +189,7 @@ INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 --
 -- Structure de la table `sessions`
 --
-
+DROP TABLE IF EXISTS sessions;
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
@@ -201,7 +201,7 @@ CREATE TABLE `sessions` (
 --
 -- Structure de la table `tablets`
 --
-
+DROP TABLE IF EXISTS tablets;
 CREATE TABLE `tablets` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
