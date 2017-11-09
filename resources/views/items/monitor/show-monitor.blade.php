@@ -23,12 +23,12 @@
             <tbody>
             @foreach($monitors as $monitor)
                 <tr>
-                    <td data-id="{{ $monitor->id }}">{{ $monitor->id }}</td>
-                    <td data-brand="{{ $monitor->brand }}">{{ $monitor->brand }}</td>
-                    <td data-price="{{ $monitor->price }}">{{ $monitor->price }}</td>
-                    <td data-qty="{{ $monitor->quantity }}">{{ $monitor->quantity }}</td>
-                    <td data-displaySize="{{ $monitor->display_size }}">{{ $monitor->display_size }}</td>
-                    <td data-weight="{{ $monitor->weight }}">{{ $monitor->weight }}</td>
+                    <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
+                    <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
+                    <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
+                    <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
+                    <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
+                    <td data-weight="{{ $monitor["weight"] }}">{{ $monitor["weight"] }}</td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Edit">
                             <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal"
