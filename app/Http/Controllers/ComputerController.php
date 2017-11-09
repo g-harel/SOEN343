@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mappers\LaptopMapper;
-use App\Mappers\DesktopMapper;
-use App\Mappers\TabletMapper;
+use App\Mappers\ItemCatalogMapper;
 
 class ComputerController extends Controller
 {
@@ -15,12 +13,8 @@ class ComputerController extends Controller
     }
 
     public function showDesktop() {
-        // syntax:
-        // folderName.folderName.fileName.php
-        $desktopMapper = new DesktopMapper();
-        $desktops = $desktopMapper->getAll();
 
-        return view('items.computer.show-desktop', ['desktops' => $desktops]);
+        return view('items.computer.show-desktop', ['desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3)]);
     }
 
     public function showLaptop() {
