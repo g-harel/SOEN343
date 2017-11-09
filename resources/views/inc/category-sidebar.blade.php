@@ -12,17 +12,14 @@
                 <ul class="list-group">
                     <a href="/items/computer/showLaptop">
                     <li class="list-group-item">
-                        {{--<span class="badge">31</span>--}}
                         Laptop
                     </li></a>
                     <a href="/items/computer/showTablet">
                     <li class="list-group-item">
-                        {{--<span class="badge">10</span>--}}
                         Tablet
                     </li></a>
                     <a href="/items/computer/showDesktop">
                     <li class="list-group-item">
-                        {{--<span class="badge">45</span>--}}
                         Desktop
                     </li></a>
                 </ul>

@@ -16,6 +16,14 @@ Function console_error($str) {
     }
 }
 
+/*
+Function getAllSessions($tableName) {
+    $sql = "SELECT * FROM $this->tableName;";
+    $db = new DatabaseGateway();
+    return $this->db->queryDB($sql);
+}
+*/
+
 Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "SELECT * FROM $tableName WHERE $conditions;";
@@ -86,12 +94,12 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        /*$configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
+        $configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];
         $this->password = $configArray["password"];
-        $this->databaseName = $configArray["databaseName"];*/
+        $this->databaseName = $configArray["databaseName"];
     }
 
     public function getDBConnection() {

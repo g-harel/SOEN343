@@ -121,5 +121,6 @@ abstract class ItemGateway implements iItemCategory {
         $id = $item["id"];
         $values = $this->updateList(self::$fields, $item);
         return "UPDATE items SET $values WHERE id = $id;";
+
     }
 }

@@ -22,9 +22,11 @@ class UserMapper
     }
 
     public static function createUserMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false) {
+                                                      $doorNumber, $appartement, $street, $city, $province,
+                                                      $country, $postalCode, $isAdmin = false)
+    {
         $user = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-        $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
+            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
         $instance = self::createUserMapper($user);
         return $instance;
     }
@@ -65,8 +67,6 @@ class UserMapper
         );
         $isSuccessful = false;
         if ($result !== null) {
-            $id = $result[0]["id"];
-            $this->user->setId($id);
             $isSuccessful = true;
         }
         return $isSuccessful;
@@ -89,6 +89,10 @@ class UserMapper
 
     public function getUser() {
         return $this->user;
+    }
+
+    public function getUserByEmail($email) {
+        return $this->gateway->getUserByEmail($email);
     }
 
     public function getId() {
@@ -229,5 +233,9 @@ class UserMapper
     //UTILITY
     public function getFullName() {
         return $this->user->getFullName();
+    }
+
+    public function isUserExist($email, $password) {
+        return $this->gateway->getUserByEmailPassword($email, $password);
     }
 }

@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Monitor Items
+@endsection
 @section('content')
     <ol class="breadcrumb">
         <li><a href="/items">Items</a></li>

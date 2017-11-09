@@ -10,9 +10,9 @@ class ItemMapper
     private $item;
     private $gateway;
 
-    public function __construct() {
-        $this->gateway = new ItemGateway();
-    }
+//    public function __construct() {
+//        $this->gateway = new ItemGateway();
+//    }
 
     public static function createItemMapper($item) {
         $instance = new self();

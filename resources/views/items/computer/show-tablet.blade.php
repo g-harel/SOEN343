@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('page-title')
+    Tablet Items
+@endsection
 @section('content')
     <ol class="breadcrumb">
         <li><a href="/items">Items</a></li>
@@ -34,28 +36,26 @@
         <tbody>
         @foreach($tablets as $tablet)
         <tr>
-            <td data-id="31">{{ $tablet->id }}</td>
-            <td data-brand="Apple">Apple</td>
-            <td data-price="900">900</td>
-            <td data-qty="43">43</td>
-            <td data-processor="AMD">AMD</td>
-            <td data-ramSize="2">2</td>
-            <td data-weight="1">1</td>
-            <td data-cpuCores="4">4</td>
-            <td data-hddSize="2TB">2TB</td>
-            <td data-displaySize="7">7</td>
-            <td data-height="2">2</td>
-            <td data-width="3">3</td>
-            <td data-thickness="6">6</td>
-            <td data-battery="Mac">Mac</td>
-            <td data-os="Windows 8">Windows 8</td>
-            <td data-camera="Yes">Yes</td>
-            <td data-touchscreen="No">No</td>
-            <td class="text-center">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select <span class="caret"></span>
-                    </button>
+            <td data-id="{{ $tablet->id }}">{{ $tablet->id }}</td>
+            <td data-brand="{{ $tablet->brand }}">{{ $tablet->brand }}</td>
+            <td data-price="{{ $tablet->price }}">{{ $tablet->price }}</td>
+            <td data-qty="{{ $tablet->quantity }}">{{ $tablet->quantity }}</td>
+            <td data-processor="{{ $tablet->processor_type }}">{{ $tablet->processor_type }}</td>
+            <td data-ramSize="{{ $tablet->ram_size }}">{{ $tablet->ram_size }}</td>
+            <td data-weight="{{ $tablet->weight }}">{{ $tablet->weight }}</td>
+            <td data-cpuCores="{{ $tablet->cpu_cores }}">{{ $tablet->cpu_cores }}</td>
+            <td data-hddSize="{{ $tablet->hdd_size }}">{{ $tablet->hdd_size }}</td>
+            <td data-displaySize="{{ $tablet->display_size }}">{{ $tablet->display_size }}</td>
+            <td data-height="{{ $tablet->height }}">{{ $tablet->height }}</td>
+            <td data-width="{{ $tablet->width }}">{{ $tablet->width }}</td>
+            <td data-thickness="{{ $tablet->thickness }}">{{ $tablet->thickness }}</td>
+            <td data-battery="{{ $tablet->battery }}">{{ $tablet->battery }}</td>
+            <td data-os="{{ $tablet->os }}">{{ $tablet->os }}</td>
+            <td data-camera="{{ $tablet->camera }}">{{ $tablet->camera }}</td>
+            <td data-touchscreen="{{ $tablet->is_touchscreen }}">{{ $tablet->is_touchscreen }}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Select <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="edit-tablet-link" href="" data-toggle="modal" data-target=".bs-edit-tablet-modal-lg">
@@ -63,14 +63,15 @@
                             </a>
                         </li>
                         <li>
-                            <a class="del-tablet-link" href="" data-qty="43" data-id="31" data-toggle="modal" data-target="#delTabletLink">
+                            <a class="del-tablet-link" href="" data-qty="{{ $tablet->quantity }}" data-id="{{ $tablet->id }}" data-toggle="modal" data-target="#delTabletLink">
                                 Delete/Update Qty
                             </a>
                         </li>
                     </ul>
                 </div>
             </td>
-            @endforeach
+        </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

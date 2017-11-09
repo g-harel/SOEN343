@@ -3,6 +3,7 @@
 namespace App\Gateway;
 
 use App\Gateway\DatabaseGateway;
+use App\Models\Session;
 
 class SessionGateway
 {
@@ -12,6 +13,15 @@ class SessionGateway
     public function __construct() {
         $this->tableName = "sessions";
         $this->db = new DatabaseGateway();
+    }
+
+//    public function getSessionCatalog(){
+//	   return getAllSessions($this->tableName);
+//    }
+
+    public function getAllSession(){
+        $sql = "SELECT * FROM $this->tableName;";
+        return $this->db->queryDB($sql);
     }
 
     public function getSessionById($id) {
@@ -26,7 +36,7 @@ class SessionGateway
 
     public function addSession($accountId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `accounts`(`account_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
+        $sql = "INSERT INTO $this->tableName(`user_id`, `login_time_stamp`) VALUES ('$userId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 
