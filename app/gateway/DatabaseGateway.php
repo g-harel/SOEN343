@@ -72,7 +72,9 @@ Function cherryPick($keys, $source) {
         $source = get_object_vars($source);
     }
     foreach ($keys as &$key) {
-        array_push($result, $source["$key"]);
+        if (isset($source["$key"])){
+            array_push($result, $source["$key"]);
+        }
     }
     return $result;
 }
@@ -86,12 +88,12 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        /*$configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
+        $configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];
         $this->password = $configArray["password"];
-        $this->databaseName = $configArray["databaseName"];*/
+        $this->databaseName = $configArray["databaseName"];
     }
 
     public function getDBConnection() {
@@ -111,6 +113,10 @@ class DatabaseGateway
     public function queryDB($sql) {
         $this->openDBConnection();
         $toReturn = $this->manualQueryDB($sql);
+        // Returns the ID of the last insertion
+        if ($this->isInsert($sql)) {
+            $toReturn = $this->DBConnection->insert_id;
+        }
         $this->closeDBConnection();
         return $toReturn;
     }
@@ -147,6 +153,10 @@ class DatabaseGateway
             $returnIndex = 0;
         }
         return $returned[$returnIndex];
+    }
+
+    private function isInsert($statement) {
+        return substr($statement, 0, 6) === "INSERT";
     }
 }
 
