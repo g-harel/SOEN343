@@ -19,17 +19,11 @@ class ComputerController extends Controller
 
     public function showLaptop() {
 
-        $laptopMapper = new LaptopMapper();
-        $laptops = $laptopMapper->getAll();
-
-        return view('items.computer.show-laptop', ['laptops' => $laptops]);
+        return view('items.computer.show-laptop', ['laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)]);
     }
 
     public function showTablet() {
 
-        $tabletMapper = new TabletMapper();
-        $tablets = $tabletMapper->getAll();
-
-        return view('items.computer.show-tablet', ['tablets' => $tablets]);
+        return view('items.computer.show-tablet', ['tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)]);
     }
 }

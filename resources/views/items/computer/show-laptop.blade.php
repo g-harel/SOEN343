@@ -32,20 +32,20 @@
             <tbody>
             @foreach($laptops as $laptop)
                 <tr>
-                    <td data-id="{{ $laptop->id }}">{{ $laptop->id }}</td>
-                    <td data-brand="{{ $laptop->brand }}">{{ $laptop->brand }}</td>
-                    <td data-price="{{ $laptop->price }}">{{ $laptop->price }}</td>
-                    <td data-qty="{{ $laptop->quantity }}">{{ $laptop->quantity }}</td>
-                    <td data-processor="{{ $laptop->processor_type }}">{{ $laptop->processor_type }}</td>
-                    <td data-ramSize="{{ $laptop->ram_size }}">{{ $laptop->ram_size }}</td>
-                    <td data-weight="{{ $laptop->weight }}">{{ $laptop->weight }}</td>
-                    <td data-cpuCores="{{ $laptop->cpu_cores }}">{{ $laptop->cpu_cores }}</td>
-                    <td data-hddSize="{{ $laptop->hdd_size }}">{{ $laptop->hdd_size }}</td>
-                    <td data-displaySize="{{ $laptop->display_size }}">{{ $laptop->display_size }}</td>
-                    <td data-battery="{{ $laptop->battery }}">{{ $laptop->battery }}</td>
-                    <td data-os="{{ $laptop->os }}">{{ $laptop->os }}</td>
-                    <td data-camera="{{ $laptop->camera }}">{{ $laptop->camera }}</td>
-                    <td data-touchscreen="{{ $laptop->is_touchscreen }}">{{ $laptop->is_touchscreen }}</td>
+                    <td data-id="{{ $laptop["id"] }}">{{ $laptop["id"] }}</td>
+                    <td data-brand="{{ $laptop["brand"] }}">{{ $laptop["brand"] }}</td>
+                    <td data-price="{{ $laptop["price"] }}">{{ $laptop["price"] }}</td>
+                    <td data-qty="{{ $laptop["quantity"] }}">{{ $laptop["quantity"] }}</td>
+                    <td data-processor="{{ $laptop["processorType"] }}">{{ $laptop["processorType"] }}</td>
+                    <td data-ramSize="{{ $laptop["ramSize"] }}">{{ $laptop["ramSize"] }}</td>
+                    <td data-weight="{{ $laptop["weight"] }}">{{ $laptop["weight"] }}</td>
+                    <td data-cpuCores="{{ $laptop["cpuCores"] }}">{{ $laptop["cpuCores"] }}</td>
+                    <td data-hddSize="{{ $laptop["hddSize"] }}">{{ $laptop["hddSize"] }}</td>
+                    <td data-displaySize="{{ $laptop["displaySize"] }}">{{ $laptop["displaySize"] }}</td>
+                    <td data-battery="{{ $laptop["battery"] }}">{{ $laptop["battery"] }}</td>
+                    <td data-os="{{ $laptop["os"] }}">{{ $laptop["os"] }}</td>
+                    <td data-camera="{{ $laptop["camera"] }}">{{ $laptop["camera"] }}</td>
+                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">{{ $laptop["isTouchscreen"] }}</td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Edit">
                             <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
