@@ -95,14 +95,7 @@ abstract class ItemCatalogMapper {
         return $this->mapItemArrayToDomainArrays($items);
     }
 
-    // Used by the controllers. Here the item type is a code where:
-    // item = 0;
-    // monitor = 1;
-    // computer = 2;
-    // desktop = 3;
-    // laptop = 4;
-    // tablet = 5;
-    // Since we have a server rendered app, I suggest using the ItemType enum directly from the controllers to generate the item type.
+    // Used by the controllers. Here the item type is the enumeration defined in app/models/ItemType (item = 0, monitor = 1, etc)
     public function selectAllItemType($itemType) {
         $this->updateCatalog();
         $items = $this->itmeCatalog->getAllItemsType($itemType);
