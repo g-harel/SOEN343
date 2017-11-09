@@ -6,7 +6,7 @@ use App\Models\ItemType;
 
 class ItemCatalog {
 
-    private $catalog;
+    private static $catalog;
     private static $instance;
 
     private function __constructor() {
@@ -14,10 +14,10 @@ class ItemCatalog {
     }
 
     public function getInstance() {
-        if ($this->instance === null) {
-            $this->instance = new ItemCatalog();
+        if (self::$instance === null) {
+            self::$instance = new ItemCatalog();
         }
-        return $this->instance;
+        return self::$instance;
     }
 
     public function addItem($item) {

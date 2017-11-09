@@ -6,7 +6,7 @@ class IdentityMap
 {
     protected $idToObject;
     protected $objectToId;
-    private $instance;
+    private static $instance;
 
     /*
      * The SplObjectStorage class provides a map from objects to data or, by ignoring data, 
@@ -24,10 +24,10 @@ class IdentityMap
     }
 
     public static function getInstance() {
-        if ($this->instance === null) {
-            $this->instance = new IdentityMap();
+        if (self::$instance === null) {
+            self::$instance = new IdentityMap();
         }
-        return $this->instance;
+        return self::$instance;
     }
 
     public function set($id, $object)

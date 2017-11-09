@@ -35,7 +35,7 @@ abstract class ItemCatalogMapper {
         ["camera", "camera"],
         ["isTouchscreen", "is_touchscreen"]
     ];
-    private $instance;
+    private static $instance;
     private $itemCatalog;
     private $unitOfWork;
     private $identityMap;
@@ -48,10 +48,10 @@ abstract class ItemCatalogMapper {
     }
 
     public static function getInstance() {
-        if ($this->instance === null) {
-            $this->instance = new ItemCatalogMapper();
+        if (self::$instance === null) {
+            self::$instance = new ItemCatalogMapper();
         }
-        return $this->instance;
+        return self::$instance;
     }
 
     // Used by the controllers
