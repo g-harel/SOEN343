@@ -4,27 +4,27 @@ namespace App\Gateway;
 
 use App\Gateway\DatabaseGateway;
 
-class UserGateway
+class AccountGateway
 {
     private $db;
     private $tableName;
 
     public function __construct() {
-        $this->tableName = "users";
+        $this->tableName = "accounts";
         $this->db = new DatabaseGateway();
     }
 
-    public function getUserByEmail($email) {
+    public function getAccountByEmail($email) {
         $conditionsAssociativeArray = ["email" => $email];
-        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
+        return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
-    public function getUserById($id) {
+    public function getAccountById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return singleTableSelectUserQuery($conditionsAssociativeArray, $this->tableName);
+        return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
-    public function editUser($id, $email, $password, $firstName, $lastName, $phoneNumber,
+    public function editAccount($id, $email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode) {
         $conditionsAssociativeArray = ["id" => $id];
         $conditions = transformConditionsToString($conditionsAssociativeArray);
@@ -40,20 +40,20 @@ class UserGateway
         return $this->db->queryDB($sql);
     }
 
-    public function addUser($email, $password, $firstName, $lastName, $phoneNumber,
+    public function addAccount($email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
-        $sql = "INSERT INTO `users`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode', $isAdmin);";
+        $sql = "INSERT INTO `accounts`(`email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES ('$email', '$password', '$firstName', '$lastName', $phoneNumber, $doorNumber, '$appartement', '$street', '$city', '$province', '$country', '$postalCode', $isAdmin);";
         $result = $this->db->queryDB($sql);
         return $result;
     }
 
-    public function deleteUserByEmail($email) {
+    public function deleteAccountByEmail($email) {
         $conditionsAssociativeArray = ["email" => $email];
-        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
+        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
-    public function deleteUserById($id) {
+    public function deleteAccountById($id) {
         $conditionsAssociativeArray = ["id" => $id];
-        return singleTableDeleteUserQuery($conditionsAssociativeArray, $this->tableName);
+        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 }

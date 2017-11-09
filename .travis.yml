@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 7.1.9
+
+before_install:
+  - cp .env.travis .env
+  - mysql -e 'CREATE DATABASE soen343;'
+  - nvm install --lts
+
+install:
+  - composer install
+  - composer update
+  - npm install
+  - php artisan key:generate
+
+script:
+  - npm run eslint
+  - vendor/bin/phpcs **/*.php --standard=ruleset.xml
+  - vendor/bin/phpunit
+
+services:
+  - mysql
+
+notifications:
+  email: false
