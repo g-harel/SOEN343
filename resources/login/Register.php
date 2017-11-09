@@ -1,11 +1,11 @@
 <?php
 
-use App\Mappers\UserMapper;
-use App\Models\User;
+use App\Mappers\AccountMapper;
+use App\Models\Account;
 
 class Register {
 
-    private $userMapper;
+    private $accountMapper;
     /*account info*/
     private $firstName;
     private $lastName;
@@ -22,14 +22,14 @@ class Register {
     private $postalCode;
 
     public function __construct($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode) {
-        $this->userMapper = new UserMapper();
-        $newUser = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $this->accountMapper = new AccountMapper();
+        $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
         $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin=false);
-        $result = $this->userMapper->setUser($newUser);
+        $result = $this->accountMapper->setAccount($newAccount);
     }
     
-    public function createUser(){
-        $result= $this->userMapper->saveUserInRecord();
+    public function createAccount(){
+        $result= $this->accountMapper->saveAccountInRecord();
         return $result;
         
     } 
