@@ -10,7 +10,7 @@ class ComputerGateway extends ItemGateway implements iItemCategory {
         "ram_size",
         "cpu_cores",
         "weight",
-        "type",
+        "hdd_size",
     );
 
     public function buildSelect() {

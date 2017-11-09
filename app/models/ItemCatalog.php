@@ -9,11 +9,11 @@ class ItemCatalog {
     private static $catalog;
     private static $instance;
 
-    private function __constructor() {
+    private function __construct() {
         self::$catalog = array();
     }
 
-    public function getInstance() {
+    public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new ItemCatalog();
         }
@@ -38,11 +38,11 @@ class ItemCatalog {
                 case ItemType::computer:
                 return new Computer($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"]);
                 case ItemType::desktop:
-                return new Computer($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["height"], $params["width"], $params["thickness"]);
+                return new Desktop($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["height"], $params["width"], $params["thickness"]);
                 case ItemType::laptop:
-                return new Computer($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["os"], $params["battery"], $params["camera"], $params["isTouchscreen"]);
+                return new Laptop($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["os"], $params["battery"], $params["camera"], $params["isTouchscreen"]);
                 case ItemType::tablet:
-                return new Computer($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["width"], $params["height"], $params["thickness"], $params["battery"], $params["os"], $params["camera"], $params["isTouchscreen"]);
+                return new Tablet($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["width"], $params["height"], $params["thickness"], $params["battery"], $params["os"], $params["camera"]);
                 default:
                 return false;
             }
@@ -83,7 +83,7 @@ class ItemCatalog {
     public function editItem($itemId, $itemParam) {
         $item = $this->getItem($itemId);
         if ($item !== null) {
-            $itemType = ItemType::getItemType($item);
+            $itemType = ItemType::getItemTypeEnum($item);
             switch($itemType) {
                 case ItemType::item:
                 $this->setItemParams($item, $itemParam);
@@ -117,7 +117,7 @@ class ItemCatalog {
     }
 
     private function isItemInCatalog($item) {
-        return $this->doesItemIdExists($item->getId());            
+        return $this->isItemIdInCatalog($item->getId());
     }
 
     public function isItemIdInCatalog($itemId) {
@@ -133,7 +133,7 @@ class ItemCatalog {
         return array_fill_keys($keys, array());
     }
 
-    private function setItemParams($item, $param) {
+    private function setItemParams(Item $item, $param) {
         $item->setId($param["id"]);
         $item->setCategory($param["category"]);
         $item->setBrand($param["brand"]);
@@ -141,13 +141,13 @@ class ItemCatalog {
         $item->setQuantity($param["quantity"]);
     }
 
-    private function setMonitorParams($item, $param) {
+    private function setMonitorParams(Monitor $item, $param) {
         $this->setItemParams($item, $param);        
         $item->setDisplaySize($param["displaySize"]);
         $item->setWeight($param["weight"]);
     }
 
-    private function setComputerParams($item, $param) {
+    private function setComputerParams(Computer $item, $param) {
         $this->setItemParams($item, $param);
         $item->setProcessorType($param["processorType"]);
         $item->setRamSize($param["ramSize"]);
@@ -156,14 +156,14 @@ class ItemCatalog {
         $item->setHddSize($param["hddSize"]);
     }
 
-    private function setDesktopParams($item, $param) {
+    private function setDesktopParams(Desktop $item, $param) {
         $this->setComputerParams($item, $param);
         $item->setHeight($param["height"]);
         $item->setWidth($param["width"]);
         $item->setThickness($param["thickness"]);
     }
 
-    private function setLaptopParams($item, $param) {
+    private function setLaptopParams(Laptop $item, $param) {
         $this->setComputerParams($item, $param);
         $item->setDisplaySize($param["displaySize"]);
         $item->setOs($param["os"]);
@@ -172,7 +172,7 @@ class ItemCatalog {
         $item->setIsTouchscreen($param["isTouchscreen"]);
     }
 
-    private function setTabletParams($item, $param) {
+    private function setTabletParams(Tablet $item, $param) {
         $this->setComputerParams($item, $param);
         $item->setHeight($param["height"]);
         $item->setWidth($param["width"]);
@@ -181,7 +181,6 @@ class ItemCatalog {
         $item->setOs($param["os"]);
         $item->setBattery($param["battery"]);
         $item->setCamera($param["camera"]);
-        $item->setIsTouchscreen($param["isTouchscreen"]);
     }
 
 }

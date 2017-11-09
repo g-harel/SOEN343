@@ -1,10 +1,9 @@
 <?php
 
 namespace App\UnitOfWork;
+use App\UnitOfWork\UnitOfWorkPair;
 
-use App\Mappers;
-
-class UnitOfWork{
+class UnitOfWorkMap{
 
     private $map;
 
@@ -14,6 +13,10 @@ class UnitOfWork{
 
     public function getMapper($id) {
         return $this->get($id)->getMapper();
+    }
+
+    public function getPairs() {
+        return $this->map;
     }
 
     public function getObject($id) {
@@ -36,24 +39,20 @@ class UnitOfWork{
     }
 
     private function set($id, $pair) {
-        $map[$id] = $pair;
+        $this->map[$id] = $pair;
     }
 
     private function get($id) {
-        return $map[$id];
+        return $this->map[$id];
     }
 
     public function delete($id) {
-        $toReturn = $map[$id];
+        $toReturn = $this->map[$id];
         $map[$id] = null;
         return $toReturn;
     }
 
     public function exists($id) {
-        return $map[$id] !== null;
+        return $this->map[$id] !== null;
     }
-
-
-
-
 }

@@ -2,9 +2,7 @@
 
 namespace App\UnitOfWork;
 
-use App\Mappers;
-
-class UnitOfWork{
+class UnitOfWorkPair {
 
     private $mapper;
     private $object;

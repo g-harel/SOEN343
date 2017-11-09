@@ -1,8 +1,7 @@
 <?php
 
 namespace App\UnitOfWork;
-
-use App\Mappers;
+use App\UnitOfWork\UnitOfWorkPair;
 
 class UnitOfWork{
 
@@ -24,7 +23,7 @@ class UnitOfWork{
     }
 
     public static function getInstance() {
-        if (self::$unitOfWork == null) {
+        if (self::$unitOfWork === null) {
             self::$unitOfWork = new UnitOfWork();
         }
         return self::$unitOfWork;
@@ -60,28 +59,33 @@ class UnitOfWork{
         ]
         */
 
+        $sessionId = "0" . $transactionId;
+
         $stateStorage = $this->storage[$state];
-        if ($stateStorage === null) {
-            $stateStorage[$transactionId] = array($transactionId => array());
+        if ($stateStorage === null || empty($stateStorage) || !isset($stateStorage[$sessionId])) {
+            $stateStorage[$sessionId] = array();
         }
 
-        $transactions = $stateStorage[$transactionId];
+        $transactions = $stateStorage[$sessionId];
 
         if ($state === self::STATE_NEW) {
             $transactions[] = new UnitOfWorkPair($mapper, $object);
         } else {
-            if ($transactions === null) {
+            if ($transactions === null || empty($transactions)) {
                 $transactions = new UnitOfWorkMap();
             }
             $transactions->createPair($objectId, $mapper, $object);
         }
+
+        $stateStorage[$sessionId] = $transactions;
+        $this->storage[$state] = $stateStorage;
     }
 
-    /**
-     * Make sure that the same object isn't in both the DIRTY and DELETED state at the same time.
-     */
+
+    // Make sure that the same object isn't in both the DIRTY and DELETED state at the same time.
     private function removeFromState($transactionId, $objectId, $state) {
-        $stateStorage;
+        $sessionId = "0" . $transactionId;
+        $stateStorage = null;
         if ($state === self::STATE_DIRTY) {
             $stateStorage = $this->storage[self::STATE_DELETED];
         } else if ($state === self::STATE_DELETED) {
@@ -90,9 +94,9 @@ class UnitOfWork{
             return;
         }
 
-        $transactions;
-        if ($transactionId !== null && $stateStorage[$transactionId] !== null) {
-            $transactions = $stateStorage[$transactionId];
+        $transactions = null;
+        if ($sessionId !== "0" && isset($stateStorage[$sessionId])) {
+            $transactions = $stateStorage[$sessionId];
         } else {
             return;
         }
@@ -126,37 +130,44 @@ class UnitOfWork{
             $mapper->add($object);
         } else if ($actionToPerform === self::ACTION_MODIFY) {
             $mapper->edit($object);
-        } else if ($actionToPerform === self::ACTION_DELETEOBJECT) {
+        } else if ($actionToPerform === self::ACTION_DELETE) {
             $mapper->delete($object);
         }
     }
 
-    public function commit($transactionId) {
-
-        $actionToPerform;
+    public function commit($transactionId, $objectId = null) {
+        echo "IN COMMITTT FUNCTION ";
+        $sessionId = "0" . $transactionId;
+        $actionToPerform = null;
         foreach ($this->storage as $key => $array) {
             if ($key === self::STATE_NEW) {
                 $actionToPerform = self::ACTION_INSERT;
             } else if ($key === self::STATE_DIRTY) {
                 $actionToPerform = self::ACTION_MODIFY;
-            } else if ($key === self::STATE_DELETE) {
-                $actionToPerform = self::ACTION_DELETEOBJECT;;
+            } else if ($key === self::STATE_DELETED) {
+                $actionToPerform = self::ACTION_DELETE;
             }
 
-            if (array_key_exists($array, $transactionId)){
-                foreach($array[$transactionId] as $transaction) {
-                    $transactionMapper = $transaction->getMapper();
-                    $transactionObject = $transaction->getObject();
-                    $this->mapperAction($actionToPerform, $transactionMapper, $transactionObject);
+            if (array_key_exists($sessionId, $array)){
+                $iterate = null;
+                if ($key === self::STATE_NEW) {
+                    $iterate = $array[$sessionId];
+                } else {
+                    $iterate = $array[$sessionId]->getPairs();
                 }
+                foreach($iterate as $transaction) {
+                        $transactionMapper = $transaction->getMapper();
+                        $transactionObject = $transaction->getObject();
+                        $this->mapperAction($actionToPerform, $transactionMapper, $transactionObject);
+                    }
             }
         }
-        $this->clear($transactionId);
+        $this->clear($sessionId);
     }
 
     public function rollback($transactionId, $objectId) {
         foreach ($this->storage as $array) {
-            if (array_key_exists($array, $transactionId)) {
+            if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId]->delete($objectId);
             }
         }
@@ -164,14 +175,9 @@ class UnitOfWork{
 
     public function clear($transactionId) {
         foreach ($this->storage as $array) {
-            if (array_key_exists($array, $transactionId)) {
+            if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId] = array();
             }
         }
     }
-
-
-
-
-
 }

@@ -12,17 +12,17 @@ abstract class ItemType {
     const tablet = 5;
 
     public static function getItemTypeEnum($itemObject) {
-        if ($item instanceof Tablet) {
+        if ($itemObject instanceof Tablet) {
             return self::tablet;
-        } else if ($item instanceof Laptop) {
+        } else if ($itemObject instanceof Laptop) {
             return self::laptop;
-        } else if ($item instanceof Desktop) {
+        } else if ($itemObject instanceof Desktop) {
             return self::desktop;
-        } else if ($item instanceof Computer) {
+        } else if ($itemObject instanceof Computer) {
             return self::computer;
-        } else if ($item instanceof Monitor) {
+        } else if ($itemObject instanceof Monitor) {
             return self::monitor;
-        } else if ($item instanceof Item) {
+        } else if ($itemObject instanceof Item) {
             return self::item;
         }
     }
@@ -45,18 +45,18 @@ abstract class ItemType {
 
     public static function getItemTypeEnumToString($itemType) {
         switch($itemType) {
-            case ItemType::item:
-            return "item";
             case ItemType::monitor:
-            return "monitor";
-            case ItemType::computer:
-            return "computer";
+                return "monitor";
             case ItemType::desktop:
-            return "desktop";
+                return "desktop";
             case ItemType::laptop:
-            return "laptop";
+                return "laptop";
             case ItemType::tablet:
-            return "tablet";
+                return "tablet";
+            case ItemType::computer:
+                return "computer";
+            case ItemType::item:
+                return "item";
         }
     }
 }

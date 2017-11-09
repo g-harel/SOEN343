@@ -72,7 +72,9 @@ Function cherryPick($keys, $source) {
         $source = get_object_vars($source);
     }
     foreach ($keys as &$key) {
-        array_push($result, $source["$key"]);
+        if (isset($source["$key"])){
+            array_push($result, $source["$key"]);
+        }
     }
     return $result;
 }

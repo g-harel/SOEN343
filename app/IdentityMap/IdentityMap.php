@@ -1,6 +1,8 @@
 <?php 
 
 namespace App\IdentityMap;
+use ArrayObject;
+use SplObjectStorage;
 
 class IdentityMap
 {
