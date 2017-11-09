@@ -1,31 +1,31 @@
 <?php
 
 use App\Mappers\SessionMapper;
-use App\Mappers\UserMapper;
+use App\Mappers\AccountMapper;
 
 class Login{
 
-    private $userMapper;
+    private $accountMapper;
     private $sessionMapper;
     private $email;
     private $password;
 
     public function __construct($email, $password) {
 
-        $this->userMapper = new UserMapper();
+        $this->accountMapper = new AccountMapper();
         $this->email = $email;
         $this->password = $password;
     }
 
     public function validate()
 	{ 
-		$user = $this->userMapper->setUserFromRecordByEmail($this->email)->getUser();
+		$account = $this->accountMapper->setAccountFromRecordByEmail($this->email)->getAccount();
 	
-		if($user){;
-            $password = $user->getPassword();
-            $isAdmin = $user->getIsAdmin();
+		if($account){;
+            $password = $account->getPassword();
+            $isAdmin = $account->getIsAdmin();
             if($password == $this->password){
-                $this->sessionMapper = SessionMapper::openSession($user);
+                $this->sessionMapper = SessionMapper::openSession($account);
                 return $isAdmin;
             }
 
@@ -40,7 +40,7 @@ class Login{
     }
 
     public function getSession(){
-		$session = $this->sessionMapper->$openSession($user);
+		$session = $this->sessionMapper->$openSession($account);
         return $session;
         
     }
