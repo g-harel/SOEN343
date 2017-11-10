@@ -192,6 +192,13 @@ class ItemCatalogMapper {
         foreach($tablets as $tablet) {
             $itemsArray[] = $this->mapStorageArrayToDomain($tablet);
         }
+        $monitorGateway = new MonitorGateway();
+        $monitorObject = $monitorGateway->getAll();
+        $monitors = json_decode(json_encode($monitorObject), True);
+        foreach($monitors as $monitor) {
+            $itemsArray[] = $this->mapStorageArrayToDomain($monitor);
+        }
+
 
         // POPULATING THE CATALOG WITH THE RESULTS
         $unvisitedKeysInCatalog = $this->itemCatalog->getCatalogKeys();

@@ -134,8 +134,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
-(1, 'test', 'test', 12.00, 1),
-(2, 'test2', 'test2', 99.00, 99),
+(1, 'monitor', 'test', 12.00, 1),
+(2, 'monitor', 'test2', 99.00, 99),
 (3, 'laptop', 'IBM', 1500.00, 2),
 (4, 'desktop', 'Dell', 1055.00, 20),
 (5, 'tablet', 'Apple', 900.00, 43),
