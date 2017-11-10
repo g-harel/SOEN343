@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\UserMapper;
-use App\Models\User;
+use App\Models\Account;
 
 class Register
 {
@@ -42,14 +42,14 @@ class Register
         $this->postalCode = $postalCode;
 
         $this->userMapper = new UserMapper();
-        $newUser = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $newUser = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
-        $this->userMapper->setUser($newUser);
+        $this->userMapper->setAccount($newUser);
     }
 
     public function createUser()
     {
-        $result = $this->userMapper->saveUserInRecord();
+        $result = $this->userMapper->saveAccountInRecord();
         return $result;
 
     }
@@ -58,6 +58,6 @@ class Register
 
         $email = $this->email;
 
-        return $this->userMapper->getUserByEmail($email) ;
+        return $this->userMapper->getAccountByEmail($email) ;
     }
 }

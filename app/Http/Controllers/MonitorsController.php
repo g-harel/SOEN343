@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gateway\MonitorGateway;
 use Illuminate\Http\Request;
-use App\Mappers\MonitorMapper;
+use App\Mappers\ItemCatalogMapper;
 
 class MonitorsController extends Controller
 {
@@ -14,10 +14,7 @@ class MonitorsController extends Controller
 
     public function showMonitor() {
 
-        $monitorMapper = new MonitorMapper();
-        $monitors = $monitorMapper->getAll();
-
-        return view('items.monitor.show-monitor', ['monitors' => $monitors]);
+        return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
     }
 
     public function insertMonitor()

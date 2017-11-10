@@ -140,7 +140,6 @@
         margin-top: 5px;
         width: auto;
     }
-
 </style>
 @section('content')
     <div class="container">
@@ -176,7 +175,6 @@
                                         </label>
                                         <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="" value="" required>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="last_name">
                                             Last name
@@ -210,7 +208,6 @@
                                         </label><br>
                                         <input type="text" name="phone_number" id="phone_number" class="form-control number" data-masked-input="999-999-9999" placeholder="XXX-XXX-XXXX" maxlength="12">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="email">
                                             Email
@@ -218,7 +215,6 @@
                                         <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
                                         <small id="emailHelp" class="form-text text-muted"></small>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="password">
                                             Password
@@ -226,7 +222,6 @@
                                         <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="" maxlength="16" required>
                                         <small id="passwordHelp" class="form-text text-muted">Maximum 16 characters.</small>
                                     </div>
-
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">

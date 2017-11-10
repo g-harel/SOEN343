@@ -32,18 +32,18 @@
             <tbody>
             @foreach($desktops as $desktop)
                 <tr>
-                    <td data-id="{{ $desktop->id }}">{{ $desktop->id }}</td>
-                    <td data-brand="{{ $desktop->brand }}">{{ $desktop->brand }}</td>
-                    <td data-price="{{ $desktop->price }}">{{ $desktop->price }}</td>
-                    <td data-qty="{{ $desktop->quantity }}">{{ $desktop->quantity }}</td>
-                    <td data-processor="{{ $desktop->processor_type }}">{{ $desktop->processor_type }}</td>
-                    <td data-ramSize="{{ $desktop->ram_size }}">{{ $desktop->ram_size }}</td>
-                    <td data-cpuCores="{{ $desktop->cpu_cores }}">{{ $desktop->cpu_cores }}</td>
-                    <td data-hddSize="{{ $desktop->hdd_size }}">{{ $desktop->hdd_size }}</td>
-                    <td data-weight="{{ $desktop->weight }}">{{ $desktop->weight }}</td>
-                    <td data-height="{{ $desktop->height }}">{{ $desktop->height }}</td>
-                    <td data-width="{{ $desktop->width }}">{{ $desktop->width }}</td>
-                    <td data-thickness="{{ $desktop->thickness }}">{{ $desktop->thickness }}</td>
+                    <td data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                    <td data-brand="{{ $desktop["brand"] }}">{{ $desktop["brand"] }}</td>
+                    <td data-price="{{ $desktop["price"] }}">{{ $desktop["price"] }}</td>
+                    <td data-qty="{{ $desktop["quantity"] }}">{{ $desktop["quantity"] }}</td>
+                    <td data-processor="{{ $desktop["processorType"] }}">{{ $desktop["processorType"] }}</td>
+                    <td data-ramSize="{{ $desktop["ramSize"] }}">{{ $desktop["ramSize"] }}</td>
+                    <td data-cpuCores="{{ $desktop["cpuCores"] }}">{{ $desktop["cpuCores"] }}</td>
+                    <td data-hddSize="{{ $desktop["hddSize"] }}">{{ $desktop["hddSize"] }}</td>
+                    <td data-weight="{{ $desktop["weight"] }}">{{ $desktop["weight"] }}</td>
+                    <td data-height="{{ $desktop["height"] }}">{{ $desktop["height"] }}</td>
+                    <td data-width="{{ $desktop["width"] }}">{{ $desktop["width"] }}</td>
+                    <td data-thickness="{{ $desktop["thickness"] }}">{{ $desktop["thickness"] }}</td>
                     <td class="text-center">
                         <p title="Edit">
                             <a class="btn btn-primary btn-xs edit-desktop-link" href="" data-toggle="modal"
@@ -54,7 +54,7 @@
                     </td>
                     <td class="text-center">
                         <p title="Delete">
-                            <a class="btn btn-danger btn-xs" href="" data-qty="{{ $desktop->quantity }}" data-id="{{ $desktop->id }}" data-toggle="modal"
+                            <a class="btn btn-danger btn-xs" href="" data-qty="" data-id="" data-toggle="modal"
                                data-target="#delDesktopLink">
                                 <span class="fa fa-trash"></span>
                             </a>

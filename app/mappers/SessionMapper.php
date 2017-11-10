@@ -48,7 +48,7 @@ class SessionMapper
 
     public function closeSession($userId)
     {
-        $success = $this->gateway->deleteSessionByUserId($userId);
+        $success = $this->gateway->deleteSessionByAccountId($userId);
         return $success;
     }
 

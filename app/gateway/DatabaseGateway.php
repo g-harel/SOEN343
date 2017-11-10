@@ -22,7 +22,7 @@ Function getAllSessions($tableName) {
     return $this->db->queryDB($sql);
 }
 
-Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
+Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "SELECT * FROM $tableName WHERE $conditions;";
     $db = new DatabaseGateway();
@@ -34,7 +34,7 @@ Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
     }
 }
 
-Function singleTableDeleteUserQuery($conditionsAssociativeArray, $tableName) {
+Function singleTableDeleteAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "DELETE FROM $tableName WHERE $conditions;";
     $db = new DatabaseGateway();
@@ -78,7 +78,9 @@ Function cherryPick($keys, $source) {
         $source = get_object_vars($source);
     }
     foreach ($keys as &$key) {
-        array_push($result, $source["$key"]);
+        if (isset($source["$key"])){
+            array_push($result, $source["$key"]);
+        }
     }
     return $result;
 }
@@ -117,6 +119,10 @@ class DatabaseGateway
     public function queryDB($sql) {
         $this->openDBConnection();
         $toReturn = $this->manualQueryDB($sql);
+        // Returns the ID of the last insertion
+        if ($this->isInsert($sql)) {
+            $toReturn = $this->DBConnection->insert_id;
+        }
         $this->closeDBConnection();
         return $toReturn;
     }
@@ -153,6 +159,10 @@ class DatabaseGateway
             $returnIndex = 0;
         }
         return $returned[$returnIndex];
+    }
+
+    private function isInsert($statement) {
+        return substr($statement, 0, 6) === "INSERT";
     }
 }
 

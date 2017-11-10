@@ -2,8 +2,8 @@
 
 namespace App\Mappers;
 
-use App\Models\User;
-use App\Gateway\UserGateway;
+use App\Models\Account;
+use App\Gateway\AccountGateway;
 
 
 class UserMapper
@@ -12,7 +12,7 @@ class UserMapper
     private $gateway;
 
     public function __construct() {
-        $this->gateway = new UserGateway();
+        $this->gateway = new AccountGateway();
     }
 
     public static function createUserMapper($user) {
@@ -25,14 +25,14 @@ class UserMapper
                                                       $doorNumber, $appartement, $street, $city, $province,
                                                       $country, $postalCode, $isAdmin = false)
     {
-        $user = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $user = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
         $instance = self::createUserMapper($user);
         return $instance;
     }
 
     public function setUserFromRecordByEmail($email) {
-        $record = $this->gateway->getUserByEmail($email);
+        $record = $this->gateway->getAccountByEmail($email);
         if ($record != null || $record != false) {
             $recordUser = $record[0];
             $id = $recordUser["id"];
@@ -50,7 +50,7 @@ class UserMapper
             $postalCode = $recordUser["postal_code"];
             $isAdmin = $recordUser["isAdmin"];
     
-            $user = User::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+            $user = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
             $this->user = $user;
         }
@@ -58,8 +58,8 @@ class UserMapper
         return $this;
     }
 
-    public function saveUserInRecord() {
-        $result = $this->gateway->addUser(
+    public function saveAccountInRecord() {
+        $result = $this->gateway->addAccount(
             $this->user->getEmail(), $this->user->getPassword(), $this->user->getFirstName(), $this->user->getLastName(),
             $this->user->getPhoneNumber(), $this->user->getDoorNumber(), $this->user->getAppartement(),
             $this->user->getStreet(), $this->user->getCity(), $this->user->getProvince(), $this->user->getCountry(),
@@ -74,8 +74,8 @@ class UserMapper
         return $isSuccessful;
     }
 
-    public function editUserInRecord() {
-        $success = $this->gateway->editUser(
+    public function editAccountInRecord() {
+        $success = $this->gateway->editAccount(
             $this->user->getId(), $this->user->getEmail(), $this->user->getPassword(), $this->user->getFirstName(), $this->user->getLastName(),
             $this->user->getPhoneNumber(), $this->user->getDoorNumber(), $this->user->getAppartement(),
             $this->user->getStreet(), $this->user->getCity(), $this->user->getProvince(), $this->user->getCountry(),
@@ -84,17 +84,17 @@ class UserMapper
         return $success;
     }
 
-    public function deleteUserInRecord() {
-        $success = $this->gateway->deleteUserByEmail($this->user->getEmail());
+    public function deleteAccountInRecord() {
+        $success = $this->gateway->deleteAccountByEmail($this->user->getEmail());
         return $success;
     }
 
-    public function getUser() {
+    public function getAccount() {
         return $this->user;
     }
 
-    public function getUserByEmail($email) {
-        return $this->gateway->getUserByEmail($email);
+    public function getAccountByEmail($email) {
+        return $this->gateway->getAccountByEmail($email);
     }
 
     public function getId() {
@@ -157,7 +157,7 @@ class UserMapper
         return $this->user->getPostalCode();
     }
 
-    public function setUser($user) {
+    public function setAccount($user) {
         $this->user = $user;
         return $this;
     }
@@ -237,7 +237,7 @@ class UserMapper
         return $this->user->getFullName();
     }
 
-    public function isUserExist($email, $password) {
-        return $this->gateway->getUserByEmailPassword($email, $password);
+    public function isAccountExist($email, $password) {
+        return $this->gateway->getAccountByEmailPassword($email, $password);
     }
 }
