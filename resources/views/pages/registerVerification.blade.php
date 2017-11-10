@@ -25,6 +25,7 @@ $query = mysqli_query($con, "SELECT * FROM users WHERE email='$email'");
 if(mysqli_num_rows($query)>0){
     echo 'Error: there already exists an account with this email.';
 }
+
 else{
     $register = new Register($firstName,$lastName,$email,$password,$phoneNumber,$doorNumber,$street,$appt,$city,$province,$country,$postalCode);
     $result = $register->createUser();
