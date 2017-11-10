@@ -33,7 +33,7 @@
         return re.test(email);
     }
 
-    function validatePostalCode(code){
+    function validatePostalCode(code) {
         const regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
         return regex.test(code);
     }
