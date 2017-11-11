@@ -71,17 +71,17 @@ const ModifyDelete = (() => {
              * @param adminSelected
              */
             genericOptionSelector = (form, idSelector, adminSelected) => {
-                $.each(form.find(idSelector), () => {
-                    const option = $(this).find('option');
-                    for (let i = 0; i < option.length; ++i) {
-                        if (option.eq(i).attr('title') === adminSelected) {
-                            option.eq(i).prop('selected', 'selected');
-                        }
+                const elem = form.find(idSelector);
+                const optionArray = elem.find('option');
+                const optionLength = optionArray.length;
+                for (let i = 0; i < optionLength; i++) {
+                    if (optionArray.eq(i).attr('title') === adminSelected) {
+                        optionArray.eq(i).prop('selected', 'selected');
                     }
-                });
+                }
             };
 
-            editDeleteMonitor.editLink.click((event) => {
+            editDeleteMonitor.editLink.on('click', function (event) {
                 const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteMonitor.modal.find('.modal-body > form#monitor-form');
                 // monitor drop downs
@@ -97,7 +97,7 @@ const ModifyDelete = (() => {
                 return false;
             });
 
-            editDeleteDesktop.editLink.click((event) => {
+            editDeleteDesktop.editLink.on('click', function (event) {
                 const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteDesktop.modal.find('.modal-body > form#desktop-form');
                 // desktop drop downs
@@ -118,7 +118,7 @@ const ModifyDelete = (() => {
                 return false;
             });
 
-            editDeleteTablet.editLink.click((event) => {
+            editDeleteTablet.editLink.on('click', function (event) {
                 const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteTablet.modal.find('.modal-body > form#tablet-form');
                 // tablet drop downs
@@ -147,7 +147,7 @@ const ModifyDelete = (() => {
                 return false;
             });
 
-            editDeleteLaptop.editLink.click((event) => {
+            editDeleteLaptop.editLink.on('click', function (event) {
                 const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteLaptop.modal.find('.modal-body > form#laptop-form');
                 // laptop drop down fields
