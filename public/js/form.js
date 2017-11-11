@@ -30,7 +30,7 @@ const dropDownOptions = {
         ramSize: [2, 4, 6, 8, 12, 16, 32],
         processorType: ['AMD', 'Intel', 'Rockchip', 'Other',
         ],
-        storageSize: ['512MB', '4GB', '8GB', '16GB', '32GB', '64GB', '120GB', '128GB', '180GB', '240GB', '480GB', '500GB', '1TB', '2TB'],
+        storageSize: [4, 8, 16, 32, 64, 120, 128, 180, 240, 480, 500, 1000, 2000],
         os: [
             'Windows 7',
             'Windows 8',
@@ -236,7 +236,7 @@ const FormDropDownFields = (() => {
             populateDropDownWithOptions(dropDownOptions.computer.os, forOsDropDown);
             populateDropDownWithOptions(
                 dropDownOptions.monitor.brands,
-                [formsObj.monitorFormSelector.find('select#monitor-brand')],
+                [formsObj.monitorFormSelector.find('select#moni tor-brand')],
             );
             populateDropDownWithOptions(
                 dropDownOptions.monitor.displaySize,
