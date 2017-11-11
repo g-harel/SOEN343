@@ -141,15 +141,15 @@
                                 </div>
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="laptop-price" id="laptop-price" class="form-control">
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" name="laptop-price" id="laptop-price"  class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    Weight (Kg):
-                                    <input type="text" name="laptop-weight" id="laptop-weight" class="form-control">
+                                    Weight (kg):
+                                    <input type="number" min="1" step="0.01" placeholder="0.00" name="laptop-weight" id="laptop-weight" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Battery:
-                                    <input type="text" name="laptop-battery" id="laptop-battery" class="form-control">
+                                    <input type="text" name="laptop-battery" id="laptop-battery" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     Camera:<br>

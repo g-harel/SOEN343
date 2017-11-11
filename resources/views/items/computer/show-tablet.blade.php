@@ -145,20 +145,19 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     Price:
-                                    <input type="text" name="tablet-price" id="tablet-price" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-price" id="tablet-price"  class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    Weight (kg):
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-weight" id="tablet-weight" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Thickness (cm):
-                                    <input type="text" name="tablet-thickness" id="tablet-thickness"
-                                           class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    Weight (Kg):
-                                    <input type="text" name="tablet-weight" id="tablet-weight" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-thickness" id="tablet-thickness" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Height (cm):
-                                    <input type="text" name="tablet-height" id="tablet-height" class="form-control">
+                                    <input required type="number" min="1" step="0.01" placeholder="0.00" name="tablet-height" id="tablet-height" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Battery:
