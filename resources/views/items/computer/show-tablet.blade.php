@@ -69,7 +69,7 @@
                                 <li>
                                     <a class="del-tablet-link" href="" data-qty="43" data-id="31" data-toggle="modal"
                                        data-target="#delTabletLink">
-                                        Delete/Update Qty
+                                        Delete
                                     </a>
                                 </li>
                             </ul>
