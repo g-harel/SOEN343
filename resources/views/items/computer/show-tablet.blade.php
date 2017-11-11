@@ -19,13 +19,13 @@
                 <th>Qty</th>
                 <th>Processor</th>
                 <th>Ram size</th>
-                <th>Weight</th>
+                {{--<th>Weight</th>--}}
                 <th>CPU cores</th>
                 <th>HDD size</th>
                 <th>Display Size (inch.)</th>
-                <th>Height (cm)</th>
-                <th>Width (cm)</th>
-                <th>Thickness (cm)</th>
+                {{--<th>Height (cm)</th>--}}
+                {{--<th>Width (cm)</th>--}}
+                {{--<th>Thickness (cm)</th>--}}
                 <th>Battery</th>
                 <th>OS</th>
                 <th>Camera</th>
@@ -42,13 +42,13 @@
                     <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
                     <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
                     <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
-                    <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
+                    {{--<td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>--}}
                     <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
                     <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
                     <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
-                    <td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>
-                    <td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>
-                    <td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>
+                    {{--<td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>--}}
+                    {{--<td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>--}}
+                    {{--<td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>--}}
                     <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
                     <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
                     <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
