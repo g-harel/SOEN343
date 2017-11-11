@@ -52,7 +52,7 @@ Route::prefix('items/computer/')->group(
         Route::post('laptop/insert', 'ComputerController@insertLaptop');
     }
 );
- 
+
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
 Route::resource('items', 'ItemsController');
