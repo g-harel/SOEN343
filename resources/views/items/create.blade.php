@@ -119,7 +119,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-desktop-form" id="submit-desktop-form">Submit</button>
+                                    <button type="submit" class="btn btn-primary" name="submit-desktop-form" id="submit-desktop-form">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-laptop-form" id="submit-laptop-form">Submit</button>
+                                    <button type="submit" class="btn btn-primary" name="submit-laptop-form" id="submit-laptop-form">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +309,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-tablet-form" id="submit-tablet-form">Submit</button>
+                                    <button type="submit" class="btn btn-primary" name="submit-tablet-form" id="submit-tablet-form">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -353,7 +353,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-7">
-                                    <button type="submit" class="btn btn-primary btn-lg" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
+                                    <button type="submit" class="btn btn-primary" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
                                 </div>
                             </div>
                         </div>
