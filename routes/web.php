@@ -33,12 +33,6 @@ Route::prefix('/view')->group(
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
     }
 );
-        Route::get('/monitor/{id}', ['uses' => 'PagesController@monitorDetails']);
-        Route::get('/desktop/{id}', ['uses' => 'PagesController@desktopDetails']);
-        Route::get('/laptop/{id}', ['uses' => 'PagesController@laptopDetails']);
-        Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
-    }
-);
 Route::get('/view', 'PagesController@view');
 Route::get('/logout', 'PagesController@logout');
 
