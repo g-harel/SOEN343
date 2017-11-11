@@ -236,7 +236,7 @@ const FormDropDownFields = (() => {
             populateDropDownWithOptions(dropDownOptions.computer.os, forOsDropDown);
             populateDropDownWithOptions(
                 dropDownOptions.monitor.brands,
-                [formsObj.monitorFormSelector.find('select#moni tor-brand')],
+                [formsObj.monitorFormSelector.find('select#monitor-brand')],
             );
             populateDropDownWithOptions(
                 dropDownOptions.monitor.displaySize,

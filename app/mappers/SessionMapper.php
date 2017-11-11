@@ -37,7 +37,7 @@ class SessionMapper
         $instance->gateway->addSession($userId);
         return $instance;
     }
-
+    //takes in the Id of the user currently logged in
     public function openSession2($userId) {
         if($this->gateway->addSession($userId)) {
             return '1';
