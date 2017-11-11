@@ -8,76 +8,80 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
-    <p><a class="btn btn-success" href="/items/create">Add new</a></p>
-    <table class="table table-bordered table-responsive">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Processor</th>
-            <th>Ram size</th>
-            {{--<th>Weight</th>--}}
-            <th>CPU cores</th>
-            <th>HDD size</th>
-            <th>Display Size (inch.)</th>
-            {{--<th>Height (cm)</th>--}}
-            {{--<th>Width (cm)</th>--}}
-            {{--<th>Thickness (cm)</th>--}}
-            <th>Battery</th>
-            <th>OS</th>
-            <th>Camera</th>
-            {{--<th>Touchscreen</th>--}}
-            <th class="text-center">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($tablets as $tablet)
+    <div >
+
+        <p><a class="btn btn-success" href="/items/create">Add new</a></p>
+        <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px">
+            <thead>
             <tr>
-                <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
-                <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
-                <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
-                <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
-                <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
-                <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
-                {{--<td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>--}}
-                <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
-                <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
-                <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
-                {{--<td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>--}}
-                {{--<td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>--}}
-                {{--<td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>--}}
-                <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
-                <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
-                <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
-                {{--<td data-touchscreen="{{ $tablet["isTouchscreen"] }}">{{ $tablet["isTouchscreen"] }}</td>--}}
-                <td class="text-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            Select <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="edit-tablet-link" href="" data-toggle="modal"
-                                   data-target=".bs-edit-tablet-modal-lg">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a class="del-tablet-link" data-id="{{ $tablet["id"] }}" data-toggle="modal"
-                                   data-target="#delTabletLink">
-                                    Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
-    </tr>
-    @endforeach
-        </tbody>
-    </table>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Processor</th>
+                <th>Ram size</th>
+                <th>Weight</th>
+                <th>CPU cores</th>
+                <th>HDD size</th>
+                <th>Display Size (inch.)</th>
+                <th>Height (cm)</th>
+                <th>Width (cm)</th>
+                <th>Thickness (cm)</th>
+                <th>Battery</th>
+                <th>OS</th>
+                <th>Camera</th>
+                <th>Touchscreen</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($tablets as $tablet)
+                <tr>
+                    <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
+                    <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
+                    <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
+                    <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
+                    <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
+                    <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
+                    <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
+                    <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
+                    <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
+                    <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
+                    <td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>
+                    <td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>
+                    <td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>
+                    <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
+                    <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
+                    <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">{{ $tablet["isTouchscreen"] }}</td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Select <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="edit-tablet-link" href="" data-toggle="modal"
+                                       data-target=".bs-edit-tablet-modal-lg">
+                                        Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="del-tablet-link" href="" data-qty="43" data-id="31" data-toggle="modal"
+                                       data-target="#delTabletLink">
+                                        Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+        </tr>
+        @endforeach
+            </tbody>
+        </table>
+    </div>
+
     <div class="modal fade bs-edit-tablet-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

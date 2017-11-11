@@ -42,7 +42,7 @@ class ItemCatalog {
                 case ItemType::laptop:
                 return new Laptop($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["os"], $params["battery"], $params["camera"], $params["isTouchscreen"]);
                 case ItemType::tablet:
-                return new Tablet($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["width"], $params["height"], $params["thickness"], $params["battery"], $params["os"], $params["camera"]);
+                return new Tablet($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["width"], $params["height"], $params["thickness"], $params["battery"], $params["os"], $params["camera"], $params["isTouchscreen"]);
                 default:
                 return false;
             }
