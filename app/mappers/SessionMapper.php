@@ -12,11 +12,13 @@ class SessionMapper
     private $gateway;
     private $userMapper;
 
-    private function __construct() {
+    public function __construct()
+    {
         $this->gateway = new SessionGateway();
     }
 
-    private static function createSessionMapper($user) {
+    private static function createSessionMapper($user)
+    {
         $instance = new self();
         $session = new Session($user);
         $instance->setSession($session);
@@ -24,7 +26,8 @@ class SessionMapper
         return $instance;
     }
 
-    public static function openSession($user) {
+    public static function openSession($user)
+    {
         $instance = self::createSessionMapper($user);
         $userId = $instance->session->getUserId();
         $openedSession = $instance->gateway->getSessionByUserId($userId);
@@ -34,31 +37,44 @@ class SessionMapper
         $instance->gateway->addSession($userId);
         return $instance;
     }
+    //takes in the Id of the user currently logged in
+    public function openSession2($userId) {
+        if($this->gateway->addSession($userId)) {
+            return '1';
+        } else {
+            return '0';
+        }
+    }
 
-    public function closeSession() {
-        $userId = $this->session->getUserId();
-        $success = $this->gateway->deleteSessionByUserId($userId);
+    public function closeSession($userId)
+    {
+        $success = $this->gateway->deleteSessionByAccountId($userId);
         return $success;
     }
 
-    public function getSession() {
+    public function getSession()
+    {
         return $this->session;
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->session->getUser();
     }
 
-    public function getUserMapper() {
+    public function getUserMapper()
+    {
         return $this->userMapper;
     }
 
-    public function setSession($session) {
+    public function setSession($session)
+    {
         $this->session = $session;
         return $this;
     }
 
-    public function setUserMapper($userMapper) {
+    public function setUserMapper($userMapper)
+    {
         $this->userMapper = $userMapper;
         return $this;
     }

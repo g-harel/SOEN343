@@ -14,6 +14,10 @@ class SessionGateway
         $this->db = new DatabaseGateway();
     }
 
+    public function getSessionCatalog(){
+        return getAllSessions($this->tableName);
+    }
+
     public function getSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
@@ -26,7 +30,7 @@ class SessionGateway
 
     public function addSession($accountId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `accounts`(`account_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
+        $sql = "INSERT INTO `sessions`(`user_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 

@@ -17,7 +17,7 @@ install:
 script:
   - npm run eslint
   - vendor/bin/phpcs **/*.php --standard=ruleset.xml
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --stderr
 
 services:
   - mysql

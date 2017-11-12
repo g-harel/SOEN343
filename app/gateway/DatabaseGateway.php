@@ -16,7 +16,13 @@ Function console_error($str) {
     }
 }
 
-Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
+Function getAllSessions($tableName) {
+    $sql = "SELECT * FROM $this->tableName;";
+    $db = new DatabaseGateway();
+    return $this->db->queryDB($sql);
+}
+
+Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "SELECT * FROM $tableName WHERE $conditions;";
     $db = new DatabaseGateway();
@@ -28,7 +34,7 @@ Function singleTableSelectUserQuery($conditionsAssociativeArray, $tableName) {
     }
 }
 
-Function singleTableDeleteUserQuery($conditionsAssociativeArray, $tableName) {
+Function singleTableDeleteAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "DELETE FROM $tableName WHERE $conditions;";
     $db = new DatabaseGateway();

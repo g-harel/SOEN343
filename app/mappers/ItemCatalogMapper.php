@@ -365,6 +365,7 @@ class ItemCatalogMapper {
         $array["os"] = $item->getOs();
         $array["battery"] = $item->getBattery();
         $array["camera"] = $item->getCamera();
+        $array["isTouchscreen"] = $item->getisTouchscreen();
         return $array;
     }
 

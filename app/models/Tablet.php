@@ -11,8 +11,9 @@ class Tablet extends Computer
     private $battery;
     private $os;
     private $camera;
+    private $isTouchscreen;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera) {
+    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera, $touchscreen) {
         parent::__construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->displaySize = $displaySize;
         $this->width = $width;
@@ -21,6 +22,7 @@ class Tablet extends Computer
         $this->battery = $battery;
         $this->os = $os;
         $this->camera = $camera;
+        $this->isTouchscreen = $touchscreen;
     }
 
     public function getDisplaySize() {
@@ -77,5 +79,15 @@ class Tablet extends Computer
 
     public function setCamera($camera) {
         $this->camera = $camera;
+    }
+
+    public function getisTouchscreen()
+    {
+        return $this->isTouchscreen;
+    }
+
+    public function setIsTouchscreen($isTouchscreen)
+    {
+        $this->isTouchscreen = $isTouchscreen;
     }
 }
