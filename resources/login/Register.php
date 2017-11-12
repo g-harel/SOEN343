@@ -31,7 +31,6 @@ class Register {
     public function createAccount(){
         $result= $this->accountMapper->saveAccountInRecord();
         return $result;
-        
     } 
 }
 ?>

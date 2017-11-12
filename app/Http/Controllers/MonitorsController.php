@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Gateway\MonitorGateway;
 use Illuminate\Http\Request;
-use App\Mappers\MonitorMapper;
+use App\Mappers\ItemCatalogMapper;
 
 class MonitorsController extends Controller
 {
@@ -13,9 +14,33 @@ class MonitorsController extends Controller
 
     public function showMonitor() {
 
-        $monitorMapper = new MonitorMapper();
-        $monitors = $monitorMapper->getAll();
+        return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
+    }
 
-        return view('items.monitor.show-monitor', ['monitors' => $monitors]);
+    public function insertMonitor()
+    {
+        if($this->isFormSubmitted($_POST)) {
+            $sanitizedInputs = filter_input_array(INPUT_POST, $this->monitorValidationFormInputs());
+            // returns the key of empty index (eg. monitor-brand => "")
+            $emptyArrayKeys = array_keys($sanitizedInputs, "");
+            if (!empty($emptyArrayKeys)) {
+                return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            } else {
+                $item = [
+                    "category" => "monitor",
+                    "brand" => $sanitizedInputs['monitor-brand'],
+                    "price" => $sanitizedInputs['monitor-price'],
+                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "display_size" => $sanitizedInputs['monitor-display-size'],
+                    "weight" => $sanitizedInputs['monitor-weight']
+                ];
+                $monitorGateway = new MonitorGateway();
+                $monitorGateway->insert($item);
+                // do not use render, use redirect, this prevent resubmitting
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
+            }
+        } else {
+            return view('items.create');
+        }
     }
 }

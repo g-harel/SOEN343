@@ -22,10 +22,19 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS carts;
+DROP TABLE IF EXISTS desktops;
+DROP TABLE IF EXISTS laptops;
+DROP TABLE IF EXISTS monitors;
+DROP TABLE IF EXISTS tablets;
+DROP TABLE IF EXISTS computers;
+DROP TABLE IF EXISTS items;
+
 --
 -- Structure de la table `accounts`
 --
-DROP TABLE IF EXISTS accounts;
 CREATE TABLE `accounts` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(100) CHARACTER SET latin1 NOT NULL,
@@ -56,10 +65,9 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cart`
+-- Structure de la table `carts`
 --
-DROP TABLE IF EXISTS cart;
-CREATE TABLE `cart` (
+CREATE TABLE `carts` (
   `id` int(10) UNSIGNED NOT NULL,
   `item1_id` int(10) UNSIGNED DEFAULT NULL,
   `item2_id` int(10) UNSIGNED DEFAULT NULL,
@@ -75,7 +83,6 @@ CREATE TABLE `cart` (
 --
 -- Structure de la table `computers`
 --
-DROP TABLE IF EXISTS computers;
 CREATE TABLE `computers` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `processor_type` varchar(100) NOT NULL,
@@ -100,7 +107,6 @@ INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `
 --
 -- Structure de la table `desktops`
 --
-DROP TABLE IF EXISTS desktops;
 CREATE TABLE `desktops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `height` float(10,2) NOT NULL,
@@ -120,7 +126,6 @@ INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
 --
 -- Structure de la table `items`
 --
-DROP TABLE IF EXISTS items;
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
   `category` varchar(20) NOT NULL,
@@ -134,8 +139,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
-(1, 'test', 'test', 12.00, 1),
-(2, 'test2', 'test2', 99.00, 99),
+(1, 'monitor', 'test', 12.00, 1),
+(2, 'monitor', 'test2', 99.00, 99),
 (3, 'laptop', 'IBM', 1500.00, 2),
 (4, 'desktop', 'Dell', 1055.00, 20),
 (5, 'tablet', 'Apple', 900.00, 43),
@@ -146,7 +151,6 @@ INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
 --
 -- Structure de la table `laptops`
 --
-DROP TABLE IF EXISTS laptops;
 CREATE TABLE `laptops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -169,7 +173,6 @@ INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is
 --
 -- Structure de la table `monitors`
 --
-DROP TABLE IF EXISTS monitors;
 CREATE TABLE `monitors` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -189,7 +192,6 @@ INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 --
 -- Structure de la table `sessions`
 --
-DROP TABLE IF EXISTS sessions;
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
@@ -201,7 +203,6 @@ CREATE TABLE `sessions` (
 --
 -- Structure de la table `tablets`
 --
-DROP TABLE IF EXISTS tablets;
 CREATE TABLE `tablets` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -235,9 +236,9 @@ ALTER TABLE `accounts`
   ADD UNIQUE KEY `cart_id` (`cart_id`);
 
 --
--- Index pour la table `cart`
+-- Index pour la table `carts`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `item1_id` (`item1_id`),
   ADD KEY `item2_id` (`item2_id`),
@@ -307,9 +308,9 @@ ALTER TABLE `tablets`
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `cart`
+-- AUTO_INCREMENT pour la table `carts`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `items`
@@ -329,12 +330,12 @@ ALTER TABLE `sessions`
 -- Contraintes pour la table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `cart`
 --
-ALTER TABLE `cart`
+ALTER TABLE `carts`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item1_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`item2_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`item3_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
