@@ -122,6 +122,12 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            Ram Size (GB):
+                            <select required="" name="tablet-ram-size" id="tablet-ram-size" class="form-control">
+                                <option title="Select tablet ram size" value="">Select ram size</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             Price: <br>
                             min:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="tablet-price" id="laptop-price" class="form-control">
                             max:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="tablet-price" id="laptop-price" class="form-control" >
