@@ -68,10 +68,13 @@ class MonitorsController extends Controller
                 $addTabletItem = ItemCatalogMapper::getInstance();
                 $addTabletItem->modifyItem($_SESSION['session_id'], 1, $params);
                 $addTabletItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with(['succeedModifyingItem' => true]);
+                return view('items.monitor.show-monitor', [
+                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                    'succeedModifyingItem' => 'monitor'
+                ]);
             }
         } else {
-            return view('items.monitor.show-monitor');
+            return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
         }
     }
 

@@ -102,10 +102,10 @@ const ModifyDelete = (() => {
                 const tr = $(this).parentsUntil('tbody');
                 const form = editDeleteDesktop.modal.find('.modal-body > form#desktop-form');
                 // desktop drop downs
-                genericOptionSelector(form, '#computer-brand', tr.find(dataAttr.brand).text());
+                genericOptionSelector(form, '#desktop-brand', tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, '#desktop-processor', tr.find(dataAttr.processor).text());
                 genericOptionSelector(form, '#desktop-ram-size', tr.find(dataAttr.ramSize).text());
-                genericOptionSelector(form, '#storage-capacity', tr.find(dataAttr.capacity).text());
+                genericOptionSelector(form, '#desktop-storage-capacity', tr.find(dataAttr.capacity).text());
                 genericOptionSelector(form, '#cpu-cores', tr.find(dataAttr.cpuCores).text());
                 // desktop input fields
                 form.find('#desktop-id').val(parseInt(tr.find(dataAttr.id).text().trim()));

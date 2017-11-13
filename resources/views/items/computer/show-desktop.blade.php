@@ -8,13 +8,13 @@
         <li>Computer</li>
         <li class="active">Desktop</li>
     </ol>
-    @if(Session::has('succeedModifyingItem'))
+    @if(!empty($succeedModifyingItem))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p>You have successfully modified this item.</p>
         </div>
     @endif
-    @if(Session::has('deleteSuccess'))
+    @if(!empty($deleteSuccess))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p>You have successfully deleted this item.</p>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="form-group">
                                         Brand:
-                                        <select required name="computer-brand" id="computer-brand" class="form-control">
+                                        <select required name="desktop-brand" id="desktop-brand" class="form-control">
                                             <option title="Select brands" value="">Select brands</option>
                                         </select>
                                     </div>
