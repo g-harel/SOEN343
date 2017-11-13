@@ -7,6 +7,18 @@
         <li><a href="/items">Items</a></li>
         <li class="active">Monitors</li>
     </ol>
+    @if(Session::has('succeedModifyingItem'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully modified this item.</p>
+        </div>
+    @endif
+    @if(Session::has('deleteSuccess'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully deleted this item.</p>
+        </div>
+    @endif
     <p><a href="../create" class="btn btn-success">Add new</a></p>
     <table class="table table-bordered bg-color-white">
         <thead>

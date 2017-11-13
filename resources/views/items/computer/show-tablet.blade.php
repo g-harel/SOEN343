@@ -8,12 +8,16 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
+    @if(Session::has('succeedModifyingItem'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully modified this item.</p>
+        </div>
+    @endif
     @if(Session::has('deleteSuccess'))
-        <div class="row">
-            <div class="alert alert-success">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p>You have successfully deleted this item.</p>
-            </div>
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully deleted this item.</p>
         </div>
     @endif
     <p><a class="btn btn-success" href="/items/create">Add new</a></p>
