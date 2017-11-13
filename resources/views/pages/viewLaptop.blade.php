@@ -7,91 +7,48 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(empty($id))
+        @if(empty($laptopDetails))
         <div class="row">
-            <div class="col-lg-12">
-               <h1> <small>Here are some weekly hot sellers!</small></h1>
+            @foreach($laptops as $laptop)
+            <div class="col-xs-6 col-lg-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{ $laptop['brand'] }}, {{ $laptop['hddSize'] }} GB {{ $laptop["displaySize"] }}"
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <i class="fa fa-laptop fa-5x"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Price: ${{ $laptop['price'] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <ul class="list-group">
+                                <li>Processor Type: <b>{{ $laptop['processorType'] }}</b></li>
+                                <li>Ram Size: <b>{{ $laptop['ramSize'] }}</b></li>
+                                <li>Cpu cores: <b>{{ $laptop['cpuCores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $laptop['hddSize'] }} GB</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span><a class="btn btn-default" href="/view/laptop/{{ $laptop['id'] }}" role="button">View details »</a></span>
+                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                    </div>
+                </div>
             </div>
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-laptop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                            <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-laptop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-laptop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-        </div><!--/row-->
-        @else
+            @endforeach
+            @if(empty($laptops))
+                <p>Laptop item catalog is currently empty.</p>
+            @endif
+        </div>
+        @endif
+
+        @if(!empty($laptopDetails))
             <div class="col-xs-12 col-lg-12">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
@@ -103,11 +60,22 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Price: $199.99</p>
-                                <p>Brand: Samsung</p>
-                                <p>quantity: 2</p>
-                                <p>Brand: Samsung</p>
-                                <p>Camera: Yes</p>
+                                <p>Quantity: <b>{{$laptopDetails['quantity']}}</b></p>
+                                <p>Price: <b>${{$laptopDetails['price']}}</b></p>
+                                <p>Brand: <b>{{$laptopDetails['brand']}}</b></p>
+                                <p>Processor Type: <b>{{$laptopDetails['processorType']}}</b></p>
+                                <p>OS: <b>{{$laptopDetails['os']}}</b></p>
+                                <p>Hard Disk Size: <b>{{$laptopDetails['hddSize']}} GB</b></p>
+                                <p>Ram Size: <b>{{$laptopDetails['ramSize']}} GB</b></p>
+                                <p>Display Size: <b>{{$laptopDetails['displaySize']}} inches</b></p>
+                                <p>Weight: <b>{{$laptopDetails['weight']}} kg</b></p>
+                                <p>Battery: <b>{{$laptopDetails['battery']}}</b></p>
+                                <p>Camera: <b>{{$laptopDetails['camera']}}</b></p>
+                                @if($laptopDetails["isTouchscreen"] == 0)
+                                    <p>Touchscreen: <b>No</b></p>
+                                @else
+                                    <p>Touchscreen: <b>Yes</b></p>
+                                @endif
                             </div>
                         </div>
                     </div>

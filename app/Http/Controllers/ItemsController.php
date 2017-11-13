@@ -11,4 +11,9 @@ class ItemsController extends Controller
         return view('items.index');
     }
 
+    public function create()
+    {
+        return view('items.create');
+    }
+
 }
