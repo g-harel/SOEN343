@@ -8,6 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 use App\Mappers\SessionMapper;
 use App\Mappers\UserMapper;
+use App\Mappers\ItemCatalogMapper;
 
 class PagesController extends Controller
 {
@@ -41,7 +42,9 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
-        return view('pages.viewDesktop');
+        return view('pages.viewDesktop', [
+            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3)
+        ]);
     }
 
     public function viewLaptop()
@@ -51,7 +54,9 @@ class PagesController extends Controller
 
     public function viewMonitor()
     {
-        return view('pages.viewMonitor');
+        return view('pages.viewMonitor', [
+            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+        ]);
     }
 
     public function viewTablet()
@@ -61,12 +66,33 @@ class PagesController extends Controller
 
     public function monitorDetails($id)
     {
-        return view('pages.viewMonitor')->with('id', $id);
+        $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
+        $details = array();
+        foreach($monitors as $monitor){
+            if($monitor['id'] == $id){
+            $details = $monitor;
+            break;
+            }
+        }
+            return view('pages.viewMonitor', [
+                'details' => $details,
+            ]);
     }
+
 
     public function desktopDetails($id)
     {
-        return view('pages.viewDesktop')->with('id', $id);
+        $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(3);
+        $details = array();
+        foreach($desktops as $desktop){
+            if($desktop['id'] == $id){
+                $details = $desktop;
+                break;
+            }
+        }
+        return view('pages.viewDesktop', [
+            'details' => $details,
+        ]);
     }
 
     public function laptopDetails($id)

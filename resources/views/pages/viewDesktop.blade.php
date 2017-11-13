@@ -7,115 +7,76 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(empty($id))
+        @if(empty($details))
         <div class="row">
-            <div class="col-lg-12">
-               <h1> <small>Here are some weekly hot sellers!</small></h1>
-            </div>
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Asus Desktop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-desktop fa-5x"></i>
+            @foreach($desktops as $desktop)
+                <div class="col-xs-6 col-lg-4">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> {{$desktop['brand']}} Desktop</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <i class="fa fa-television fa-5x"></i>
+                                </div>
+                                <div class="col-md-6">
+                                    <p style="color: red">Price: ${{$desktop['price']}}</p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
+                            <div class="col-md-12">
+                                <div class="col-md-12">
+                                    <ul class="list-group">
+                                        <li>Processor Type: {{$desktop['processorType']}} </li>
+                                        <li>Ram Size: {{$desktop['ramSize']}} </li>
+                                        <li>CPU Cores: {{$desktop['cpuCores']}} </li>
+                                        <li>Hard Disk Size: {{$desktop['hddSize']}}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
+                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/desktop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Asus Desktop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-desktop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/desktop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Asus Desktop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-desktop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/desktop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
+                </div><!--/.col-xs-6.col-lg-4-->
+            @endforeach
         </div><!--/row-->
-        @else
-            <div class="col-xs-12 col-lg-12">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Asus Desktop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <i class="fa fa-desktop fa-5x"></i>
-                            </div>
-                            <div class="col-md-8">
-                                <p>Price: $199.99</p>
-                                <p>Brand: Samsung</p>
-                                <p>quantity: 2</p>
-                                <p>Brand: Samsung</p>
-                                <p>Camera: Yes</p>
+        @endif
+        @if(!empty($details))
+            <div class="row">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{$details['brand']}} Desktop</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <i class="fa fa-desktop fa-5x"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Price: <strong>${{$details['price']}}</strong> </p>
+                                    <p>Brand: <strong>{{$details['brand']}}</strong> </p>
+                                    <p>Quantity: <strong>{{$details['quantity']}}</strong> </p>
+                                    <p>Processor Type: <strong>{{$details['processorType']}} </strong> </p>
+                                    <p>Ram Size: <strong>{{$details['ramSize']}} GB</strong> </p>
+                                    <p>CPU Cores: <strong>{{$details['cpuCores']}} </strong> </p>
+                                    <p>Hard Disk Size: <strong>{{$details['hddSize']}} GB</strong> </p>
+                                    <p>Height: <strong>{{$details['height']}} cm</strong> </p>
+                                    <p>Width: <strong>{{$details['width']}} cm</strong> </p>
+                                    <p>Thickness: <strong>{{$details['thickness']}} cm</strong> </p>
+                                    <p>Weight: <strong>{{$details['weight']}} kg</strong> </p>
+                                </div>
                             </div>
                         </div>
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
+                </div><!--/.col-xs-6.col-lg-4-->
+            </div>
         @endif
     </div><!--/.col-xs-12.col-sm-9-->
 
