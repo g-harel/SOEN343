@@ -60,12 +60,16 @@
                     <h4 class="modal-title">Editing Monitor</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
-                    <form id="monitor-form" class="form-horizontal">
+                    <form id="monitor-form" class="form-horizontal" action="/items/monitor/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="2"></div>
                                 <div class="col-md-7">
                                     <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                                    <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="monitor-qty" id="monitor-qty" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control">

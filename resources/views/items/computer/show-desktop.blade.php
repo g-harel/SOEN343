@@ -73,10 +73,15 @@
                     <h4 class="modal-title">Editing Desktop</h4>
                 </div>
                 <div class="modal-body" id="edit-desktop-form-body">
-                    <form id="desktop-form" class="form-horizontal">
+                    <form id="desktop-form" class="form-horizontal" action="/items/computer/desktop/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
+                                    <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                                    <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="desktop-qty" id="desktop-qty" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select required name="computer-brand" id="computer-brand" class="form-control">

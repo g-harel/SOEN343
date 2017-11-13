@@ -48,9 +48,12 @@ Route::prefix('items/computer/')->group(
         Route::get('showTablet', 'ComputerController@showTablet');
         Route::post('desktop/insert', 'ComputerController@insertDesktop');
         Route::post('tablet/insert', 'ComputerController@insertTablet');
-        Route::post('desktop/delete', 'ComputerController@deleteDesktop');
         Route::post('laptop/insert', 'ComputerController@insertLaptop');
+        Route::post('desktop/delete', 'ComputerController@deleteDesktop');
         Route::post('tablet/delete', 'ComputerController@deleteTablet');
+        Route::post('desktop/modify', 'ComputerController@modifyDesktop');
+        Route::post('tablet/modify', 'ComputerController@modifyTablet');
+        Route::post('laptop/modify', 'ComputerController@modifyLaptop');
     }
 );
 
@@ -67,4 +70,6 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
 
+Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+Route::post('items/monitor/modify', 'MonitorsController@modifyMonitor');
 

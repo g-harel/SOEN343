@@ -76,11 +76,15 @@
                     <h4 class="modal-title">Editing Laptop</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="laptop-form" class="form-horizontal">
+                    <form id="laptop-form" class="form-horizontal" action="/items/computer/laptop/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
+                                    <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="laptop-qty" id="laptop-qty" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
