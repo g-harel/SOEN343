@@ -14,9 +14,19 @@
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
+Route::get('/login', 'PagesController@login');
+Route::post('/login/verify', 'PagesController@loginVerify');
+Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
+// client
+Route::get('/view', 'PagesController@view');
+Route::get('/logout', 'PagesController@logout');
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
+
+// admin pages
+Route::get('/items', 'ItemsController@index');
 Route::get('/admin', 'PagesController@admin');
 
 Route::prefix('/view')->group(
@@ -33,11 +43,6 @@ Route::prefix('/view')->group(
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
     }
 );
-Route::get('/view', 'PagesController@view');
-Route::get('/logout', 'PagesController@logout');
-
-Route::get('/shoppingCart', 'PagesController@shoppingCart');
-Route::get('/items', 'ItemsController@index');
 
 // Computer
 Route::prefix('items/computer/')->group(
@@ -58,15 +63,12 @@ Route::prefix('items/computer/')->group(
 );
 
 // Monitor
-Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
-Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
-Route::post('items/monitor/delete', 'MonitorsController@deleteMonitor');
-Route::post('items/monitor/modify', 'MonitorsController@modifyMonitor');
-
-
-Route::get('/admin/view', 'AdminController@showItems');//Login pages
-Route::get('/login', 'PagesController@login');
-Route::post('/login/verify', 'PagesController@loginVerify');
-//Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
-//Route::post('loginClientVerification', 'PagesController@loginClientVerification');
+Route::prefix('items/monitor/')->group(
+    function () {
+        Route::get('showMonitor', 'MonitorsController@showMonitor');
+        Route::post('insert', 'MonitorsController@insertMonitor');
+        Route::post('delete', 'MonitorsController@deleteMonitor');
+        Route::post('modify', 'MonitorsController@modifyMonitor');
+    }
+);
 
