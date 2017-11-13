@@ -26,6 +26,8 @@ class Login {
             $userId = $this->userMapper->setUserFromRecordByEmail($this->email)->getId();
             $sessionMapper = new SessionMapper();
             $sessionMapper->openSession2($userId);
+            // get the session id by the user
+            $_SESSION['session_id'] = $sessionMapper->getSessionByAccountIdMapper($userId)[0]['id'];
             return true;
         } else {
             return false;

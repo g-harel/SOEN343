@@ -181,13 +181,12 @@ const ModifyDelete = (() => {
                 editDeleteMonitor.deleteLink,
             ];
             for (let i = 0; i < deleteLinks.length; ++i) {
-                deleteLinks[i].on('show.bs.modal', (event) => {
+                deleteLinks[i].on('show.bs.modal', function (event) {
                     const link = $(event.relatedTarget);
                     const qty = link.data('qty');
                     const itemId = link.data('id');
                     const modal = $(this);
-                    modal.find('.modal-body input[type=number]').val(1);
-                    modal.find('.modal-body input[type=hidden]').val(itemId);
+                    modal.find('.modal-body input[type=hidden]').attr('value', itemId);
                     modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
                 });
             }

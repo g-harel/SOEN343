@@ -50,6 +50,7 @@ Route::prefix('items/computer/')->group(
         Route::post('tablet/insert', 'ComputerController@insertTablet');
         Route::post('desktop/delete', 'ComputerController@deleteDesktop');
         Route::post('laptop/insert', 'ComputerController@insertLaptop');
+        Route::post('tablet/delete', 'ComputerController@deleteTablet');
     }
 );
 

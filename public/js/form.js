@@ -249,11 +249,10 @@ const FormDropDownFields = (() => {
 $(document).ready(() => {
     FormDropDownFields.init();
     $('#tabletTable').DataTable({
-        "aoColumnDefs": [{ "bVisible": false }],
-        "pageLength": 50,
-        "scrollX": true
+        aoColumnDefs: [{ bVisible: false }],
+        pageLength: 50,
+        scrollX: true,
     });
-
 });
 
 /**

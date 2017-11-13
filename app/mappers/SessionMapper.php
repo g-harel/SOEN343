@@ -10,7 +10,7 @@ class SessionMapper
 {
     private $session;
     private $gateway;
-    private $userMapper;
+//    private $userMapper;
 
     public function __construct()
     {
@@ -19,31 +19,37 @@ class SessionMapper
 
     private static function createSessionMapper($user)
     {
-        $instance = new self();
-        $session = new Session($user);
-        $instance->setSession($session);
-        $instance->setUserMapper($user);
-        return $instance;
+//        $instance = new self();
+////        $session = new Session($user);
+//        $instance->setSession($session);
+//        $instance->setUserMapper($user);
+//        return $instance;
     }
 
-    public static function openSession($user)
-    {
-        $instance = self::createSessionMapper($user);
-        $userId = $instance->session->getUserId();
-        $openedSession = $instance->gateway->getSessionByUserId($userId);
-        if ($openedSession != null) {
-            $instance->closeSession();
-        }
-        $instance->gateway->addSession($userId);
-        return $instance;
-    }
+//    public static function openSession($user)
+//    {
+//        $instance = self::createSessionMapper($user);
+//        $userId = $instance->session->getUserId();
+//        $openedSession = $instance->gateway->getSessionByUserId($userId);
+//        if ($openedSession != null) {
+//            $instance->closeSession();
+//        }
+//        $instance->gateway->addSession($userId);
+//        return $instance;
+//    }
+
     //takes in the Id of the user currently logged in
     public function openSession2($userId) {
+        // add this admin/client to the session table
         if($this->gateway->addSession($userId)) {
             return '1';
         } else {
             return '0';
         }
+    }
+
+    public function getSessionByAccountIdMapper($userId) {
+        return $this->gateway->getSessionByAccountId($userId);
     }
 
     public function closeSession($userId)
@@ -57,25 +63,25 @@ class SessionMapper
         return $this->session;
     }
 
-    public function getUser()
-    {
-        return $this->session->getUser();
-    }
+//    public function getUser()
+//    {
+//        return $this->session->getUser();
+//    }
 
-    public function getUserMapper()
-    {
-        return $this->userMapper;
-    }
+//    public function getUserMapper()
+//    {
+//        return $this->userMapper;
+//    }
 
-    public function setSession($session)
-    {
-        $this->session = $session;
-        return $this;
-    }
+//    public function setSession($session)
+//    {
+//        $this->session = $session;
+//        return $this;
+//    }
 
-    public function setUserMapper($userMapper)
-    {
-        $this->userMapper = $userMapper;
-        return $this;
-    }
+//    public function setUserMapper($userMapper)
+//    {
+//        $this->userMapper = $userMapper;
+//        return $this;
+//    }
 }

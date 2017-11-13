@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 use App\Mappers\ItemCatalogMapper;
 use App\Gateway;
 use App\Gateway\DesktopGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\LaptopGateway;
+use App\Models\Item;
+use App\Models\ItemType;
+use App\Models\Tablet;
 
 
 class ComputerController extends Controller
@@ -106,27 +113,30 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $tabletItem = [
-                    "processor_type" => $sanitizedInputs['tablet-processor'],
-                    "ram_size" => $sanitizedInputs['tablet-ram-size'],
-                    "cpu_cores" => $sanitizedInputs['tablet-cpu-cores'],
+
+                $params = [
+                    "processorType" => $sanitizedInputs['tablet-processor'],
+                    "ramSize" => $sanitizedInputs['tablet-ram-size'],
+                    "cpuCores" => $sanitizedInputs['tablet-cpu-cores'],
                     "weight" => $sanitizedInputs['tablet-weight'],
-                    "hdd_size" => $sanitizedInputs["tablet-storage-capacity"],
+                    "hddSize" => $sanitizedInputs["tablet-storage-capacity"],
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
                     "quantity" => $sanitizedInputs['tablet-qty'],
-                    "display_size" => $sanitizedInputs['tablet-display-size'],
+                    "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],
                     "thickness" => $sanitizedInputs['tablet-thickness'],
                     "battery" => $sanitizedInputs['tablet-battery'],
                     "os" => $sanitizedInputs['tablet-os'],
                     "camera" => $sanitizedInputs['tablet-camera'],
-                    "is_touchscreen" => $sanitizedInputs['tablet-touchscreen']
+                    "isTouchscreen" => $sanitizedInputs['tablet-touchscreen']
                 ];
-                $tabletGateWay = new TabletGateway();
-                $tabletGateWay->insert($tabletItem);
+
+                $addTabletItem = ItemCatalogMapper::getInstance();
+                $addTabletItem->addNewItem($_SESSION['session_id'], 5, $params); // ufw
+                $addTabletItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'tablet']);
             }
         } else {
@@ -136,40 +146,21 @@ class ComputerController extends Controller
 
     public function deleteDesktop()
     {
-        // validate the id and the quantity in the modal
-        $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-        $itemQty = filter_input(INPUT_POST, 'qty-to-remove', FILTER_VALIDATE_INT);
-        $thisDesktop = Gateway\singleTableSelectUserQuery(["item_id" => $itemId], "desktops");
-        if ($thisDesktop != null || !empty($thisDesktop)) {
-            $newQty = null;
-            $computer = Gateway\singleTableSelectUserQuery(["item_id" => $thisDesktop[0]["item_id"]], "computers");
-            $item = Gateway\singleTableSelectUserQuery(["id" => $thisDesktop[0]["item_id"]], "items");
-            if ($item[0]["id"] == $itemId) {
-                $desktopUpdate = new DesktopGateway();
-                // subtract the quantity entered with the old quantity
-                $newQty = ($item[0]["quantity"] - $itemQty);
-                // update function requires all fields to be present so
-                $desktopItem = [
-                    "id" => $item[0]["id"],
-                    "processor_type" => $computer[0]["processor_type"],
-                    "ram_size" => $computer[0]["ram_size"],
-                    "cpu_cores" => $computer[0]["cpu_cores"],
-                    "weight" => $computer[0]["weight"],
-                    "type" => $computer[0]["type"],
-                    "category" => $item[0]["category"],
-                    "brand" => $item[0]["brand"],
-                    "price" => $item[0]["price"],
-                    "quantity" => $newQty,
-                    "height" => $thisDesktop[0]["height"],
-                    "width" => $thisDesktop[0]["width"],
-                    "thickness" => $thisDesktop[0]["thickness"]
-                ];
-                $desktopUpdate->update($desktopItem);
-                echo 'updated!';
+
+    }
+
+    public function deleteTablet() {
+        if($this->isFormSubmitted($_POST)) {
+            $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            if(!empty($itemId)) {
+                $itemMapper = ItemCatalogMapper::getInstance();
+                $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+                $itemMapper->commit($_SESSION['session_id']);
+            } else {
+                return view('items.create');
             }
-        } else {
-            echo 'cannot update this item!';
         }
+        return view('items.create');
     }
 }
 

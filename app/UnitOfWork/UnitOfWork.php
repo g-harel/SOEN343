@@ -1,6 +1,7 @@
 <?php
 
 namespace App\UnitOfWork;
+use App\Mappers\ItemCatalogMapper;
 use App\UnitOfWork\UnitOfWorkPair;
 
 class UnitOfWork{
@@ -102,6 +103,7 @@ class UnitOfWork{
         }
 
         if ($objectId !== null) {
+            $transactions = ItemCatalogMapper::getInstance();
             $transactions->delete($objectId);
         } else {
             return;
@@ -120,6 +122,8 @@ class UnitOfWork{
     }
 
     public function registerDeleted($transactionId, $objectId, $mapper, $object) {
+//        echo ' here now';
+
         $state = self::STATE_DELETED;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);

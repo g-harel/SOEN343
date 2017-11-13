@@ -225,7 +225,7 @@ class ItemCatalogMapper {
     }
 
     private function getGateway($item) {
-        $itemType = ItemType::getItemTypeEnum($item);
+      $itemType = ItemType::getItemTypeEnum($item);
         switch($itemType) {
             case ItemType::monitor:
             return new MonitorGateway();            
