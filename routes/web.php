@@ -37,8 +37,7 @@ Route::get('/view', 'PagesController@view');
 Route::get('/logout', 'PagesController@logout');
 
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
-
-Route::resource('items', 'ItemsController');
+Route::get('/items', 'ItemsController@index');
 
 // Computer
 Route::prefix('items/computer/')->group(
@@ -58,7 +57,6 @@ Route::prefix('items/computer/')->group(
     }
 );
 
-Route::resource('items', 'ItemsController');
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
 Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');

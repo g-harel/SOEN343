@@ -18,20 +18,30 @@ use App\Models\Tablet;
 
 class ComputerController extends Controller
 {
-    public function index() {
+    public function index()
+    {
 
     }
 
-    public function showDesktop() {
-        return view('items.computer.show-desktop', ['desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3)]);
+    public function showDesktop()
+    {
+        return view('items.computer.show-desktop', [
+            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3)
+        ]);
     }
 
-    public function showLaptop() {
-        return view('items.computer.show-laptop', ['laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)]);
+    public function showLaptop()
+    {
+        return view('items.computer.show-laptop', [
+            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)
+        ]);
     }
 
-    public function showTablet() {
-        return view('items.computer.show-tablet', ['tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)]);
+    public function showTablet()
+    {
+        return view('items.computer.show-tablet', [
+            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)
+        ]);
     }
 
     public function insertDesktop()
@@ -72,7 +82,7 @@ class ComputerController extends Controller
 
     public function insertLaptop()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->laptopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
@@ -110,7 +120,7 @@ class ComputerController extends Controller
 
     public function insertTablet()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->tabletValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
@@ -149,10 +159,11 @@ class ComputerController extends Controller
         }
     }
 
-    public function deleteDesktop(){
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteDesktop()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-            if(!empty($itemId)) {
+            if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
@@ -164,10 +175,11 @@ class ComputerController extends Controller
         return view('items.create');
     }
 
-    public function deleteTablet() {
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteTablet()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-            if(!empty($itemId)) {
+            if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
@@ -179,10 +191,11 @@ class ComputerController extends Controller
         return view('items.create');
     }
 
-    public function deleteLaptop() {
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteLaptop()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-            if(!empty($itemId)) {
+            if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
@@ -196,7 +209,7 @@ class ComputerController extends Controller
 
     public function modifyDesktop()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
             $id = filter_input(INPUT_POST, 'desktop-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
@@ -238,7 +251,7 @@ class ComputerController extends Controller
 
     public function modifyLaptop()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->laptopValidationFormInputs());
             $id = filter_input(INPUT_POST, 'laptop-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
@@ -280,7 +293,7 @@ class ComputerController extends Controller
 
     public function modifyTablet()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->tabletValidationFormInputs());
             $id = filter_input(INPUT_POST, 'tablet-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
@@ -321,7 +334,6 @@ class ComputerController extends Controller
         } else {
             return view('items.computer.show-tablet', ['tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)]);
         }
-
     }
 }
 

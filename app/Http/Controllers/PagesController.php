@@ -25,15 +25,17 @@ class PagesController extends Controller
     {
         return view('pages.register');
     }
-  
-    public function admin(){
-        if($this->isAdminLoggedIn()) {
+
+    public function admin()
+    {
+        if ($this->isAdminLoggedIn()) {
             return view('pages.admin');
         }
         return view('pages.index');
     }
 
-    public function view(){
+    public function view()
+    {
         return view('pages.view');
     }
 
@@ -77,7 +79,8 @@ class PagesController extends Controller
         return view('pages.viewTablet')->with('id', $id);
     }
 
-    public function login(){
+    public function login()
+    {
         return view('pages.login');
     }
 
@@ -85,7 +88,7 @@ class PagesController extends Controller
     {
         // on log out close session item in session table as well
         $sessionMapper = new SessionMapper();
-        if(isset($_SESSION['currentLoggedInId'])) {
+        if (isset($_SESSION['currentLoggedInId'])) {
             $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
         }
         $_SESSION = array();
@@ -125,28 +128,37 @@ class PagesController extends Controller
         return view('pages.index');
     }
 
-    public function registerUser() {
+    public function registerUser()
+    {
         $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
         $emptyArrayKeys = array_keys($sanitizedInputs, "");
         if (!empty($emptyArrayKeys)) {
-            return view('pages.register', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            return view('pages.register', [
+                'inputErrors' => $emptyArrayKeys,
+                'alertType' => 'warning'
+            ]);
         } else {
-            $registerThis = new Register($sanitizedInputs['first_name'], $sanitizedInputs['last_name'], $sanitizedInputs['email'],
-                $sanitizedInputs['password'], $sanitizedInputs['phone_number'],
-                $sanitizedInputs['door_number'], $sanitizedInputs['street'], $_POST['appartment'], $sanitizedInputs['city'],
-                $sanitizedInputs['province'], $sanitizedInputs['country'], $sanitizedInputs['postal_code']);
-
+            $registerThis = new Register($sanitizedInputs['first_name'],
+                $sanitizedInputs['last_name'],
+                $sanitizedInputs['email'],
+                $sanitizedInputs['password'],
+                $sanitizedInputs['phone_number'],
+                $sanitizedInputs['door_number'],
+                $sanitizedInputs['street'],
+                $_POST['appartment'],
+                $sanitizedInputs['city'],
+                $sanitizedInputs['province'],
+                $sanitizedInputs['country'],
+                $sanitizedInputs['postal_code']
+            );
             $exists = $registerThis->checkExistingEmail();
-
-            if($exists){
+            if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
-            }
-            else{
+            } else {
                 $registerThis->createUser();
             }
             return view('pages.view');
         }
-
     }
 }
 

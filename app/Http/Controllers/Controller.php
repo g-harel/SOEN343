@@ -30,7 +30,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function desktopValidationFormInputs() {
+    public function desktopValidationFormInputs()
+    {
         return [
             'desktop-qty' => $this->filterIntInputQty,
             'desktop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -52,7 +53,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function laptopValidationFormInputs() {
+    public function laptopValidationFormInputs()
+    {
         return [
             'laptop-qty' => $this->filterIntInputQty,
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -76,7 +78,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function tabletValidationFormInputs() {
+    public function tabletValidationFormInputs()
+    {
         return $params = [
             'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -97,7 +100,8 @@ class Controller extends BaseController
         ];
     }
 
-    public function registerValidateFormInputs() {
+    public function registerValidateFormInputs()
+    {
         $args = [
             'first_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'last_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -120,7 +124,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function monitorValidationFormInputs() {
+    public function monitorValidationFormInputs()
+    {
         return [
             'monitor-qty' => $this->filterIntInputQty,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -130,8 +135,9 @@ class Controller extends BaseController
         ];
     }
 
-    public function isFormSubmitted($method) {
-        if($method == $_POST) {
+    public function isFormSubmitted($method)
+    {
+        if ($method == $_POST) {
             return ($_SERVER['REQUEST_METHOD'] == 'POST');
         } else {
             return ($_SERVER['REQUEST_METHOD'] == 'GET');
@@ -144,7 +150,8 @@ class Controller extends BaseController
      * admin
      * @return bool
      */
-    public function isAdminLoggedIn() {
+    public function isAdminLoggedIn()
+    {
         return isset($_SESSION) && !empty($_SESSION) && $_SESSION['isAdmin'] == 1;
     }
 }
