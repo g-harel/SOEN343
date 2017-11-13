@@ -21,7 +21,7 @@
                                     <i class="fa fa-television fa-5x"></i>
                                 </div>
                                 <div class="col-md-6">
-                                    <p style="color: red">Price: ${{$desktop['price']}}</p>
+                                    <p>Price: ${{$desktop['price']}}</p>
                                 </div>
                             </div>
                             <div class="col-md-12">

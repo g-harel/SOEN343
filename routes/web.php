@@ -71,6 +71,7 @@ Route::prefix('items/monitor/')->group(
         Route::post('insert', 'MonitorsController@insertMonitor');
         Route::post('delete', 'MonitorsController@deleteMonitor');
         Route::post('modify', 'MonitorsController@modifyMonitor');
+        Route::get('search', 'MonitorsController@searchMonitor');
     }
 );
 

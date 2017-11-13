@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\ItemCatalogMapper;
+
 
 class PagesController extends Controller
 {

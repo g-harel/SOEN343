@@ -1,13 +1,42 @@
 @extends('layouts.app')
 @section('content')
 
-
 <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-xs-12 col-sm-9">
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(empty($details))
+        @if(!empty($result))
+            @foreach($result as $value)
+                <div class="row">
+                    <div class="col-xs-12 col-lg-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{$value['brand']}} Monitor</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <i class="fa fa-television fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>Price:<strong> ${{$value['price']}}</strong> </p>
+                                        <p>Brand: <strong>{{$value['brand']}}</strong> </p>
+                                        <p>Quantity: <strong>{{$value['quantity']}}</strong> </p>
+                                        <p>Display Size: <strong>{{$value['displaySize']}} inches</strong> </p>
+                                        <p>Weight: <strong>{{$value['weight']}} kg</strong> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                            </div>
+                        </div>
+                    </div><!--/.col-xs-6.col-lg-4-->
+                </div>
+            @endforeach
+        @endif
+        @if(empty($details) && empty($result))
         <div class="row">
         @foreach($monitors as $monitor)
             <div class="col-xs-6 col-lg-4">
@@ -21,7 +50,7 @@
                                 <i class="fa fa-television fa-5x"></i>
                             </div>
                             <div class="col-md-6">
-                                <p style="color: red">Price: ${{$monitor['price']}}</p>
+                                <p  >Price: ${{$monitor['price']}}</p>
                             </div>
                         </div>
                     </div>
@@ -50,7 +79,7 @@
                                 <p>Price:<strong> ${{$details['price']}}</strong> </p>
                                 <p>Brand: <strong>{{$details['brand']}}</strong> </p>
                                 <p>Quantity: <strong>{{$details['quantity']}}</strong> </p>
-                                <p>Display Size: <strong>"{{$details['displaySize']}} inches</strong> </p>
+                                <p>Display Size: <strong>{{$details['displaySize']}} inches</strong> </p>
                                 <p>Weight: <strong>{{$details['weight']}} kg</strong> </p>
                             </div>
                         </div>
@@ -76,24 +105,24 @@
                 <h3 class="panel-title">Advanced Search</h3>
             </div>
             <div class="panel-body">
-                <form id="monitor-form" class="form-horizontal" action="" method="post">
+                <form id="monitor-form" class="form-horizontal" action="/items/monitor/search" method="get">
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand Name:
-                            <select name="monitor-brand" id="monitor-brand" class="form-control" required="">
+                            <select name="monitor-brand" id="monitor-brand" class="form-control" >
                                 <option title="Select brands" value="">Select Brand</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Display size (inches):
-                            <select name="monitor-display-size" id="monitor-display-size" class="form-control" required="">
+                            <select name="monitor-display-size" id="monitor-display-size" class="form-control" >
                                 <option title="Select display size" value="">Select display size</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Price: <br>
-                            min:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="monitor-price" id="monitor-price" class="form-control">
-                            max:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="monitor-price" id="monitor-price" class="form-control" >
+                            min:<input type="number" step="0.01" placeholder="0.00" max="99999" name="min-price" id="monitor-price" class="form-control" value="0">
+                            max:<input type="number" step="0.01" placeholder="0.00" max="99999" name="max-price" id="monitor-price" class="form-control" value="0">
                         </div>
 
                         <div class="form-group">
