@@ -179,6 +179,7 @@
                         </div>
                     </div>
                     <form action="/items/computer/desktop/delete" method="post">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>

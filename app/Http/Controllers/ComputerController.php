@@ -15,12 +15,6 @@ use App\Models\Item;
 use App\Models\ItemType;
 use App\Models\Tablet;
 
-//const item = 0;
-//const monitor = 1;
-//const computer = 2;
-//const desktop = 3;
-//const laptop = 4;
-//const tablet = 5;
 
 class ComputerController extends Controller
 {
@@ -89,19 +83,22 @@ class ComputerController extends Controller
                     "ram_size" => $sanitizedInputs['laptop-ram-size'],
                     "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
                     "weight" => $sanitizedInputs['laptop-weight'],
-                    "hdd_size" => $sanitizedInputs["laptop-storage-capacity"],
+                    "hddSize" => $sanitizedInputs["laptop-storage-capacity"],
                     "category" => "laptop",
+                    "displaySize" => $sanitizedInputs["laptop-display-size"],
+                    "os" => $sanitizedInputs["laptop-os"],
+                    "battery" => $sanitizedInputs["laptop-battery"],
+                    "camera" => $sanitizedInputs["laptop-camera"],
+                    "isTouchscreen" => $sanitizedInputs["laptop-touchscreen"],
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
                     "quantity" => $sanitizedInputs['laptop-qty'],
-                    "display_size" => $sanitizedInputs['laptop-display-size'],
-                    "os" => $sanitizedInputs['laptop-os'],
-                    "battery" => $sanitizedInputs['laptop-battery'],
-                    "camera" => $sanitizedInputs['laptop-camera'],
-                    "is_touchscreen" => $sanitizedInputs['laptop-touchscreen'],
                 ];
-                $laptopGateway = new LaptopGateway();
-                $laptopGateway->insert($laptopItem);
+
+
+                $addLaptopItem = ItemCatalogMapper::getInstance();
+                $addLaptopItem->addNewItem($_SESSION['session_id'], 4, $params); // ufw
+                $addLaptopItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'laptop']);
             }
         } else {
@@ -176,6 +173,20 @@ class ComputerController extends Controller
         return view('items.create');
     }
 
+    public function deleteLaptop() {
+        if($this->isFormSubmitted($_POST)) {
+            $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            if(!empty($itemId)) {
+                $itemMapper = ItemCatalogMapper::getInstance();
+                $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+                $itemMapper->commit($_SESSION['session_id']);
+            } else {
+                return view('items.create');
+            }
+        }
+        return view('items.create');
+    }
+
     public function modifyDesktop()
     {
         if($this->isFormSubmitted($_POST)) {
@@ -185,7 +196,7 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.computer.show-desktop', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $desktopParams = [
+                $params = [
                     "id" => $id,
                     "processorType" => $sanitizedInputs["desktop-processor"],
                     "ramSize" => $sanitizedInputs["desktop-ram-size"],
@@ -200,7 +211,6 @@ class ComputerController extends Controller
                     "width" => $sanitizedInputs["desktop-width"],
                     "thickness" => $sanitizedInputs["desktop-thickness"]
                 ];
-
                 $addTabletItem = ItemCatalogMapper::getInstance();
                 $addTabletItem->modifyItem($_SESSION['session_id'], 3, $desktopParams);
                 $addTabletItem->commit($_SESSION['session_id']);

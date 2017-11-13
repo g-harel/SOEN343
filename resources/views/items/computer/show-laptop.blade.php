@@ -205,7 +205,8 @@
                             <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
                         </div>
                     </div>
-                    <form>
+                    <form action="/items/computer/laptop/delete" method="post">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>
