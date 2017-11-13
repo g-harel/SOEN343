@@ -28,7 +28,8 @@ Route::get('/shoppingCart', 'PagesController@shoppingCart');
 // admin pages
 Route::get('/items', 'ItemsController@index');
 Route::get('/admin', 'PagesController@admin');
-Route::get('/items/create', 'ItemsController@create');
+Route::get('items/create', 'ItemsController@create');
+
 
 Route::prefix('/view')->group(
     function () {

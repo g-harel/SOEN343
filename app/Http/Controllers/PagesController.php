@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Mappers\SessionMapper;
-use App\Mappers\UserMapper;
+use App\Mappers\ItemCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
 
 class PagesController extends Controller
@@ -49,7 +49,9 @@ class PagesController extends Controller
 
     public function viewLaptop()
     {
-        return view('pages.viewLaptop');
+        return view('pages.viewLaptop', [
+            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)
+        ]);
     }
 
     public function viewMonitor()
@@ -61,7 +63,9 @@ class PagesController extends Controller
 
     public function viewTablet()
     {
-        return view('pages.viewTablet');
+        return view('pages.viewTablet', [
+            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)
+        ]);
     }
 
     public function monitorDetails($id)
@@ -97,12 +101,32 @@ class PagesController extends Controller
 
     public function laptopDetails($id)
     {
-        return view('pages.viewLaptop')->with('id', $id);
+        $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(4);
+        $laptopItem = null;
+        foreach ($laptops as $laptop) {
+            if($laptop['id'] == $id) {
+                $laptopItem = $laptop;
+                break;
+            }
+        }
+        return view('pages.viewLaptop', [
+            'laptopDetails' => $laptopItem
+        ]);
     }
 
     public function tabletDetails($id)
     {
-        return view('pages.viewTablet')->with('id', $id);
+        $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(5);
+        $tabletItem = null;
+        foreach ($tablets as $tablet) {
+            if($tablet['id'] == $id) {
+                $tabletItem = $tablet;
+                break;
+            }
+        }
+        return view('pages.viewTablet', [
+            'tabletDetails' => $tabletItem
+        ]);
     }
 
     public function login()
