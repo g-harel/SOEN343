@@ -67,6 +67,10 @@
                                 <div class="col-md-7">
                                     <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
                                     <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="monitor-qty" id="monitor-qty" class="form-control">
+                                    </div>
+                                    <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control">
                                             <option title="Select brands" selected disabled>Select brands</option>

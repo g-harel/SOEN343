@@ -102,6 +102,10 @@
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
                                     <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="tablet-qty" id="tablet-qty" class="form-control">
+                                    </div>
+                                    <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
                                             <option title="Select brands" selected disabled>Select brands</option>

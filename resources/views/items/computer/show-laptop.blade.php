@@ -82,6 +82,10 @@
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
                                     <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="laptop-qty" id="laptop-qty" class="form-control">
+                                    </div>
+                                    <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
                                             <option title="Select brands" selected disabled>Select brands</option>
