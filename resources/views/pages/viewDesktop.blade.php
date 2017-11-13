@@ -93,17 +93,17 @@
                 <h3 class="panel-title">Advanced Search</h3>
             </div>
             <div class="panel-body">
-                <form id="desktop-form" class="form-horizontal" action="" method="POST">
+                <form id="desktop-form" class="form-horizontal" action="/items/computer/search" method="GET">
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand:
-                            <select required="" name="computer-brand" id="computer-brand" class="form-control">
+                            <select required="" name="desktop-brand" id="desktop-brand" class="form-control">
                                 <option title="Select brands" value="">Select brands</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Hard Drive Size (GB):
-                            <select required="" name="storage-capacity" id="storage-capacity" class="form-control">
+                            <select required="" name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                 <option title="Select storage qty" value="">Select storage size</option>
                             </select>
                         </div>

@@ -61,6 +61,7 @@ Route::prefix('items/computer/')->group(
         Route::post('tablet/modify', 'ComputerController@modifyTablet');
         Route::post('laptop/modify', 'ComputerController@modifyLaptop');
         Route::post('laptop/delete', 'ComputerController@deleteLaptop');
+        Route::get('advancedSearch', 'ComputerController@searchComputer');
     }
 );
 

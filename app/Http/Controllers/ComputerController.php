@@ -15,9 +15,10 @@ use App\Models\Item;
 use App\Models\ItemType;
 use App\Models\Tablet;
 
-
 class ComputerController extends Controller
 {
+
+
     public function index()
     {
 
@@ -42,6 +43,40 @@ class ComputerController extends Controller
         return view('items.computer.show-tablet', [
             'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)
         ]);
+    }
+
+    public function advancedSearch() {
+        if($this->isFormSubmitted($_GET)) {
+            $desktopFields = [
+                'brand' => filter_input(INPUT_GET, 'desktop-brand'),
+                'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
+                'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
+                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+                'minPrice' => filter_input(INPUT_GET, 'min-price')
+            ];
+            $laptopFields = [
+                'brand' => filter_input(INPUT_GET, 'laptop-brand'),
+                'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
+                'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
+                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+                'minPrice' => filter_input(INPUT_GET, 'min-price')
+            ];
+            $tabletFields = [
+                'brand' => filter_input(INPUT_GET, 'tablet-brand'),
+                'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
+                'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
+                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+                'minPrice' => filter_input(INPUT_GET, 'min-price')
+            ];
+            $itemToSearch = array();
+            if(isset($_GET['search-desktop-form'])) {
+                $itemToSearch = $desktopFields;
+            } else if(isset($_GET['search-laptop-form'])) {
+                $itemToSearch = $laptopFields;
+            } else {
+                $itemToSearch = $tabletFields;
+            }
+        }
     }
 
     public function insertDesktop()
