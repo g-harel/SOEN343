@@ -50,21 +50,25 @@ class MonitorsController extends Controller
     {
         if($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->monitorValidationFormInputs());
+            $id = filter_input(INPUT_POST, 'monitor-id', FILTER_VALIDATE_INT);
             // returns the key of empty index (eg. monitor-brand => "")
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
                 return view('items.monitor.show-monitor', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $item = [
+                $params = [
+                    "id" => $id,
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => $sanitizedInputs['monitor-qty'],
-                    "display_size" => $sanitizedInputs['monitor-display-size'],
+                    "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];
-                // do not use render, use redirect, this prevent resubmitting
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
+                $addTabletItem = ItemCatalogMapper::getInstance();
+                $addTabletItem->modifyItem($_SESSION['session_id'], 1, $params);
+                $addTabletItem->commit($_SESSION['session_id']);
+                return redirect()->back()->with(['succeedModifyingItem' => true]);
             }
         } else {
             return view('items.monitor.show-monitor');

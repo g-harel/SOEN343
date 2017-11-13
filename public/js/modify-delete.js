@@ -88,7 +88,7 @@ const ModifyDelete = (() => {
                 genericOptionSelector(form, '#monitor-brand', tr.find(dataAttr.brand).text());
                 genericOptionSelector(form, '#monitor-display-size', tr.find(dataAttr.displaySize).text());
                 // monitor input fields
-                form.find('#monitor-id').val(tr.find(dataAttr.id).text());
+                form.find('#monitor-id').val(parseInt(tr.find(dataAttr.id).text().trim()));
                 form.find('#monitor-qty').val(parseInt(tr.find(dataAttr.qty).text()));
                 form.find('#monitor-price').val(tr.find(dataAttr.price).text());
                 form.find('#monitor-weight').val(tr.find(dataAttr.weight).text());
@@ -108,7 +108,7 @@ const ModifyDelete = (() => {
                 genericOptionSelector(form, '#storage-capacity', tr.find(dataAttr.capacity).text());
                 genericOptionSelector(form, '#cpu-cores', tr.find(dataAttr.cpuCores).text());
                 // desktop input fields
-                form.find('#desktop-id').val(tr.find(dataAttr.id).text().trim());
+                form.find('#desktop-id').val(parseInt(tr.find(dataAttr.id).text().trim()));
                 form.find('#desktop-qty').val(parseInt(tr.find(dataAttr.qty).text()));
                 form.find('#desktop-price').val(tr.find(dataAttr.price).text());
                 form.find('#desktop-weight').val(tr.find(dataAttr.weight).text());
@@ -138,7 +138,7 @@ const ModifyDelete = (() => {
                 const touchscreenChoice = form.find('[name=tablet-touchscreen]');
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
                 // tablet input fields
-                form.find('#tablet-id').val(tr.find(dataAttr.id).text());
+                form.find('#tablet-id').val(parseInt(tr.find(dataAttr.id).text().trim()));
                 form.find('#tablet-qty').val(parseInt(tr.find(dataAttr.qty).text()));
                 form.find('#tablet-price').val(tr.find(dataAttr.price).text());
                 form.find('#tablet-weight').val(tr.find(dataAttr.weight).text());
@@ -168,7 +168,7 @@ const ModifyDelete = (() => {
                 const touchscreenChoice = form.find('[name=laptop-touchscreen]');
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
                 // laptop input fields
-                form.find('#laptop-id').val(tr.find(dataAttr.id).text().trim());
+                form.find('#laptop-id').val(parseInt(tr.find(dataAttr.id).text().trim()));
                 form.find('#laptop-qty').val(parseInt(tr.find(dataAttr.qty).text()));
                 form.find('#laptop-price').val(tr.find(dataAttr.price).text());
                 form.find('#laptop-weight').val(tr.find(dataAttr.weight).text());
