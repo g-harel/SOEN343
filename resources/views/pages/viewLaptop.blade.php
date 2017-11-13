@@ -52,7 +52,9 @@
             <div class="col-xs-12 col-lg-12">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Razr Monitor</h3>
+                        <h3 class="panel-title">
+                            {{ $laptopDetails['brand'] }}, {{ $laptopDetails['hddSize'] }} GB {{ $laptopDetails["displaySize"] }}"
+                        </h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -83,9 +85,9 @@
                         <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
                     </div>
                 </div>
-            </div><!--/.col-xs-6.col-lg-4-->
+            </div>
         @endif
-    </div><!--/.col-xs-12.col-sm-9-->
+    </div>
 
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
