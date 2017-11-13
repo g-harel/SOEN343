@@ -65,9 +65,9 @@ class MonitorsController extends Controller
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];
-                $addTabletItem = ItemCatalogMapper::getInstance();
-                $addTabletItem->modifyItem($_SESSION['session_id'], 1, $params);
-                $addTabletItem->commit($_SESSION['session_id']);
+                $monitorItem = ItemCatalogMapper::getInstance();
+                $monitorItem->modifyItem($_SESSION['session_id'], $id, $params);
+                $monitorItem->commit($_SESSION['session_id']);
                 return view('items.monitor.show-monitor', [
                     'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
                     'succeedModifyingItem' => 'monitor'

@@ -143,6 +143,7 @@ const ModifyDelete = (() => {
                 form.find('#tablet-price').val(tr.find(dataAttr.price).text());
                 form.find('#tablet-weight').val(tr.find(dataAttr.weight).text());
                 form.find('#tablet-height').val(tr.find(dataAttr.height).text());
+                form.find('#tablet-width').val(tr.find(dataAttr.width).text());
                 form.find('#tablet-thickness').val(tr.find(dataAttr.thickness).text());
                 form.find('#tablet-battery').val(tr.find(dataAttr.battery).text());
 

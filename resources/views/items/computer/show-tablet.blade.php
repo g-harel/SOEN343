@@ -8,7 +8,7 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
-    @if(Session::has('succeedModifyingItem'))
+    @if(!empty($succeedModifyingItem))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p>You have successfully modified this item.</p>
@@ -169,6 +169,10 @@
                                     <div class="form-group">
                                         Height (cm):
                                         <input type="text" name="tablet-height" id="tablet-height" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        Width:
+                                        <input type="text" name="tablet-width" id="tablet-width" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         Battery:

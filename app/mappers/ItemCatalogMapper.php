@@ -77,7 +77,7 @@ class ItemCatalogMapper {
     public function modifyItem($transactionId, $itemId, $param) {
         $itemInCatalog = $this->itemCatalog->getItem($itemId);
         if ($itemInCatalog !== null) {
-            $itemType = ItemType::getItemTypeStringToEnum($itemInCatalog->getCategory());
+            $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
             $this->unitOfWork->registerDirty($transactionId, $itemId, self::$instance, $item);
             return true;

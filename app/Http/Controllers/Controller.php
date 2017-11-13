@@ -77,7 +77,7 @@ class Controller extends BaseController
      * @return array
      */
     public function tabletValidationFormInputs() {
-        return [
+        return $params = [
             'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,

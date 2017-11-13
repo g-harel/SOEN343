@@ -8,7 +8,7 @@
         <li>Computer</li>
         <li class="active">Laptop</li>
     </ol>
-    @if(Session::has('succeedModifyingItem'))
+    @if(!empty($succeedModifyingItem))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p>You have successfully modified this item.</p>
