@@ -8,16 +8,16 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
-    @if(!empty($succeedModifyingItem))
+    @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>You have successfully modified this item.</p>
+            <p>You have successfully <b>modified</b> this item.</p>
         </div>
     @endif
-    @if(Session::has('deleteSuccess'))
+    @if(Session::has('itemSuccessfullyDeleted'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>You have successfully deleted this item.</p>
+            <p>You have successfully <b>deleted</b> this item.</p>
         </div>
     @endif
     <p><a class="btn btn-success" href="/items/create">Add new</a></p>
@@ -64,7 +64,11 @@
                 <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
                 <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
                 <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
-                <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">{{ $tablet["isTouchscreen"] }}</td>
+                @if($tablet["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">No</td>
+                @else
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">Yes</td>
+                @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                         <a class="btn btn-primary btn-xs edit-tablet-link" href="" data-toggle="modal"
@@ -185,9 +189,8 @@
                                     </div>
                                     <div class="form-group">
                                         Touchscreen:<br>
-                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen"
-                                               value="Yes">&nbsp;Yes
-                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No">&nbsp;No
+                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="1">&nbsp;Yes
+                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="0">&nbsp;No
                                     </div>
                                 </div>
                             </div>

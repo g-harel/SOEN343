@@ -36,13 +36,12 @@ class ComputerController extends Controller
 
     public function insertDesktop()
     {
-        if($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-
                 $params = [
                     "processorType" => $sanitizedInputs['desktop-processor'],
                     "ramSize" => $sanitizedInputs['desktop-ram-size'],
@@ -57,13 +56,14 @@ class ComputerController extends Controller
                     "height" => $sanitizedInputs['desktop-height'],
                     "thickness" => $sanitizedInputs['desktop-thickness'],
                 ];
-
-
-
                 $addDesktopItem = ItemCatalogMapper::getInstance();
                 $addDesktopItem->addNewItem($_SESSION['session_id'], 3, $params); // ufw
                 $addDesktopItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'desktop']);
+                return redirect()->back()->with([
+                    'itemSuccessfullyAdded' => true,
+                    'for' => 'desktop',
+                    'link' => 'computer/showDesktop'
+                ]);
             }
         } else {
             return view('items.create');
@@ -94,12 +94,14 @@ class ComputerController extends Controller
                     "price" => $sanitizedInputs['laptop-price'],
                     "quantity" => $sanitizedInputs['laptop-qty'],
                 ];
-
-
                 $addLaptopItem = ItemCatalogMapper::getInstance();
-                $addLaptopItem->addNewItem($_SESSION['session_id'], 4, $params); // ufw
+                $addLaptopItem->addNewItem($_SESSION['session_id'], 4, $laptopItem); // ufw
                 $addLaptopItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'laptop']);
+                return redirect()->back()->with([
+                    'itemSuccessfullyAdded' => true,
+                    'for' => 'laptop',
+                    'link' => 'computer/showLaptop'
+                ]);
             }
         } else {
             return view('items.create');
@@ -114,7 +116,6 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-
                 $params = [
                     "processorType" => $sanitizedInputs['tablet-processor'],
                     "ramSize" => $sanitizedInputs['tablet-ram-size'],
@@ -134,11 +135,14 @@ class ComputerController extends Controller
                     "camera" => $sanitizedInputs['tablet-camera'],
                     "isTouchscreen" => $sanitizedInputs['tablet-touchscreen']
                 ];
-
                 $addTabletItem = ItemCatalogMapper::getInstance();
                 $addTabletItem->addNewItem($_SESSION['session_id'], 5, $params); // ufw
                 $addTabletItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'tablet']);
+                return redirect()->back()->with([
+                    'itemSuccessfullyAdded' => true,
+                    'for' => 'tablet',
+                    'link' => 'computer/showTablet'
+                ]);
             }
         } else {
             return view('items.create');
@@ -152,6 +156,7 @@ class ComputerController extends Controller
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
+                return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
                 return view('items.create');
             }
@@ -166,6 +171,7 @@ class ComputerController extends Controller
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
+                return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
                 return view('items.create');
             }
@@ -180,6 +186,7 @@ class ComputerController extends Controller
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
+                return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
                 return view('items.create');
             }
@@ -217,9 +224,9 @@ class ComputerController extends Controller
                 $desktopItem = ItemCatalogMapper::getInstance();
                 $desktopItem->modifyItem($_SESSION['session_id'], $id, $params);
                 $desktopItem->commit($_SESSION['session_id']);
-                return view('items.computer.show-desktop', [
+                return redirect()->back()->with([
                     'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3),
-                    'succeedModifyingItem' => 'desktop'
+                    'itemSuccessfullyModified' => 'desktop'
                 ]);
             }
         } else {
@@ -261,9 +268,9 @@ class ComputerController extends Controller
                 $laptopItem = ItemCatalogMapper::getInstance();
                 $laptopItem->modifyItem($_SESSION['session_id'], $id, $params);
                 $laptopItem->commit($_SESSION['session_id']);
-                return view('items.computer.show-laptop', [
+                return redirect()->back()->with([
                     'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4),
-                    'succeedModifyingItem' => 'laptop'
+                    'itemSuccessfullyModified' => 'laptop'
                 ]);
             }
         } else {
@@ -303,13 +310,12 @@ class ComputerController extends Controller
                     "camera" => $sanitizedInputs['tablet-camera'],
                     "isTouchscreen" => $sanitizedInputs['tablet-touchscreen']
                 ];
-
                 $tabletItem = ItemCatalogMapper::getInstance();
                 $tabletItem->modifyItem($_SESSION['session_id'], $id, $params);
                 $tabletItem->commit($_SESSION['session_id']);
-                return view('items.computer.show-tablet', [
+                return redirect()->back()->with([
                     'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5),
-                    'succeedModifyingItem' => 'tablet'
+                    'itemSuccessfullyModified' => 'tablet'
                 ]);
             }
         } else {

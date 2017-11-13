@@ -9,15 +9,17 @@
             <li>Create Items</li>
         </ol>
     </div>
-    @if(Session::has('succeedInsertingItem'))
+    @if(Session::has('itemSuccessfullyAdded'))
         <div class="row">
             <div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p>You have successfully added a new <b>{{Session::get('for')}}</b> item.</p>
+                <p>
+                    You have successfully added a new <b>{{Session::get('for')}}</b> item.
+                    Click <a href="{{Session::get('link')}}">here</a> to view.
+                </p>
             </div>
         </div>
     @endif
-
     @if(!empty($inputErrors))
         @foreach($inputErrors as $value)
             <div class="row">

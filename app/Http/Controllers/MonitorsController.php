@@ -39,7 +39,11 @@ class MonitorsController extends Controller
                 $addMonitorItem = ItemCatalogMapper::getInstance();
                 $addMonitorItem->addNewItem($_SESSION['session_id'], 1, $params); // ufw
                 $addMonitorItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
+                return redirect()->back()->with([
+                    'itemSuccessfullyAdded' => true,
+                    'for' => 'monitor',
+                    'link' => 'monitor/showMonitor'
+                ]);
             }
         } else {
             return view('items.create');
@@ -51,10 +55,12 @@ class MonitorsController extends Controller
         if($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->monitorValidationFormInputs());
             $id = filter_input(INPUT_POST, 'monitor-id', FILTER_VALIDATE_INT);
-            // returns the key of empty index (eg. monitor-brand => "")
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.monitor.show-monitor', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+                return view('items.monitor.show-monitor', [
+                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                ]);
             } else {
                 $params = [
                     "id" => $id,
@@ -68,13 +74,15 @@ class MonitorsController extends Controller
                 $monitorItem = ItemCatalogMapper::getInstance();
                 $monitorItem->modifyItem($_SESSION['session_id'], $id, $params);
                 $monitorItem->commit($_SESSION['session_id']);
-                return view('items.monitor.show-monitor', [
+                return redirect()->back()->with([
                     'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
-                    'succeedModifyingItem' => 'monitor'
+                    'itemSuccessfullyModified' => 'monitor'
                 ]);
             }
         } else {
-            return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
+            return view('items.monitor.show-monitor', [
+                'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+            ]);
         }
     }
 
@@ -85,6 +93,7 @@ class MonitorsController extends Controller
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);
+                return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
                 return view('items.create');
             }

@@ -8,16 +8,16 @@
         <li>Computer</li>
         <li class="active">Laptop</li>
     </ol>
-    @if(!empty($succeedModifyingItem))
+    @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>You have successfully modified this item.</p>
+            <p>You have successfully <b>modified</b> this item.</p>
         </div>
     @endif
-    @if(Session::has('deleteSuccess'))
+    @if(Session::has('itemSuccessfullyDeleted'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <p>You have successfully deleted this item.</p>
+            <p>You have successfully <b>deleted</b> this item.</p>
         </div>
     @endif
     <p><a class="btn btn-success" href="/items/create">Add new</a></p>
@@ -58,7 +58,11 @@
                 <td data-battery="{{ $laptop["battery"] }}">{{ $laptop["battery"] }}</td>
                 <td data-os="{{ $laptop["os"] }}">{{ $laptop["os"] }}</td>
                 <td data-camera="{{ $laptop["camera"] }}">{{ $laptop["camera"] }}</td>
-                <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">{{ $laptop["isTouchscreen"] }}</td>
+                @if($laptop["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">No</td>
+                @else
+                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">Yes</td>
+                @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                         <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
@@ -133,9 +137,9 @@
                                     </div>
                                     <div class="form-group">
                                         Touchscreen:<br>
-                                        <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="Yes"
+                                        <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="1"
                                                id="laptop-camera">&nbsp;Yes
-                                        <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="No"
+                                        <input type="radio" title="laptop touchscreen" name="laptop-touchscreen" value="0"
                                                id="laptop-camera">&nbsp;No
                                     </div>
                                 </div>
@@ -170,8 +174,7 @@
                                         Camera:<br>
                                         <input type="radio" title="laptop camera" name="laptop-camera" value="Yes"
                                                id="laptop-camera">&nbsp;Yes
-                                        <input type="radio" title="laptop camera" name="laptop-camera" value="No"
-                                               id="laptop-camera">&nbsp;No
+                                        <input type="radio" title="laptop camera" name="laptop-camera" value="No" id="laptop-camera">&nbsp;No
                                     </div>
                                 </div>
                             </div>
