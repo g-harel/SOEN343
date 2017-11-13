@@ -17,7 +17,7 @@
         </div>
     @endif
     <p><a class="btn btn-success" href="/items/create">Add new</a></p>
-    <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px">
+    <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px;">
         <thead>
         <tr>
             <th>#</th>
@@ -37,7 +37,8 @@
             <th>OS</th>
             <th>Camera</th>
             <th>Touchscreen</th>
-            <th class="text-center">Actions</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -61,28 +62,22 @@
                 <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
                 <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">{{ $tablet["isTouchscreen"] }}</td>
                 <td class="text-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            Select <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="edit-tablet-link" href="" data-toggle="modal"
-                                   data-target=".bs-edit-tablet-modal-lg">
-                                    Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a class="del-tablet-link" href="" data-id="{{ $tablet["id"] }}" data-toggle="modal"
-                                   data-target="#delTabletLink">
-                                    Delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                        <a class="btn btn-primary btn-xs edit-tablet-link" href="" data-toggle="modal"
+                           data-target=".bs-edit-tablet-modal-lg">
+                            <span class="fa fa-scissors"></span>
+                        </a>
+                    </p>
                 </td>
-    </tr>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        <a class="btn btn-danger btn-xs" data-id="{{ $tablet["id"] }}" data-toggle="modal"
+                           data-target="#delTabletLink">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+            </tr>
     @endforeach
         </tbody>
     </table>

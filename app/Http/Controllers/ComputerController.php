@@ -78,24 +78,29 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $laptopItem = [
-                    "processor_type" => $sanitizedInputs['laptop-processor'],
-                    "ram_size" => $sanitizedInputs['laptop-ram-size'],
-                    "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
+// $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["os"], $params["battery"],
+// $params["camera"], $params["isTouchscreen"]
+                $params = [
+                    "processorType" => $sanitizedInputs['laptop-processor'],
+                    "ramSize" => $sanitizedInputs['laptop-ram-size'],
+                    "cpuCores" => $sanitizedInputs['laptop-cpu-cores'],
                     "weight" => $sanitizedInputs['laptop-weight'],
-                    "hdd_size" => $sanitizedInputs["laptop-storage-capacity"],
+                    "hddSize" => $sanitizedInputs["laptop-storage-capacity"],
                     "category" => "laptop",
+                    "displaySize" => $sanitizedInputs["laptop-display-size"],
+                    "os" => $sanitizedInputs["laptop-os"],
+                    "battery" => $sanitizedInputs["laptop-battery"],
+                    "camera" => $sanitizedInputs["laptop-camera"],
+                    "isTouchscreen" => $sanitizedInputs["laptop-touchscreen"],
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
                     "quantity" => $sanitizedInputs['laptop-qty'],
-                    "display_size" => $sanitizedInputs['laptop-display-size'],
-                    "os" => $sanitizedInputs['laptop-os'],
-                    "battery" => $sanitizedInputs['laptop-battery'],
-                    "camera" => $sanitizedInputs['laptop-camera'],
-                    "is_touchscreen" => $sanitizedInputs['laptop-touchscreen'],
                 ];
-                $laptopGateway = new LaptopGateway();
-                $laptopGateway->insert($laptopItem);
+
+
+                $addLaptopItem = ItemCatalogMapper::getInstance();
+                $addLaptopItem->addNewItem($_SESSION['session_id'], 4, $params); // ufw
+                $addLaptopItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'laptop']);
             }
         } else {
@@ -159,6 +164,20 @@ class ComputerController extends Controller
 
 
     public function deleteTablet() {
+        if($this->isFormSubmitted($_POST)) {
+            $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            if(!empty($itemId)) {
+                $itemMapper = ItemCatalogMapper::getInstance();
+                $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+                $itemMapper->commit($_SESSION['session_id']);
+            } else {
+                return view('items.create');
+            }
+        }
+        return view('items.create');
+    }
+
+    public function deleteLaptop() {
         if($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
             if(!empty($itemId)) {
@@ -261,7 +280,7 @@ class ComputerController extends Controller
                     "isTouchscreen" => $sanitizedInputs['tablet-touchscreen']
                 ];
 
-                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'tablet']);
+                return view('items.computer.show-tablet');
             }
         } else {
             return view('items.computer.show-tablet');
