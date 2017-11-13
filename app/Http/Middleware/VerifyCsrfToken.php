@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'items/computer/desktop/delete',
-        'items/computer/tablet/delete'
+        'items/computer/tablet/delete',
+        'items/monitor/delete'
     ];
 }

@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     Brand:
-                                    <select required name="computer-brand" id="computer-brand" class="form-control">
+                                    <select required name="desktop-brand" id="desktop-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
                                 </div>
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="form-group">
                                     Hard Drive Size (GB):
-                                    <select required name="storage-capacity" id="storage-capacity" class="form-control">
+                                    <select required name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                         <option title="Select storage qty" value="">Select storage size</option>
                                     </select>
                                 </div>

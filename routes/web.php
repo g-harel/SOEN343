@@ -57,6 +57,8 @@ Route::prefix('items/computer/')->group(
 // Monitor
 Route::get('items/monitor/showMonitor', 'MonitorsController@showMonitor');
 Route::resource('items', 'ItemsController');
+Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+Route::post('items/monitor/delete', 'MonitorsController@deleteMonitor');
 
 
 Route::get('/admin/view', 'AdminController@showItems');//Login pages
@@ -65,4 +67,4 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::post('loginAdminVerification', 'PagesController@loginAdminVerification');
 Route::post('loginClientVerification', 'PagesController@loginClientVerification');
 
-Route::post('items/monitor/insert', 'MonitorsController@insertMonitor');
+

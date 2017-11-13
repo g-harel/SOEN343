@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 use App\Gateway\MonitorGateway;
 use Illuminate\Http\Request;
 use App\Mappers\ItemCatalogMapper;
@@ -21,26 +24,40 @@ class MonitorsController extends Controller
     {
         if($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->monitorValidationFormInputs());
-            // returns the key of empty index (eg. monitor-brand => "")
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $item = [
+                $params = [
+                    "weight" => $sanitizedInputs['monitor-weight'],
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => $sanitizedInputs['monitor-qty'],
-                    "display_size" => $sanitizedInputs['monitor-display-size'],
-                    "weight" => $sanitizedInputs['monitor-weight']
+                    "displaySize" => $sanitizedInputs['monitor-display-size'],
                 ];
-                $monitorGateway = new MonitorGateway();
-                $monitorGateway->insert($item);
-                // do not use render, use redirect, this prevent resubmitting
+
+                $addMonitorItem = ItemCatalogMapper::getInstance();
+                $addMonitorItem->addNewItem($_SESSION['session_id'], 1, $params); // ufw
+                $addMonitorItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
             }
         } else {
             return view('items.create');
         }
+    }
+
+    public function deleteMonitor() {
+        if($this->isFormSubmitted($_POST)) {
+            $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            if(!empty($itemId)) {
+                $itemMapper = ItemCatalogMapper::getInstance();
+                $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+                $itemMapper->commit($_SESSION['session_id']);
+            } else {
+                return view('items.create');
+            }
+        }
+        return view('items.create');
     }
 }

@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="form-group">
                                         Hard Drive Size (GB):
-                                        <select required name="storage-capacity" id="storage-capacity" class="form-control">
+                                        <select required name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                             <option title="Select storage qty" value="">Select storage size</option>
                                         </select>
                                     </div>
@@ -161,7 +161,7 @@
                             <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
                         </div>
                     </div>
-                    <form>
+                    <form action="/items/computer/desktop/delete" method="post">
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>

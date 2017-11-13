@@ -119,7 +119,7 @@
                             <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
                         </div>
                     </div>
-                    <form>
+                    <form action="/items/monitor/delete" method="post">
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>

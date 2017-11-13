@@ -33,10 +33,10 @@ class Controller extends BaseController
     public function desktopValidationFormInputs() {
         return [
             'desktop-qty' => $this->filterIntInputQty,
-            'computer-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'desktop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-ram-size' => FILTER_VALIDATE_INT,
-            'storage-capacity' => FILTER_VALIDATE_INT,
+            'desktop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
             'desktop-price' => $this->filterInputFloatArr,
             'desktop-weight' => $this->filterInputFloatArr,

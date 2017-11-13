@@ -42,28 +42,32 @@ class ComputerController extends Controller
     public function insertDesktop()
     {
         if($this->isFormSubmitted($_POST)) {
-
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                $desktopItem = [ // it is assumed all the values are good here, can now insert
-                    "processor_type" => $sanitizedInputs["desktop-processor"],
-                    "ram_size" => $sanitizedInputs["desktop-ram-size"],
-                    "cpu_cores" => $sanitizedInputs["desktop-cpu-cores"],
-                    "weight" => $sanitizedInputs["desktop-weight"],
-                    "hdd_size" => $sanitizedInputs["storage-capacity"],
+
+                $params = [
+                    "processorType" => $sanitizedInputs['desktop-processor'],
+                    "ramSize" => $sanitizedInputs['desktop-ram-size'],
+                    "cpuCores" => $sanitizedInputs['desktop-cpu-cores'],
+                    "weight" => $sanitizedInputs['desktop-weight'],
+                    "hddSize" => $sanitizedInputs["desktop-storage-capacity"],
                     "category" => "desktop",
-                    "brand" => $sanitizedInputs["computer-brand"],
-                    "price" => $sanitizedInputs["desktop-price"],
-                    "quantity" => $sanitizedInputs["desktop-qty"],
-                    "height" => $sanitizedInputs["desktop-height"],
-                    "width" => $sanitizedInputs["desktop-width"],
-                    "thickness" => $sanitizedInputs["desktop-thickness"]
+                    "brand" => $sanitizedInputs['desktop-brand'],
+                    "price" => $sanitizedInputs['desktop-price'],
+                    "quantity" => $sanitizedInputs['desktop-qty'],
+                    "width" => $sanitizedInputs['desktop-width'],
+                    "height" => $sanitizedInputs['desktop-height'],
+                    "thickness" => $sanitizedInputs['desktop-thickness'],
                 ];
-                $desktopGateway = new DesktopGateway();
-                $desktopGateway->insert($desktopItem);
+
+
+
+                $addDesktopItem = ItemCatalogMapper::getInstance();
+                $addDesktopItem->addNewItem($_SESSION['session_id'], 3, $params); // ufw
+                $addDesktopItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'desktop']);
             }
         } else {
@@ -106,7 +110,6 @@ class ComputerController extends Controller
 
     public function insertTablet()
     {
-
         if($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->tabletValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
@@ -144,10 +147,21 @@ class ComputerController extends Controller
         }
     }
 
-    public function deleteDesktop()
-    {
-
+    public function deleteDesktop(){
+        if($this->isFormSubmitted($_POST)) {
+            $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            if(!empty($itemId)) {
+                $itemMapper = ItemCatalogMapper::getInstance();
+                $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+                $itemMapper->commit($_SESSION['session_id']);
+            } else {
+                return view('items.create');
+            }
+        }
+        return view('items.create');
     }
+
+
 
     public function deleteTablet() {
         if($this->isFormSubmitted($_POST)) {
