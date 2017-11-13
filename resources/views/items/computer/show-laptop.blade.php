@@ -76,7 +76,7 @@
                     <h4 class="modal-title">Editing Laptop</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="laptop-form" class="form-horizontal">
+                    <form id="laptop-form" class="form-horizontal" action="/items/computer/laptop/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">

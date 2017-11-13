@@ -73,7 +73,7 @@
                     <h4 class="modal-title">Editing Desktop</h4>
                 </div>
                 <div class="modal-body" id="edit-desktop-form-body">
-                    <form id="desktop-form" class="form-horizontal">
+                    <form id="desktop-form" class="form-horizontal" action="/items/computer/desktop/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">

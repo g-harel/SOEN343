@@ -96,7 +96,7 @@
                     <h4 class="modal-title">Editing Tablet</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="tablet-form" class="form-horizontal">
+                    <form id="tablet-form" class="form-horizontal" action="/items/computer/tablet/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">

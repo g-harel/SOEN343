@@ -13,7 +13,6 @@ class MonitorsController extends Controller
     }
 
     public function showMonitor() {
-
         return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
     }
 
@@ -41,6 +40,31 @@ class MonitorsController extends Controller
             }
         } else {
             return view('items.create');
+        }
+    }
+
+    public function modifyMonitor()
+    {
+        if($this->isFormSubmitted($_POST)) {
+            $sanitizedInputs = filter_input_array(INPUT_POST, $this->monitorValidationFormInputs());
+            // returns the key of empty index (eg. monitor-brand => "")
+            $emptyArrayKeys = array_keys($sanitizedInputs, "");
+            if (!empty($emptyArrayKeys)) {
+                return view('items.monitor.show-monitor', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            } else {
+                $item = [
+                    "category" => "monitor",
+                    "brand" => $sanitizedInputs['monitor-brand'],
+                    "price" => $sanitizedInputs['monitor-price'],
+                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "display_size" => $sanitizedInputs['monitor-display-size'],
+                    "weight" => $sanitizedInputs['monitor-weight']
+                ];
+                // do not use render, use redirect, this prevent resubmitting
+                return redirect()->back()->with(['succeedInsertingItem' => true, 'for' => 'monitor']);
+            }
+        } else {
+            return view('items.monitor.show-monitor');
         }
     }
 }

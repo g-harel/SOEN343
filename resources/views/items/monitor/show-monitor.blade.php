@@ -60,7 +60,7 @@
                     <h4 class="modal-title">Editing Monitor</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
-                    <form id="monitor-form" class="form-horizontal">
+                    <form id="monitor-form" class="form-horizontal" action="/items/monitor/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="2"></div>
