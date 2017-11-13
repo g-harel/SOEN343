@@ -79,9 +79,9 @@ class ComputerController extends Controller
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
                 $laptopItem = [
-                    "processor_type" => $sanitizedInputs['laptop-processor'],
-                    "ram_size" => $sanitizedInputs['laptop-ram-size'],
-                    "cpu_cores" => $sanitizedInputs['laptop-cpu-cores'],
+                    "processorType" => $sanitizedInputs['laptop-processor'],
+                    "ramSize" => $sanitizedInputs['laptop-ram-size'],
+                    "cpuCores" => $sanitizedInputs['laptop-cpu-cores'],
                     "weight" => $sanitizedInputs['laptop-weight'],
                     "hddSize" => $sanitizedInputs["laptop-storage-capacity"],
                     "category" => "laptop",
