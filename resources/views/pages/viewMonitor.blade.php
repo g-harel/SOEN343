@@ -6,14 +6,24 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(Session::has('noResults'))
+            <div class="row">
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>
+                        No results were found for your search.
+                    </p>
+                </div>
+            </div>
+        @endif
+        @if(!empty($numResult))
+            <div class="col-md-6">
+                <label>{{$numResult}} result(s) found.</label>
+            </div>
+        @endif
         @if(!empty($result))
             @foreach($result as $value)
                 <div class="row">
-                    @if(!empty($numResult))
-                        <div class="col-md-6">
-                            <label>{{$numResult}} result(s) found.</label>
-                        </div>
-                    @endif
                     <div class="col-xs-12 col-lg-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">

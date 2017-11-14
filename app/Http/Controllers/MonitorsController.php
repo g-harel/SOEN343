@@ -52,6 +52,11 @@ class MonitorsController extends Controller
                     'result' => $result, 'numResult' => $numResult
                 ]);
             }
+            else if (empty($result)) {
+                return redirect()->back()->with([
+                    'noResults' => true
+                ]);
+            }
         }
         return view('pages.view');
     }

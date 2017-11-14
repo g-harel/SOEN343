@@ -7,7 +7,58 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(empty($details))
+        @if(Session::has('noResults'))
+            <div class="row">
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>
+                       No results were found for your search.
+                    </p>
+                </div>
+            </div>
+        @endif
+        @if(!empty($numResult))
+            <div class="col-md-6">
+                <label>{{$numResult}} result(s) found.</label>
+            </div>
+        @endif
+        @if(!empty($result))
+            @foreach($result as $value)
+                <div class="row">
+                    <div class="col-xs-12 col-lg-12">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{$value['brand']}} Desktop</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <i class="fa fa-desktop fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>Price: <strong>${{$value['price']}}</strong> </p>
+                                        <p>Brand: <strong>{{$value['brand']}}</strong> </p>
+                                        <p>Quantity: <strong>{{$value['quantity']}}</strong> </p>
+                                        <p>Processor Type: <strong>{{$value['processorType']}} </strong> </p>
+                                        <p>Ram Size: <strong>{{$value['ramSize']}} GB</strong> </p>
+                                        <p>CPU Cores: <strong>{{$value['cpuCores']}} </strong> </p>
+                                        <p>Hard Disk Size: <strong>{{$value['hddSize']}} GB</strong> </p>
+                                        <p>Height: <strong>{{$value['height']}} cm</strong> </p>
+                                        <p>Width: <strong>{{$value['width']}} cm</strong> </p>
+                                        <p>Thickness: <strong>{{$value['thickness']}} cm</strong> </p>
+                                        <p>Weight: <strong>{{$value['weight']}} kg</strong> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                            </div>
+                        </div>
+                    </div><!--/.col-xs-6.col-lg-4-->
+                </div>
+            @endforeach
+        @endif
+        @if(empty($details) && empty($result))
         <div class="row">
             @foreach($desktops as $desktop)
                 <div class="col-xs-6 col-lg-4">
@@ -97,27 +148,27 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand:
-                            <select required="" name="desktop-brand" id="desktop-brand" class="form-control">
+                            <select  name="desktop-brand" id="desktop-brand" class="form-control">
                                 <option title="Select brands" value="">Select brands</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Hard Drive Size (GB):
-                            <select required="" name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
+                            <select  name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                 <option title="Select storage qty" value="">Select storage size</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             Ram Size (GB):
-                            <select required="" name="desktop-ram-size" id="desktop-ram-size" class="form-control">
+                            <select  name="desktop-ram-size" id="desktop-ram-size" class="form-control">
                                 <option title="Select desktop ram size" value="">Select ram size</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Price: <br>
-                            min:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control">
-                            max:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="desktop-price" id="desktop-price" class="form-control" >
+                            min:<input type="number" step="0.01" placeholder="0.00" max="99999" name="min-price" id="desktop-price" class="form-control" value="0">
+                            max:<input type="number" step="0.01" placeholder="0.00" max="99999" name="max-price" id="desktop-price" class="form-control" value="0">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-success btn-sm" name="search-desktop-form" id="search-desktop-form">Search</button>

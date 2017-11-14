@@ -46,6 +46,8 @@ class ComputerController extends Controller
     }
 
     public function search() {
+
+
         if($this->isFormSubmitted($_GET)) {
             $desktopFields = [
                 'brand' => filter_input(INPUT_GET, 'desktop-brand'),
@@ -69,15 +71,56 @@ class ComputerController extends Controller
                 'minPrice' => filter_input(INPUT_GET, 'min-price')
             ];
             $itemToSearch = array();
+            $computers = array();
+            $result = array();
+            $type = "";
             if(isset($_GET['search-desktop-form'])) {
                 $itemToSearch = $desktopFields;
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(3);
+                $type = "Desktop";
             } else if(isset($_GET['search-laptop-form'])) {
                 $itemToSearch = $laptopFields;
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(4);
+                $type = "Laptop";
             } else if(isset($_GET['search-tablet-form'])) {
                 $itemToSearch = $tabletFields;
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(5);
+                $type = "Tablet";
             }
+
             // start here
+            foreach ($computers as $computer) {
+                if ($itemToSearch['maxPrice'] == 0) {
+                    if ($computer['price'] > $itemToSearch['minPrice']) {
+                        if (($computer['brand'] == $itemToSearch['brand'] || $itemToSearch['brand'] == "") &&
+                                ($computer['hddSize'] == $itemToSearch['storage'] || $itemToSearch['storage'] == "") &&
+                                    ($computer['ramSize'] == $itemToSearch['ramSize'] || $itemToSearch['ramSize'] == "")) {
+                                        array_push($result, $computer);
+                        }
+                    }
+                } else if ($itemToSearch['maxPrice'] > 0) {
+                    if ($computer['price'] > $itemToSearch['minPrice'] && $computer['price'] < $itemToSearch['maxPrice']) {
+                        if (($computer['brand'] == $itemToSearch['brand'] || $itemToSearch['brand'] == "") &&
+                                ($computer['hddSize'] == $itemToSearch['storage'] || $itemToSearch['storage'] == "") &&
+                                    ($computer['ramSize'] == $itemToSearch['ramSize'] || $itemToSearch['ramSize'] == "")) {
+                                        array_push($result, $computer);
+                        }
+                    }
+                }
+            }
+            if (!empty($result)) {
+                $numResult = count($result);
+                return view('pages.view'.$type, [
+                    'result' => $result, 'numResult' => $numResult
+                ]);
+            }
+            else if (empty($result)) {
+                return redirect()->back()->with([
+                    'noResults' => true
+                ]);
+                }
         }
+        return view('pages.view');
     }
 
     public function insertDesktop()
