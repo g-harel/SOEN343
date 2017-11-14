@@ -144,14 +144,4 @@ class Controller extends BaseController
         }
     }
 
-    /**
-     * Return true if the user
-     * currently logged is an
-     * admin
-     * @return bool
-     */
-    public function isAdminLoggedIn()
-    {
-        return isset($_SESSION) && !empty($_SESSION) && $_SESSION['isAdmin'] == 1;
-    }
 }
