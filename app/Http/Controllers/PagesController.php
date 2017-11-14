@@ -156,5 +156,11 @@ class PagesController extends Controller
         }
 
     }
+
+    public function clients()
+    {
+        $accountCatalog = new AccountCatalogMapper();
+        return view('pages.clients', ['clients' => $accountCatalog->getAllAccounts()]);
+    }
 }
 
