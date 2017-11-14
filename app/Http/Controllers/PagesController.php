@@ -69,11 +69,15 @@ class PagesController extends Controller
     {
         $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
         $details = array();
-        foreach($monitors as $monitor){
-            if($monitor['id'] == $id){
-            $details = $monitor;
-            break;
+        foreach ($monitors as $monitor) {
+            if ($monitor['id'] == $id) {
+                $details = $monitor;
+                break;
             }
+            return view('pages.viewMonitor', [
+                'notFound' => true,
+                'for' => 'Monitor'
+            ]);
         }
         return view('pages.viewMonitor', [
             'details' => $details,
@@ -90,6 +94,10 @@ class PagesController extends Controller
                 $details = $desktop;
                 break;
             }
+            return view('pages.viewDesktop', [
+                'notFound' => true,
+                'for' => 'Desktop'
+            ]);
         }
         return view('pages.viewDesktop', [
             'details' => $details,
@@ -105,6 +113,10 @@ class PagesController extends Controller
                 $laptopItem = $laptop;
                 break;
             }
+            return view('pages.viewLaptop', [
+                'notFound' => true,
+                'for' => 'Laptop'
+            ]);
         }
         return view('pages.viewLaptop', [
             'laptopDetails' => $laptopItem
@@ -120,6 +132,10 @@ class PagesController extends Controller
                 $tabletItem = $tablet;
                 break;
             }
+            return view('pages.viewTablet', [
+                'notFound' => true,
+                'for' => 'Tablet'
+            ]);
         }
         return view('pages.viewTablet', [
             'tabletDetails' => $tabletItem

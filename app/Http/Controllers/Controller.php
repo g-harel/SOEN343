@@ -191,11 +191,13 @@ class Controller extends BaseController
         $forms = [
             'admin-search-desktop-form',
             'admin-search-laptop-form',
-            'admin-search-tablet-form'
+            'admin-search-tablet-form',
+            'admin-search-monitor-form'
         ];
         foreach ($forms as $form) {
-            if(isset($form)) {
+            if(isset($_GET[$form])) {
                 $cond = true;
+                break;
             }
         }
         return $cond;

@@ -28,7 +28,6 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-
             $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
             $result = array();
             foreach ($monitors as $monitor) {
@@ -52,7 +51,7 @@ class MonitorsController extends Controller
             }
             if (!empty($result)) {
                 $numResult = count($result);
-                if(isset($_GET['admin-search-monitor-form'])) {
+                if($this->isAdminSearching()) {
                     return view('items.monitor.show-monitor', [
                         'result' => $result, 'numResult' => $numResult
                     ]);
@@ -62,7 +61,7 @@ class MonitorsController extends Controller
                     ]);
                 }
             } else {
-                if(isset($_GET['admin-search-monitor-form'])) {
+                if($this->isAdminSearching()) {
                     return view('items.monitor.show-monitor', [
                         'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
                         'noResults' => true
@@ -160,7 +159,4 @@ class MonitorsController extends Controller
         return view('items.create');
     }
 
-    public function adminMonitorSearchResultView() {
-
-    }
 }

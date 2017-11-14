@@ -6,6 +6,12 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(!empty($notFound))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <label>{{ $for }} not found.</label>
+            </div>
+        @endif
         @if(!empty($noResults))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -59,7 +65,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($laptopDetails)  && empty($result))
+        @if(empty($laptopDetails)  && empty($result) && empty($notFound))
         <div class="row">
             @foreach($laptops as $laptop)
             <div class="col-xs-6 col-lg-4">
