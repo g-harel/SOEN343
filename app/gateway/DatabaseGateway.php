@@ -94,7 +94,7 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
+        $configPath = dirname(__FILE__, 3) . "/databaseConfig.ini"; //Forward slash in order for macOS and Linux systems to read the file.
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];

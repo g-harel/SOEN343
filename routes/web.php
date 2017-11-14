@@ -18,6 +18,7 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
 Route::get('/admin', 'PagesController@admin');
+Route::get('/clients', 'AccountController@clients');
 
 Route::prefix('/view')->group(
     function () {

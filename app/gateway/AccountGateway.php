@@ -2,7 +2,7 @@
 
 namespace App\Gateway;
 
-use App\Gateway\DatabaseGateway;
+use DB;
 
 class AccountGateway
 {
@@ -61,5 +61,10 @@ class AccountGateway
     public function deleteAccountById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
+    }
+
+    public function getAll()
+    {
+        return DB::table('accounts')->get();
     }
 }

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
-use App\Mappers\UserMapper;
+use App\Mappers\AccountCatalogMapper;
 
 class Login {
 
@@ -13,7 +13,7 @@ class Login {
 
     public function __construct($email, $password) {
         $this->sessionMapper = new SessionMapper();
-        $this->userMapper = new UserMapper();
+        $this->userMapper = new AccountCatalogMapper();
         $this->email = $email;
         $this->password = $password;
     }

@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Mappers\SessionMapper;
-use App\Mappers\UserMapper;
+use App\Mappers\AccountCatalogMapper;
 
 class PagesController extends Controller
 {
