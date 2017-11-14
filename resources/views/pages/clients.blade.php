@@ -3,6 +3,7 @@
     List of clients
 @endsection
 @section('content')
+    <h2>List of Clients</h2>
     <table class="table">
         <thead>
         <td>id</td>

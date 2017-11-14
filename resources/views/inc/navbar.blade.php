@@ -14,6 +14,12 @@
                 @endif
             @endif
 
+            @if(isset($_SESSION) && !empty($_SESSION))
+                @if($_SESSION['isAdmin'] == 1)
+                    <li><a href="/clients">Clients</a></li>
+                @endif
+            @endif
+
             @if(isset($_SESSION)  && !empty($_SESSION))
                 @if($_SESSION['isAdmin'] != 1)
                     <li><a href="/view">Products</a></li>
