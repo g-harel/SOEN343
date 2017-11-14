@@ -19,34 +19,39 @@ class MonitorsController extends Controller
         return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
     }
 
-    public function searchMonitor(){
-        if($this->isFormSubmitted($_GET)) {
+    public function searchMonitor()
+    {
+        if ($this->isFormSubmitted($_GET)) {
             $brand = filter_input(INPUT_GET, 'monitor-brand');
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
 
-            $monitors =  ItemCatalogMapper::getInstance()->selectAllItemType(1);
+            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
             $result = array();
-            foreach($monitors as $monitor){
-                if($maxPrice == 0){
-                    if($monitor['price'] > $minPrice){
-                        if(($monitor['brand'] == $brand || $brand == "") && ($monitor['displaySize'] == $displaySize || $displaySize == "")){
+            foreach ($monitors as $monitor) {
+                if ($maxPrice == 0) {
+                    if ($monitor['price'] > $minPrice) {
+                        if (($monitor['brand'] == $brand || $brand == "") &&
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")) {
                             array_push($result, $monitor);
                         }
                     }
-                }
-                else if($maxPrice > 0){
-                    if($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice){
-                        if(($monitor['brand'] == $brand || $brand == "") && ($monitor['displaySize'] == $displaySize || $displaySize == "")){
+                } else if ($maxPrice > 0) {
+                    if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
+                        if (($monitor['brand'] == $brand || $brand == "") &&
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")) {
                             array_push($result, $monitor);
                         }
                     }
                 }
             }
-            if(!empty($result))
-            return view('pages.viewMonitor', [
-                'result' => $result]);
+            if (!empty($result)) {
+                $numResult = count($result);
+                return view('pages.viewMonitor', [
+                    'result' => $result, 'numResult' => $numResult
+                ]);
+            }
         }
         return view('pages.view');
     }

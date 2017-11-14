@@ -9,6 +9,11 @@
         @if(!empty($result))
             @foreach($result as $value)
                 <div class="row">
+                    @if(!empty($numResult))
+                        <div class="col-md-6">
+                            <label>{{$numResult}} result(s) found.</label>
+                        </div>
+                    @endif
                     <div class="col-xs-12 col-lg-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">

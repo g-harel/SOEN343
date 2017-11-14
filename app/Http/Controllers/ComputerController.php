@@ -45,7 +45,7 @@ class ComputerController extends Controller
         ]);
     }
 
-    public function advancedSearch() {
+    public function search() {
         if($this->isFormSubmitted($_GET)) {
             $desktopFields = [
                 'brand' => filter_input(INPUT_GET, 'desktop-brand'),
@@ -73,9 +73,10 @@ class ComputerController extends Controller
                 $itemToSearch = $desktopFields;
             } else if(isset($_GET['search-laptop-form'])) {
                 $itemToSearch = $laptopFields;
-            } else {
+            } else if(isset($_GET['search-tablet-form'])) {
                 $itemToSearch = $tabletFields;
             }
+            // start here
         }
     }
 
