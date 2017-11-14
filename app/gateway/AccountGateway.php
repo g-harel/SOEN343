@@ -2,14 +2,15 @@
 
 namespace App\Gateway;
 
-use DB;
+use SplObjectStorage;
 
-class AccountGateway
+class AccountGateway extends DatabaseGateway
 {
     private $db;
     private $tableName;
 
     public function __construct() {
+        parent::__construct();
         $this->tableName = "accounts";
         $this->db = new DatabaseGateway();
     }
@@ -65,6 +66,24 @@ class AccountGateway
 
     public function getAll()
     {
-        return DB::table('accounts')->get();
+        $accounts = new SplObjectStorage();
+        $mysqli = $this->db->generateConnection();
+        $query = "SELECT * FROM accounts";
+        if (mysqli_connect_errno()) {
+            printf("Connect failed: %s\n", mysqli_connect_error());
+            exit();
+        }
+        if ($result = $mysqli->query($query)) {
+
+            /* fetch object array */
+            while ($obj = $result->fetch_object()) {
+                $accounts->attach($obj);
+            }
+            /* free result set */
+            $result->close();
+        }
+        /* close connection */
+        $mysqli->close();
+        return $accounts;
     }
 }

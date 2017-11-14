@@ -94,7 +94,8 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $configPath = dirname(__FILE__, 3) . "/databaseConfig.ini"; //Forward slash in order for macOS and Linux systems to read the file.
+        //Forward slash in order for macOS and Linux systems to read the file.
+        $configPath = dirname(__FILE__, 3) . "/databaseConfig.ini";
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];
@@ -108,6 +109,10 @@ class DatabaseGateway
 
     public function openDBConnection() {
         $this->DBConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
+    }
+
+    public function generateConnection() {
+        return new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
     }
 
     public function closeDBConnection() {
