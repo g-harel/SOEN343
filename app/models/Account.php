@@ -97,9 +97,6 @@ class Account
     // SETTERS
     public function setId($id) {
         $this->id = $id;
-        if ($this->address != null) {
-            $this->address->setId($id);
-        }
         return $this;
     }
 
