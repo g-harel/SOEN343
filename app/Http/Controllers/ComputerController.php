@@ -82,13 +82,13 @@ class ComputerController extends Controller
             $result = array();
             if (isset($_GET['search-desktop-form'])) {
                 $searchItem = $desktopFields;
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(3);
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
             } else if (isset($_GET['search-laptop-form'])) {
                 $searchItem = $laptopFields;
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(4);
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
             } else if (isset($_GET['search-tablet-form'])) {
                 $searchItem = $tabletFields;
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType(5);
+                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
             }
             foreach ($computers as $computer) {
                 if ($searchItem['maxPrice'] == 0) {
