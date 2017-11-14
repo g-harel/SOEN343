@@ -21,6 +21,7 @@ Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
+
 // only for client after logged in
 if(!isAdminLoggedIn()) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
@@ -31,9 +32,11 @@ Route::prefix('/view')->group(
     function () {
         Route::get('/', 'PagesController@view');
         Route::get('/monitor', 'PagesController@viewMonitor');
+        Route::get('/monitor/search', 'MonitorsController@searchMonitor');
         Route::get('/desktop', 'PagesController@viewDesktop');
         Route::get('/laptop', 'PagesController@viewLaptop');
         Route::get('/tablet', 'PagesController@viewTablet');
+        Route::get('/computer/search', 'ComputerController@search');
 
         Route::get('/monitor/{id}', ['uses' => 'PagesController@monitorDetails']);
         Route::get('/desktop/{id}', ['uses' => 'PagesController@desktopDetails']);

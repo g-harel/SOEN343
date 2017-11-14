@@ -6,18 +6,15 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(Session::has('noResults'))
-            <div class="row">
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p>
-                        No results were found for your search.
-                    </p>
-                </div>
+        @if(!empty($noResults))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>No results were found for your search.</p>
             </div>
         @endif
         @if(!empty($numResult))
-            <div class="col-md-6">
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <label>{{$numResult}} result(s) found.</label>
             </div>
         @endif
@@ -169,7 +166,7 @@
                 <h3 class="panel-title">Advanced Search</h3>
             </div>
             <div class="panel-body">
-                <form id="tablet-form" class="form-horizontal" action="/items/computer/search" method="GET">
+                <form id="tablet-form" class="form-horizontal" action="/view/computer/search" method="GET">
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand:

@@ -16,7 +16,9 @@ class MonitorsController extends Controller
     }
 
     public function showMonitor() {
-        return view('items.monitor.show-monitor', ['monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)]);
+        return view('items.monitor.show-monitor', ['
+        monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+        ]);
     }
 
     public function searchMonitor()
@@ -33,14 +35,16 @@ class MonitorsController extends Controller
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")) {
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                        ) {
                             array_push($result, $monitor);
                         }
                     }
                 } else if ($maxPrice > 0) {
                     if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")) {
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                        ) {
                             array_push($result, $monitor);
                         }
                     }
@@ -51,9 +55,10 @@ class MonitorsController extends Controller
                 return view('pages.viewMonitor', [
                     'result' => $result, 'numResult' => $numResult
                 ]);
-            }
-            else if (empty($result)) {
-                return redirect()->back()->with([
+            } else {
+                return view('pages.viewMonitor', [
+                    // still needed if no result found
+                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
                     'noResults' => true
                 ]);
             }

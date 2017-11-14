@@ -46,79 +46,82 @@ class ComputerController extends Controller
     }
 
     public function search() {
-
-
-        if($this->isFormSubmitted($_GET)) {
+        if ($this->isFormSubmitted($_GET)) {
             $desktopFields = [
                 'brand' => filter_input(INPUT_GET, 'desktop-brand'),
                 'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
                 'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
                 'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price')
+                'minPrice' => filter_input(INPUT_GET, 'min-price'),
+                'view' => 'viewDesktop',
+                'collection' => 'desktops',
+                'itemType' => 3
             ];
             $laptopFields = [
                 'brand' => filter_input(INPUT_GET, 'laptop-brand'),
                 'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
                 'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
                 'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price')
+                'minPrice' => filter_input(INPUT_GET, 'min-price'),
+                'view' => 'viewLaptop',
+                'collection' => 'laptops',
+                'itemType' => 4
             ];
             $tabletFields = [
                 'brand' => filter_input(INPUT_GET, 'tablet-brand'),
                 'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
                 'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
                 'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price')
+                'minPrice' => filter_input(INPUT_GET, 'min-price'),
+                'view' => 'viewTablet',
+                'collection' => 'tablets',
+                'itemType' => 5
             ];
-            $itemToSearch = array();
+            $searchItem = array();
             $computers = array();
             $result = array();
-            $type = "";
-            if(isset($_GET['search-desktop-form'])) {
-                $itemToSearch = $desktopFields;
+            if (isset($_GET['search-desktop-form'])) {
+                $searchItem = $desktopFields;
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType(3);
-                $type = "Desktop";
-            } else if(isset($_GET['search-laptop-form'])) {
-                $itemToSearch = $laptopFields;
+            } else if (isset($_GET['search-laptop-form'])) {
+                $searchItem = $laptopFields;
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType(4);
-                $type = "Laptop";
-            } else if(isset($_GET['search-tablet-form'])) {
-                $itemToSearch = $tabletFields;
+            } else if (isset($_GET['search-tablet-form'])) {
+                $searchItem = $tabletFields;
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType(5);
-                $type = "Tablet";
             }
-
-            // start here
             foreach ($computers as $computer) {
-                if ($itemToSearch['maxPrice'] == 0) {
-                    if ($computer['price'] > $itemToSearch['minPrice']) {
-                        if (($computer['brand'] == $itemToSearch['brand'] || $itemToSearch['brand'] == "") &&
-                                ($computer['hddSize'] == $itemToSearch['storage'] || $itemToSearch['storage'] == "") &&
-                                    ($computer['ramSize'] == $itemToSearch['ramSize'] || $itemToSearch['ramSize'] == "")) {
-                                        array_push($result, $computer);
+                if ($searchItem['maxPrice'] == 0) {
+                    if ($computer['price'] > $searchItem['minPrice']) {
+                        if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
+                            ($computer['hddSize'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
+                            ($computer['ramSize'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
+                        ) {
+                            array_push($result, $computer);
                         }
                     }
-                } else if ($itemToSearch['maxPrice'] > 0) {
-                    if ($computer['price'] > $itemToSearch['minPrice'] && $computer['price'] < $itemToSearch['maxPrice']) {
-                        if (($computer['brand'] == $itemToSearch['brand'] || $itemToSearch['brand'] == "") &&
-                                ($computer['hddSize'] == $itemToSearch['storage'] || $itemToSearch['storage'] == "") &&
-                                    ($computer['ramSize'] == $itemToSearch['ramSize'] || $itemToSearch['ramSize'] == "")) {
-                                        array_push($result, $computer);
+                } else if ($searchItem['maxPrice'] > 0) {
+                    if ($computer['price'] > $searchItem['minPrice'] && $computer['price'] < $searchItem['maxPrice']) {
+                        if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
+                            ($computer['hddSize'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
+                            ($computer['ramSize'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
+                        ) {
+                            array_push($result, $computer);
                         }
                     }
                 }
             }
             if (!empty($result)) {
                 $numResult = count($result);
-                return view('pages.view'.$type, [
+                return view('pages.'.$searchItem['view'], [
                     'result' => $result, 'numResult' => $numResult
                 ]);
-            }
-            else if (empty($result)) {
-                return redirect()->back()->with([
+            } else {
+                return view('pages.'.$searchItem['view'], [
+                    $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
                     'noResults' => true
                 ]);
-                }
+            }
         }
         return view('pages.view');
     }
@@ -366,7 +369,9 @@ class ComputerController extends Controller
                 ]);
             }
         } else {
-            return view('items.computer.show-laptop', ['laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)]);
+            return view('items.computer.show-laptop', [
+                'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)
+            ]);
         }
     }
 
@@ -411,7 +416,9 @@ class ComputerController extends Controller
                 ]);
             }
         } else {
-            return view('items.computer.show-tablet', ['tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)]);
+            return view('items.computer.show-tablet', [
+                'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)
+            ]);
         }
     }
 }

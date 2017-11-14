@@ -6,18 +6,15 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(Session::has('noResults'))
-            <div class="row">
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p>
-                        No results were found for your search.
-                    </p>
-                </div>
+        @if(!empty($noResults))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>No results were found for your search.</p>
             </div>
         @endif
         @if(!empty($numResult))
-            <div class="col-md-6">
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <label>{{$numResult}} result(s) found.</label>
             </div>
         @endif
@@ -35,7 +32,7 @@
                                         <i class="fa fa-television fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
-                                        <p>Price:<strong> ${{$value['price']}}</strong> </p>
+                                        <p>Price: <strong> ${{$value['price']}}</strong> </p>
                                         <p>Brand: <strong>{{$value['brand']}}</strong> </p>
                                         <p>Quantity: <strong>{{$value['quantity']}}</strong> </p>
                                         <p>Display Size: <strong>{{$value['displaySize']}} inches</strong> </p>
@@ -47,7 +44,7 @@
                                 <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
                             </div>
                         </div>
-                    </div><!--/.col-xs-6.col-lg-4-->
+                    </div>
                 </div>
             @endforeach
         @endif
@@ -120,7 +117,7 @@
                 <h3 class="panel-title">Advanced Search</h3>
             </div>
             <div class="panel-body">
-                <form id="monitor-form" class="form-horizontal" action="/items/monitor/search" method="get">
+                <form id="monitor-form" class="form-horizontal" action="/view/monitor/search" method="get">
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand Name:
