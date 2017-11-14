@@ -108,7 +108,7 @@ class AccountCatalogMapper
             $address = new Address($account->door_number, $account->appartement, $account->street, $account->city, $account->province, $account->country, $account->postal_code);
             $accountObject = new Account($account->email, $account->password, $account->first_name, $account->last_name, $account->phone_number, $address, $account->isAdmin);
             $accountObject->setId($account->id);
-            AccountCatalog::getCatalog()->attach($accountObject);
+            AccountCatalog::addAccount($accountObject);
         }
     }
 
