@@ -136,9 +136,8 @@
                             min:<input type="number" step="0.01" placeholder="0.00" max="99999" name="min-price" id="monitor-price" class="form-control" value="0">
                             max:<input type="number" step="0.01" placeholder="0.00" max="99999" name="max-price" id="monitor-price" class="form-control" value="0">
                         </div>
-
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-sm" name="submit-monitor-form" id="submit-monitor-form">Submit</button>
+                            <button type="submit" class="btn btn-success btn-sm" name="submit-monitor-form" id="submit-monitor-form">Search</button>
                         </div>
                     </div>
                 </form>

@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href="{{asset('css/app.css')}}">
         <link rel='stylesheet' href="{{asset('css/style.css')}}">
+        <link rel='stylesheet' href="{{asset('css/filtering.css')}}">
         <title>@yield('page-title')</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,7 +23,7 @@ if (session_status() == PHP_SESSION_NONE) {
         @include('inc.navbar')
         <div class='container'>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="">
                     @include('inc.messages')
                     @yield('content')
                 </div>

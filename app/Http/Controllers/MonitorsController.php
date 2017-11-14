@@ -16,8 +16,8 @@ class MonitorsController extends Controller
     }
 
     public function showMonitor() {
-        return view('items.monitor.show-monitor', ['
-        monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+        return view('items.monitor.show-monitor', [
+            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
         ]);
     }
 
@@ -52,15 +52,28 @@ class MonitorsController extends Controller
             }
             if (!empty($result)) {
                 $numResult = count($result);
-                return view('pages.viewMonitor', [
-                    'result' => $result, 'numResult' => $numResult
-                ]);
+                if(isset($_GET['admin-search-monitor-form'])) {
+                    return view('items.monitor.show-monitor', [
+                        'result' => $result, 'numResult' => $numResult
+                    ]);
+                } else {
+                    return view('pages.viewMonitor', [
+                        'result' => $result, 'numResult' => $numResult
+                    ]);
+                }
             } else {
-                return view('pages.viewMonitor', [
-                    // still needed if no result found
-                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
-                    'noResults' => true
-                ]);
+                if(isset($_GET['admin-search-monitor-form'])) {
+                    return view('items.monitor.show-monitor', [
+                        // still needed if no result found
+                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                        'noResults' => true
+                    ]);
+                } else {
+                    return view('pages.viewMonitor', [
+                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                        'noResults' => true
+                    ]);
+                }
             }
         }
         return view('pages.view');
@@ -146,5 +159,9 @@ class MonitorsController extends Controller
             }
         }
         return view('items.create');
+    }
+
+    public function adminMonitorSearchResultView() {
+
     }
 }
