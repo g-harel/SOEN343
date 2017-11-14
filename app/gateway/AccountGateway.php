@@ -4,13 +4,12 @@ namespace App\Gateway;
 
 use SplObjectStorage;
 
-class AccountGateway extends DatabaseGateway
+class AccountGateway
 {
     private $db;
     private $tableName;
 
     public function __construct() {
-        parent::__construct();
         $this->tableName = "accounts";
         $this->db = new DatabaseGateway();
     }
