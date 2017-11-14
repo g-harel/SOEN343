@@ -33,17 +33,17 @@
                                         <i class="fa fa-desktop fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
-                                        <p>Price: <strong>${{$value['price']}}</strong> </p>
-                                        <p>Brand: <strong>{{$value['brand']}}</strong> </p>
-                                        <p>Quantity: <strong>{{$value['quantity']}}</strong> </p>
-                                        <p>Processor Type: <strong>{{$value['processorType']}} </strong> </p>
-                                        <p>Ram Size: <strong>{{$value['ramSize']}} GB</strong> </p>
-                                        <p>CPU Cores: <strong>{{$value['cpuCores']}} </strong> </p>
-                                        <p>Hard Disk Size: <strong>{{$value['hddSize']}} GB</strong> </p>
-                                        <p>Height: <strong>{{$value['height']}} cm</strong> </p>
-                                        <p>Width: <strong>{{$value['width']}} cm</strong> </p>
-                                        <p>Thickness: <strong>{{$value['thickness']}} cm</strong> </p>
-                                        <p>Weight: <strong>{{$value['weight']}} kg</strong> </p>
+                                        <p>Price: <b>${{$value['price']}}</b> </p>
+                                        <p>Brand: <b>{{$value['brand']}}</b> </p>
+                                        <p>Quantity: <b>{{$value['quantity']}}</b> </p>
+                                        <p>Processor Type: <b>{{$value['processorType']}} </b> </p>
+                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b> </p>
+                                        <p>CPU Cores: <b>{{$value['cpuCores']}} </b> </p>
+                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b> </p>
+                                        <p>Height: <b>{{$value['height']}} cm</b> </p>
+                                        <p>Width: <b>{{$value['width']}} cm</b> </p>
+                                        <p>Thickness: <b>{{$value['thickness']}} cm</b> </p>
+                                        <p>Weight: <b>{{$value['weight']}} kg</b> </p>
                                     </div>
                                 </div>
                             </div>
@@ -75,10 +75,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li>Processor Type: {{$desktop['processorType']}} </li>
-                                        <li>Ram Size: {{$desktop['ramSize']}} </li>
-                                        <li>CPU Cores: {{$desktop['cpuCores']}} </li>
-                                        <li>Hard Disk Size: {{$desktop['hddSize']}}</li>
+                                        <li>Processor Type: <b>{{$desktop['processorType']}}</b></li>
+                                        <li>Ram Size: <b>{{$desktop['ramSize']}} GB</b></li>
+                                        <li>CPU Cores: <b>{{$desktop['cpuCores']}}</b></li>
+                                        <li>Hard Disk Size: <b>{{$desktop['hddSize']}} GB</b></li>
                                     </ul>
                                 </div>
                             </div>
@@ -105,17 +105,17 @@
                                     <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-md-8">
-                                    <p>Price: <strong>${{$details['price']}}</strong> </p>
-                                    <p>Brand: <strong>{{$details['brand']}}</strong> </p>
-                                    <p>Quantity: <strong>{{$details['quantity']}}</strong> </p>
-                                    <p>Processor Type: <strong>{{$details['processorType']}} </strong> </p>
-                                    <p>Ram Size: <strong>{{$details['ramSize']}} GB</strong> </p>
-                                    <p>CPU Cores: <strong>{{$details['cpuCores']}} </strong> </p>
-                                    <p>Hard Disk Size: <strong>{{$details['hddSize']}} GB</strong> </p>
-                                    <p>Height: <strong>{{$details['height']}} cm</strong> </p>
-                                    <p>Width: <strong>{{$details['width']}} cm</strong> </p>
-                                    <p>Thickness: <strong>{{$details['thickness']}} cm</strong> </p>
-                                    <p>Weight: <strong>{{$details['weight']}} kg</strong> </p>
+                                    <p>Price: <b>${{$details['price']}}</b> </p>
+                                    <p>Brand: <b>{{$details['brand']}}</b> </p>
+                                    <p>Quantity: <b>{{$details['quantity']}}</b> </p>
+                                    <p>Processor Type: <b>{{$details['processorType']}} </b> </p>
+                                    <p>Ram Size: <b>{{$details['ramSize']}} GB</b> </p>
+                                    <p>CPU Cores: <b>{{$details['cpuCores']}} </b> </p>
+                                    <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b> </p>
+                                    <p>Height: <b>{{$details['height']}} cm</b> </p>
+                                    <p>Width: <b>{{$details['width']}} cm</b> </p>
+                                    <p>Thickness: <b>{{$details['thickness']}} cm</b> </p>
+                                    <p>Weight: <b>{{$details['weight']}} kg</b> </p>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
                             max:<input type="number" step="0.01" placeholder="0.00" max="99999" name="max-price" id="desktop-price" class="form-control" value="0">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-sm" name="search-desktop-form" id="search-desktop-form">Search</button>
+                            <button type="submit" class="btn btn-success btn-sm" name="client-search-desktop-form" id="client-search-desktop-form">Search</button>
                         </div>
                     </div>
                 </form>

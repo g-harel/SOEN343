@@ -68,6 +68,7 @@ if(isAdminLoggedIn()) {
             Route::post('tablet/modify', 'ComputerController@modifyTablet');
             Route::post('laptop/modify', 'ComputerController@modifyLaptop');
             Route::post('laptop/delete', 'ComputerController@deleteLaptop');
+            Route::get('search', 'ComputerController@search'); // computer filter
         }
     );
 

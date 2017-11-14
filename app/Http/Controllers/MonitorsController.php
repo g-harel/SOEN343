@@ -64,7 +64,6 @@ class MonitorsController extends Controller
             } else {
                 if(isset($_GET['admin-search-monitor-form'])) {
                     return view('items.monitor.show-monitor', [
-                        // still needed if no result found
                         'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
                         'noResults' => true
                     ]);

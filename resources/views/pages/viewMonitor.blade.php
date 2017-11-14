@@ -32,11 +32,11 @@
                                         <i class="fa fa-television fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
-                                        <p>Price: <strong> ${{$value['price']}}</strong> </p>
-                                        <p>Brand: <strong>{{$value['brand']}}</strong> </p>
-                                        <p>Quantity: <strong>{{$value['quantity']}}</strong> </p>
-                                        <p>Display Size: <strong>{{$value['displaySize']}} inches</strong> </p>
-                                        <p>Weight: <strong>{{$value['weight']}} kg</strong> </p>
+                                        <p>Price: <b> ${{$value['price']}}</b> </p>
+                                        <p>Brand: <b>{{$value['brand']}}</b> </p>
+                                        <p>Quantity: <b>{{$value['quantity']}}</b> </p>
+                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b> </p>
+                                        <p>Weight: <b>{{$value['weight']}} kg</b> </p>
                                     </div>
                                 </div>
                             </div>
@@ -88,11 +88,11 @@
                                 <i class="fa fa-television fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Price:<strong> ${{$details['price']}}</strong> </p>
-                                <p>Brand: <strong>{{$details['brand']}}</strong> </p>
-                                <p>Quantity: <strong>{{$details['quantity']}}</strong> </p>
-                                <p>Display Size: <strong>{{$details['displaySize']}} inches</strong> </p>
-                                <p>Weight: <strong>{{$details['weight']}} kg</strong> </p>
+                                <p>Price:<b> ${{$details['price']}}</b> </p>
+                                <p>Brand: <b>{{$details['brand']}}</b> </p>
+                                <p>Quantity: <b>{{$details['quantity']}}</b> </p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b> </p>
+                                <p>Weight: <b>{{$details['weight']}} kg</b> </p>
                             </div>
                         </div>
                     </div>

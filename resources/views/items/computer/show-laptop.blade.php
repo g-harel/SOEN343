@@ -20,7 +20,136 @@
             <p>You have successfully <b>deleted</b> this item.</p>
         </div>
     @endif
-    <p><a class="btn btn-success" href="/items/create">Add new</a></p>
+    @if(!empty($noResults))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>No results were found for your search.</p>
+        </div>
+    @endif
+    @if(!empty($numResult))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <label>{{$numResult}} result(s) found.</label>
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-md-1">
+            <p><a href="../create" class="btn btn-success">Add new</a></p>
+        </div>
+        <div class="col-md-11">
+            <div class="input-group" id="adv-search">
+                <input type="text" readonly="" class="form-control" placeholder="Search by" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form id="laptop-form" class="form-horizontal" action="/items/computer/search" method="GET">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            Brand:
+                                            <select name="laptop-brand" id="laptop-brand" class="form-control">
+                                                <option title="Select brands" value="">Select brands</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Hard Drive Size (GB):
+                                            <select name="laptop-storage-capacity" id="laptop-storage-capacity" class="form-control">
+                                                <option title="Select storage qty" value="">Select storage size</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Ram Size (GB):
+                                            <select name="laptop-ram-size" id="laptop-ram-size" class="form-control">
+                                                <option title="Select laptop ram size" value="">Select ram size</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Min Price:
+                                            <input type="number"  step="0.01" placeholder="0.00" max="99999" name="min-price" id="laptop-price" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            Max Price:
+                                            <input type="number"  step="0.01" placeholder="0.00" max="99999" name="max-price" id="laptop-price" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success btn-sm" name="client-search-laptop-form" id="client-search-laptop-form">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if(!empty($result))
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Processor type</th>
+            <th>Ram size</th>
+            <th>Weight</th>
+            <th>CPU cores</th>
+            <th>HDD size</th>
+            <th>Display Size (inches)</th>
+            <th>Battery</th>
+            <th>OS</th>
+            <th>Camera</th>
+            <th>Touchscreen</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($result as $value)
+            <tr>
+                <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
+                <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
+                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
+                <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
+                <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
+                <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
+                <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
+                <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
+                <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
+                <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
+                <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
+                <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
+                @if($value["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
+                @else
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
+                @endif
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                        <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
+                           data-target=".bs-edit-laptop-modal-lg">
+                            <span class="fa fa-scissors"></span>
+                        </a>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                           data-target="#delLaptopLink">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    @endif
+    @if(empty($result))
     <table class="table table-bordered table-responsive">
         <thead>
         <tr>
@@ -83,6 +212,7 @@
         @endforeach
         </tbody>
     </table>
+    @endif
     <div class="modal fade bs-edit-laptop-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">

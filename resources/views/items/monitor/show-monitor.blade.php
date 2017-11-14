@@ -31,6 +31,7 @@
             <label>{{$numResult}} result(s) found.</label>
         </div>
     @endif
+    <!-- filtering form -->
     <div class="row">
         <div class="col-md-1">
             <p><a href="../create" class="btn btn-success">Add new</a></p>
@@ -60,7 +61,6 @@
                                         Min Price:
                                         <input type="number" step="0.01" placeholder="min" max="99999" name="min-price" id="monitor-price" class="form-control" value="0">
                                     </div>
-
                                     <div class="form-group">
                                         Max Price:
                                         <input type="number" step="0.01" placeholder="max" max="99999" name="max-price" id="monitor-price" class="form-control" value="0">
@@ -77,6 +77,7 @@
             </div>
         </div>
     </div>
+    <!-- end filtering monitor form -->
     <!-- filtering result -->
     @if(!empty($result))
         <table class="table table-bordered bg-color-white">

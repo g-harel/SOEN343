@@ -47,47 +47,20 @@ class ComputerController extends Controller
 
     public function search() {
         if ($this->isFormSubmitted($_GET)) {
-            $desktopFields = [
-                'brand' => filter_input(INPUT_GET, 'desktop-brand'),
-                'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
-                'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
-                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price'),
-                'view' => 'viewDesktop',
-                'collection' => 'desktops',
-                'itemType' => 3
-            ];
-            $laptopFields = [
-                'brand' => filter_input(INPUT_GET, 'laptop-brand'),
-                'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
-                'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
-                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price'),
-                'view' => 'viewLaptop',
-                'collection' => 'laptops',
-                'itemType' => 4
-            ];
-            $tabletFields = [
-                'brand' => filter_input(INPUT_GET, 'tablet-brand'),
-                'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
-                'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
-                'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-                'minPrice' => filter_input(INPUT_GET, 'min-price'),
-                'view' => 'viewTablet',
-                'collection' => 'tablets',
-                'itemType' => 5
-            ];
             $searchItem = array();
             $computers = array();
             $result = array();
-            if (isset($_GET['search-desktop-form'])) {
-                $searchItem = $desktopFields;
+            if (isset($_GET['admin-search-desktop-form']) ||
+                isset($_GET['client-search-desktop-form'])) {
+                $searchItem = $this->desktopFilteringFields();
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
-            } else if (isset($_GET['search-laptop-form'])) {
-                $searchItem = $laptopFields;
+            } else if (isset($_GET['admin-search-laptop-form']) ||
+                isset($_GET['client-search-laptop-form'])) {
+                $searchItem = $this->laptopFilteringFields();
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
-            } else if (isset($_GET['search-tablet-form'])) {
-                $searchItem = $tabletFields;
+            } else if (isset($_GET['admin-search-tablet-form']) ||
+                isset($_GET['client-search-tablet-form'])) {
+                $searchItem = $this->tabletFilteringFields();
                 $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
             }
             foreach ($computers as $computer) {
@@ -113,14 +86,27 @@ class ComputerController extends Controller
             }
             if (!empty($result)) {
                 $numResult = count($result);
-                return view('pages.'.$searchItem['view'], [
-                    'result' => $result, 'numResult' => $numResult
-                ]);
+                if($this->isAdminSearching()) {
+                    return view($searchItem['adminView'], [
+                        'result' => $result, 'numResult' => $numResult
+                    ]);
+                } else {
+                    return view($searchItem['clientView'], [
+                        'result' => $result, 'numResult' => $numResult
+                    ]);
+                }
             } else {
-                return view('pages.'.$searchItem['view'], [
-                    $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
-                    'noResults' => true
-                ]);
+                if($this->isAdminSearching()) {
+                    return view($searchItem['adminView'], [
+                        $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
+                        'noResults' => true
+                    ]);
+                } else {
+                    return view($searchItem['clientView'], [
+                        $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
+                        'noResults' => true
+                    ]);
+                }
             }
         }
         return view('pages.view');

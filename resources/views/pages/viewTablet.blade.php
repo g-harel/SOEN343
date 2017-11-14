@@ -87,7 +87,7 @@
                         <div class="col-md-12">
                             <ul class="list-group">
                                 <li>Processor Type: <b>{{ $tablet['processorType'] }}</b></li>
-                                <li>Ram Size: <b>{{ $tablet['ramSize'] }}</b></li>
+                                <li>Ram Size: <b>{{ $tablet['ramSize'] }} GB</b></li>
                                 <li>Cpu cores: <b>{{ $tablet['cpuCores'] }}</b></li>
                                 <li>Hard Disk Size: <b>{{ $tablet['hddSize'] }} GB</b></li>
                             </ul>
@@ -192,7 +192,7 @@
                             max:<input type="number"  step="0.01" placeholder="0.00" max="99999" name="max-price" id="laptop-price" class="form-control" value="0">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-sm" name="search-tablet-form" id="search-tablet-form">Search</button>
+                            <button type="submit" class="btn btn-success btn-sm" name="client-search-tablet-form" id="client-search-tablet-form">Search</button>
                         </div>
                     </div>
                 </form>

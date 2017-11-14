@@ -144,4 +144,61 @@ class Controller extends BaseController
         }
     }
 
+    public function desktopFilteringFields() {
+        return [
+            'brand' => filter_input(INPUT_GET, 'desktop-brand'),
+            'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewDesktop',
+            'adminView' => 'items.computer.show-desktop',
+            'collection' => 'desktops',
+            'itemType' => 3
+        ];
+    }
+
+    public function laptopFilteringFields() {
+        return  [
+            'brand' => filter_input(INPUT_GET, 'laptop-brand'),
+            'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewLaptop',
+            'adminView' => 'items.computer.show-laptop',
+            'collection' => 'laptops',
+            'itemType' => 4
+        ];
+    }
+
+    public function tabletFilteringFields() {
+        return [
+            'brand' => filter_input(INPUT_GET, 'tablet-brand'),
+            'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewTablet',
+            'adminView' => 'items.computer.show-tablet',
+            'collection' => 'tablets',
+            'itemType' => 5
+        ];
+    }
+
+    public function isAdminSearching() {
+        $cond = false;
+        $forms = [
+            'admin-search-desktop-form',
+            'admin-search-laptop-form',
+            'admin-search-tablet-form'
+        ];
+        foreach ($forms as $form) {
+            if(isset($form)) {
+                $cond = true;
+            }
+        }
+        return $cond;
+    }
+
 }
