@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
@@ -20,17 +22,21 @@ Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
-// client
+// client public view
 Route::get('/view', 'PagesController@view');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 // admin pages
-Route::get('/items', 'ItemsController@index');
-Route::get('/admin', 'PagesController@admin');
-Route::get('items/create', 'ItemsController@create');
+if (isset($_SESSION['isAdmin'])) {
+    if ($_SESSION['isAdmin'] == 1) {
+        Route::get('/items', 'ItemsController@index');
+        Route::get('/admin', 'PagesController@admin');
+        Route::get('items/create', 'ItemsController@create');
+    }
+}
 
-
+// Client shopping view
 Route::prefix('/view')->group(
     function () {
         Route::get('/', 'PagesController@view');
