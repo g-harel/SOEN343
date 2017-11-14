@@ -15,28 +15,18 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
-
 Route::get('/login', 'PagesController@login');
 Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
-// client public view
-Route::get('/view', 'PagesController@view');
-Route::get('/logout', 'PagesController@logout');
-Route::get('/shoppingCart', 'PagesController@shoppingCart');
-
-// admin pages
-if (isset($_SESSION['isAdmin'])) {
-    if ($_SESSION['isAdmin'] == 1) {
-        Route::get('/items', 'ItemsController@index');
-        Route::get('/admin', 'PagesController@admin');
-        Route::get('items/create', 'ItemsController@create');
-    }
+// only for client after logged in
+if(!isAdminLoggedIn()) {
+    Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
-// Client shopping view
+// Client shopping view : public
 Route::prefix('/view')->group(
     function () {
         Route::get('/', 'PagesController@view');
@@ -49,36 +39,56 @@ Route::prefix('/view')->group(
         Route::get('/desktop/{id}', ['uses' => 'PagesController@desktopDetails']);
         Route::get('/laptop/{id}', ['uses' => 'PagesController@laptopDetails']);
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
+        Route::get('search', 'ComputerController@search'); // computer filter
+        Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
     }
 );
 
-// Computer
-Route::prefix('items/computer/')->group(
-    function () {
-        Route::get('showDesktop', 'ComputerController@showDesktop');
-        Route::get('showLaptop', 'ComputerController@showLaptop');
-        Route::get('showTablet', 'ComputerController@showTablet');
-        Route::post('desktop/insert', 'ComputerController@insertDesktop');
-        Route::post('tablet/insert', 'ComputerController@insertTablet');
-        Route::post('laptop/insert', 'ComputerController@insertLaptop');
-        Route::post('desktop/delete', 'ComputerController@deleteDesktop');
-        Route::post('tablet/delete', 'ComputerController@deleteTablet');
-        Route::post('desktop/modify', 'ComputerController@modifyDesktop');
-        Route::post('tablet/modify', 'ComputerController@modifyTablet');
-        Route::post('laptop/modify', 'ComputerController@modifyLaptop');
-        Route::post('laptop/delete', 'ComputerController@deleteLaptop');
-        Route::get('search', 'ComputerController@search');
-    }
-);
+// admin pages : admin only after logged in
+if(isAdminLoggedIn()) {
+    Route::get('/items', 'ItemsController@index');
+    Route::get('/admin', 'PagesController@admin');
+    Route::get('items/create', 'ItemsController@create');
 
-// Monitor
-Route::prefix('items/monitor/')->group(
-    function () {
-        Route::get('showMonitor', 'MonitorsController@showMonitor');
-        Route::post('insert', 'MonitorsController@insertMonitor');
-        Route::post('delete', 'MonitorsController@deleteMonitor');
-        Route::post('modify', 'MonitorsController@modifyMonitor');
-        Route::get('search', 'MonitorsController@searchMonitor');
-    }
-);
+    // Computer pages
+    Route::prefix('items/computer/')->group(
+        function () {
+            Route::get('showDesktop', 'ComputerController@showDesktop');
+            Route::get('showLaptop', 'ComputerController@showLaptop');
+            Route::get('showTablet', 'ComputerController@showTablet');
+            Route::post('desktop/insert', 'ComputerController@insertDesktop');
+            Route::post('tablet/insert', 'ComputerController@insertTablet');
+            Route::post('laptop/insert', 'ComputerController@insertLaptop');
+            Route::post('desktop/delete', 'ComputerController@deleteDesktop');
+            Route::post('tablet/delete', 'ComputerController@deleteTablet');
+            Route::post('desktop/modify', 'ComputerController@modifyDesktop');
+            Route::post('tablet/modify', 'ComputerController@modifyTablet');
+            Route::post('laptop/modify', 'ComputerController@modifyLaptop');
+            Route::post('laptop/delete', 'ComputerController@deleteLaptop');
+        }
+    );
 
+    // Monitor pages
+    Route::prefix('items/monitor/')->group(
+        function () {
+            Route::get('showMonitor', 'MonitorsController@showMonitor');
+            Route::post('insert', 'MonitorsController@insertMonitor');
+            Route::post('delete', 'MonitorsController@deleteMonitor');
+            Route::post('modify', 'MonitorsController@modifyMonitor');
+        }
+    );
+}
+
+
+/**
+ * Returns true if the user
+ * currently logged is an admin,
+ * can be used globally?
+ * @return bool
+ */
+Function isAdminLoggedIn()
+{
+    return isset($_SESSION['isAdmin']) &&
+        !empty($_SESSION['isAdmin']) &&
+        $_SESSION['isAdmin'] == 1;
+}

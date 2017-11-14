@@ -29,10 +29,7 @@ class PagesController extends Controller
 
     public function admin()
     {
-        if ($this->isAdminLoggedIn()) {
-            return view('pages.admin');
-        }
-        return view('pages.index');
+        return view('pages.admin');
     }
 
     public function view()
@@ -78,9 +75,9 @@ class PagesController extends Controller
             break;
             }
         }
-            return view('pages.viewMonitor', [
-                'details' => $details,
-            ]);
+        return view('pages.viewMonitor', [
+            'details' => $details,
+        ]);
     }
 
 
@@ -153,9 +150,6 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        if ($this->isAdminLoggedIn()) {
-            return view('pages.admin');
-        }
         return view('pages.shoppingCart');
     }
 
@@ -165,9 +159,9 @@ class PagesController extends Controller
             $email = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             $login = new Login($email, $password);
-            if ($login->validate() && $this->isAdminLoggedIn()) {
+            if ($login->validate() && isAdminLoggedIn()) {
                 return redirect('admin');
-            } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
+            } elseif ($login->validate() && !isAdminLoggedIn()) {
                 return redirect('view');
             } else {
                 return redirect()->back()->with(
