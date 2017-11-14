@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
-
 
 class PagesController extends Controller
 {

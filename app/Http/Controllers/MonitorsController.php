@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-use App\Gateway\MonitorGateway;
-use Illuminate\Http\Request;
 use App\Mappers\ItemCatalogMapper;
 
 class MonitorsController extends Controller
@@ -115,9 +110,9 @@ class MonitorsController extends Controller
             $id = filter_input(INPUT_POST, 'monitor-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.monitor.show-monitor', [
+                return redirect()->back()->with([
                     'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
-                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                    'inputErrors' => $emptyArrayKeys
                 ]);
             } else {
                 $params = [

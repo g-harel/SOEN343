@@ -23,10 +23,8 @@ if (session_status() == PHP_SESSION_NONE) {
         @include('inc.navbar')
         <div class='container'>
             <div class="row">
-                <div class="">
-                    @include('inc.messages')
-                    @yield('content')
-                </div>
+                @include('inc.messages')
+                @yield('content')
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

@@ -19,6 +19,14 @@
             <p>You have successfully <b>modified</b> this item.</p>
         </div>
     @endif
+    @if(Session::has('inputErrors'))
+        @foreach(Session::get('inputErrors') as $value)
+            <div class='alert alert-warning'>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
+            </div>
+        @endforeach
+    @endif
     @if(!empty($noResults))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

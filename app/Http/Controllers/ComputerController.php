@@ -2,23 +2,10 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 use App\Mappers\ItemCatalogMapper;
-use App\Gateway;
-use App\Gateway\DesktopGateway;
-use App\Gateway\TabletGateway;
-use App\Gateway\LaptopGateway;
-use App\Models\Item;
-use App\Models\ItemType;
-use App\Models\Tablet;
 
 class ComputerController extends Controller
 {
-
-
     public function index()
     {
 
@@ -282,9 +269,9 @@ class ComputerController extends Controller
             $id = filter_input(INPUT_POST, 'desktop-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.computer.show-desktop', [
+                return redirect()->back()->with([
                     'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3),
-                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                    'inputErrors' => $emptyArrayKeys
                 ]);
             } else {
                 $params = [
@@ -324,9 +311,9 @@ class ComputerController extends Controller
             $id = filter_input(INPUT_POST, 'laptop-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.computer.show-laptop', [
+                return redirect()->back()->with([
                     'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4),
-                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                    'inputErrors' => $emptyArrayKeys
                 ]);
             } else {
                 $params = [
@@ -368,9 +355,9 @@ class ComputerController extends Controller
             $id = filter_input(INPUT_POST, 'tablet-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.computer.show-tablet', [
+                return redirect()->back()->with([
                     'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5),
-                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                    'inputErrors' => $emptyArrayKeys
                 ]);
             } else {
                 $params = [
