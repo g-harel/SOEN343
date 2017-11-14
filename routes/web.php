@@ -23,7 +23,7 @@ Route::post('registerUser', 'PagesController@registerUser');
 
 
 // only for client after logged in
-if(!isAdminLoggedIn()) {
+if (!isAdminLoggedIn()) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
@@ -48,7 +48,7 @@ Route::prefix('/view')->group(
 );
 
 // admin pages : admin only after logged in
-if(isAdminLoggedIn()) {
+if (isAdminLoggedIn()) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
     Route::get('items/create', 'ItemsController@create');
@@ -90,7 +90,7 @@ if(isAdminLoggedIn()) {
  * can be used globally?
  * @return bool
  */
-Function isAdminLoggedIn()
+function isAdminLoggedIn()
 {
     return isset($_SESSION['isAdmin']) &&
         !empty($_SESSION['isAdmin']) &&
