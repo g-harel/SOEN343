@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
-
 
 class PagesController extends Controller
 {
@@ -37,109 +32,109 @@ class PagesController extends Controller
         return view('pages.view');
     }
 
+    public function viewProfile() {
+        return view('pages.client-profile');
+    }
+
     public function viewDesktop()
     {
         return view('pages.viewDesktop', [
-            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(3)
+            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
         ]);
     }
 
     public function viewLaptop()
     {
         return view('pages.viewLaptop', [
-            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(4)
+            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE)
         ]);
     }
 
     public function viewMonitor()
     {
         return view('pages.viewMonitor', [
-            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
 
     public function viewTablet()
     {
         return view('pages.viewTablet', [
-            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(5)
+            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE)
         ]);
     }
 
     public function monitorDetails($id)
     {
-        $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
-        $details = array();
-        foreach ($monitors as $monitor) {
-            if ($monitor['id'] == $id) {
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::MONITOR_ITEM_TYPE)) {
+            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+            foreach($monitors as $monitor){
                 $details = $monitor;
-                break;
             }
             return view('pages.viewMonitor', [
-                'notFound' => true,
-                'for' => 'Monitor'
+                'details' => $details,
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
             ]);
         }
-        return view('pages.viewMonitor', [
-            'details' => $details,
-        ]);
     }
-
 
     public function desktopDetails($id)
     {
-        $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(3);
-        $details = array();
-        foreach($desktops as $desktop){
-            if($desktop['id'] == $id){
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::DESKTOP_ITEM_TYPE)) {
+            $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+            foreach($desktops as $desktop){
                 $details = $desktop;
-                break;
             }
             return view('pages.viewDesktop', [
-                'notFound' => true,
-                'for' => 'Desktop'
+                'details' => $details,
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
             ]);
         }
-        return view('pages.viewDesktop', [
-            'details' => $details,
-        ]);
+
     }
 
     public function laptopDetails($id)
     {
-        $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(4);
-        $laptopItem = null;
-        foreach ($laptops as $laptop) {
-            if($laptop['id'] == $id) {
-                $laptopItem = $laptop;
-                break;
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::LAPTOP_ITEM_TYPE)) {
+            $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+            foreach($laptops as $laptop){
+                $details = $laptop;
             }
             return view('pages.viewLaptop', [
-                'notFound' => true,
-                'for' => 'Laptop'
+                'details' => $details
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
             ]);
         }
-        return view('pages.viewLaptop', [
-            'laptopDetails' => $laptopItem
-        ]);
     }
 
     public function tabletDetails($id)
     {
-        $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(5);
-        $tabletItem = null;
-        foreach ($tablets as $tablet) {
-            if($tablet['id'] == $id) {
-                $tabletItem = $tablet;
-                break;
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::TABLET_ITEM_TYPE)) {
+            $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+            foreach($tablets as $tablet){
+                $details = $tablet;
             }
-            return view('pages.viewTablet', [
-                'notFound' => true,
-                'for' => 'Tablet'
+            return view('pages.viewLaptop', [
+                'details' => $details
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
             ]);
         }
-        return view('pages.viewTablet', [
-            'tabletDetails' => $tabletItem
-        ]);
     }
 
     public function login()
@@ -175,9 +170,9 @@ class PagesController extends Controller
             $email = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             $login = new Login($email, $password);
-            if ($login->validate() && isAdminLoggedIn()) {
+            if ($login->validate() && $this->isAdminLoggedIn()) {
                 return redirect('admin');
-            } elseif ($login->validate() && !isAdminLoggedIn()) {
+            } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
                 return redirect('view');
             } else {
                 return redirect()->back()->with(
@@ -215,7 +210,7 @@ class PagesController extends Controller
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
             } else {
-                $registerThis->createUser();
+                $registerThis->createAccount();
             }
             return view('pages.view');
         }

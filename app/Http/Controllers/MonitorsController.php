@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-use App\Gateway\MonitorGateway;
-use Illuminate\Http\Request;
 use App\Mappers\ItemCatalogMapper;
 
 class MonitorsController extends Controller
@@ -17,7 +12,7 @@ class MonitorsController extends Controller
 
     public function showMonitor() {
         return view('items.monitor.show-monitor', [
-            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
 
@@ -28,7 +23,7 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
+            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
             $result = array();
             foreach ($monitors as $monitor) {
                 if ($maxPrice == 0) {
@@ -63,12 +58,12 @@ class MonitorsController extends Controller
             } else {
                 if($this->isAdminSearching()) {
                     return view('items.monitor.show-monitor', [
-                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
                         'noResults' => true
                     ]);
                 } else {
                     return view('pages.viewMonitor', [
-                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
                         'noResults' => true
                     ]);
                 }
@@ -95,7 +90,7 @@ class MonitorsController extends Controller
                 ];
 
                 $addMonitorItem = ItemCatalogMapper::getInstance();
-                $addMonitorItem->addNewItem($_SESSION['session_id'], 1, $params); // ufw
+                $addMonitorItem->addNewItem($_SESSION['session_id'], Controller::MONITOR_ITEM_TYPE, $params); // ufw
                 $addMonitorItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with([
                     'itemSuccessfullyAdded' => true,
@@ -115,9 +110,9 @@ class MonitorsController extends Controller
             $id = filter_input(INPUT_POST, 'monitor-id', FILTER_VALIDATE_INT);
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
-                return view('items.monitor.show-monitor', [
-                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
-                    'inputErrors' => $emptyArrayKeys, 'alertType' => 'warning'
+                return redirect()->back()->with([
+                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
+                    'inputErrors' => $emptyArrayKeys
                 ]);
             } else {
                 $params = [
@@ -133,13 +128,13 @@ class MonitorsController extends Controller
                 $monitorItem->modifyItem($_SESSION['session_id'], $id, $params);
                 $monitorItem->commit($_SESSION['session_id']);
                 return redirect()->back()->with([
-                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1),
+                    'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
                     'itemSuccessfullyModified' => 'monitor'
                 ]);
             }
         } else {
             return view('items.monitor.show-monitor', [
-                'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(1)
+                'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
             ]);
         }
     }

@@ -20,6 +20,14 @@
             <p>You have successfully <b>deleted</b> this item.</p>
         </div>
     @endif
+    @if(Session::has('inputErrors'))
+        @foreach(Session::get('inputErrors') as $value)
+            <div class='alert alert-warning'>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
+            </div>
+        @endforeach
+    @endif
     @if(!empty($noResults))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -34,7 +42,7 @@
     @endif
     <div class="row">
         <div class="col-md-1">
-            <p><a href="../create" class="btn btn-success">Add new</a></p>
+            <p><a href="/items/create" class="btn btn-success">Add new</a></p>
         </div>
         <div class="col-md-11">
             <div class="input-group" id="adv-search">
@@ -73,7 +81,7 @@
                                             <input type="number"  step="0.01" placeholder="0.00" max="99999" name="max-price" id="laptop-price" class="form-control" value="0">
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success btn-sm" name="client-search-laptop-form" id="client-search-laptop-form">Search</button>
+                                            <button type="submit" class="btn btn-success btn-sm" name="admin-search-laptop-form" id="admin-search-laptop-form">Search</button>
                                         </div>
                                     </div>
                                 </form>

@@ -24,13 +24,13 @@ class SessionGateway
     }
 
     public function getSessionByAccountId($accountId) {
-        $conditionsAssociativeArray = ["user_id" => $accountId];
+        $conditionsAssociativeArray = ["account_id" => $accountId];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function addSession($accountId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `sessions`(`user_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
+        $sql = "INSERT INTO `sessions`(`account_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 
