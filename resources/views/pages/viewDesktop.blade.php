@@ -7,10 +7,10 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(!empty($notFound))
+        @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <label>{{ $for }} not found.</label>
+                <label>Monitor not found.</label>
             </div>
         @endif
         @if(!empty($noResults))
@@ -61,7 +61,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($details) && empty($result) && empty($notFound))
+        @if(empty($details) && empty($result))
         <div class="row">
             @foreach($desktops as $desktop)
                 <div class="col-xs-6 col-lg-4">

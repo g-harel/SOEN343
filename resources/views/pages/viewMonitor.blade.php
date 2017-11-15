@@ -6,10 +6,10 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(!empty($notFound))
+        @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <label>{{ $for }} not found.</label>
+                <label>Monitor not found.</label>
             </div>
         @endif
         @if(!empty($noResults))
@@ -54,7 +54,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($details) && empty($result) && empty($notFound))
+        @if(empty($details) && empty($result))
         <div class="row">
         @foreach($monitors as $monitor)
             <div class="col-xs-6 col-lg-4">
@@ -68,7 +68,7 @@
                                 <i class="fa fa-television fa-5x"></i>
                             </div>
                             <div class="col-md-6">
-                                <p  >Price: ${{$monitor['price']}}</p>
+                                <p>Price: ${{$monitor['price']}}</p>
                             </div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                             max:<input type="number" step="0.01" placeholder="0.00" max="99999" name="max-price" id="monitor-price" class="form-control" value="0">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-sm" name="submit-monitor-form" id="submit-monitor-form">Search</button>
+                            <button type="submit" class="btn btn-success btn-sm" name="client-search-monitor-form" id="client-search-monitor-form">Search</button>
                         </div>
                     </div>
                 </form>
