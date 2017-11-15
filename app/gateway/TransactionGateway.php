@@ -31,8 +31,8 @@ class TransactionGateway
         return $this->db->queryDB($sql);
     }
 
-    public function addTransaction($itemId, $accountId, $purchasePrice) {
-        $sql = "INSERT INTO `$this->tableName`(`item_id`, `account_id`, `purchase_price`) VALUES ('$itemId', '$accountId', '$purchasePrice');";
+    public function addTransaction($accountId, $itemId, $purchasePrice) {
+        $sql = "INSERT INTO `$this->tableName`(`account_id`, `item_id`, `purchase_price`) VALUES ('$accountId', '$itemId', '$purchasePrice');";
         $result = $this->db->queryDB($sql);
         return $result;
     }
