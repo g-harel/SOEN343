@@ -170,9 +170,9 @@ class PagesController extends Controller
             $email = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             $login = new Login($email, $password);
-            if ($login->validate() && isAdminLoggedIn()) {
+            if ($login->validate() && $this->isAdminLoggedIn()) {
                 return redirect('admin');
-            } elseif ($login->validate() && !isAdminLoggedIn()) {
+            } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
                 return redirect('view');
             } else {
                 return redirect()->back()->with(

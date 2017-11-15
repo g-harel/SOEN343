@@ -207,4 +207,11 @@ class Controller extends BaseController
         return $cond;
     }
 
+    public function isAdminLoggedIn()
+    {
+        return isset($_SESSION['isAdmin']) &&
+            !empty($_SESSION['isAdmin']) &&
+            $_SESSION['isAdmin'] == 1;
+    }
+
 }

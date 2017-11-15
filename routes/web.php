@@ -23,7 +23,10 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
 
-if (!isAdminLoggedIn()) {
+if (isset($_SESSION['isAdmin']) 
+    && !empty($_SESSION['isAdmin']) 
+    && $_SESSION['isAdmin'] != 1
+) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
@@ -46,7 +49,10 @@ Route::prefix('/view')->group(
     }
 );
 
-if (isAdminLoggedIn()) {
+if (isset($_SESSION['isAdmin']) 
+    && !empty($_SESSION['isAdmin']) 
+    && $_SESSION['isAdmin'] == 1
+) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
     Route::get('items/create', 'ItemsController@create');
@@ -77,19 +83,4 @@ if (isAdminLoggedIn()) {
             Route::post('modify', 'MonitorsController@modifyMonitor');
         }
     );
-}
-
-
-/**
- * Returns true if the user
- * currently logged is an admin,
- * can be used globally?
- *
- * @return bool
- */
-Function isAdminLoggedIn()
-{
-    return isset($_SESSION['isAdmin']) &&
-        !empty($_SESSION['isAdmin']) &&
-        $_SESSION['isAdmin'] == 1;
 }
