@@ -13,19 +13,19 @@ if (session_status() == PHP_SESSION_NONE) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel='stylesheet' href="{{asset('css/app.css')}}">
         <link rel='stylesheet' href="{{asset('css/style.css')}}">
+        <link rel='stylesheet' href="{{asset('css/filtering.css')}}">
         <title>@yield('page-title')</title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="@yield('profile-css')">
     </head>
     <body>
         @include('inc.navbar')
         <div class='container'>
             <div class="row">
-                <div class="col-lg-12">
-                    @include('inc.messages')
-                    @yield('content')
-                </div>
+                @include('inc.messages')
+                @yield('content')
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
