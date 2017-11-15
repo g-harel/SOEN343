@@ -23,10 +23,7 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
 
-if (isset($_SESSION['isAdmin']) 
-    && !empty($_SESSION['isAdmin']) 
-    && $_SESSION['isAdmin'] != 1
-) {
+if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
@@ -49,10 +46,7 @@ Route::prefix('/view')->group(
     }
 );
 
-if (isset($_SESSION['isAdmin']) 
-    && !empty($_SESSION['isAdmin']) 
-    && $_SESSION['isAdmin'] == 1
-) {
+if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
     Route::get('items/create', 'ItemsController@create');

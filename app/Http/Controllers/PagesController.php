@@ -65,7 +65,7 @@ class PagesController extends Controller
         $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(1);
         $details = array();
         foreach ($monitors as $monitor) {
-            if ($monitor['id'] == $id) {
+            if ($monitor['id'] == trim($id)) {
                 $details = $monitor;
                 break;
             }
@@ -79,13 +79,12 @@ class PagesController extends Controller
         ]);
     }
 
-
     public function desktopDetails($id)
     {
         $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(3);
         $details = array();
         foreach($desktops as $desktop){
-            if($desktop['id'] == $id){
+            if($desktop['id'] == trim($id)){
                 $details = $desktop;
                 break;
             }
@@ -104,7 +103,7 @@ class PagesController extends Controller
         $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(4);
         $laptopItem = null;
         foreach ($laptops as $laptop) {
-            if($laptop['id'] == $id) {
+            if($laptop['id'] == trim($id)) {
                 $laptopItem = $laptop;
                 break;
             }
@@ -123,7 +122,7 @@ class PagesController extends Controller
         $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(5);
         $tabletItem = null;
         foreach ($tablets as $tablet) {
-            if($tablet['id'] == $id) {
+            if($tablet['id'] == trim($id)) {
                 $tabletItem = $tablet;
                 break;
             }
