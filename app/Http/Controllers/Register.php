@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mappers\UserMapper;
+use App\Mappers\AccountMapper;
 use App\Models\Account;
 
 class Register
 {
 
-    private $userMapper;
+    private $accountMapper;
     /*account info*/
     private $firstName;
     private $lastName;
@@ -41,15 +41,15 @@ class Register
         $this->country = $country;
         $this->postalCode = $postalCode;
 
-        $this->userMapper = new UserMapper();
-        $newUser = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $this->accountMapper = new AccountMapper();
+        $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
-        $this->userMapper->setAccount($newUser);
+        $this->accountMapper->setAccount($newAccount);
     }
 
-    public function createUser()
+    public function createAccount()
     {
-        $result = $this->userMapper->saveAccountInRecord();
+        $result = $this->accountMapper->saveAccountInRecord();
         return $result;
 
     }
@@ -58,6 +58,6 @@ class Register
 
         $email = $this->email;
 
-        return $this->userMapper->getAccountByEmail($email) ;
+        return $this->accountMapper->getAccountByEmail($email) ;
     }
 }

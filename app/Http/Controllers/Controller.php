@@ -10,11 +10,16 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Mappers\ItemCatalogMapper;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    const MONITOR_ITEM_TYPE = 1;
+    const DESKTOP_ITEM_TYPE = 3;
+    const LAPTOP_ITEM_TYPE = 4;
+    const TABLET_ITEM_TYPE = 5;
 
     // utility
     public $filterInputFloatArr = array(
@@ -212,6 +217,21 @@ class Controller extends BaseController
         return isset($_SESSION['isAdmin']) &&
             !empty($_SESSION['isAdmin']) &&
             $_SESSION['isAdmin'] == 1;
+    }
+
+    /**
+     * e.g. /view/monitor/{id}
+     * return true if id exist, otherwise false
+     * @param $idToSearch
+     * @param $itemType
+     * @return bool
+     */
+    public function isIdExistInCatalog($idToSearch, $itemType) {
+        $ids = array_column(
+            ItemCatalogMapper::getInstance()->selectAllItemType($itemType),
+            'id'
+        );
+        return in_array((int)$idToSearch, $ids);
     }
 
 }

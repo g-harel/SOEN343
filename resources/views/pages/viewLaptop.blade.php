@@ -6,10 +6,10 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(!empty($notFound))
+        @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <label>{{ $for }} not found.</label>
+                <label>Monitor not found.</label>
             </div>
         @endif
         @if(!empty($noResults))
@@ -65,7 +65,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($laptopDetails)  && empty($result) && empty($notFound))
+        @if(empty($details)  && empty($result))
         <div class="row">
             @foreach($laptops as $laptop)
             <div class="col-xs-6 col-lg-4">
@@ -105,12 +105,12 @@
             @endif
         </div>
         @endif
-        @if(!empty($laptopDetails))
+        @if(!empty($details))
             <div class="col-xs-12 col-lg-12">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $laptopDetails['brand'] }}, {{ $laptopDetails['hddSize'] }} GB {{ $laptopDetails["displaySize"] }}"
+                            {{ $details['brand'] }}, {{ $details['hddSize'] }} GB {{ $details["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -119,18 +119,18 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Quantity: <b>{{$laptopDetails['quantity']}}</b></p>
-                                <p>Price: <b>${{$laptopDetails['price']}}</b></p>
-                                <p>Brand: <b>{{$laptopDetails['brand']}}</b></p>
-                                <p>Processor Type: <b>{{$laptopDetails['processorType']}}</b></p>
-                                <p>OS: <b>{{$laptopDetails['os']}}</b></p>
-                                <p>Hard Disk Size: <b>{{$laptopDetails['hddSize']}} GB</b></p>
-                                <p>Ram Size: <b>{{$laptopDetails['ramSize']}} GB</b></p>
-                                <p>Display Size: <b>{{$laptopDetails['displaySize']}} inches</b></p>
-                                <p>Weight: <b>{{$laptopDetails['weight']}} kg</b></p>
-                                <p>Battery: <b>{{$laptopDetails['battery']}}</b></p>
-                                <p>Camera: <b>{{$laptopDetails['camera']}}</b></p>
-                                @if($laptopDetails["isTouchscreen"] == 0)
+                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
+                                <p>Price: <b>${{$details['price']}}</b></p>
+                                <p>Brand: <b>{{$details['brand']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processorType']}}</b></p>
+                                <p>OS: <b>{{$details['os']}}</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ramSize']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b></p>
+                                <p>Weight: <b>{{$details['weight']}} kg</b></p>
+                                <p>Battery: <b>{{$details['battery']}}</b></p>
+                                <p>Camera: <b>{{$details['camera']}}</b></p>
+                                @if($details["isTouchscreen"] == 0)
                                     <p>Touchscreen: <b>No</b></p>
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>

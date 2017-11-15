@@ -42,7 +42,7 @@
     <!-- filtering form -->
     <div class="row">
         <div class="col-md-1">
-            <p><a href="../create" class="btn btn-success">Add new</a></p>
+            <p><a href="/items/create" class="btn btn-success">Add new</a></p>
         </div>
         <div class="col-md-11">
             <div class="input-group" id="adv-search">

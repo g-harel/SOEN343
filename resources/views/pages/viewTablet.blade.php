@@ -6,10 +6,10 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(!empty($notFound))
+        @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <label>{{ $for }} not found.</label>
+                <label>Monitor not found.</label>
             </div>
         @endif
         @if(!empty($noResults))
@@ -71,7 +71,7 @@
             @endforeach
         @endif
         <!-- all tablets in the catalog -->
-        @if(empty($tabletDetails)  && empty($result) && empty($notFound))
+        @if(empty($details)  && empty($result))
         <div class="row">
         @foreach($tablets as $tablet)
             <div class="col-xs-6 col-lg-4">
@@ -111,14 +111,14 @@
         @endif
         </div>
         @endif
-        @if(!empty($tabletDetails))
+        @if(!empty($details))
         <!-- specific tablet  -->
         <div class="row">
             <div class="col-xs-12 col-lg-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $tabletDetails['brand'] }}, {{ $tabletDetails['hddSize'] }} GB {{ $tabletDetails["displaySize"] }}"
+                            {{ $details['brand'] }}, {{ $details['hddSize'] }} GB {{ $details["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -127,21 +127,21 @@
                                 <i class="fa fa-tablet fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Quantity: <b>{{$tabletDetails['quantity']}}</b></p>
-                                <p>Price: <b>${{$tabletDetails['price']}}</b></p>
-                                <p>Brand: <b>{{$tabletDetails['brand']}}</b></p>
-                                <p>Processor Type: <b>{{$tabletDetails['processorType']}}</b></p>
-                                <p>OS: <b>{{$tabletDetails['os']}}</b></p>
-                                <p>Hard Disk Size: <b>{{$tabletDetails['hddSize']}} GB</b></p>
-                                <p>Ram Size: <b>{{$tabletDetails['ramSize']}} GB</b></p>
-                                <p>Display Size: <b>{{$tabletDetails['displaySize']}} inches</b></p>
-                                <p>Width: <b>{{$tabletDetails['width']}} cm</b></p>
-                                <p>Height: <b>{{$tabletDetails['height']}} cm</b></p>
-                                <p>Weight: <b>{{$tabletDetails['weight']}} kg</b></p>
-                                <p>Thickness: <b>{{$tabletDetails['thickness']}} cm</b></p>
-                                <p>Battery: <b>{{$tabletDetails['battery']}}</b></p>
-                                <p>Camera: <b>{{$tabletDetails['camera']}}</b></p>
-                                @if($tabletDetails["isTouchscreen"] == 0)
+                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
+                                <p>Price: <b>${{$details['price']}}</b></p>
+                                <p>Brand: <b>{{$details['brand']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processorType']}}</b></p>
+                                <p>OS: <b>{{$details['os']}}</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ramSize']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b></p>
+                                <p>Width: <b>{{$details['width']}} cm</b></p>
+                                <p>Height: <b>{{$details['height']}} cm</b></p>
+                                <p>Weight: <b>{{$details['weight']}} kg</b></p>
+                                <p>Thickness: <b>{{$details['thickness']}} cm</b></p>
+                                <p>Battery: <b>{{$details['battery']}}</b></p>
+                                <p>Camera: <b>{{$details['camera']}}</b></p>
+                                @if($details["isTouchscreen"] == 0)
                                     <p>Touchscreen: <b>No</b></p>
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
@@ -161,7 +161,7 @@
     <!-- category filter -->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
-            <a href="/view/monitor" class="list-group-item">Monitor</a>
+            <a href="/view/monitor" class="list-group-item ">Monitor</a>
             <a href="/view/desktop" class="list-group-item">Desktop</a>
             <a href="/view/laptop" class="list-group-item">Laptop</a>
             <a href="/view/tablet" class="list-group-item active">Tablet</a>
