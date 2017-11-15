@@ -159,6 +159,29 @@ const dropDownOptions = {
 
 };
 
+const itemsTable = {
+    monitor: {
+        link: '#monitorTable',
+        scrollX: false,
+        pageLength: 50
+    },
+    tablet: {
+        link: '#tabletTable',
+        scrollX: true,
+        pageLength: 50
+    },
+    laptop: {
+        link: '#laptopTable',
+        scrollX: false,
+        pageLength: 50
+    },
+    desktop: {
+        link: '#desktopTable',
+        scrollX: false,
+        pageLength: 50
+    }
+};
+
 /**
  * Populate select drop down field
  * @param dropDownOptionType
@@ -248,10 +271,63 @@ const FormDropDownFields = (() => {
 
 $(document).ready(() => {
     FormDropDownFields.init();
-    $('#tabletTable').DataTable({
-        aoColumnDefs: [{ bVisible: false }],
-        pageLength: 50,
-        scrollX: true,
+    $(itemsTable.tablet.link).DataTable({
+        pageLength: itemsTable.tablet.pageLength,
+        scrollX: itemsTable.tablet.scrollX
+    });
+    $(itemsTable.monitor.link).DataTable({
+        pageLength: itemsTable.monitor.pageLength,
+        scrollX: itemsTable.monitor.scrollX,
+        searching: false
+    });
+    $(itemsTable.laptop.link).DataTable({
+        pageLength: itemsTable.laptop.pageLength,
+        scrollX: itemsTable.laptop.scrollX,
+        searching: false
+    });
+    $(itemsTable.desktop.link).DataTable({
+        pageLength: itemsTable.desktop.pageLength,
+        scrollX: itemsTable.desktop.scrollX,
+        searching: false
+    });
+
+    /* ---- particles.js config ---- */
+
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 100
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "size": {
+                "value": 2,
+                "random": true
+            },
+            "line_linked": {
+                "enable": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 1,
+                "direction": "none",
+                "straight": false
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": false
+                }
+            },
+            "modes": {
+                "push": {
+                    "particles_nb": 12
+                }
+            }
+        }
     });
 });
 

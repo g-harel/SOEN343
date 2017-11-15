@@ -2,7 +2,9 @@
 @section('page-title')
     Welcome to iShop Electronics
 @endsection
+<div id="particles-js"></div>
 @section('content')
+    <!-- particles.js container -->
     <div class='jumbotron text-center'>
         <h1>Welcome to iShop Electronics</h1>
         <p>Please Log in to use the Shopping cart. Otherwise, feel free to browse out products! </p>

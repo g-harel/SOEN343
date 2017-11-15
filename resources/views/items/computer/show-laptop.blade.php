@@ -94,7 +94,7 @@
         </div>
     </div>
     @if(!empty($result))
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive" id="laptopTable">
         <thead>
         <tr>
             <th>#</th>
@@ -158,7 +158,7 @@
     </table>
     @endif
     @if(empty($result))
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive" id="laptopTable">
         <thead>
         <tr>
             <th>#</th>

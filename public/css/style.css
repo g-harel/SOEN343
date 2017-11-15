@@ -1,3 +1,7 @@
+.jumbotron {
+    position: relative !important;
+    background-color: #ccc !important;
+}
 .panel-green {
     border-color: #5cb85c;
     color: white;
@@ -38,15 +42,24 @@ tbody th, td {
 .modal-larger {
     width: 1120px !important;
 }
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
 
-.fullscreen_bg {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+/* ---- particles.js container ---- */
+body {
+    margin: 0;
+    font:normal 75% Arial, Helvetica, sans-serif;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.92);
+    background-image: url("");
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
-    background-image: url('http://cleancanvas.herokuapp.com/img/backgrounds/color-splash.jpg');
-    background-repeat:repeat;
 }
+
