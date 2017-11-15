@@ -32,6 +32,10 @@ class PagesController extends Controller
         return view('pages.view');
     }
 
+    public function viewProfile() {
+        return view('pages.client-profile');
+    }
+
     public function viewDesktop()
     {
         return view('pages.viewDesktop', [

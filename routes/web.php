@@ -43,6 +43,7 @@ Route::prefix('/view')->group(
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
         Route::get('search', 'ComputerController@search'); // computer filter
         Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
+        Route::get('profile', 'PagesController@viewProfile');
     }
 );
 
