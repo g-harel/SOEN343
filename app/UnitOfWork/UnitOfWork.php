@@ -1,7 +1,6 @@
 <?php
 
 namespace App\UnitOfWork;
-use App\Mappers\ItemCatalogMapper;
 use App\UnitOfWork\UnitOfWorkPair;
 
 class UnitOfWork{
@@ -103,7 +102,6 @@ class UnitOfWork{
         }
 
         if ($objectId !== null) {
-            $transactions = ItemCatalogMapper::getInstance();
             $transactions->delete($objectId);
         } else {
             return;
