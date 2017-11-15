@@ -13,7 +13,7 @@ class Login {
 
     public function __construct($email, $password) {
         $this->sessionMapper = new SessionMapper();
-        $this->userMapper = new AccountMapper();
+        $this->accountMapper = new AccountMapper();
         $this->email = $email;
         $this->password = $password;
     }
