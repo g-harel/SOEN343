@@ -15,7 +15,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 Route::get('/', 'PagesController@index');
-Route::get('/about', 'PagesController@about');
 Route::get('/login', 'PagesController@login');
 Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
