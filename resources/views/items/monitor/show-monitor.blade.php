@@ -88,7 +88,7 @@
     <!-- end filtering monitor form -->
     <!-- filtering result -->
     @if(!empty($result))
-        <table class="table table-bordered bg-color-white">
+        <table class="table table-bordered bg-color-white" id="monitorTable">
             <thead>
             <tr>
                 <th>#</th>
@@ -133,7 +133,7 @@
     @endif
     <!-- end filtering -->
     @if(empty($result))
-    <table class="table table-bordered bg-color-white">
+    <table class="table table-bordered bg-color-white" id="monitorTable">
         <thead>
         <tr>
             <th>#</th>

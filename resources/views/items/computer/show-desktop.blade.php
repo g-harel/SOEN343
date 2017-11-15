@@ -97,7 +97,7 @@
     </div><!-- end filtering form -->
     <!-- start filtering result -->
     @if(!empty($result))
-        <table class="table table-bordered table-responsive">
+        <table class="table table-bordered table-responsive" id="desktopTable" >
             <thead>
             <tr>
                 <th>#</th>
@@ -154,7 +154,7 @@
     @endif
     <!-- end filtering result -->
     @if(empty($result))
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive" id="desktopTable">
         <thead>
         <tr>
             <th>#</th>
