@@ -13,6 +13,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/login', 'PagesController@login');
@@ -22,12 +23,10 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 
 
-// only for client after logged in
 if (!isAdminLoggedIn()) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
-// Client shopping view : public
 Route::prefix('/view')->group(
     function () {
         Route::get('/', 'PagesController@view');
@@ -47,13 +46,11 @@ Route::prefix('/view')->group(
     }
 );
 
-// admin pages : admin only after logged in
 if (isAdminLoggedIn()) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
     Route::get('items/create', 'ItemsController@create');
 
-    // Computer pages
     Route::prefix('items/computer/')->group(
         function () {
             Route::get('showDesktop', 'ComputerController@showDesktop');
@@ -72,7 +69,6 @@ if (isAdminLoggedIn()) {
         }
     );
 
-    // Monitor pages
     Route::prefix('items/monitor/')->group(
         function () {
             Route::get('showMonitor', 'MonitorsController@showMonitor');
@@ -88,9 +84,10 @@ if (isAdminLoggedIn()) {
  * Returns true if the user
  * currently logged is an admin,
  * can be used globally?
+ *
  * @return bool
  */
-function isAdminLoggedIn()
+Function isAdminLoggedIn()
 {
     return isset($_SESSION['isAdmin']) &&
         !empty($_SESSION['isAdmin']) &&
