@@ -221,7 +221,7 @@ INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
   `login_time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -331,7 +331,7 @@ ALTER TABLE `monitors`
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD UNIQUE KEY `user_id_UNIQUE` (`user_id`);
+  ADD UNIQUE KEY `account_id_UNIQUE` (`account_id`);
 
 --
 -- Index pour la table `tablets`
@@ -427,7 +427,7 @@ ALTER TABLE `monitors`
 -- Contraintes pour la table `sessions`
 --
 ALTER TABLE `sessions`
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `account_id` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `tablets`

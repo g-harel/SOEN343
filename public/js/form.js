@@ -191,7 +191,7 @@ const FormDropDownFields = (() => {
                 monitorFormSelector: $('form#monitor-form'),
             };
             forBrandDropDown = [
-                formsObj.desktopFormSelector.find('select#computer-brand'),
+                formsObj.desktopFormSelector.find('select#desktop-brand'),
                 formsObj.laptopFormSelector.find('select#laptop-brand'),
                 formsObj.tabletFormSelector.find('select#tablet-brand'),
             ];
@@ -201,7 +201,7 @@ const FormDropDownFields = (() => {
                 formsObj.tabletFormSelector.find('select#tablet-ram-size'),
             ];
             forStorageSizeDropDown = [
-                formsObj.desktopFormSelector.find('select#storage-capacity'),
+                formsObj.desktopFormSelector.find('select#desktop-storage-capacity'),
                 formsObj.laptopFormSelector.find('select#laptop-storage-capacity'),
                 formsObj.tabletFormSelector.find('select#tablet-storage-capacity'),
             ];
@@ -249,11 +249,10 @@ const FormDropDownFields = (() => {
 $(document).ready(() => {
     FormDropDownFields.init();
     $('#tabletTable').DataTable({
-        "aoColumnDefs": [{ "bVisible": false }],
-        "pageLength": 50,
-        "scrollX": true
+        aoColumnDefs: [{ bVisible: false }],
+        pageLength: 50,
+        scrollX: true,
     });
-
 });
 
 /**

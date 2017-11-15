@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Mappers\ItemCatalogMapper;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    const MONITOR_ITEM_TYPE = 1;
+    const DESKTOP_ITEM_TYPE = 3;
+    const LAPTOP_ITEM_TYPE = 4;
+    const TABLET_ITEM_TYPE = 5;
 
     // utility
     public $filterInputFloatArr = array(
@@ -30,13 +39,14 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function desktopValidationFormInputs() {
+    public function desktopValidationFormInputs()
+    {
         return [
             'desktop-qty' => $this->filterIntInputQty,
-            'computer-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'desktop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-ram-size' => FILTER_VALIDATE_INT,
-            'storage-capacity' => FILTER_VALIDATE_INT,
+            'desktop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
             'desktop-price' => $this->filterInputFloatArr,
             'desktop-weight' => $this->filterInputFloatArr,
@@ -52,7 +62,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function laptopValidationFormInputs() {
+    public function laptopValidationFormInputs()
+    {
         return [
             'laptop-qty' => $this->filterIntInputQty,
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -76,8 +87,9 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function tabletValidationFormInputs() {
-        return [
+    public function tabletValidationFormInputs()
+    {
+        return $params = [
             'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -97,7 +109,8 @@ class Controller extends BaseController
         ];
     }
 
-    public function registerValidateFormInputs() {
+    public function registerValidateFormInputs()
+    {
         $args = [
             'first_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'last_name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -120,7 +133,8 @@ class Controller extends BaseController
      * can use this function
      * @return array
      */
-    public function monitorValidationFormInputs() {
+    public function monitorValidationFormInputs()
+    {
         return [
             'monitor-qty' => $this->filterIntInputQty,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
@@ -130,21 +144,94 @@ class Controller extends BaseController
         ];
     }
 
-    public function isFormSubmitted($method) {
-        if($method == $_POST) {
+    public function isFormSubmitted($method)
+    {
+        if ($method == $_POST) {
             return ($_SERVER['REQUEST_METHOD'] == 'POST');
         } else {
             return ($_SERVER['REQUEST_METHOD'] == 'GET');
         }
     }
 
+    public function desktopFilteringFields() {
+        return [
+            'brand' => filter_input(INPUT_GET, 'desktop-brand'),
+            'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewDesktop',
+            'adminView' => 'items.computer.show-desktop',
+            'collection' => 'desktops',
+            'itemType' => 3
+        ];
+    }
+
+    public function laptopFilteringFields() {
+        return  [
+            'brand' => filter_input(INPUT_GET, 'laptop-brand'),
+            'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewLaptop',
+            'adminView' => 'items.computer.show-laptop',
+            'collection' => 'laptops',
+            'itemType' => 4
+        ];
+    }
+
+    public function tabletFilteringFields() {
+        return [
+            'brand' => filter_input(INPUT_GET, 'tablet-brand'),
+            'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
+            'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
+            'maxPrice' => filter_input(INPUT_GET, 'max-price'),
+            'minPrice' => filter_input(INPUT_GET, 'min-price'),
+            'clientView' => 'pages.viewTablet',
+            'adminView' => 'items.computer.show-tablet',
+            'collection' => 'tablets',
+            'itemType' => 5
+        ];
+    }
+
+    public function isAdminSearching() {
+        $cond = false;
+        $forms = [
+            'admin-search-desktop-form',
+            'admin-search-laptop-form',
+            'admin-search-tablet-form',
+            'admin-search-monitor-form'
+        ];
+        foreach ($forms as $form) {
+            if(isset($_GET[$form])) {
+                $cond = true;
+                break;
+            }
+        }
+        return $cond;
+    }
+
+    public function isAdminLoggedIn()
+    {
+        return isset($_SESSION['isAdmin']) &&
+            !empty($_SESSION['isAdmin']) &&
+            $_SESSION['isAdmin'] == 1;
+    }
+
     /**
-     * Return true if the user
-     * currently logged is an
-     * admin
+     * e.g. /view/monitor/{id}
+     * return true if id exist, otherwise false
+     * @param $idToSearch
+     * @param $itemType
      * @return bool
      */
-    public function isAdminLoggedIn() {
-        return isset($_SESSION) && !empty($_SESSION) && $_SESSION['isAdmin'] == 1;
+    public function isIdExistInCatalog($idToSearch, $itemType) {
+        $ids = array_column(
+            ItemCatalogMapper::getInstance()->selectAllItemType($itemType),
+            'id'
+        );
+        return in_array((int)$idToSearch, $ids);
     }
+
 }
