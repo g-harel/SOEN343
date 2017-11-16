@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('page-title')
-    Create
 @endsection
 @section('content')
     <div class="row">
@@ -9,15 +8,17 @@
             <li>Create Items</li>
         </ol>
     </div>
-    @if(Session::has('succeedInsertingItem'))
+    @if(Session::has('itemSuccessfullyAdded'))
         <div class="row">
             <div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p>You have successfully added a new <b>{{Session::get('for')}}</b> item.</p>
+                <p>
+                    You have successfully added a new <b>{{Session::get('for')}}</b> item.
+                    Click <a href="{{Session::get('link')}}">here</a> to view.
+                </p>
             </div>
         </div>
     @endif
-
     @if(!empty($inputErrors))
         @foreach($inputErrors as $value)
             <div class="row">
@@ -63,7 +64,7 @@
                                 </div>
                                 <div class="form-group">
                                     Brand:
-                                    <select required name="computer-brand" id="computer-brand" class="form-control">
+                                    <select required name="desktop-brand" id="desktop-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
                                 </div>
@@ -81,7 +82,7 @@
                                 </div>
                                 <div class="form-group">
                                     Hard Drive Size (GB):
-                                    <select required name="storage-capacity" id="storage-capacity" class="form-control">
+                                    <select required name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                         <option title="Select storage qty" value="">Select storage size</option>
                                     </select>
                                 </div>

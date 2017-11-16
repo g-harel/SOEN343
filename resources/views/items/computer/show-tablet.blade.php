@@ -8,80 +8,231 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
-    <div >
-
-        <p><a class="btn btn-success" href="/items/create">Add new</a></p>
-        <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Brand</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Processor</th>
-                <th>Ram size</th>
-                <th>Weight</th>
-                <th>CPU cores</th>
-                <th>HDD size</th>
-                <th>Display Size (inch.)</th>
-                <th>Height (cm)</th>
-                <th>Width (cm)</th>
-                <th>Thickness (cm)</th>
-                <th>Battery</th>
-                <th>OS</th>
-                <th>Camera</th>
-                <th>Touchscreen</th>
-                <th class="text-center">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($tablets as $tablet)
-                <tr>
-                    <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
-                    <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
-                    <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
-                    <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
-                    <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
-                    <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
-                    <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
-                    <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
-                    <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
-                    <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
-                    <td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>
-                    <td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>
-                    <td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>
-                    <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
-                    <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
-                    <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
-                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">{{ $tablet["isTouchscreen"] }}</td>
-                    <td class="text-center">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                Select <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="edit-tablet-link" href="" data-toggle="modal"
-                                       data-target=".bs-edit-tablet-modal-lg">
-                                        Edit
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="del-tablet-link" href="" data-qty="43" data-id="31" data-toggle="modal"
-                                       data-target="#delTabletLink">
-                                        Delete
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-        </tr>
+    @if(Session::has('itemSuccessfullyModified'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully <b>modified</b> this item.</p>
+        </div>
+    @endif
+    @if(Session::has('itemSuccessfullyDeleted'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully <b>deleted</b> this item.</p>
+        </div>
+    @endif
+    @if(Session::has('inputErrors'))
+        @foreach(Session::get('inputErrors') as $value)
+            <div class='alert alert-warning'>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
+            </div>
         @endforeach
-            </tbody>
-        </table>
+    @endif
+    @if(!empty($noResults))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>No results were found for your search.</p>
+        </div>
+    @endif
+    @if(!empty($numResult))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <label>{{$numResult}} result(s) found.</label>
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-md-1">
+            <p><a href="/items/create" class="btn btn-success">Add new</a></p>
+        </div>
+        <div class="col-md-11">
+            <div class="input-group" id="adv-search">
+                <input type="text" readonly="" class="form-control" placeholder="Search by" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form id="tablet-form" class="form-horizontal" action="/items/computer/search" method="GET">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            Brand:
+                                            <select name="tablet-brand" id="tablet-brand" class="form-control">
+                                                <option title="Select brands" value="">Select brands</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Hard Drive Size (GB):
+                                            <select name="tablet-storage-capacity" id="tablet-storage-capacity" class="form-control">
+                                                <option title="Select storage qty" value="">Select storage size</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Ram Size (GB):
+                                            <select name="tablet-ram-size" id="tablet-ram-size" class="form-control">
+                                                <option title="Select tablet ram size" value="">Select ram size</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            Min Price:
+                                            <input type="number"  step="0.01" placeholder="0.00" max="99999" name="min-price" id="laptop-price" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            Max Price:
+                                            <input type="number"  step="0.01" placeholder="0.00" max="99999" name="max-price" id="laptop-price" class="form-control" value="0">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success btn-sm" name="admin-search-tablet-form" id="admin-search-tablet-form">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
+    @if(!empty($result))
+    <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px;">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Processor</th>
+            <th>Ram size</th>
+            <th>Weight</th>
+            <th>CPU cores</th>
+            <th>HDD size</th>
+            <th>Display Size (inch.)</th>
+            <th>Height (cm)</th>
+            <th>Width (cm)</th>
+            <th>Thickness (cm)</th>
+            <th>Battery</th>
+            <th>OS</th>
+            <th>Camera</th>
+            <th>Touchscreen</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($result as $value)
+            <tr>
+                <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
+                <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
+                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
+                <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
+                <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
+                <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
+                <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
+                <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
+                <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
+                <td data-height="{{ $value["height"] }}">{{ $value["height"] }}</td>
+                <td data-width="{{ $value["width"] }}">{{ $value["width"] }}</td>
+                <td data-thickness="{{ $value["thickness"] }}">{{ $value["thickness"] }}</td>
+                <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
+                <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
+                <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
+                @if($value["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
+                @else
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
+                @endif
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                        <a class="btn btn-primary btn-xs edit-tablet-link" href="" data-toggle="modal"
+                           data-target=".bs-edit-tablet-modal-lg">
+                            <span class="fa fa-scissors"></span>
+                        </a>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                           data-target="#delTabletLink">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    @endif
+    @if(empty($result))
+    <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px;">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Processor</th>
+            <th>Ram size</th>
+            <th>Weight</th>
+            <th>CPU cores</th>
+            <th>HDD size</th>
+            <th>Display Size (inch.)</th>
+            <th>Height (cm)</th>
+            <th>Width (cm)</th>
+            <th>Thickness (cm)</th>
+            <th>Battery</th>
+            <th>OS</th>
+            <th>Camera</th>
+            <th>Touchscreen</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($tablets as $tablet)
+            <tr>
+                <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
+                <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
+                <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
+                <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
+                <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
+                <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
+                <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
+                <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
+                <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
+                <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
+                <td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>
+                <td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>
+                <td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>
+                <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
+                <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
+                <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
+                @if($tablet["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">No</td>
+                @else
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">Yes</td>
+                @endif
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                        <a class="btn btn-primary btn-xs edit-tablet-link" href="" data-toggle="modal"
+                           data-target=".bs-edit-tablet-modal-lg">
+                            <span class="fa fa-scissors"></span>
+                        </a>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                        <a class="btn btn-danger btn-xs" data-id="{{ $tablet["id"] }}" data-toggle="modal"
+                           data-target="#delTabletLink">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    @endif
     <div class="modal fade bs-edit-tablet-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -91,11 +242,15 @@
                     <h4 class="modal-title">Editing Tablet</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="tablet-form" class="form-horizontal">
+                    <form id="tablet-form" class="form-horizontal" action="/items/computer/tablet/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                                    <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="tablet-qty" id="tablet-qty" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
@@ -163,6 +318,10 @@
                                         <input type="text" name="tablet-height" id="tablet-height" class="form-control">
                                     </div>
                                     <div class="form-group">
+                                        Width:
+                                        <input type="text" name="tablet-width" id="tablet-width" class="form-control">
+                                    </div>
+                                    <div class="form-group">
                                         Battery:
                                         <input type="text" name="tablet-battery" id="tablet-battery" class="form-control">
                                     </div>
@@ -173,9 +332,8 @@
                                     </div>
                                     <div class="form-group">
                                         Touchscreen:<br>
-                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen"
-                                               value="Yes">&nbsp;Yes
-                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="No">&nbsp;No
+                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="1">&nbsp;Yes
+                                        <input type="radio" title="tablet touchscreen" name="tablet-touchscreen" value="0">&nbsp;No
                                     </div>
                                 </div>
                             </div>
@@ -208,9 +366,10 @@
                             <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
                         </div>
                     </div>
-                    <form>
+                    <form action="/items/computer/tablet/delete" method="POST">
+                        {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="hidden" class="form-control" name="item-id" id="item-id">
+                            <input type="hidden" class="form-control" name="item-id" id="item-id" value="">
                         </div>
                         <div class="form-group">
                             <input type="submit" class="form-control btn btn-danger btn-sm" name="submit" value="Confirm">
