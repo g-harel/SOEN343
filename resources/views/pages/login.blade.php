@@ -94,6 +94,7 @@
     border-color: #53A3CD;
   }
 </style>
+<div id="particles-js"></div>
 @section('content')
 <div class="container">
 	<div class="row">

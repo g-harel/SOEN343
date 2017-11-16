@@ -1,6 +1,8 @@
-.jumbotron {
+.custom-jumbo {
     position: relative !important;
-    background-color: #ccc !important;
+    /*background-color: #ccc !important;*/
+    color: white;
+    font-size:  30px;
 }
 .panel-green {
     border-color: #5cb85c;
@@ -63,3 +65,26 @@ body {
     background-position: 50% 50%;
 }
 
+.btn.register-btn {
+    border: 2px solid #5cb85c ;
+    color: white;
+}
+.btn.login-btn {
+    border: 2px solid #428bca ;
+    color: white;
+}
+.register-btn {
+    background-color: transparent;
+}
+.login-btn {
+    background-color: transparent;
+    border: 1px solid #428bca ;
+}
+.login-btn:hover  {
+    background-color: #428bca ;
+    border: 1px solid #428bca ;
+}
+.register-btn:hover {
+    background-color: #5cb85c ;
+    border: 1px solid #5cb85c ;
+}

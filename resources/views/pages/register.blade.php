@@ -70,7 +70,6 @@
     .panel-register input[type="text"],
     .panel-register input[type="email"],
     .panel-register input[type="password"] {
-        height: 45px;
         border: 1px solid #ddd;
         font-size: 16px;
         -webkit-transition: all 0.1s linear;
@@ -141,6 +140,7 @@
         width: auto;
     }
 </style>
+<div id="particles-js"></div>
 @section('content')
     <div class="container">
         <div class="row">

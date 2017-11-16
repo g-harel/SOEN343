@@ -5,9 +5,10 @@
 <div id="particles-js"></div>
 @section('content')
     <!-- particles.js container -->
-    <div class='jumbotron text-center'>
+    <div class='custom-jumbo text-center'>
         <h1>Welcome to iShop Electronics</h1>
-        <p>Please Log in to use the Shopping cart. Otherwise, feel free to browse out products! </p>
-        <p><a class='btn btn-primary btn-lg' href='/login' role='button'>Login</a> <a class='btn btn-success btn-lg' href='/register' role='button'>Register</a>
+        <h4>Please Log in to use the Shopping cart. Otherwise, feel free to browse our products! </h4>
+        <p><a class="btn login-btn" href="/login">Login</a>
+            <a class="btn register-btn" href="/register">Register</a>
     </div>
 @endsection

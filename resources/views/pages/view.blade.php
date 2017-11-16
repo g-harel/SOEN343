@@ -9,7 +9,7 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
         <div class="jumbotron">
-            <h1>Hello, dear user!</h1>
+            <h1>Hello,</h1>
             <p>You may select an item category using the links on the side</p>
         </div>
         <div class="row">
