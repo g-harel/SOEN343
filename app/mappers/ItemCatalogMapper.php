@@ -11,6 +11,7 @@ use App\Models\Laptop;
 use App\Models\Monitor;
 use App\Models\Computer;
 use App\UnitOfWork\UnitOfWork;
+use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\Gateway\ComputerGateway;
 use App\Gateway\DesktopGateway;
@@ -18,8 +19,7 @@ use App\Gateway\LaptopGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\MonitorGateway;
 
-class ItemCatalogMapper {
-
+class ItemCatalogMapper implements CollectionMapper {
     private const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
@@ -213,7 +213,7 @@ class ItemCatalogMapper {
             }
         }
 
-        // REMOVING THE KEYS THAT HAVN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
+        // REMOVING THE KEYS THAT HAVEN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
         foreach($unvisitedKeysInCatalog as $key => $value) {
             if ($this->identityMap->hasId($key)) {
                 $this->identityMap->removeObject($key);

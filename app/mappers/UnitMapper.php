@@ -1,35 +1,117 @@
 <?php
 
+// TODO create new units at the same time as items
+// TODO timeout unit reservations
+// TODO update item count when unit is reserved
+// TODO update item count when unit is returned
+
 namespace App\Mappers;
 
 use App\Models\Unit;
-use App\Gateway\unitGateway;
+use App\Gateway\UnitGateway;
 use App\UnitOfWork\UnitOfWork;
+use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 
-// prefixes the serial number to make it unique to the
-// unit mapper.
+// enum for the three possible unit statuses.
+class StatusEnum {
+    const AVAILABLE = "AVAILABLE";
+    const RESERVED = 'RESERVED';
+    const PURCHASED = 'PURCHASED';
+}
+
+// prefixes the serial string to ensure it is unique when
+// given to the identitiy map.
 function mapSerial($serial) {
     return "unit-$serial";
 }
 
+// creates an sql timestamp of the current time.
 function getDate() {
     return date("'Y-m-d H:i:s'");
 }
 
-class UnitMapper {
+// maintains a list of the available units and references
+// to the in-memory objects. Although the identity map is
+// used as the source of truth, this class is useful to
+// represent the aggregate of units.
+class UnitCatalog {
     private static $instance;
-    private static $deletedUnit;
 
+    private $catalog;
+
+    private function __construct() {
+        $this->catalog = array();
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new UnitCatalog();
+        }
+        return self::$instance;
+    }
+
+    public function toObject($record) {
+        return new Unit(
+            $record["serial"],
+            $record["item_id"],
+            $record["status"],
+            $record["account_id"],
+            $record["reserved_date"],
+            $record["purchased_price"],
+            $record["purchased_date"]
+        );
+    }
+
+    public function add(Unit $unit) {
+        $this->catalog[$unit->getSerial()] = $unit;
+    }
+
+    public function remove(Unit $unit) {
+        unset($this->catalog[$unit->getSerial()]);
+    }
+
+    public function query($accountId, $status) {
+        $arr = array();
+        foreach($this->catalog as $item) {
+            $isStatus = $item->getStatus() === $status;
+            $isAccount = $item->getAccountId() === $accountId;
+            if ($isStatus && $isAccount) {
+                array_push($arr, $item);
+            }
+        }
+        return $arr;
+    }
+}
+
+class UnitMapper implements CollectionMapper {
+    private static $instance;
+
+    private $deletedUnit;
     private $unitGateway;
     private $identityMap;
     private $unitOfWork;
+    private $catalog;
 
     private function __construct() {
+        $this->deletedUnit = new Unit(null, null, null, null, null, null, null);
         $this->unitGateway = UnitGateway::getInstance();
         $this->identityMap = IdentityMap::getInstance();
         $this->unitOfWork = UnitOfWork::getInstance();
-        $this::$deletedUnit = new Unit(null, null, null, null, null, null, null);
+        $this->catalog = UnitCatalog::getInstance();
+
+        // loading all units into the identity map/catalog.
+        // since this is the executed in the constructor, it
+        // is assumed that the identity map has no values for
+        // this mapper and that nothing will be overwritten.
+        $res = $this->unitGateway->select(array());
+        if ($res) {
+            for ($i = 0; $i < count($res); $i++) {
+                $unit = $this->catalog->toObject($res[$i]);
+                $this->identityMap->set(mapSerial($unit->getSerial()), $unit);
+                $this->catalog->add($unit);
+            }
+        }
     }
 
     public static function getInstance() {
@@ -39,9 +121,9 @@ class UnitMapper {
         return self::$instance;
     }
 
-    public function commit($transactionId) {
-        $this->unitOfWork->commit($transactionId);
-    }
+    ////////////////////////////////
+    ///  UNIT OF WORK INTERFACE  ///
+    ////////////////////////////////
 
     public function add($object) {
         $this->unitGateway->insert(
@@ -67,14 +149,24 @@ class UnitMapper {
         $this->unitGateway->delete($object->getSerial());
     }
 
-    // create a new unit.
+    ////////////////////////////
+    ///  CONTROLLER METHODS  ///
+    ////////////////////////////
+
+    public function commit($transactionId) {
+        $this->unitOfWork->commit($transactionId);
+    }
+
+    // create a new unit. note that the status is not set in
+    // this method. the units' actions are defined below.
     public function create($transactionId, $serial, $itemId) {
         // this can be done since the primary key (serial) is
         // is not auto-generated which means all the necessary
         // information is available.
-        $unit = new Unit($serial, $itemId, "AVAILABLE", "NULL", "NULL", "NULL", "NULL");
+        $unit = new Unit($serial, $itemId, StatusEnum::AVAILABLE, "NULL", "NULL", "NULL", "NULL");
         $serial = $unit->getSerial();
         $this->identityMap->set(mapSerial($serial), $unit);
+        $this->catalog->add($unit);
         $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
         return $unit;
     }
@@ -85,8 +177,8 @@ class UnitMapper {
         if (!$unit) {
             return;
         }
-        // mark unit in map as deleted.
-        $this->identityMap->set(mapSerial($serial), $this::$deletedUnit);
+        $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
+        $this->catalog->remove($unit);
         $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
@@ -99,7 +191,7 @@ class UnitMapper {
             // deleted units are set to this value so that reads
             // do not go fetch the value from the database (where
             // it still exists until work is committed)
-            if ($unit === $this::$deletedUnit) {
+            if ($unit === $this->deletedUnit) {
                 return null;
             }
             return $unit;
@@ -108,17 +200,7 @@ class UnitMapper {
         if ($res === null) {
             return null;
         }
-        $unit = $res[0];
-        $unit = new Unit(
-            $unit["serial"],
-            $unit["item_id"],
-            $unit["status"],
-            $unit["account_id"],
-            $unit["reserved_date"],
-            $unit["purchased_price"],
-            $unit["purchased_date"]
-        );
-        // identity map is updated for future fetches.
+        $unit = $this->catalog->toObject($res[0]);
         $this->identityMap->set(mapSerial($serial), $unit);
         return $unit;
     }
@@ -130,14 +212,12 @@ class UnitMapper {
         if (!$unit) {
             return;
         }
-        $unit->setStatus("RESERVED");
+        $unit->setStatus(StatusEnum::RESERVED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate(getDate());
         $unit->setPurchasedPrice("NULL");
         $unit->setPurchasedDate("NULL");
         $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
-        // TODO update items
-        // TODO timeout reservations
     }
 
     // checked out units are associated with an account and
@@ -147,7 +227,7 @@ class UnitMapper {
         if (!$unit) {
             return;
         }
-        $unit->setStatus("PURCHASED");
+        $unit->setStatus(StatusEnum::PURCHASED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice($purchasedPrice);
@@ -162,30 +242,19 @@ class UnitMapper {
         if (!$unit) {
             return;
         }
-        $unit->setStatus("AVAILABLE");
+        $unit->setStatus(StatusEnum::AVAILABLE);
         $unit->setAccountId('NULL');
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice("NULL");
         $unit->setPurchasedDate("NULL");
         $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
-        // TODO update items
     }
 
     public function getCart($accountId) {
-        // loading all units into identity map.
-        $res = $this->unitGateway->select(array());
-        if ($res) {
-            for ($i = 0; $i <= count($res); $i++) {
-                $res[$i] = $this->get($res[$i]["serial"]);
-            }
-        }
-        return array_filter($res, function ($v) {
-            return $v->getAccountId() === $accountId;
-        }, ARRAY_FILTER_USE_BOTH);
-        // TODO test
+        return $this->catalog->query($accountId, StatusEnum::RESERVED);
     }
 
-    public function getPurchases() {
-        // TODO
+    public function getPurchased($accountId) {
+        return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
 }

@@ -11,8 +11,7 @@ use App\Gateway\UnitGateway;
 $ug = UnitGateway::getInstance();
 $um = UnitMapper::getInstance();
 
-function p($m, $serial) {
-    $unit = $m->get($serial);
+function _($unit) {
     echo "<div></div><pre>";
     if (!$unit) {
         echo "null";
@@ -31,16 +30,23 @@ function p($m, $serial) {
     echo "</pre>";
 }
 
+function p($m, $serial) {
+    $unit = $m->get($serial);
+    _($unit);
+}
+
 $transactionId = 123456;
 $serial = "SERIAL";
 $accountId = 1;
 $itemId = 1;
 $purchasePrice = 2.99;
 
-$um->remove($transactionId, $serial);
-// $um->create($transactionId, $serial, $itemId);
+$um->create($transactionId, $serial, $itemId);
 // $um->reserve($transactionId, $serial, $accountId);
-// $um->checkout($transactionId, $serial, $accountId, $purchasePrice);
+// _($um->getCart($accountId)[0]);
+// $um->remove($transactionId, $serial);
+$um->checkout($transactionId, $serial, $accountId, $purchasePrice);
+echo json_encode(count($um->getPurchased($accountId)));
 
 p($um, $serial);
 
