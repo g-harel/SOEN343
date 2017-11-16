@@ -28,6 +28,13 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
 
+Route::prefix('/purchaseHistory')->group(
+    function() {
+        Route::get('showPurchase', 'UnitsController@searchPurchase');
+        Route::get('returnPurchase', 'UnitsController@returnPurchase');
+    }
+);
+
 Route::prefix('/view')->group(
     function () {
         Route::get('/', 'PagesController@view');
