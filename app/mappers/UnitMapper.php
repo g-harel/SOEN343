@@ -1,7 +1,5 @@
 <?php
 
-// TODO integrate with items on create/reserve/return
-
 namespace App\Mappers;
 
 use App\Models\Unit;
@@ -76,9 +74,12 @@ class UnitCatalog {
         );
     }
 
-    // does not check that another object is being overwritten.
-    public function add(Unit $unit): void {
+    public function add(Unit $unit): bool {
+        if ($this->catalog[$unit->getSerial()]) {
+            return false;
+        }
         $this->catalog[$unit->getSerial()] = $unit;
+        return true;
     }
 
     public function remove(Unit $unit): void {
@@ -216,15 +217,21 @@ class UnitMapper implements CollectionMapper {
 
     // create a new unit. note that the status is not set in
     // this method. the units' actions are defined below.
-    public function create($transactionId, $serial, $itemId): void {
+    public function create($transactionId, $serial, $itemId): bool {
         // this can be done since the primary key (serial) is
         // is not auto-generated which means all the necessary
         // information is available.
         $unit = new Unit($serial, $itemId, StatusEnum::AVAILABLE, "NULL", "NULL", "NULL", "NULL");
         $serial = $unit->getSerial();
+        // the catalog returns whether the unit's id wasn't
+        // already in the catalog, making the creation invalid.
+        $success = $this->catalog->add($unit);
+        if (!$success) {
+            return false;
+        }
         $this->identityMap->set(mapSerial($serial), $unit);
-        $this->catalog->add($unit);
         $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
+        return true;
     }
 
     // delete unit from database.
@@ -233,8 +240,8 @@ class UnitMapper implements CollectionMapper {
         if (!$unit) {
             return;
         }
-        $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
         $this->catalog->remove($unit);
+        $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
         $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
