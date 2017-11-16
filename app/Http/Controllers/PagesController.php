@@ -32,6 +32,10 @@ class PagesController extends Controller
         return view('pages.view');
     }
 
+    public function purchaseHistory(){
+        return view('pages.purchaseHistory');
+    }
+
     public function viewProfile() {
         return view('pages.client-profile');
     }

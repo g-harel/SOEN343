@@ -14,6 +14,7 @@
             @if(isset($_SESSION)  && !empty($_SESSION))
                 @if($_SESSION['isAdmin'] != 1)
                     <li><a href="/view">Products</a></li>
+                    <li><a href="/purchaseHistory">Purchase History</a></li>
                 @endif
             @endif
             @if(empty($_SESSION))

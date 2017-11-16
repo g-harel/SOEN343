@@ -21,6 +21,7 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
+Route::post('/purchaseHistory', 'PagesController@purchaseHistory');
 
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
