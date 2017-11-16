@@ -13,6 +13,7 @@ class ComputerController extends Controller
 
     public function showDesktop()
     {
+
         return view('items.computer.show-desktop', [
             'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
         ]);

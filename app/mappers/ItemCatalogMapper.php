@@ -20,7 +20,7 @@ use App\Gateway\TabletGateway;
 use App\Gateway\MonitorGateway;
 
 class ItemCatalogMapper implements CollectionMapper {
-    private const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
+    const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
         ["brand", "brand"],
@@ -117,7 +117,7 @@ class ItemCatalogMapper implements CollectionMapper {
     }
 
     // Used by the unitofwork when commit happens
-    public function add(Item $item) {
+    public function add($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -141,7 +141,7 @@ class ItemCatalogMapper implements CollectionMapper {
     }
 
     // Used by the unitofwork when commit happens
-    public function delete(Item $item) {
+    public function delete($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -157,7 +157,7 @@ class ItemCatalogMapper implements CollectionMapper {
     // Used by the unitofwork when commit happens
     // NOTE: CURRENTLY, THE ITEM IN THE UNIT OF WORK POINTS TOWARDS THE ITEM IN THE IDENTITY MAP.
     // NEED TO DECOUPLE THOSE TWO FOR THIS METHOD TO BE USEFUL!
-    public function edit(Item $item) {
+    public function edit($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;

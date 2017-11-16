@@ -38,6 +38,7 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
+
         return view('pages.viewDesktop', [
             'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
         ]);
