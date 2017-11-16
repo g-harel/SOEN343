@@ -17,7 +17,9 @@ class UoWAspect implements Aspect
 {
     /**
      * Method that advices to activate the UoW after committing to Mapper
+     * Pointcut for eat method
      *
+     * @Pointcut("execution(public mappers\ItemCatalogMappers->commit(*))")
      * @param MethodInvocation $invocation Invocation
      * @After("execution(public **->*(*))")
      */
