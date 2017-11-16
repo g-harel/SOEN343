@@ -24,7 +24,12 @@ Function getAllSessions($tableName) {
 
 Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
-    $sql = "SELECT * FROM $tableName WHERE $conditions;";
+    $sql = "SELECT * FROM $tableName";
+    if (trim($conditions)) {
+        $sql .= " WHERE $conditions;";
+    } else {
+        $sql .= ";";
+    }
     $db = new DatabaseGateway();
     $result = $db->queryDB($sql);
     if ($result !== null) {
