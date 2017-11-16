@@ -24,16 +24,5 @@
                 @endforeach
             @endif
         </table>
-        <hr>
-        <h3>Returns</h3>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Serial Number</th>
-            </tr>
-            <tr>
-                <td>item</td>
-            </tr>
-        </table>
     </div>
 @endsection
