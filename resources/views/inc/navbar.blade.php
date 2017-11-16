@@ -36,7 +36,7 @@
                             <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>
                     </li>
-                    <li><a href="/view/profile"><?php echo " " . ucfirst ($_SESSION['firstName']) . " " ?></a></li>
+                    <li><a href="/view/profile">Account</a></li>
                 @endif
                 <li><a href="/logout">Logout</a></li>
             @endif
