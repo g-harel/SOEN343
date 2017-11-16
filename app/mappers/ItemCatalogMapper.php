@@ -89,7 +89,10 @@ class ItemCatalogMapper {
 
     // Used by the controllers
     public function commit($transactionId) {
-        $this->unitOfWork->commit($transactionId);
+        /**
+         * This is where the Aspect executes
+         * $this->unitOfWork->commit($transactionId);
+         */
     }
 
     // Used by the controllers
