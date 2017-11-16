@@ -221,11 +221,19 @@ class PagesController extends Controller
         $accountMapper = new AccountMapper();
         $id =$_SESSION['currentLoggedInId'];
         
-        $account=$accountMapper->getAccountById($id);
-        $accountMapper->setAccount($account);
+        $accountMapper->setAccountFromRecordById($id);
         $accountMapper->deleteAccountInRecord();
         
+        // on log out close session item in session table as well
+        $sessionMapper = new SessionMapper();
+        if (isset($_SESSION['currentLoggedInId'])) {
+            $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
+        }
+        $_SESSION = array();
+        session_destroy();
         return view('pages.login');
+        
+        //return view('pages.login');
     }
 }
 

@@ -22,7 +22,6 @@ class AccountGateway
     public function getAccountById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
-        
     }
 
     public function editAccount($id, $email, $password, $firstName, $lastName, $phoneNumber,

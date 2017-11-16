@@ -57,6 +57,33 @@ class AccountMapper
 
         return $this;
     }
+    
+    public function setAccountFromRecordById($id) {
+        $record = $this->gateway->getAccountById($id);
+        if ($record != null || $record != false) {
+            $recordAccount = $record[0];
+            $id = $recordAccount["id"];
+            $email = $recordAccount["email"];
+            $password = $recordAccount["password"];
+            $firstName = $recordAccount["first_name"];
+            $lastName = $recordAccount["last_name"];
+            $phoneNumber = $recordAccount["phone_number"];
+            $doorNumber = $recordAccount["door_number"];
+            $appartement = $recordAccount["appartement"];
+            $street = $recordAccount["street"];
+            $city = $recordAccount["city"];
+            $province = $recordAccount["province"];
+            $country = $recordAccount["country"];
+            $postalCode = $recordAccount["postal_code"];
+            $isAdmin = $recordAccount["isAdmin"];
+    
+            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
+            $this->account = $account;
+        }
+
+        return $this;
+    }
 
     public function saveAccountInRecord() {
         $result = $this->gateway->addAccount(
@@ -84,10 +111,15 @@ class AccountMapper
         return $success;
     }
 
-    public function deleteAccountInRecord() {
+    /*public function deleteAccountInRecord() {
         $success = $this->gateway->deleteAccountByEmail($this->account->getEmail());
         return $success;
-    }
+    }*/
+    
+    public function deleteAccountInRecord() {
+        $success = $this->gateway->deleteAccountById($this->account->getId());
+        return $success;
+    } 
 
     public function getAccount() {
         return $this->account;
