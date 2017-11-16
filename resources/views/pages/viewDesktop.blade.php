@@ -72,7 +72,7 @@
                         <div class="panel-body">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <i class="fa fa-television fa-5x"></i>
+                                    <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-md-6">
                                     <p>Price: ${{$desktop['price']}}</p>

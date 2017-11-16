@@ -20,7 +20,7 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
-
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
