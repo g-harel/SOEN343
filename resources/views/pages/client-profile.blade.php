@@ -29,6 +29,7 @@
                             <div class="col-lg-8">
                                 
                                 <form class="form-horizontal ng-pristine ng-valid" action="/deleteAccount" method="post" role="form">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact1">Name</label>
                                         <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="Audrey Hunt" readonly></div>
@@ -51,7 +52,6 @@
                                         <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-danger" type="submit">Delete My Account</button></div>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>

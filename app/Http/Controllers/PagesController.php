@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\AccountMapper;
 
 class PagesController extends Controller
 {
@@ -30,10 +31,6 @@ class PagesController extends Controller
     public function view()
     {
         return view('pages.view');
-    }
-
-    public function viewProfile() {
-        return view('pages.client-profile');
     }
 
     public function viewDesktop()
@@ -216,11 +213,15 @@ class PagesController extends Controller
         }
     }
     
+    public function viewProfile() {
+        return view('pages.client-profile');
+    }
+    
     public function deleteAccount(){
         $accountMapper = new AccountMapper();
         $id =$_SESSION['currentLoggedInId'];
         
-        $account= $accountMapper->getAccountById($id);
+        $account=$accountMapper->getAccountById($id);
         $accountMapper->setAccount($account);
         $accountMapper->deleteAccountInRecord();
         
