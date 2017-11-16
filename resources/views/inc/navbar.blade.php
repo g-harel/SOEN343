@@ -37,8 +37,8 @@
                     </li>
                     <li><a href="/view/profile">Audrey Hunt</a></li>
                 @endif
+                  <li><a href="/logout">Logout</a></li>
             @endif
-            <li><a href="/logout">Logout</a></li>
         </ul>
     </div>
 </nav>
