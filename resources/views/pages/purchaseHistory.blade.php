@@ -8,10 +8,15 @@
                 <th>Serial Number</th>
                 <td></td>
             </tr>
-            <tr>
-                <td>item</td>
-                <td><a class="btn" href="#">Return</a>
-            </tr>
+            <!-- still need to display purchase name -->
+            @if(isset($_SESSION)  && !empty($_SESSION))
+                @foreach($units as $unit)
+                    <tr>
+                        <td>Product {{ $unit['serial'] }}, price: {{ $unit['price'] }}, purchased on {{ $unit['purchased_date'] }}</td>
+                        <td><a class="btn" href="#">Return</a>
+                    </tr>
+                @endforeach
+            @endif
         </table>
         <hr>
         <h3>Returns</h3>
