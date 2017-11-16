@@ -99,6 +99,7 @@
                 <th>Weight (kg)</th>
                 <th class="text-center">Edit</th>
                 <th class="text-center">Delete</th>
+                <th class="text-center">Add Units</th>
             </tr>
             </thead>
             <tbody>
@@ -126,6 +127,14 @@
                             </a>
                         </p>
                     </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                            <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                               data-target="#addMonitorLink">
+                                <span class="fa fa-plus"></span>
+                            </a>
+                        </p>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -144,6 +153,7 @@
             <th>Weight (kg)</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>
+            <th class="text-center">Add Units</th>
         </tr>
         </thead>
         <tbody>
@@ -168,6 +178,14 @@
                         <a class="btn btn-danger btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
                            data-target="#delMonitorLink">
                             <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                        <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                           data-target="#addMonitorLink">
+                            <span class="fa fa-plus"></span>
                         </a>
                     </p>
                 </td>
@@ -259,6 +277,45 @@
                         <div class="form-group">
                             <input type="button" data-dismiss="modal" aria-label="Close" class="form-control"
                                    value="Cancel" name="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade addMonitorlink" id="addMonitorLink" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Adding Units</h4>
+                </div>
+                <div class="modal-body" id="edit-monitor-form-body">
+                    <form id="monitor-form-units" class="form-horizontal" action="/items/monitor/modify" method="POST">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="2"></div>
+                                <div class="col-md-7">
+                                    <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                                    <div class="form-group">
+                                        How many unit(s) with this specification would you like to add?
+                                        <input type="number" min="0" max="10"  id="monitor-units" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="button"  class="btn btn-primary generate-serial-form" value="Next">
+                                    </div>
+                                </div>
+                                <div class="2" id="serial-forms">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="submit-monitor-form" id="submit-monitor-form">Add Units</button>
+                            </div>
                         </div>
                     </form>
                 </div>

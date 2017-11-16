@@ -10,6 +10,11 @@
                     <li><a href="/items">Items</a></li>
                 @endif
             @endif
+            @if(isset($_SESSION) && !empty($_SESSION))
+                @if($_SESSION['isAdmin'] == 1)
+                    <li><a href="/admin">Admin</a></li>
+                @endif
+            @endif
             @if(isset($_SESSION)  && !empty($_SESSION))
                 @if($_SESSION['isAdmin'] != 1)
                     <li><a href="/view">Products</a></li>

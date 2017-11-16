@@ -37,6 +37,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
         <script src="{{asset('js/form.js')}}"></script>
         <script src="{{asset('js/modify-delete.js')}}"></script>
+        <script src="{{asset('js/add-units.js')}}"></script>
     @yield('register-js')
     @yield('particle-js')
     </body>
