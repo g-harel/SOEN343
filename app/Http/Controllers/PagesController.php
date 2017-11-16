@@ -224,7 +224,9 @@ class PagesController extends Controller
         $result=$accountMapper->setAccountFromRecordById($id);
         $success=$accountMapper->deleteAccountInRecord();
         
-        // on log out close session item in session table as well
+        //$this->logout();
+        
+        // logout
         $sessionMapper = new SessionMapper();
         if (isset($_SESSION['currentLoggedInId'])) {
             $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
