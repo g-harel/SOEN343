@@ -47,12 +47,15 @@ class UnitOfWorkMap{
     }
 
     public function delete($id) {
+        if (!$this->exists($id)) {
+            return null;
+        }
         $toReturn = $this->map[$id];
         $map[$id] = null;
         return $toReturn;
     }
 
     public function exists($id) {
-        return $this->map[$id] !== null;
+        return isset($this->map[$id]);
     }
 }
