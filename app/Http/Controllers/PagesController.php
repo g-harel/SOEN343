@@ -6,7 +6,9 @@ use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 
 use App\Mappers\UnitMapper;
+use App\Gateway\UnitGateway;
 
+$ug = UnitGateway::getInstance();
 $um = UnitMapper::getInstance();
 
 function p($m, $serial) {
@@ -29,21 +31,20 @@ function p($m, $serial) {
     echo "</pre>";
 }
 
-$um->create("serial", 1, "status2");
-p($um, "serial");
-$um->reserve("serial", 1);
-p($um, "serial");
-$um->checkout("serial", 1, 2.0);
-p($um, "serial");
-$um->return("serial");
-p($um, "serial");
-$um->delete("serial");
-p($um, "serial");
+$transactionId = 123456;
+$serial = "SERIAL";
+$accountId = 1;
+$itemId = 1;
+$purchasePrice = 2.99;
 
-/* $cart->insert("SERIAL", 1, 1);
-$cart->update("SERIAL", "TEST", 1, 2, "RESERVED", null, null, null);
-echo json_encode($cart->get("TEST"));
-$cart->delete("TEST"); */
+$um->remove($transactionId, $serial);
+// $um->create($transactionId, $serial, $itemId);
+// $um->reserve($transactionId, $serial, $accountId);
+// $um->checkout($transactionId, $serial, $accountId, $purchasePrice);
+
+p($um, $serial);
+
+$um->commit($transactionId);
 
 class PagesController extends Controller
 {

@@ -14,7 +14,7 @@ function mapSerial($serial) {
 }
 
 function getDate() {
-    return date("Y-m-d H:i:s");
+    return date("'Y-m-d H:i:s'");
 }
 
 class UnitMapper {
@@ -39,23 +39,55 @@ class UnitMapper {
         return self::$instance;
     }
 
+    public function commit($transactionId) {
+        $this->unitOfWork->commit($transactionId);
+    }
+
+    public function add($object) {
+        $this->unitGateway->insert(
+            $object->getSerial(),
+            $object->getItemId()
+        );
+        $this->edit($object);
+    }
+
+    public function edit($object) {
+        $this->unitGateway->update(
+            $object->getSerial(),
+            $object->getItemId(),
+            $object->getStatus(),
+            $object->getAccountId(),
+            $object->getReservedDate(),
+            $object->getPurchasedPrice(),
+            $object->getPurchasedDate()
+        );
+    }
+
+    public function delete($object) {
+        $this->unitGateway->delete($object->getSerial());
+    }
+
     // create a new unit.
-    public function create($serial, $itemId, $status) {
+    public function create($transactionId, $serial, $itemId) {
         // this can be done since the primary key (serial) is
         // is not auto-generated which means all the necessary
         // information is available.
-        $unit = new Unit($serial, $itemId, $status, "NULL", "NULL", "NULL", "NULL");
+        $unit = new Unit($serial, $itemId, "AVAILABLE", "NULL", "NULL", "NULL", "NULL");
         $serial = $unit->getSerial();
         $this->identityMap->set(mapSerial($serial), $unit);
-        // TODO uow
+        $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
         return $unit;
     }
 
     // delete unit from database.
-    public function delete($serial) {
+    public function remove($transactionId, $serial) {
+        $unit = $this->get($serial);
+        if (!$unit) {
+            return;
+        }
         // mark unit in map as deleted.
         $this->identityMap->set(mapSerial($serial), $this::$deletedUnit);
-        // TODO uow
+        $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
     // fetches unit object from identity map or from the gateway.
@@ -72,51 +104,88 @@ class UnitMapper {
             }
             return $unit;
         }
-        $unit = $this->unitGateway->get($serial);
-        if ($unit === null) {
+        $res = $this->unitGateway->select(["serial" => $serial]);
+        if ($res === null) {
             return null;
         }
+        $unit = $res[0];
+        $unit = new Unit(
+            $unit["serial"],
+            $unit["item_id"],
+            $unit["status"],
+            $unit["account_id"],
+            $unit["reserved_date"],
+            $unit["purchased_price"],
+            $unit["purchased_date"]
+        );
         // identity map is updated for future fetches.
         $this->identityMap->set(mapSerial($serial), $unit);
         return $unit;
     }
 
-    public function reserve($serial, $accountId) {
+    // reserved units are associated with an account and
+    // store their reserved time.
+    public function reserve($transactionId, $serial, $accountId) {
         $unit = $this->get($serial);
         if (!$unit) {
             return;
         }
+        $unit->setStatus("RESERVED");
         $unit->setAccountId($accountId);
         $unit->setReservedDate(getDate());
         $unit->setPurchasedPrice("NULL");
         $unit->setPurchasedDate("NULL");
-        // TODO uow
+        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         // TODO update items
         // TODO timeout reservations
     }
 
-    public function checkout($serial, $accountId, $purchasedPrice) {
+    // checked out units are associated with an account and
+    // specify their purchase price and time.
+    public function checkout($transactionId, $serial, $accountId, $purchasedPrice) {
         $unit = $this->get($serial);
         if (!$unit) {
             return;
         }
+        $unit->setStatus("PURCHASED");
         $unit->setAccountId($accountId);
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice($purchasedPrice);
         $unit->setPurchasedDate(getDate());
-        // TODO uow
+        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
-    public function return($serial) {
+    // returned units are not associated to any account and
+    // have no reserved/purchased fields.
+    public function return($transactionId, $serial) {
         $unit = $this->get($serial);
         if (!$unit) {
             return;
         }
+        $unit->setStatus("AVAILABLE");
         $unit->setAccountId('NULL');
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice("NULL");
         $unit->setPurchasedDate("NULL");
-        // TODO uow
+        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         // TODO update items
+    }
+
+    public function getCart($accountId) {
+        // loading all units into identity map.
+        $res = $this->unitGateway->select(array());
+        if ($res) {
+            for ($i = 0; $i <= count($res); $i++) {
+                $res[$i] = $this->get($res[$i]["serial"]);
+            }
+        }
+        return array_filter($res, function ($v) {
+            return $v->getAccountId() === $accountId;
+        }, ARRAY_FILTER_USE_BOTH);
+        // TODO test
+    }
+
+    public function getPurchases() {
+        // TODO
     }
 }

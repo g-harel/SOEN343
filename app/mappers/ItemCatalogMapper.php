@@ -152,7 +152,6 @@ class ItemCatalogMapper {
             $this->identityMap->removeObject($id);
             $this->itemCatalog->removeItem($id);
         }
-
     }
 
     // Used by the unitofwork when commit happens

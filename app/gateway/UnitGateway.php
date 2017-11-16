@@ -21,22 +21,20 @@ class UnitGateway {
         return self::$instance;
     }
 
-    public function insert($serial, $itemId, $status) {
+    public function insert($serial, $itemId) {
         $sql = "INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES ('$serial', '$itemId', 'AVAILABLE', NULL, NULL, NULL, NULL);";
         $result = $this->db->queryDB($sql);
         return $result;
     }
 
-    public function get($serial) {
-        $conditionsAssociativeArray = ["serial" => $serial];
+    public function select($conditionsAssociativeArray) {
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
-    public function update($sourceSerial, $serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
-        $conditionsAssociativeArray = ["serial" => $sourceSerial];
+    public function update($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
+        $conditionsAssociativeArray = ["serial" => $serial];
         $conditions = transformConditionsToString($conditionsAssociativeArray);
         $valuePairs =
-            "serial = '$serial"."', ".
             "item_id = '$itemId"."', ".
             "status = '$status"."', ".
             // these fields are purposefully left without apostrophes
