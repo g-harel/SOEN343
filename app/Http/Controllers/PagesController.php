@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
-
+/*
 use App\Mappers\UnitMapper;
 use App\Gateway\UnitGateway;
 
@@ -50,7 +50,7 @@ echo json_encode(count($um->getPurchased($accountId)));
 
 p($um, $serial);
 
-$um->commit($transactionId);
+$um->commit($transactionId); */
 
 class PagesController extends Controller
 {
