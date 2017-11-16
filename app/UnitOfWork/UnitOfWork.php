@@ -120,6 +120,8 @@ class UnitOfWork{
     }
 
     public function registerDeleted($transactionId, $objectId, $mapper, $object) {
+//        echo ' here now';
+
         $state = self::STATE_DELETED;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);

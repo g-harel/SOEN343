@@ -7,7 +7,132 @@
         <li><a href="/items">Items</a></li>
         <li class="active">Monitors</li>
     </ol>
-    <p><a href="../create" class="btn btn-success">Add new</a></p>
+    @if(Session::has('itemSuccessfullyDeleted'))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully <b>deleted</b> this item.</p>
+        </div>
+    @endif
+    @if(Session::has('itemSuccessfullyModified'))
+        <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>You have successfully <b>modified</b> this item.</p>
+        </div>
+    @endif
+    @if(Session::has('inputErrors'))
+        @foreach(Session::get('inputErrors') as $value)
+            <div class='alert alert-warning'>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Invalid {{str_replace('-', ' ', $value)}}. Please try again.</p>
+            </div>
+        @endforeach
+    @endif
+    @if(!empty($noResults))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>No results were found for your search.</p>
+        </div>
+    @endif
+    @if(!empty($numResult))
+        <div class="alert alert-info">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <label>{{$numResult}} result(s) found.</label>
+        </div>
+    @endif
+    <!-- filtering form -->
+    <div class="row">
+        <div class="col-md-1">
+            <p><a href="/items/create" class="btn btn-success">Add new</a></p>
+        </div>
+        <div class="col-md-11">
+            <div class="input-group" id="adv-search">
+                <input type="text" readonly="" class="form-control" placeholder="Search by" />
+                <div class="input-group-btn">
+                    <div class="btn-group" role="group">
+                        <div class="dropdown dropdown-lg">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <form id="monitor-form" class="form-horizontal" action="/view/monitor/search" method="get">
+                                    <div class="form-group">
+                                        Brand Name:
+                                        <select name="monitor-brand" id="monitor-brand" class="form-control" >
+                                            <option title="Select brands" value="">Select Brand</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        Display size (inches):
+                                        <select name="monitor-display-size" id="monitor-display-size" class="form-control" >
+                                            <option title="Select display size" value="">Select display size</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        Min Price:
+                                        <input type="number" step="0.01" placeholder="min" max="99999" name="min-price" id="monitor-price" class="form-control" value="0">
+                                    </div>
+                                    <div class="form-group">
+                                        Max Price:
+                                        <input type="number" step="0.01" placeholder="max" max="99999" name="max-price" id="monitor-price" class="form-control" value="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success btn-sm" name="admin-search-monitor-form" id="admin-search-monitor-form">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end filtering monitor form -->
+    <!-- filtering result -->
+    @if(!empty($result))
+        <table class="table table-bordered bg-color-white">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Display Size (inches)</th>
+                <th>Weight (kg)</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($result as $value)
+                <tr>
+                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
+                    <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
+                    <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
+                    <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
+                    <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal"
+                               data-target=".bs-edit-monitor-modal-lg">
+                                <span class="fa fa-scissors"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Delete">
+                            <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                               data-target="#delMonitorLink">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    @endif
+    <!-- end filtering -->
+    @if(empty($result))
     <table class="table table-bordered bg-color-white">
         <thead>
         <tr>
@@ -50,7 +175,7 @@
         @endforeach
         </tbody>
     </table>
-
+    @endif
     <div class="modal fade bs-edit-monitor-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -60,12 +185,16 @@
                     <h4 class="modal-title">Editing Monitor</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
-                    <form id="monitor-form" class="form-horizontal">
+                    <form id="monitor-form" class="form-horizontal" action="/items/monitor/modify" method="POST">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="2"></div>
                                 <div class="col-md-7">
                                     <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                                    <div class="form-group">
+                                        Quantity:
+                                        <input type="number" min="0" max="100" required name="monitor-qty" id="monitor-qty" class="form-control">
+                                    </div>
                                     <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control">
@@ -119,7 +248,7 @@
                             <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
                         </div>
                     </div>
-                    <form>
+                    <form action="/items/monitor/delete" method="post">
                         <div class="form-group">
                             <input type="hidden" class="form-control" name="item-id" id="item-id">
                         </div>

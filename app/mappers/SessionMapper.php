@@ -10,45 +10,51 @@ class SessionMapper
 {
     private $session;
     private $gateway;
-    private $userMapper;
+    //private $accountMapper;
 
     public function __construct()
     {
         $this->gateway = new SessionGateway();
     }
 
-    private static function createSessionMapper($user)
+    private static function createSessionMapper($account)
     {
-        $instance = new self();
-        $session = new Session($user);
-        $instance->setSession($session);
-        $instance->setUserMapper($user);
-        return $instance;
+//        $instance = new self();
+////      $session = new Session($account);
+//        $instance->setSession($session);
+//        $instance->setAccountMapper($account);
+//        return $instance;
     }
 
-    public static function openSession($user)
-    {
-        $instance = self::createSessionMapper($user);
-        $userId = $instance->session->getUserId();
-        $openedSession = $instance->gateway->getSessionByUserId($userId);
-        if ($openedSession != null) {
-            $instance->closeSession();
-        }
-        $instance->gateway->addSession($userId);
-        return $instance;
-    }
-    //takes in the Id of the user currently logged in
-    public function openSession2($userId) {
-        if($this->gateway->addSession($userId)) {
+//    public static function openSession($account)
+//    {
+//        $instance = self::createSessionMapper($account);
+//        $accountId = $instance->session->getAccountId();
+//        $openedSession = $instance->gateway->getSessionByAccountId($accountId);
+//        if ($openedSession != null) {
+//            $instance->closeSession();
+//        }
+//        $instance->gateway->addSession($accountId);
+//        return $instance;
+//    }
+
+    //takes in the Id of the Account currently logged in
+    public function openSession2($accountId) {
+        // add this admin/client to the session table
+        if($this->gateway->addSession($accountId)) {
             return '1';
         } else {
             return '0';
         }
     }
 
-    public function closeSession($userId)
+    public function getSessionByAccountIdMapper($accountId) {
+        return $this->gateway->getSessionByAccountId($accountId);
+    }
+
+    public function closeSession($accountId)
     {
-        $success = $this->gateway->deleteSessionByAccountId($userId);
+        $success = $this->gateway->deleteSessionByAccountId($accountId);
         return $success;
     }
 
@@ -57,25 +63,25 @@ class SessionMapper
         return $this->session;
     }
 
-    public function getUser()
-    {
-        return $this->session->getUser();
-    }
+//    public function getAccount()
+//    {
+//        return $this->session->getAccount();
+//    }
 
-    public function getUserMapper()
-    {
-        return $this->userMapper;
-    }
+//    public function getAccountMapper()
+//    {
+//        return $this->AccountMapper;
+//    }
 
-    public function setSession($session)
-    {
-        $this->session = $session;
-        return $this;
-    }
+//    public function setSession($session)
+//    {
+//        $this->session = $session;
+//        return $this;
+//    }
 
-    public function setUserMapper($userMapper)
-    {
-        $this->userMapper = $userMapper;
-        return $this;
-    }
+//    public function setAccountMapper($accountMapper)
+//    {
+//        $this->AccountMapper = $accountMapper;
+//        return $this;
+//    }
 }
