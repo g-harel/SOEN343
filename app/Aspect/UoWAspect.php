@@ -25,8 +25,8 @@ class UoWAspect implements Aspect
      */
     protected function SaveAfterCommit(MethodInvocation $invocation)
     {
+        $transactionId = $invocation->func_get_args();
         $UnitOfWork = new UnitOfWork();
-        $transactionId = $invocation->getThis();
-        $transactionId -> $UnitOfWork -> commit();
+        $UnitOfWork->commit($transactionId);
     }
 }
