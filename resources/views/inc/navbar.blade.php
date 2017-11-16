@@ -36,7 +36,7 @@
                             <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>
                     </li>
-                    <li><a href="/view/profile">Account</a></li>
+                    <li><a href="/view/profile">View Profile</a></li>
                 @endif
                 <li><a href="/logout">Logout</a></li>
             @endif
