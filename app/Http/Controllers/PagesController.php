@@ -32,7 +32,7 @@ class PagesController extends Controller
         return view('pages.view');
     }
 
-    public function purchaseHistory(){
+    public function purchaseHistory(){        
         return view('pages.purchaseHistory');
     }
 

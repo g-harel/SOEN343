@@ -29,7 +29,7 @@
                             <div class="col-lg-8">
                                 <form class="form-horizontal ng-pristine ng-valid">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputContact1">Name</label>
+                                        <label class="col-sm-2 control-label" for="inputContact1"> Name</label>
                                         <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="Audrey Hunt" readonly></div>
                                     </div>
                                     <div class="form-group">
