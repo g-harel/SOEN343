@@ -10,7 +10,7 @@ use App\Models\Address;
 
 class AccountCatalogMapper
 {
-    private $user;
+    private $account;
     private $gateway;
     private $accountCatalog;
 
@@ -21,46 +21,46 @@ class AccountCatalogMapper
         $this->updateCatalog();
     }
 
-    public static function createUserMapper($user)
+    public static function createAccountMapper($account)
     {
         $instance = new self();
-        $instance->setUser($user);
+        $instance->setAccount($account);
         return $instance;
     }
 
-    public static function createUserMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+    public static function createAccountMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
                                                       $doorNumber, $appartement, $street, $city, $province,
                                                       $country, $postalCode, $isAdmin = false)
     {
-        $user = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
-        $instance = self::createUserMapper($user);
+        $instance = self::createAccountMapper($account);
         return $instance;
     }
 
-    public function setUserFromRecordByEmail($email)
+    public function setAccountFromRecordByEmail($email)
     {
         $record = $this->gateway->getAccountByEmail($email);
         if ($record != null || $record != false) {
-            $recordUser = $record[0];
-            $id = $recordUser["id"];
-            $email = $recordUser["email"];
-            $password = $recordUser["password"];
-            $firstName = $recordUser["first_name"];
-            $lastName = $recordUser["last_name"];
-            $phoneNumber = $recordUser["phone_number"];
-            $doorNumber = $recordUser["door_number"];
-            $appartement = $recordUser["appartement"];
-            $street = $recordUser["street"];
-            $city = $recordUser["city"];
-            $province = $recordUser["province"];
-            $country = $recordUser["country"];
-            $postalCode = $recordUser["postal_code"];
-            $isAdmin = $recordUser["isAdmin"];
+            $recordAccount = $record[0];
+            $id = $recordAccount["id"];
+            $email = $recordAccount["email"];
+            $password = $recordAccount["password"];
+            $firstName = $recordAccount["first_name"];
+            $lastName = $recordAccount["last_name"];
+            $phoneNumber = $recordAccount["phone_number"];
+            $doorNumber = $recordAccount["door_number"];
+            $appartement = $recordAccount["appartement"];
+            $street = $recordAccount["street"];
+            $city = $recordAccount["city"];
+            $province = $recordAccount["province"];
+            $country = $recordAccount["country"];
+            $postalCode = $recordAccount["postal_code"];
+            $isAdmin = $recordAccount["isAdmin"];
 
-            $user = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
                 $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-            $this->user = $user;
+            $this->account = $account;
         }
 
         return $this;
@@ -69,15 +69,15 @@ class AccountCatalogMapper
     public function saveAccountInRecord()
     {
         $result = $this->gateway->addAccount(
-            $this->user->getEmail(), $this->user->getPassword(), $this->user->getFirstName(), $this->user->getLastName(),
-            $this->user->getPhoneNumber(), $this->user->getDoorNumber(), $this->user->getAppartement(),
-            $this->user->getStreet(), $this->user->getCity(), $this->user->getProvince(), $this->user->getCountry(),
-            $this->user->getPostalCode(), $this->user->getIsAdmin()
+            $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
+            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
+            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
+            $this->account->getPostalCode(), $this->account->getIsAdmin()
         );
         $isSuccessful = false;
         if ($result !== null) {
             /*$id = $result[0]["id"];
-            $this->user->setId($id);*/
+            $this->account->setId($id);*/
             $isSuccessful = true;
         }
         return $isSuccessful;
@@ -86,17 +86,17 @@ class AccountCatalogMapper
     public function editAccountInRecord()
     {
         $success = $this->gateway->editAccount(
-            $this->user->getId(), $this->user->getEmail(), $this->user->getPassword(), $this->user->getFirstName(), $this->user->getLastName(),
-            $this->user->getPhoneNumber(), $this->user->getDoorNumber(), $this->user->getAppartement(),
-            $this->user->getStreet(), $this->user->getCity(), $this->user->getProvince(), $this->user->getCountry(),
-            $this->user->getPostalCode(), $this->user->getIsAdmin()
+            $this->account->getId(), $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
+            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
+            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
+            $this->account->getPostalCode(), $this->account->getIsAdmin()
         );
         return $success;
     }
 
     public function deleteAccountInRecord()
     {
-        $success = $this->gateway->deleteAccountByEmail($this->user->getEmail());
+        $success = $this->gateway->deleteAccountByEmail($this->account->getEmail());
         return $success;
     }
 
@@ -119,7 +119,7 @@ class AccountCatalogMapper
 
     public function getAccount()
     {
-        return $this->user;
+        return $this->account;
     }
 
     public function getAccountByEmail($email)
@@ -129,173 +129,173 @@ class AccountCatalogMapper
 
     public function getId()
     {
-        return $this->user->getId();
+        return $this->account->getId();
     }
 
     public function getEmail()
     {
-        return $this->user->getEmail();
+        return $this->account->getEmail();
     }
 
     public function getPassword()
     {
-        return $this->user->getPassword();
+        return $this->account->getPassword();
     }
 
     public function getFirstName()
     {
-        return $this->user->getFirstName();
+        return $this->account->getFirstName();
     }
 
     public function getLastName()
     {
-        return $this->user->getLastName();
+        return $this->account->getLastName();
     }
 
     public function getPhoneNumber()
     {
-        return $this->user->getPhoneNumber();
+        return $this->account->getPhoneNumber();
     }
 
     public function getAddress()
     {
-        return $this->user->getAddress();
+        return $this->account->getAddress();
     }
 
     public function getIsAdmin()
     {
-        return $this->user->getIsAdmin();
+        return $this->account->getIsAdmin();
     }
 
     public function getDoorNumber()
     {
-        return $this->user->getDoorNumber();
+        return $this->account->getDoorNumber();
     }
 
     public function getAppartement()
     {
-        return $this->user->getAppartement();
+        return $this->account->getAppartement();
     }
 
     public function getStreet()
     {
-        return $this->user->getStreet();
+        return $this->account->getStreet();
     }
 
     public function getCity()
     {
-        return $this->user->getCity();
+        return $this->account->getCity();
     }
 
     public function getProvince()
     {
-        return $this->user->getProvince();
+        return $this->account->getProvince();
     }
 
     public function getCountry()
     {
-        return $this->user->getCountry();
+        return $this->account->getCountry();
     }
 
     public function getPostalCode()
     {
-        return $this->user->getPostalCode();
+        return $this->account->getPostalCode();
     }
 
-    public function setAccount($user)
+    public function setAccount($account)
     {
-        $this->user = $user;
+        $this->account = $account;
         return $this;
     }
 
     public function setId($id)
     {
-        $this->user->setId($id);
+        $this->account->setId($id);
         return $this;
     }
 
     public function setEmail($email)
     {
-        $this->user->setEmail($email);
+        $this->account->setEmail($email);
         return $this;
     }
 
     public function setPassword($password)
     {
-        $this->user->setPassword($password);
+        $this->account->setPassword($password);
         return $this;
     }
 
     public function setFirstName($firstName)
     {
-        $this->user->setFirstName($firstName);
+        $this->account->setFirstName($firstName);
         return $this;
     }
 
     public function setLastName($lastName)
     {
-        $this->user->setLastName($lastName);
+        $this->account->setLastName($lastName);
         return $this;
     }
 
     public function setPhoneNumber($phoneNumber)
     {
-        $this->user->setPhoneNumber($phoneNumber);
+        $this->account->setPhoneNumber($phoneNumber);
         return $this;
     }
 
     public function setAddress($address)
     {
-        $this->user->setAddress($address);
+        $this->account->setAddress($address);
         return $this;
     }
 
     public function setDoorNumber($doorNumber)
     {
-        $this->user->setDoorNumber($doorNumber);
+        $this->account->setDoorNumber($doorNumber);
         return $this;
     }
 
     public function setAppartement($appartement)
     {
-        $this->user->setAppartement($appartement);
+        $this->account->setAppartement($appartement);
         return $this;
     }
 
     public function setStreet($street)
     {
-        $this->user->setStreet($street);
+        $this->account->setStreet($street);
         return $this;
     }
 
     public function setCity($city)
     {
-        $this->user->setCity($city);
+        $this->account->setCity($city);
         return $this;
     }
 
     public function setProvince($province)
     {
-        $this->user->setProvince($province);
+        $this->account->setProvince($province);
         return $this;
     }
 
     public function setCountry($country)
     {
-        $this->user->setCountry($country);
+        $this->account->setCountry($country);
         return $this;
     }
 
     public function setPostalCode($postalCode)
     {
-        $this->user->setPostalCode($postalCode);
+        $this->account->setPostalCode($postalCode);
         return $this;
     }
 
     //UTILITY
     public function getFullName()
     {
-        return $this->user->getFullName();
+        return $this->account->getFullName();
     }
 
     public function isAccountExist($email, $password)

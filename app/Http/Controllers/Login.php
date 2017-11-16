@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\AccountCatalogMapper;
-use App\Mappers\AccountMapper;
 
 class Login {
 
