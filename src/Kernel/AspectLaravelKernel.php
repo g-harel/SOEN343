@@ -12,6 +12,7 @@ namespace Go\Laravel\GoAopBridge\Kernel;
 
 use Go\Core\AspectContainer;
 use Go\Core\AspectKernel;
+use Aspect\UoWAspect;
 
 /**
  * Laravel aspect kernel class
@@ -23,5 +24,6 @@ class AspectLaravelKernel extends AspectKernel
      */
     protected function configureAop(AspectContainer $container)
     {
+        $container->registerAspect(new UoWAspect());
     }
 }
