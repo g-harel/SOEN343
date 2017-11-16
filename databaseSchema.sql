@@ -23,15 +23,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS units;
 DROP TABLE IF EXISTS accounts;
-DROP TABLE IF EXISTS carts;
 DROP TABLE IF EXISTS desktops;
 DROP TABLE IF EXISTS laptops;
 DROP TABLE IF EXISTS monitors;
 DROP TABLE IF EXISTS tablets;
 DROP TABLE IF EXISTS computers;
 DROP TABLE IF EXISTS items;
-DROP TABLE IF EXISTS transactions;
 
 --
 -- Structure de la table `accounts`
@@ -51,35 +50,17 @@ CREATE TABLE `accounts` (
   `province` varchar(100) CHARACTER SET latin1 NOT NULL,
   `country` varchar(50) CHARACTER SET latin1 NOT NULL,
   `postal_code` varchar(12) CHARACTER SET latin1 NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
-  `cart_id` int(10) UNSIGNED DEFAULT NULL
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Contenu de la table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`, `cart_id`) VALUES
-(1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, NULL),
-(2, 'mikehawk@gmail.com', 'mikey', 'Mike', 'Hawk', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, NULL),
-(3, 'munch@gmail.com', 'qwerty', 'Munchma', 'Quchi', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, NULL);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `cart`
---
-
-CREATE TABLE `cart` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `item1_id` int(10) UNSIGNED DEFAULT NULL,
-  `item2_id` int(10) UNSIGNED DEFAULT NULL,
-  `item3_id` int(10) UNSIGNED DEFAULT NULL,
-  `item4_id` int(10) UNSIGNED DEFAULT NULL,
-  `item5_id` int(10) UNSIGNED DEFAULT NULL,
-  `item6_id` int(10) UNSIGNED DEFAULT NULL,
-  `item7_id` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
+(1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1),
+(2, 'mikehawk@gmail.com', 'mikey', 'Mike', 'Hawk', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1),
+(3, 'munch@gmail.com', 'qwerty', 'Munchma', 'Quchi', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1);
 
 -- --------------------------------------------------------
 
@@ -253,20 +234,28 @@ INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`
 -- --------------------------------------------------------
 
 --
--- Structure de la table `transactions`
+-- Structure de la table `units`
 --
 
-CREATE TABLE `transactions` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `sales_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `units` (
+  `serial` varchar(20) NOT NULL,
   `item_id` int(11) UNSIGNED NOT NULL,
   `account_id` int(11) UNSIGNED NOT NULL,
-  `purchase_price` int(11) NOT NULL
+  `status` ENUM('AVAILABLE', 'RESERVED', 'PURCHASED'),
+  `reserved_date` timestamp NULL,
+  `purchased_price` float(10,2) NULL,
+  `purchased_date` timestamp NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Index pour les tables exportées
+-- Contenu de la table `units`
 --
+
+INSERT INTO `units` (`serial`, `item_id`, `account_id`, `status`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
+('ABCDEF123', 1, 1, 'AVAILABLE', NOW(), 12.99, NOW()),
+('312FEDCBA', 2, 3, 'AVAILABLE', NOW(), 12.99, NOW());
+
+-- --------------------------------------------------------
 
 --
 -- Index pour la table `accounts`
@@ -274,21 +263,7 @@ CREATE TABLE `transactions` (
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`),
-  ADD UNIQUE KEY `cart_id` (`cart_id`);
-
---
--- Index pour la table `cart`
---
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `item1_id` (`item1_id`),
-  ADD KEY `item2_id` (`item2_id`),
-  ADD KEY `item3_id` (`item3_id`),
-  ADD KEY `item4_id` (`item4_id`),
-  ADD KEY `item5_id` (`item5_id`),
-  ADD KEY `item6_id` (`item6_id`),
-  ADD KEY `item7_id` (`item7_id`);
+  ADD UNIQUE KEY `email_UNIQUE` (`email`);
 
 --
 -- Index pour la table `computers`
@@ -341,10 +316,10 @@ ALTER TABLE `tablets`
   ADD UNIQUE KEY `id_UNIQUE` (`item_id`);
 
 --
--- Index pour la table `transactions`
+-- Index pour la table `units`
 --
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`),
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`serial`),
   ADD KEY `item_id_fk` (`item_id`),
   ADD KEY `account_id_fk` (`account_id`);
 
@@ -358,11 +333,6 @@ ALTER TABLE `transactions`
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `cart`
---
-ALTER TABLE `cart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT pour la table `items`
 --
 ALTER TABLE `items`
@@ -373,31 +343,8 @@ ALTER TABLE `items`
 ALTER TABLE `sessions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
---
 -- Contraintes pour les tables exportées
 --
-
---
--- Contraintes pour la table `accounts`
---
-ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item1_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`item2_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`item3_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_5` FOREIGN KEY (`item4_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_6` FOREIGN KEY (`item5_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_7` FOREIGN KEY (`item6_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_8` FOREIGN KEY (`item7_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `computers`
@@ -436,9 +383,9 @@ ALTER TABLE `tablets`
   ADD CONSTRAINT `fk_tablet_item_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `transactions`
+-- Contraintes pour la table `units`
 --
-ALTER TABLE `transactions`
+ALTER TABLE `units`
   ADD CONSTRAINT `account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 

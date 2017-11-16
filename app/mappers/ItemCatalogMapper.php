@@ -228,19 +228,19 @@ class ItemCatalogMapper {
       $itemType = ItemType::getItemTypeEnum($item);
         switch($itemType) {
             case ItemType::monitor:
-            return new MonitorGateway();            
+            return new MonitorGateway();
             break;
             case ItemType::computer:
-            return new ComputerGateway();            
+            return new ComputerGateway();
             break;
             case ItemType::desktop:
-            return new DesktopGateway();            
+            return new DesktopGateway();
             break;
             case ItemType::laptop:
-            return new LaptopGateway();            
+            return new LaptopGateway();
             break;
             case ItemType::tablet:
-            return new TabletGateway();            
+            return new TabletGateway();
             break;
             default:
             return null;
@@ -335,7 +335,7 @@ class ItemCatalogMapper {
         $array["cpuCores"] = $item->getCpuCores();
         $array["weight"] = $item->getWeight();
         $array["hddSize"] = $item->getHddSize();
-        return $array;        
+        return $array;
     }
 
     private function getDesktopParams(Desktop $item) {
@@ -343,7 +343,7 @@ class ItemCatalogMapper {
         $array["height"] = $item->getHeight();
         $array["width"] = $item->getWidth();
         $array["thickness"] = $item->getThickness();
-        return $array;        
+        return $array;
     }
 
     private function getLaptopParams(Laptop $item) {
@@ -353,7 +353,7 @@ class ItemCatalogMapper {
         $array["battery"] = $item->getBattery();
         $array["camera"] = $item->getCamera();
         $array["isTouchscreen"] = $item->getIsTouchscreen();
-        return $array;        
+        return $array;
     }
 
     private function getTabletParams(Tablet $item) {

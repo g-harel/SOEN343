@@ -5,6 +5,15 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 
+use App\Gateway\UnitGateway;
+
+$cart = UnitGateway::getInstance();
+
+$cart->insert("SERIAL", 1, 1);
+$cart->update("SERIAL", "TEST", 1, 2, "RESERVED", null, null, null);
+echo json_encode($cart->get("TEST"));
+$cart->delete("TEST");
+
 class PagesController extends Controller
 {
     public function index()
