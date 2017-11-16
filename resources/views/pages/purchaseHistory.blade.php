@@ -2,17 +2,17 @@
 @section('content')
     <div class='jumbotron'>
         <h3>Purchase History</h3>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Serial Number</th>
-                <td></td>
-            </tr>
+        @if(isset($_SESSION)  && !empty($_SESSION))
+            @if(empty($units))
+                <p>Your purchase history is empty.</p>
             <!-- still need to display purchase name -->
-            @if(isset($_SESSION)  && !empty($_SESSION))
-                @if(empty($units))
-                    <td>Your purchase history is empty.</td>
                 @else
+                    <table>
+                        <tr>
+                            <th>Product</th>
+                            <th>Serial Number</th>
+                            <td></td>
+                        </tr>
                     @foreach($units as $unit)
                         <tr>
                             <td>{{ $unit['name'] }}, {{ $unit['serial'] }},{{ $unit['price'] }}$, purchased on {{ $unit['purchased_date'] }}</td> 
