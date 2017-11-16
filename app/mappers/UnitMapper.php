@@ -2,6 +2,7 @@
 
 // TODO create new units at the same time as items
 // TODO timeout unit reservations
+// TODO limit unit reservations
 // TODO update item count when unit is reserved
 // TODO update item count when unit is returned
 
