@@ -2,9 +2,6 @@
 
 namespace App\Gateway;
 
-use App\Gateway\ComputerGateway;
-use Illuminate\Support\Facades\DB;
-
 class LaptopGateway extends ComputerGateway implements iItemCategory {
     public static $fields = array(
         "display_size",
@@ -32,6 +29,6 @@ class LaptopGateway extends ComputerGateway implements iItemCategory {
 
     public function getAll()
     {
-        return DB::select($this->buildSelect());
+        return getAllFromSelectQuery($this->buildSelect());
     }
 }

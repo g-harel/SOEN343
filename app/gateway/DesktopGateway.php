@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use Illuminate\Support\Facades\DB;
-
 class DesktopGateway extends ComputerGateway implements iItemCategory {
     public static $fields = array(
         "height",
@@ -29,6 +27,6 @@ class DesktopGateway extends ComputerGateway implements iItemCategory {
 
     public function getAll()
     {
-        return DB::select($this->buildSelect());
+        return getAllFromSelectQuery($this->buildSelect());
     }
 }

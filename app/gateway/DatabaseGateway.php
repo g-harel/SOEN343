@@ -3,6 +3,7 @@
 namespace App\Gateway;
 
 use Mysqli;
+use SplObjectStorage;
 
 // log result in the client console.
 Function console_log($str) {
@@ -16,10 +17,44 @@ Function console_error($str) {
     }
 }
 
-Function getAllSessions($tableName) {
-    $sql = "SELECT * FROM $this->tableName;";
+Function getAllFromTable($tableName) {
+    $rows = new SplObjectStorage();
+    $query = "SELECT * FROM $tableName;";
     $db = new DatabaseGateway();
-    return $this->db->queryDB($sql);
+    $db->openDBConnection();
+    $mysqli = $db->getDBConnection();
+    if (mysqli_connect_errno()) {
+        printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
+    }
+    if ($result = $mysqli->query($query)) {
+
+        while ($obj = $result->fetch_object()) {
+            $rows->attach($obj);
+        }
+        $result->close();
+    }
+    $mysqli->close();
+    return $rows;
+}
+
+Function getAllFromSelectQuery($query) {
+    $rows = array();
+    $db = new DatabaseGateway();
+    $db->openDBConnection();
+    $mysqli = $db->getDBConnection();
+    if (mysqli_connect_errno()) {
+        printf("Connect failed: %s\n", mysqli_connect_error());
+        exit();
+    }
+    if ($result = $mysqli->query($query)) {
+        while ($obj = $result->fetch_assoc()) {
+            $rows[] = $obj;
+        }
+        $result->close();
+    }
+    $mysqli->close();
+    return $rows;
 }
 
 Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
@@ -109,10 +144,6 @@ class DatabaseGateway
 
     public function openDBConnection() {
         $this->DBConnection = new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
-    }
-
-    public function generateConnection() {
-        return new mysqli($this->serverName, $this->userName, $this->password, $this->databaseName);
     }
 
     public function closeDBConnection() {

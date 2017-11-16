@@ -65,24 +65,6 @@ class AccountGateway
 
     public function getAll()
     {
-        $accounts = new SplObjectStorage();
-        $mysqli = $this->db->generateConnection();
-        $query = "SELECT * FROM accounts";
-        if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n", mysqli_connect_error());
-            exit();
-        }
-        if ($result = $mysqli->query($query)) {
-
-            /* fetch object array */
-            while ($obj = $result->fetch_object()) {
-                $accounts->attach($obj);
-            }
-            /* free result set */
-            $result->close();
-        }
-        /* close connection */
-        $mysqli->close();
-        return $accounts;
+        return getAllFromTable($this->tableName);
     }
 }

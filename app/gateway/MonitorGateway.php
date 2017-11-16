@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use Illuminate\Support\Facades\DB;
-
 class MonitorGateway extends ItemGateway implements iItemCategory {
   public static $fields = array(
       "display_size",
@@ -28,6 +26,6 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
 
   public function getAll()
   {
-      return DB::select($this->buildSelect());
+      return getAllFromSelectQuery($this->buildSelect());
   }
 }
