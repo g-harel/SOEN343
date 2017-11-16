@@ -20,7 +20,7 @@ use App\Gateway\MonitorGateway;
 
 class ItemCatalogMapper {
 
-    private const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
+    const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
         ["brand", "brand"],
