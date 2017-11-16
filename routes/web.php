@@ -29,7 +29,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
 }
 
 Route::prefix('/purchaseHistory')->group(
-    function() {
+    function () {
         Route::get('showPurchase', 'UnitsController@searchPurchase');
         Route::get('returnPurchase', 'UnitsController@returnPurchase');
     }
