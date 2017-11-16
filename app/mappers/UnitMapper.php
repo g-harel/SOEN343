@@ -75,7 +75,7 @@ class UnitCatalog {
     }
 
     public function add(Unit $unit): bool {
-        if ($this->catalog[$unit->getSerial()]) {
+        if (isset($this->catalog[$unit->getSerial()])) {
             return false;
         }
         $this->catalog[$unit->getSerial()] = $unit;
