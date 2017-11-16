@@ -163,23 +163,23 @@ const itemsTable = {
     monitor: {
         link: '#monitorTable',
         scrollX: false,
-        pageLength: 50
+        pageLength: 50,
     },
     tablet: {
         link: '#tabletTable',
         scrollX: true,
-        pageLength: 50
+        pageLength: 50,
     },
     laptop: {
         link: '#laptopTable',
         scrollX: false,
-        pageLength: 50
+        pageLength: 50,
     },
     desktop: {
         link: '#desktopTable',
         scrollX: false,
-        pageLength: 50
-    }
+        pageLength: 50,
+    },
 };
 
 /**
@@ -273,61 +273,61 @@ $(document).ready(() => {
     FormDropDownFields.init();
     $(itemsTable.tablet.link).DataTable({
         pageLength: itemsTable.tablet.pageLength,
-        scrollX: itemsTable.tablet.scrollX
+        scrollX: itemsTable.tablet.scrollX,
     });
     $(itemsTable.monitor.link).DataTable({
         pageLength: itemsTable.monitor.pageLength,
         scrollX: itemsTable.monitor.scrollX,
-        searching: false
+        searching: false,
     });
     $(itemsTable.laptop.link).DataTable({
         pageLength: itemsTable.laptop.pageLength,
         scrollX: itemsTable.laptop.scrollX,
-        searching: false
+        searching: false,
     });
     $(itemsTable.desktop.link).DataTable({
         pageLength: itemsTable.desktop.pageLength,
         scrollX: itemsTable.desktop.scrollX,
-        searching: false
+        searching: false,
     });
 
     /* ---- particles.js config ---- */
 
-    particlesJS("particles-js", {
-        "particles": {
-            "number": {
-                "value": 100
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 100,
             },
-            "shape": {
-                "type": "circle"
+            shape: {
+                type: 'circle',
             },
-            "size": {
-                "value": 2,
-                "random": true
+            size: {
+                value: 2,
+                random: true,
             },
-            "line_linked": {
-                "enable": true
+            line_linked: {
+                enable: true,
             },
-            "move": {
-                "enable": true,
-                "speed": 1,
-                "direction": "none",
-                "straight": false
-            }
+            move: {
+                enable: true,
+                speed: 1,
+                direction: 'none',
+                straight: false,
+            },
         },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": false
-                }
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: false,
+                },
             },
-            "modes": {
-                "push": {
-                    "particles_nb": 12
-                }
-            }
-        }
+            modes: {
+                push: {
+                    particles_nb: 12,
+                },
+            },
+        },
     });
 });
 

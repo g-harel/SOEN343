@@ -93,6 +93,9 @@
     background-color: #53A3CD;
     border-color: #53A3CD;
   }
+  #login-submit {
+      border: 1px solid rgba(113, 112, 112, 0.81);
+  }
 </style>
 <div id="particles-js"></div>
 @section('content')
