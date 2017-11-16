@@ -8,27 +8,17 @@ use Go\Lang\Annotation\Before;
 use Psr\Log\LoggerInterface;
 
 /**
- * Application logging aspect
+ * Application UoW aspect
  */
-class LoggingAspect implements Aspect
+class UoWAspect implements Aspect
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    /**
-     * Writes a log info before method execution
+     * Executes save() method that goes from UoW to the Mapper after method execution
      *
      * @param MethodInvocation $invocation
-     * @Before("execution(public **->*(*))")
+     * @After("execution(public **->*(*))")
      */
-    public function beforeMethod(MethodInvocation $invocation)
+    public function afterMethod(MethodInvocation $invocation)
     {
         $this->logger->info($invocation, $invocation->getArguments());
     }
