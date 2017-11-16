@@ -11,25 +11,17 @@ use Go\Lang\Annotation\Before;
 use Go\Lang\Annotation\Pointcut;
 use Go\Core\AspectContainer;
 use Go\Core\AspectKernel;
+use Go\Lang\Annotation\DeclareParents;
 /**
  * Aspect of Unit of Work
  */
 class UoWAspect implements Aspect
 {
-
-    /**
-     * Pointcut for commit method
-     *
-     * @Pointcut("execution(public mappers\ItemCatalogMappers->commit(*))")
-     */
-    protected function commit() {}
-
-
     /**
      * Method that activates the UoW after committing to Mapper
      *
      * @param MethodInvocation $invocation
-     * @After("$this->commit()")
+     * @After("execution(public ItemCatalogMappers->commit(*))") // This is our PointCut
      */
     protected function SaveAfterCommit(MethodInvocation $invocation)
     {
