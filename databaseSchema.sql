@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 01 Novembre 2017 à 21:08
+-- Généré le :  Mer 15 Novembre 2017 à 20:23
 -- Version du serveur :  5.7.17-log
 -- Version de PHP :  7.1.1
 
@@ -31,10 +31,12 @@ DROP TABLE IF EXISTS monitors;
 DROP TABLE IF EXISTS tablets;
 DROP TABLE IF EXISTS computers;
 DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS transactions;
 
 --
 -- Structure de la table `accounts`
 --
+
 CREATE TABLE `accounts` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(100) CHARACTER SET latin1 NOT NULL,
@@ -65,9 +67,10 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 -- --------------------------------------------------------
 
 --
--- Structure de la table `carts`
+-- Structure de la table `cart`
 --
-CREATE TABLE `carts` (
+
+CREATE TABLE `cart` (
   `id` int(10) UNSIGNED NOT NULL,
   `item1_id` int(10) UNSIGNED DEFAULT NULL,
   `item2_id` int(10) UNSIGNED DEFAULT NULL,
@@ -83,6 +86,7 @@ CREATE TABLE `carts` (
 --
 -- Structure de la table `computers`
 --
+
 CREATE TABLE `computers` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `processor_type` varchar(100) NOT NULL,
@@ -100,13 +104,16 @@ INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `
 (3, 'Intel', 12, 4, 5.00, 128),
 (4, 'Rockchip', 16, 6, 13.20, 1000),
 (5, 'AMD', 2, 4, 1.00, 2000),
-(6, 'Intel', 8, 2, 3.00, 256);
+(6, 'Intel', 8, 2, 3.00, 256),
+(23, 'NoIdea', 16, 8, 31.20, 1000),
+(24, 'NoIdea', 16, 8, 31.20, 1000);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `desktops`
 --
+
 CREATE TABLE `desktops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `height` float(10,2) NOT NULL,
@@ -119,13 +126,16 @@ CREATE TABLE `desktops` (
 --
 
 INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
-(4, 43.00, 24.00, 13.00);
+(4, 43.00, 24.00, 13.00),
+(23, 12.00, 12.00, 4.00),
+(24, 12.00, 12.00, 4.00);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `items`
 --
+
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
   `category` varchar(20) NOT NULL,
@@ -139,18 +149,33 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
-(1, 'monitor', 'test', 12.00, 1),
-(2, 'monitor', 'test2', 99.00, 99),
+(1, 'test', 'test', 12.00, 1),
+(2, 'test2', 'test2', 99.00, 99),
 (3, 'laptop', 'IBM', 1500.00, 2),
 (4, 'desktop', 'Dell', 1055.00, 20),
 (5, 'tablet', 'Apple', 900.00, 43),
-(6, 'laptop', 'Apple', 9999.00, 9);
+(6, 'laptop', 'Apple', 9999.00, 9),
+(7, 'desktop', 'Alienware', 2400.00, 23),
+(8, 'desktop', 'Alienware3333', 240022.00, 23),
+(9, 'desktop', 'Alienware', 2400.00, 23),
+(10, 'desktop', 'Alienware3333', 240022.00, 23),
+(11, 'desktop', 'Alienware', 2400.00, 23),
+(12, 'desktop', 'Alienware3333', 240022.00, 23),
+(13, 'desktop', 'Alienware', 2400.00, 23),
+(14, 'desktop', 'Alienware3333', 240022.00, 23),
+(15, 'desktop', 'Alienware', 2400.00, 23),
+(16, 'desktop', 'Alienware3333', 240022.00, 23),
+(17, 'desktop', 'Alienware', 2400.00, 23),
+(18, 'desktop', 'Alienware3333', 240022.00, 23),
+(23, 'desktop', 'Alienware6666', 111111.00, 23),
+(24, 'desktop', 'Alienware3333', 240022.00, 23);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `laptops`
 --
+
 CREATE TABLE `laptops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -173,6 +198,7 @@ INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is
 --
 -- Structure de la table `monitors`
 --
+
 CREATE TABLE `monitors` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -192,6 +218,7 @@ INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 --
 -- Structure de la table `sessions`
 --
+
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
   `account_id` int(10) UNSIGNED NOT NULL,
@@ -203,6 +230,7 @@ CREATE TABLE `sessions` (
 --
 -- Structure de la table `tablets`
 --
+
 CREATE TABLE `tablets` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -222,6 +250,20 @@ CREATE TABLE `tablets` (
 INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`, `battery`, `os`, `camera`, `is_touchscreen`) VALUES
 (5, 7.00, 3.00, 2.00, 6.00, 'Mac', 'iOS', 'Yes', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `sales_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `item_id` int(11) UNSIGNED NOT NULL,
+  `account_id` int(11) UNSIGNED NOT NULL,
+  `purchase_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Index pour les tables exportées
 --
@@ -236,9 +278,9 @@ ALTER TABLE `accounts`
   ADD UNIQUE KEY `cart_id` (`cart_id`);
 
 --
--- Index pour la table `carts`
+-- Index pour la table `cart`
 --
-ALTER TABLE `carts`
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
   ADD KEY `item1_id` (`item1_id`),
   ADD KEY `item2_id` (`item2_id`),
@@ -299,6 +341,14 @@ ALTER TABLE `tablets`
   ADD UNIQUE KEY `id_UNIQUE` (`item_id`);
 
 --
+-- Index pour la table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_id_fk` (`item_id`),
+  ADD KEY `account_id_fk` (`account_id`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -308,20 +358,25 @@ ALTER TABLE `tablets`
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `carts`
+-- AUTO_INCREMENT pour la table `cart`
 --
-ALTER TABLE `carts`
+ALTER TABLE `cart`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT pour la table `sessions`
 --
 ALTER TABLE `sessions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables exportées
 --
@@ -330,12 +385,12 @@ ALTER TABLE `sessions`
 -- Contraintes pour la table `accounts`
 --
 ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `cart`
 --
-ALTER TABLE `carts`
+ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item1_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`item2_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`item3_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -379,6 +434,13 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `tablets`
   ADD CONSTRAINT `fk_tablet_item_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
