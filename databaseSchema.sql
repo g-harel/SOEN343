@@ -238,10 +238,10 @@ INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`
 --
 
 CREATE TABLE `units` (
-  `serial` varchar(20) NOT NULL,
+  `serial` varchar(32) NOT NULL,
   `item_id` int(11) UNSIGNED NOT NULL,
-  `account_id` int(11) UNSIGNED NOT NULL,
   `status` ENUM('AVAILABLE', 'RESERVED', 'PURCHASED'),
+  `account_id` int(11) UNSIGNED,
   `reserved_date` timestamp NULL,
   `purchased_price` float(10,2) NULL,
   `purchased_date` timestamp NULL
@@ -251,9 +251,9 @@ CREATE TABLE `units` (
 -- Contenu de la table `units`
 --
 
-INSERT INTO `units` (`serial`, `item_id`, `account_id`, `status`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
-('ABCDEF123', 1, 1, 'AVAILABLE', NOW(), 12.99, NOW()),
-('312FEDCBA', 2, 3, 'AVAILABLE', NOW(), 12.99, NOW());
+INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
+('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
+('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW());
 
 -- --------------------------------------------------------
 

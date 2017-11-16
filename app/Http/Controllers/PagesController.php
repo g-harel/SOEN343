@@ -5,14 +5,45 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 
-use App\Gateway\UnitGateway;
+use App\Mappers\UnitMapper;
 
-$cart = UnitGateway::getInstance();
+$um = UnitMapper::getInstance();
 
-$cart->insert("SERIAL", 1, 1);
+function p($m, $serial) {
+    $unit = $m->get($serial);
+    echo "<div></div><pre>";
+    if (!$unit) {
+        echo "null";
+    } else {
+        echo json_encode(array(
+            "serial" => $unit->getSerial(),
+            "item_id" => $unit->getItemId(),
+            "status" => $unit->getStatus(),
+            "account_id" => $unit->getAccountId(),
+            "reserved_date" => $unit->getReservedDate(),
+            "purchased_price" => $unit->getPurchasedPrice(),
+            "purchased_date" => $unit->getPurchasedDate(),
+        ), JSON_PRETTY_PRINT);
+    }
+    echo "<br>";
+    echo "</pre>";
+}
+
+$um->create("serial", 1, "status2");
+p($um, "serial");
+$um->reserve("serial", 1);
+p($um, "serial");
+$um->checkout("serial", 1, 2.0);
+p($um, "serial");
+$um->return("serial");
+p($um, "serial");
+$um->delete("serial");
+p($um, "serial");
+
+/* $cart->insert("SERIAL", 1, 1);
 $cart->update("SERIAL", "TEST", 1, 2, "RESERVED", null, null, null);
 echo json_encode($cart->get("TEST"));
-$cart->delete("TEST");
+$cart->delete("TEST"); */
 
 class PagesController extends Controller
 {

@@ -11,14 +11,15 @@ class Unit {
     private $purchasedPrice;
     private $purchasedDate;
 
-    public function __construct($serial, $itemId, $accountId, $status, $reservedDate, $purchasedPrice, $purchasedDate) {
-        $this->$serial = $serial;
-        $this->$itemId = $itemId;
-        $this->$accountId = $accountId;
-        $this->$status = $status;
-        $this->$reservedDate = $reservedDate;
-        $this->$purchasedPrice = $purchasedPrice;
-        $this->$purchasedDate = $purchasedDate;
+    public function __construct($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
+        // using setters because some werent't working !?
+        $this->setserial($serial);
+        $this->setItemId($itemId);
+        $this->setStatus($status);
+        $this->setAccountId($accountId);
+        $this->setReservedDate($reservedDate);
+        $this->setPurchasedPrice($purchasedPrice);
+        $this->setPurchasedDate($purchasedDate);
     }
 
     public function getSerial() {
@@ -29,12 +30,12 @@ class Unit {
         return $this->itemId;
     }
 
-    public function getAccountId() {
-        return $this->accountId;
-    }
-
     public function getStatus() {
         return $this->status;
+    }
+
+    public function getAccountId() {
+        return $this->accountId;
     }
 
     public function getReservedDate() {
@@ -57,12 +58,12 @@ class Unit {
         $this->itemId = $itemId;
     }
 
-    public function setAccountId($accountId) {
-        $this->accountId = $accountId;
-    }
-
     public function setStatus($status) {
         $this->status = $status;
+    }
+
+    public function setAccountId($accountId) {
+        $this->accountId = $accountId;
     }
 
     public function setReservedDate($reservedDate) {

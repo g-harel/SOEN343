@@ -21,31 +21,27 @@ class UnitGateway {
         return self::$instance;
     }
 
+    public function insert($serial, $itemId, $status) {
+        $sql = "INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES ('$serial', '$itemId', 'AVAILABLE', NULL, NULL, NULL, NULL);";
+        $result = $this->db->queryDB($sql);
+        return $result;
+    }
+
     public function get($serial) {
         $conditionsAssociativeArray = ["serial" => $serial];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
-    public function insert($serial, $itemId, $accountId) {
-        $sql = "INSERT INTO `units` (`serial`, `item_id`, `account_id`, `status`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES ('$serial', '$itemId', '$accountId', 'AVAILABLE', NULL, NULL, NULL);";
-        $result = $this->db->queryDB($sql);
-        return $result;
-    }
-
-    public function update($sourceSerial, $serial, $itemId, $accountId, $status, $reservedDate, $purchasedPrice, $purchasedDate) {
+    public function update($sourceSerial, $serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
         $conditionsAssociativeArray = ["serial" => $sourceSerial];
         $conditions = transformConditionsToString($conditionsAssociativeArray);
-
-        // empty values are replaced by null.
-        $reservedDate = (!$reservedDate) ? "NULL" : $reservedDate;
-        $purchasedPrice = (!$purchasedPrice) ? "NULL" : $purchasedPrice;
-        $purchasedDate = (!$purchasedDate) ? "NULL" : $purchasedDate;
-
         $valuePairs =
             "serial = '$serial"."', ".
             "item_id = '$itemId"."', ".
-            "account_id = '$accountId"."', ".
             "status = '$status"."', ".
+            // these fields are purposefully left without apostrophes
+            // so that the value can be set to more exotic values.
+            "account_id = $accountId".", ".
             "reserved_date = $reservedDate".", ".
             "purchased_price = $purchasedPrice".", ".
             "purchased_date = $purchasedDate";
