@@ -96,6 +96,10 @@ class AccountMapper
     public function getAccountByEmail($email) {
         return $this->gateway->getAccountByEmail($email);
     }
+    
+    public function getAccountById($id) {
+        return $this->gateway->getAccountById($id);
+    }
 
     public function getId() {
         return $this->account->getId();

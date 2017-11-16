@@ -215,5 +215,16 @@ class PagesController extends Controller
             return view('pages.view');
         }
     }
+    
+    public function deleteAccount(){
+        $accountMapper = new AccountMapper();
+        $id =$_SESSION['currentLoggedInId'];
+        
+        $account= $accountMapper->getAccountById($id);
+        $accountMapper->setAccount($account);
+        $accountMapper->deleteAccountInRecord();
+        
+        return view('pages.login');
+    }
 }
 

@@ -27,7 +27,8 @@
                         <div class="row pv-lg">
                             <div class="col-lg-2"></div>
                             <div class="col-lg-8">
-                                <form class="form-horizontal ng-pristine ng-valid">
+                                
+                                <form class="form-horizontal ng-pristine ng-valid" action="/deleteAccount" method="post" role="form">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact1">Name</label>
                                         <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="Audrey Hunt" readonly></div>
@@ -47,7 +48,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-danger" type="submit">Close My Account</button></div>
+                                        <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-danger" type="submit">Delete My Account</button></div>
                                     </div>
                                 </form>
 
