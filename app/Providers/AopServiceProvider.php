@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Aspect\UoWAspect;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+
 
 class AopServiceProvider extends ServiceProvider
 {
@@ -23,10 +26,10 @@ class AopServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(LoggingAspect::class, function (Application $app) {
-            return new LoggingAspect($app->make(LoggerInterface::class));
+        $this->app->singleton(UoWAspect::class, function (Application $app) {
+            return new UoWAspect($app->make(UoWAspect::class));
         });
 
-        $this->app->tag([LoggingAspect::class], 'goaop.aspect');
+        $this->app->tag([UoWAspect::class], 'goaop.aspect');
     }
 }
