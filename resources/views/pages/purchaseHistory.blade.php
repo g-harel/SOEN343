@@ -12,7 +12,7 @@
             @if(isset($_SESSION)  && !empty($_SESSION))
                 @foreach($units as $unit)
                     <tr>
-                        <td>Product {{ $unit['serial'] }}, price: {{ $unit['price'] }}, purchased on {{ $unit['purchased_date'] }}</td>
+                        <td>{{ $unit['name'] }}, {{ $unit['serial'] }},{{ $unit['price'] }}$, purchased on {{ $unit['purchased_date'] }}</td>
                         <td><a class="btn" href="#">Return</a>
                     </tr>
                 @endforeach
