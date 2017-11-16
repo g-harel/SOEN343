@@ -6,7 +6,6 @@ if (session_status() == PHP_SESSION_NONE) {
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +13,10 @@ if (session_status() == PHP_SESSION_NONE) {
         <link rel='stylesheet' href="{{asset('css/app.css')}}">
         <link rel='stylesheet' href="{{asset('css/style.css')}}">
         <link rel='stylesheet' href="{{asset('css/filtering.css')}}">
-        <title>@yield('page-title')</title>
+        @yield('login-register-css')
+        <title>
+            @yield('page-title')
+        </title>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -35,5 +37,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
         <script src="{{asset('js/form.js')}}"></script>
         <script src="{{asset('js/modify-delete.js')}}"></script>
+    @yield('register-js')
+    @yield('particle-js')
     </body>
 </html>

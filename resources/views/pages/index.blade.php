@@ -12,3 +12,6 @@
             <a class="btn register-btn" href="/register">Register</a>
     </div>
 @endsection
+@section('particle-js')
+    <script src="{{asset('js/particle.js')}}"></script>
+@endsection

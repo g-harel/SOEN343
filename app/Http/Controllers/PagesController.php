@@ -188,9 +188,8 @@ class PagesController extends Controller
         $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
         $emptyArrayKeys = array_keys($sanitizedInputs, "");
         if (!empty($emptyArrayKeys)) {
-            return view('pages.register', [
-                'inputErrors' => $emptyArrayKeys,
-                'alertType' => 'warning'
+            return redirect()->back()->with([
+                'inputErrors' => $emptyArrayKeys
             ]);
         } else {
             $registerThis = new Register($sanitizedInputs['first_name'],
