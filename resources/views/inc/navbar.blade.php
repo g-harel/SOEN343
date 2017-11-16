@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="border-radius: 0;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">{{config('app.name', 'soen343')}}</a>

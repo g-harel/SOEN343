@@ -5,6 +5,7 @@ php:
 
 before_install:
   - cp .env.travis .env
+  - cp databaseConfig.ini.travis databaseConfig.ini
   - mysql -e 'CREATE DATABASE soen343;'
   - nvm install --lts
 
