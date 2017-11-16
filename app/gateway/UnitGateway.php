@@ -21,14 +21,19 @@ class UnitGateway {
         return self::$instance;
     }
 
+    public function select($conditionsAssociativeArray) {
+        return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
+    }
+
     public function insert($serial, $itemId) {
         $sql = "INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES ('$serial', '$itemId', 'AVAILABLE', NULL, NULL, NULL, NULL);";
         $result = $this->db->queryDB($sql);
         return $result;
     }
 
-    public function select($conditionsAssociativeArray) {
-        return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
+    public function delete($serial) {
+        $conditionsAssociativeArray = ["serial" => $serial];
+        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function update($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
@@ -47,10 +52,5 @@ class UnitGateway {
         $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
 
         return $this->db->queryDB($sql);
-    }
-
-    public function delete($serial) {
-        $conditionsAssociativeArray = ["serial" => $serial];
-        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 }

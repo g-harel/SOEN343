@@ -5,6 +5,7 @@
 // TODO limit unit reservations
 // TODO update item count when unit is reserved
 // TODO update item count when unit is returned
+// TODO type checks before creating instances
 
 namespace App\Mappers;
 
@@ -29,7 +30,7 @@ function mapSerial($serial) {
 
 // creates an sql timestamp of the current time.
 function getDate() {
-    return date("'Y-m-d H:i:s'");
+    return date("Y-m-d H:i:s");
 }
 
 // maintains a list of the available units and references
@@ -52,7 +53,9 @@ class UnitCatalog {
         return self::$instance;
     }
 
-    public function toObject($record) {
+    // helper to convert an array of column values into
+    // a unit object.
+    public function toObject($record): Unit {
         return new Unit(
             $record["serial"],
             $record["item_id"],
@@ -61,6 +64,20 @@ class UnitCatalog {
             $record["reserved_date"],
             $record["purchased_price"],
             $record["purchased_date"]
+        );
+    }
+
+    // helper to convert an object of type unit into an
+    // associative array.
+    public function toArray(Unit $object) {
+        return array(
+            "serial" => $object->getSerial(),
+            "item_id" => $object->getItemId(),
+            "status" => $object->getStatus(),
+            "account_id" => $object->getAccountId(),
+            "reserved_date" => $object->getReservedDate(),
+            "purchased_price" => $object->getPurchasedPrice(),
+            "purchased_date" => $object->getPurchasedDate()
         );
     }
 
@@ -74,11 +91,11 @@ class UnitCatalog {
 
     public function query($accountId, $status) {
         $arr = array();
-        foreach($this->catalog as $item) {
-            $isStatus = $item->getStatus() === $status;
-            $isAccount = $item->getAccountId() === $accountId;
+        foreach($this->catalog as $unit) {
+            $isStatus = $unit->getStatus() === $status;
+            $isAccount = $unit->getAccountId() === $accountId;
             if ($isStatus && $isAccount) {
-                array_push($arr, $item);
+                array_push($arr, $this->toArray($unit));
             }
         }
         return $arr;
@@ -122,6 +139,29 @@ class UnitMapper implements CollectionMapper {
         return self::$instance;
     }
 
+    // fetches unit object from identity map or from the gateway.
+    // returns null if the unit is not found.
+    private function getObject($serial) {
+        $exists = $this->identityMap->hasId(mapSerial($serial));
+        if ($exists) {
+            $unit = $this->identityMap->getObject(mapSerial($serial));
+            // deleted units are set to this value so that reads
+            // do not go fetch the value from the database (where
+            // it still exists until work is committed)
+            if ($unit === $this->deletedUnit) {
+                return null;
+            }
+            return $unit;
+        }
+        $res = $this->unitGateway->select(["serial" => $serial]);
+        if ($res === null) {
+            return null;
+        }
+        $unit = $this->catalog->toObject($res[0]);
+        $this->identityMap->set(mapSerial($serial), $unit);
+        return $unit;
+    }
+
     ////////////////////////////////
     ///  UNIT OF WORK INTERFACE  ///
     ////////////////////////////////
@@ -158,6 +198,16 @@ class UnitMapper implements CollectionMapper {
         $this->unitOfWork->commit($transactionId);
     }
 
+    // fetches an item from memory, and returns it as an
+    // associative array.
+    public function get($serial) {
+        $unit = $this->getObject($serial);
+        if (!$unit) {
+            return null;
+        }
+        return $this->catalog->toArray($unit);
+    }
+
     // create a new unit. note that the status is not set in
     // this method. the units' actions are defined below.
     public function create($transactionId, $serial, $itemId) {
@@ -174,7 +224,7 @@ class UnitMapper implements CollectionMapper {
 
     // delete unit from database.
     public function remove($transactionId, $serial) {
-        $unit = $this->get($serial);
+        $unit = $this->getObject($serial);
         if (!$unit) {
             return;
         }
@@ -183,33 +233,10 @@ class UnitMapper implements CollectionMapper {
         $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
-    // fetches unit object from identity map or from the gateway.
-    // returns null if the unit is not found.
-    public function get($serial) {
-        $exists = $this->identityMap->hasId(mapSerial($serial));
-        if ($exists) {
-            $unit = $this->identityMap->getObject(mapSerial($serial));
-            // deleted units are set to this value so that reads
-            // do not go fetch the value from the database (where
-            // it still exists until work is committed)
-            if ($unit === $this->deletedUnit) {
-                return null;
-            }
-            return $unit;
-        }
-        $res = $this->unitGateway->select(["serial" => $serial]);
-        if ($res === null) {
-            return null;
-        }
-        $unit = $this->catalog->toObject($res[0]);
-        $this->identityMap->set(mapSerial($serial), $unit);
-        return $unit;
-    }
-
     // reserved units are associated with an account and
     // store their reserved time.
     public function reserve($transactionId, $serial, $accountId) {
-        $unit = $this->get($serial);
+        $unit = $this->getObject($serial);
         if (!$unit) {
             return;
         }
@@ -224,7 +251,7 @@ class UnitMapper implements CollectionMapper {
     // checked out units are associated with an account and
     // specify their purchase price and time.
     public function checkout($transactionId, $serial, $accountId, $purchasedPrice) {
-        $unit = $this->get($serial);
+        $unit = $this->getObject($serial);
         if (!$unit) {
             return;
         }
@@ -239,7 +266,7 @@ class UnitMapper implements CollectionMapper {
     // returned units are not associated to any account and
     // have no reserved/purchased fields.
     public function return($transactionId, $serial) {
-        $unit = $this->get($serial);
+        $unit = $this->getObject($serial);
         if (!$unit) {
             return;
         }
