@@ -184,7 +184,7 @@
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Add Units">
                         <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
-                           data-target="#addMonitorLink">
+                           data-target="#addUnitsMonitorLink">
                             <span class="fa fa-plus"></span>
                         </a>
                     </p>
@@ -284,8 +284,8 @@
         </div>
     </div>
 
-    <div class="modal fade addMonitorlink" id="addMonitorLink" tabindex="-1" role="dialog" aria-labelledby="">
-        <div class="modal-dialog modal-lg" role="document">
+    <div class="modal fade addUnitsMonitorLink" id="addUnitsMonitorLink" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -293,28 +293,26 @@
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
-                    <form id="monitor-form-units" class="form-horizontal" action="/items/monitor/addUnit" method="POST">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="2"></div>
-                                <div class="col-md-7">
-                                    <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
-                                    <div class="form-group">
-                                        How many unit(s) with this specification would you like to add?
-                                        <input type="number" min="0" max="10"  id="monitor-units" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="button"  class="btn btn-primary generate-serial-form" value="Next">
-                                    </div>
-                                </div>
-                                <div class="2" id="serial-forms">
-                                </div>
+                    <form id="monitor-form-units" class="form-horizontal unit-form" action="" method="POST">
+                        <div class="col-md-12">
+                            <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                            <div class="form-group">
+                                How many unit(s) with this specification would you like to add?
+                                <input title="" type="number" min="0" max="10" id="monitor-units" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="units-inputs-container"></div>
+                        <div class="col-md-12" id="serial-next">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-primary generate-serial-form" name="monitor-serial" value="Next">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-monitor-form" id="submit-monitor-form">Add Units</button>
+                                <button type="submit" class="btn btn-primary" name="submit-monitor-form"
+                                        id="submit-monitor-form">Add Units
+                                </button>
                             </div>
                         </div>
                     </form>
