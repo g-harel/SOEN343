@@ -11,6 +11,7 @@ use App\Models\Laptop;
 use App\Models\Monitor;
 use App\Models\Computer;
 use App\UnitOfWork\UnitOfWork;
+use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\Gateway\ComputerGateway;
 use App\Gateway\DesktopGateway;
@@ -19,7 +20,6 @@ use App\Gateway\TabletGateway;
 use App\Gateway\MonitorGateway;
 
 class ItemCatalogMapper {
-
     const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
@@ -152,7 +152,6 @@ class ItemCatalogMapper {
             $this->identityMap->removeObject($id);
             $this->itemCatalog->removeItem($id);
         }
-
     }
 
     // Used by the unitofwork when commit happens
@@ -214,7 +213,7 @@ class ItemCatalogMapper {
             }
         }
 
-        // REMOVING THE KEYS THAT HAVN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
+        // REMOVING THE KEYS THAT HAVEN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
         foreach($unvisitedKeysInCatalog as $key => $value) {
             if ($this->identityMap->hasId($key)) {
                 $this->identityMap->removeObject($key);
@@ -228,19 +227,19 @@ class ItemCatalogMapper {
       $itemType = ItemType::getItemTypeEnum($item);
         switch($itemType) {
             case ItemType::monitor:
-            return new MonitorGateway();            
+            return new MonitorGateway();
             break;
             case ItemType::computer:
-            return new ComputerGateway();            
+            return new ComputerGateway();
             break;
             case ItemType::desktop:
-            return new DesktopGateway();            
+            return new DesktopGateway();
             break;
             case ItemType::laptop:
-            return new LaptopGateway();            
+            return new LaptopGateway();
             break;
             case ItemType::tablet:
-            return new TabletGateway();            
+            return new TabletGateway();
             break;
             default:
             return null;
@@ -335,7 +334,7 @@ class ItemCatalogMapper {
         $array["cpuCores"] = $item->getCpuCores();
         $array["weight"] = $item->getWeight();
         $array["hddSize"] = $item->getHddSize();
-        return $array;        
+        return $array;
     }
 
     private function getDesktopParams(Desktop $item) {
@@ -343,7 +342,7 @@ class ItemCatalogMapper {
         $array["height"] = $item->getHeight();
         $array["width"] = $item->getWidth();
         $array["thickness"] = $item->getThickness();
-        return $array;        
+        return $array;
     }
 
     private function getLaptopParams(Laptop $item) {
@@ -353,7 +352,7 @@ class ItemCatalogMapper {
         $array["battery"] = $item->getBattery();
         $array["camera"] = $item->getCamera();
         $array["isTouchscreen"] = $item->getIsTouchscreen();
-        return $array;        
+        return $array;
     }
 
     private function getTabletParams(Tablet $item) {
