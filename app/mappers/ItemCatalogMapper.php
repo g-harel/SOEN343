@@ -19,7 +19,7 @@ use App\Gateway\LaptopGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\MonitorGateway;
 
-class ItemCatalogMapper {
+class ItemCatalogMapper implements CollectionMapper {
     const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
