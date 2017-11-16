@@ -1,5 +1,9 @@
 <?php
 
+// TODO test unit of work
+// TODO test max reserved units
+// TODO test unit reservation timeout
+
 namespace Tests\Unit;
 
 use Tests\TestCase;
@@ -45,16 +49,17 @@ class UnitMapperTest extends TestCase {
         $gateway = UnitGateway::getInstance();
         $serial = "X347589K";
         $itemId = 1;
+        $reservedDate = "2017-11-16 11:24:00";
         $gateway->insert($serial, $itemId);
-        $gateway->update($serial, $itemId, "RESERVED", 1, "NULL", 2.99, "NULL");
+        $gateway->update($serial, $itemId, "RESERVED", 1, "'$reservedDate'", "NULL", "NULL");
         $unit = $gateway->select(array("serial" => $serial))[0];
         $this->assertEquals($unit, array(
             "serial" => $serial,
             "item_id" => "$itemId",
             "status" => "RESERVED",
             "account_id" => 1,
-            "reserved_date" => null,
-            "purchased_price" => 2.99,
+            "reserved_date" => $reservedDate,
+            "purchased_price" => null,
             "purchased_date" => null,
         ));
     }

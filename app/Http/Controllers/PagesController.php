@@ -4,53 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
-/*
-use App\Mappers\UnitMapper;
-use App\Gateway\UnitGateway;
-
-$ug = UnitGateway::getInstance();
-$um = UnitMapper::getInstance();
-
-function _($unit) {
-    echo "<div></div><pre>";
-    if (!$unit) {
-        echo "null";
-    } else {
-        echo json_encode(array(
-            "serial" => $unit->getSerial(),
-            "item_id" => $unit->getItemId(),
-            "status" => $unit->getStatus(),
-            "account_id" => $unit->getAccountId(),
-            "reserved_date" => $unit->getReservedDate(),
-            "purchased_price" => $unit->getPurchasedPrice(),
-            "purchased_date" => $unit->getPurchasedDate(),
-        ), JSON_PRETTY_PRINT);
-    }
-    echo "<br>";
-    echo "</pre>";
-}
-
-function p($m, $serial) {
-    $unit = $m->get($serial);
-    _($unit);
-}
-
-$transactionId = 123456;
-$serial = "SERIAL";
-$accountId = 1;
-$itemId = 1;
-$purchasePrice = 2.99;
-
-$um->create($transactionId, $serial, $itemId);
-// $um->reserve($transactionId, $serial, $accountId);
-// _($um->getCart($accountId)[0]);
-// $um->remove($transactionId, $serial);
-$um->checkout($transactionId, $serial, $accountId, $purchasePrice);
-echo json_encode(count($um->getPurchased($accountId)));
-
-p($um, $serial);
-
-$um->commit($transactionId); */
 
 class PagesController extends Controller
 {
