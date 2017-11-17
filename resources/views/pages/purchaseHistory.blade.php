@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('content')
-
     @if(isset($itemSuccessfullyReturned) && $itemSuccessfullyReturned==true)
-          <div class="row">
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p>Your purchased item was successfully returned.</p>
-                </div>
+        <div class="row">
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Your purchased item was successfully returned.</p>
             </div>
+        </div>
     @endif
     <div class='jumbotron'>
         <h3>Purchase History</h3>
@@ -52,7 +51,6 @@
                                         <button type="button" data-dismiss="modal" class="btn btn-danger">Close</button>
                                       </div>
                                     </div>
-
                                   </div>
                                 </div>
                             </form>
