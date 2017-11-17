@@ -21,12 +21,19 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
-Route::post('deleteAccount', 'PagesController@deleteAccount');
+Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
 
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
+
+Route::prefix('/purchaseHistory')->group(
+    function () {
+        Route::get('showPurchase', 'UnitsController@searchPurchase');
+        Route::get('returnPurchase', 'UnitsController@returnPurchase');
+    }
+);
 
 Route::prefix('/view')->group(
     function () {

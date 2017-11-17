@@ -14,6 +14,7 @@
             @if(isset($_SESSION)  && !empty($_SESSION))
                 @if($_SESSION['isAdmin'] != 1)
                     <li><a href="/view">Products</a></li>
+                    <li><a href="/purchaseHistory">Purchase History</a></li>
                 @endif
             @endif
             @if(empty($_SESSION))
@@ -37,7 +38,7 @@
                     </li>
                     <li><a href="/view/profile">View Profile</a></li>
                 @endif
-                  <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             @endif
         </ul>
     </div>
