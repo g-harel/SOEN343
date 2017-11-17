@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\AccountCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\AccountMapper;
-use App\gateway\AccountGateway;
 
 class PagesController extends Controller
 {
@@ -219,27 +217,22 @@ class PagesController extends Controller
     }
     
     public function viewProfile() {
-        $id =$_SESSION['currentLoggedInId'];
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $currentUser = $accountMapper->getAccount();
-        
+        $currentUser = AccountCatalogMapper::getInstance()->getAccountFromRecordById($_SESSION['currentLoggedInId']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
     
     public function deleteAccount(){
-        $id =$_SESSION['currentLoggedInId'];
+
+        //Delete user
+        AccountCatalogMapper::getInstance()->deleteAccountInRecord($_SESSION['currentLoggedInId'],$_SESSION['currentLoggedInId']);
+        AccountCatalogMapper::getInstance()->commit($_SESSION['currentLoggedInId']);
         // Delete session
         $sessionMapper = new SessionMapper();
         if (isset($_SESSION['currentLoggedInId'])) {
-            $sessionMapper->closeSession($id);
+            $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
         }
         $_SESSION = array();
         session_destroy();
-        
-        //Delete user 
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $success = $accountMapper->deleteAccountInRecord();
-        
         return view('pages.index');
     }
 }

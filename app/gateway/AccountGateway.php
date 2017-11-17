@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use SplObjectStorage;
-
 class AccountGateway
 {
     private $db;

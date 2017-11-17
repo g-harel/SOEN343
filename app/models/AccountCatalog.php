@@ -22,12 +22,17 @@ class AccountCatalog
         return self::$instance;
     }
 
-    public static function addAccount($account)
+    public function addAccount($account)
     {
         self::$catalog->attach($account);
     }
 
-    public static function isEmailExist($email)
+    public function removeAccount($accountId)
+    {
+        self::$catalog->detach($this->getAccount($accountId));
+    }
+
+    public function isEmailExist($email)
     {
         $accounts = self::$catalog;
         foreach($accounts as $account)
@@ -40,8 +45,20 @@ class AccountCatalog
         return false;
     }
 
+    public function getAccount($accountId)
+    {
+        $accounts = self::$catalog;
+        foreach($accounts as $account)
+        {
+            if($account->getId() === (string)$accountId)
+            {
+                return $account;
+            }
+        }
+        return null;
+    }
 
-    public static function getCatalog()
+    public function getCatalog()
     {
         return self::$catalog;
     }

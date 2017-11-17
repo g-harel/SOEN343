@@ -15,6 +15,8 @@ class AccountCatalogMapper implements CollectionMapper
 {
     private $gateway;
     private $accountCatalog;
+    private $identityMap;
+    private $unitOfWork;
     private static $instance;
 
     private function __construct()
@@ -37,6 +39,7 @@ class AccountCatalogMapper implements CollectionMapper
     public function getAccountFromRecordByEmail($email)
     {
         $record = $this->gateway->getAccountByEmail($email);
+        $account = null;
         if ($record != null || $record != false) {
             $recordAccount = $record[0];
             $id = $recordAccount["id"];
@@ -60,46 +63,23 @@ class AccountCatalogMapper implements CollectionMapper
         return $account;
     }
 
-    public function getAccountFromRecordById($id) {
+    public function getAccountFromRecordById($accountId) {
 
-
+        $identityMapId = $this->getAccountId($accountId);
         $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
-        $item = null;
+        $account = null;
         if ($isItemInIdentityMap) {
-            $item = $this->identityMap->getObject($identityMapId);
+            $account = $this->identityMap->getObject($identityMapId);
         } else {
             // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
-            $item = $this->itemCatalog->getItem($itemId);
+            $account = $this->accountCatalog->getAccount((string)$accountId);
         }
 
-        if ($item === null) {
+        if ($account === null) {
             return null;
         } else {
-            return $this->mapItemToDomainArray($item);
+            return $account;
         }
-
-        $record = $this->gateway->getAccountById($id);
-        if ($record != null || $record != false) {
-            $recordAccount = $record[0];
-            $id = $recordAccount["id"];
-            $email = $recordAccount["email"];
-            $password = $recordAccount["password"];
-            $firstName = $recordAccount["first_name"];
-            $lastName = $recordAccount["last_name"];
-            $phoneNumber = $recordAccount["phone_number"];
-            $doorNumber = $recordAccount["door_number"];
-            $appartement = $recordAccount["appartement"];
-            $street = $recordAccount["street"];
-            $city = $recordAccount["city"];
-            $province = $recordAccount["province"];
-            $country = $recordAccount["country"];
-            $postalCode = $recordAccount["postal_code"];
-            $isAdmin = $recordAccount["isAdmin"];
-
-            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-                $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-        }
-        return $account;
     }
 
     private function getAccountId($id) {
@@ -141,24 +121,18 @@ class AccountCatalogMapper implements CollectionMapper
             $address = new Address($account->door_number, $account->appartement, $account->street, $account->city, $account->province, $account->country, $account->postal_code);
             $accountObject = new Account($account->email, $account->password, $account->first_name, $account->last_name, $account->phone_number, $address, $account->isAdmin);
             $accountObject->setId($account->id);
-            AccountCatalog::addAccount($accountObject);
+            $this->accountCatalog->addAccount($accountObject);
         }
     }
 
     public function getAllAccounts()
     {
-        return AccountCatalog::getInstance()::getCatalog();
+        return $this->accountCatalog->getCatalog();
     }
 
     public function isEmailExists($email)
     {
-        return AccountCatalog::getInstance()::isEmailExist($email);
-    }
-
-    //UTILITY
-    public function getFullName()
-    {
-        return $this->account->getFullName();
+        return $this->accountCatalog->isEmailExist($email);
     }
 
     public function isAccountExist($email, $password)
@@ -180,16 +154,12 @@ class AccountCatalogMapper implements CollectionMapper
     //For UoW
     public function delete($account)
     {
-        $gateway = $this->getGateway($account);
-        if ($gateway === null) {
-            return false;
-        }
         $id = $account->getId();
-        $identityMapId = $this->getItemId($id);
-        $deleted = $gateway->deleteById($id);
+        $identityMapId = $this->getAccountId($id);
+        $deleted = $this->gateway->deleteAccountById($id);
         if ($deleted) {
             $this->identityMap->removeObject($identityMapId);
-            $this->itemCatalog->removeItem($id);
+            $this->accountCatalog->removeAccount($id);
         }
     }
 
