@@ -88,7 +88,7 @@ function serialInputs(fields, form) {
     for(let i = 0; i < fields; i++){
         form.find('#units-inputs-container').append(`<div class="form-group serial-number">
         <label>Serial #</label>
-        <input type="text" id="serial-number" value="${randomString()}" class="form-control">
+        <input type="text" id="serial-number" name="serial${i}" value="${randomString()}" class="form-control">
         </div>`);
     }
     return h;
