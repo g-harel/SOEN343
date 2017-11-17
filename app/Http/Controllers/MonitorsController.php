@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Gateway\DesktopGateway;
+use App\Gateway\MonitorGateway;
+use App\Gateway\UnitGateway;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\UnitCatalog;
 use App\Mappers\UnitMapper;
+use App\Models\Desktop;
 use App\Models\Unit;
 
 class MonitorsController extends Controller
@@ -24,9 +28,13 @@ class MonitorsController extends Controller
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['monitor-id'];
         $units = array();
-        $cata = UnitCatalog::getInstance();
-        print_r($cata);
-        die;
+        $item = new MonitorGateway();
+        $arr  = $item->getByCondition([]);
+        //$cata = UnitCatalog::getInstance();
+        /*echo '<pre>';
+        print_r($arr);
+        print_r($arr2);
+        die;*/
         for($i = 0; $i< $numOfUnits; $i++){
             $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
         }

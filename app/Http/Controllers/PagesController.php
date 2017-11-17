@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
+use App\Gateway\MonitorGateway;
 
 class PagesController extends Controller
 {
@@ -53,8 +54,25 @@ class PagesController extends Controller
 
     public function viewMonitor()
     {
+        $item = new MonitorGateway();
+        $arr  = $item->getByCondition([]);
+        $monitors = array();
+        $count = 0 ;
+        $arr1 = array();
+
+        foreach($arr as $value){
+            array_push($arr1, [$value['quantity'], $value['id']]);
+        }
+        for($i = 0;$i < count($arr1);$i++){
+            for($j=0; $count < $arr1['quantity'];$j++){
+                array_push($arr,$arr1);
+            }
+        }
+        echo '<pre>';
+        print_r($arr);
+        die;
         return view('pages.viewMonitor', [
-            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
+            'monitors' => $arr
         ]);
     }
 

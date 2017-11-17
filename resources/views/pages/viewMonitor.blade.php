@@ -41,7 +41,7 @@
                                         <p>Price: <b> ${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
                                         <p>Quantity: <b>{{$value['quantity']}}</b> </p>
-                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b> </p>
+                                        <p>Display Size: <b>{{$value['display_size']}} inches</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
             <div class="col-xs-6 col-lg-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">"{{$monitor['displaySize']}}  {{$monitor['brand']}} Monitor</h3>
+                        <h3 class="panel-title">"{{$monitor['display_size']}}  {{$monitor['brand']}} Monitor</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -97,7 +97,7 @@
                                 <p>Price:<b> ${{$details['price']}}</b> </p>
                                 <p>Brand: <b>{{$details['brand']}}</b> </p>
                                 <p>Quantity: <b>{{$details['quantity']}}</b> </p>
-                                <p>Display Size: <b>{{$details['displaySize']}} inches</b> </p>
+                                <p>Display Size: <b>{{$details['display_size']}} inches</b> </p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b> </p>
                             </div>
                         </div>
