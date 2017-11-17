@@ -97,6 +97,30 @@ class UnitCatalog {
         }
         return $arr;
     }
+
+    public function reserve(Unit $unit, $accountId): void {
+        $unit->setStatus(StatusEnum::RESERVED);
+        $unit->setAccountId($accountId);
+        $unit->setReservedDate(getDate());
+        $unit->setPurchasedPrice("NULL");
+        $unit->setPurchasedDate("NULL");
+    }
+
+    public function checkout(Unit $unit, $accountId, $purchasedPrice): void {
+        $unit->setStatus(StatusEnum::PURCHASED);
+        $unit->setAccountId($accountId);
+        $unit->setReservedDate("NULL");
+        $unit->setPurchasedPrice($purchasedPrice);
+        $unit->setPurchasedDate(getDate());
+    }
+
+    public function return(Unit $unit): void {
+        $unit->setStatus(StatusEnum::AVAILABLE);
+        $unit->setAccountId('NULL');
+        $unit->setReservedDate("NULL");
+        $unit->setPurchasedPrice("NULL");
+        $unit->setPurchasedDate("NULL");
+    }
 }
 
 class UnitMapper implements CollectionMapper {
@@ -133,7 +157,8 @@ class UnitMapper implements CollectionMapper {
                 $maxReservationMinutes = 100000;
                 $secondsSinceReserved = time() - strtotime($unit->getReservedDate());
                 if ($secondsSinceReserved > $maxReservationMinutes*60) {
-                    $this->delete($unit);
+                    $this->catalog->return($unit);
+                    $this->edit($unit);
                 }
             }
         }
@@ -256,11 +281,7 @@ class UnitMapper implements CollectionMapper {
         if ($cartSize > 7) {
             return false;
         }
-        $unit->setStatus(StatusEnum::RESERVED);
-        $unit->setAccountId($accountId);
-        $unit->setReservedDate(getDate());
-        $unit->setPurchasedPrice("NULL");
-        $unit->setPurchasedDate("NULL");
+        $this->catalog->reserve($unit, $accountId);
         $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
@@ -272,11 +293,7 @@ class UnitMapper implements CollectionMapper {
         if (!$unit) {
             return false;
         }
-        $unit->setStatus(StatusEnum::PURCHASED);
-        $unit->setAccountId($accountId);
-        $unit->setReservedDate("NULL");
-        $unit->setPurchasedPrice($purchasedPrice);
-        $unit->setPurchasedDate(getDate());
+        $this->catalog->checkout($unit, $accountId, $purchasedPrice);
         $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
@@ -290,11 +307,7 @@ class UnitMapper implements CollectionMapper {
         if (!$unit) {
             return false;
         }
-        $unit->setStatus(StatusEnum::AVAILABLE);
-        $unit->setAccountId('NULL');
-        $unit->setReservedDate("NULL");
-        $unit->setPurchasedPrice("NULL");
-        $unit->setPurchasedDate("NULL");
+        $this->catalog->return($unit);
         $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
