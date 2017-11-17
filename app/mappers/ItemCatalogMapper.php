@@ -70,7 +70,7 @@ class ItemCatalogMapper implements CollectionMapper {
     // Used by the controllers
     public function removeItem($transactionId, $itemId) {
         $item = $this->itemCatalog->getItem($itemId);
-        $this->unitOfWork->registerDeleted($transactionId, $item->getId(), self::$instance, $item);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
     }
 
     // Used by the controllers
@@ -79,7 +79,7 @@ class ItemCatalogMapper implements CollectionMapper {
         if ($itemInCatalog !== null) {
             $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
-            $this->unitOfWork->registerDirty($transactionId, $itemId, self::$instance, $item);
+            $this->unitOfWork->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
             return true;
         } else {
             return false;
@@ -95,10 +95,11 @@ class ItemCatalogMapper implements CollectionMapper {
     // Used by the controllers
     public function getItem($itemId){
 
-        $isItemInIdentityMap = $this->identityMap->hasId($itemId . "item");
+        $identityMapId = $this->getItemId($itemId);
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
         $item = null;
         if ($isItemInIdentityMap) {
-            $item = $this->identityMap->getObject($itemId . "item");
+            $item = $this->identityMap->getObject($identityMapId);
         } else {
             // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
             $item = $this->itemCatalog->getItem($itemId);
@@ -139,12 +140,13 @@ class ItemCatalogMapper implements CollectionMapper {
         unset($domainArray["id"]);
         $param = $this->mapDomainArrayToStorage($domainArray);
 
-        $id = $gateway->insert($param) . "item";
-        if ($this->identityMap->hasId($id)){
+        $id = $gateway->insert($param);
+        $identityMapId = $this->getItemId($id);
+        if ($this->identityMap->hasId($identityMapId)){
             return false;
         }
         $item->setId($id);
-        $this->identityMap->set($id, $item);
+        $this->identityMap->set($identityMapId, $item);
         $this->itemCatalog->addItem($item);
         return true;
     }
@@ -156,9 +158,10 @@ class ItemCatalogMapper implements CollectionMapper {
             return false;
         }
         $id = $item->getId();
+        $identityMapId = $this->getItemId($id);
         $deleted = $gateway->deleteById($id);
         if ($deleted) {
-            $this->identityMap->removeObject($id . "item");
+            $this->identityMap->removeObject($identityMapId);
             $this->itemCatalog->removeItem($id);
         }
     }
@@ -285,6 +288,10 @@ class ItemCatalogMapper implements CollectionMapper {
         } else {
             return null;
         }
+    }
+
+    private function getItemId($id) {
+        return $id . "item";
     }
 
     private function mapDomainArrayToStorage($domainArray) {
