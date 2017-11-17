@@ -130,7 +130,7 @@ class UnitMapper implements CollectionMapper {
             // all accounts' reserved items are made available
             // if the reservation expires.
             if ($unit->getStatus() === StatusEnum::RESERVED) {
-                $maxReservationMinutes = 5;
+                $maxReservationMinutes = 100000;
                 $secondsSinceReserved = time() - strtotime($unit->getReservedDate());
                 if ($secondsSinceReserved > $maxReservationMinutes*60) {
                     $this->delete($unit);

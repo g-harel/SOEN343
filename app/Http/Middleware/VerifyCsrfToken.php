@@ -23,5 +23,6 @@ class VerifyCsrfToken extends Middleware
         'items/computer/desktop/addDesktopUnits',
         'items/computer/tablet/addTabletUnits',
         'items/computer/laptop/addLaptopUnits',
+        'view/items/monitor/reserve'
     ];
 }

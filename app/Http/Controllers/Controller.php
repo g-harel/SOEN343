@@ -258,15 +258,24 @@ class Controller extends BaseController
             $item = new TabletGateway();
         }
         $arr = $item->getByCondition([]);
-        $units = array();
+        $units_arr = array();
         for ($i = 0; $i < count($arr); $i++) {
-            for ($j = 0; $j < $arr[$i]['quantity']; $j++) {
-                $serialNum = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
-                $arr[$i]['serial'] = $serialNum[$j]['serial'];
-                array_push($units, $arr[$i]);
+            $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+            for ($j = 0; $j < count($units); $j++) {
+                if($units[$j]['status'] != 'AVAILABLE') {
+                    continue;
+                }
+                $serial = $units[$j]['serial'];
+                $units[$j] = $arr[$i];
+                $units[$j]['serial'] = $serial;
+                array_push($units_arr, $units[$j]);
             }
+//            $units_arr = array_merge($units_arr, $units);
         }
-        return $units;
+//        echo '<pre>';
+//        print_r($units_arr);
+//        die;
+        return $units_arr;
     }
 
 

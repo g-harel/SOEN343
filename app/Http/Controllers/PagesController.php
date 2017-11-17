@@ -169,10 +169,19 @@ class PagesController extends Controller
         $cart = UnitMapper::getInstance();
 
         $units = $cart->getCart($_SESSION['currentLoggedInId']);
-        echo '<pre>';
-        print_r($units);
-        die;
-        return view('pages.shoppingCart');
+        $itemMapper = ItemCatalogMapper::getInstance();
+
+        $specs = [];
+        foreach ($units as $unit) {
+            array_push($specs, $itemMapper->getItem($unit['item_id']));
+        }
+//        echo '<pre>';
+//        print_r($specs);
+//        die;
+        return view('pages.shoppingCart', [
+            'cart' => $specs
+        ]);
+//        return view('pages.shoppingCart');
     }
 
     public function loginVerify()
