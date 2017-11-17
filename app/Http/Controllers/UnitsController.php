@@ -12,10 +12,6 @@ class UnitsController extends Controllers {
         /*return view('purchaseHistory', ['units' => UnitMapper::getPurchased($_SESSION['currentLoggedInId']), 
                                        'returns' => UnitMapper::getReturned($_SESSION['currentLoggedInId']]);*/
     }
-    
-    public function showPurchaseTemplate() {
-        return view('pages.purchaseHistoryTemplate');
-    }
 
     public function returnPurchase() {  
          if($this->isFormSubmitted($_POST)) {
