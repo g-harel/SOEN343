@@ -91,7 +91,31 @@ $(document).ready(() => {
     })
 });
 
-function randomString() {
+function bindDeleteActions() {
+    const deleteLinks = [
+        editDeleteLaptop.deleteLink,
+        editDeleteTablet.deleteLink,
+        editDeleteDesktop.deleteLink,
+        editDeleteMonitor.deleteLink,
+    ];
+    for (let i = 0; i < deleteLinks.length; ++i) {
+        deleteLinks[i].on('show.bs.modal', function (event) {
+            const link = $(event.relatedTarget);
+            const qty = link.data('qty');
+            const itemId = link.data('id');
+            const modal = $(this);
+            modal.find('.modal-body input[type=hidden]').attr('value', itemId);
+            modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
+        });
+    }
+}
+
+function randomString()
+        const editDeleteMonitor = {
+            editLink: $('.edit-monitor-link'),
+            modal: $('.bs-edit-monitor-modal-lg'),
+            deleteLink: $('#delMonitorLink'),
+        };
     let chars ='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let len = 5;
     let result = '';
