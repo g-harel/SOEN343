@@ -15,7 +15,7 @@
                             <img class="center-block img-responsive img-circle img-thumbnail thumb96"
                                  src="https://api.adorable.io/avatars/285/audreyhunt">
                         </div>
-                        <h3 class="m0 text-bold">{{ $user['id'] }}</h3>
+                        <h3 class="m0 text-bold">{{ $currentUser['id'] }}</h3>
                     </div>
                 </div>
             </div>
