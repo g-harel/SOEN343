@@ -49,7 +49,7 @@ Route::prefix('/view')->group(
 
     }
 );
-Route::post('items/monitor/purchase', 'MonitorsController@purchaseUnit');
+Route::post('items/monitor/purchase', 'MonitorsController@purchaseMonitorUnit');
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');

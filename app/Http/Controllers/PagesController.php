@@ -42,9 +42,9 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
-
+        $desktops = $this->returnDesktopUnits();
         return view('pages.viewDesktop', [
-            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
+            'desktops' => $desktops
         ]);
     }
 

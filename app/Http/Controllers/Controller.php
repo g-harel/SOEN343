@@ -7,12 +7,16 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Gateway\DatabaseGateway;
+use App\Gateway\DesktopGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Mappers\ItemCatalogMapper;
 use App\Gateway\MonitorGateway;
+use App\Gateway\TabletGateway;
+use App\Gateway\LaptopGateway;
+
 
 class Controller extends BaseController
 {
@@ -253,6 +257,45 @@ class Controller extends BaseController
             }
         }
         return $monitors;
+    }
+
+    public function returnDesktopUnits(){
+        $item = new DesktopGateway();
+        $arr  = $item->getByCondition([]);
+        $desktops = array();
+        for($i = 0; $i < count($arr);$i++){
+            for($j = 0; $j < $arr[$i]['quantity'];$j++){
+                $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
+
+                $arr[$i]['serial'] = $serialnum[$j]['serial'];
+                array_push($desktops,$arr[$i]);
+            }
+        }
+        return $desktops;
+    }
+
+    public function returnItemUnits($itemType)
+    {
+        $item = null;
+        if($itemType == $this::MONITOR_ITEM_TYPE) {
+            $item = new MonitorGateway();
+        } else if($itemType == $this::DESKTOP_ITEM_TYPE) {
+            $item = new DesktopGateway();
+        } else if($itemType == $this::LAPTOP_ITEM_TYPE) {
+            $item = new LaptopGateway();
+        } else if($itemType == $this::TABLET_ITEM_TYPE) {
+            $item = new TabletGateway();
+        }
+        $arr = $item->getByCondition([]);
+        $units = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            for ($j = 0; $j < $arr[$i]['quantity']; $j++) {
+                $serialNum = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+                $arr[$i]['serial'] = $serialNum[$j]['serial'];
+                array_push($units, $arr[$i]);
+            }
+        }
+        return $units;
     }
 
 

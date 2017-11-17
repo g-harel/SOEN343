@@ -18,7 +18,7 @@ class MonitorsController extends Controller
     }
     //ublic function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
 
-    public function purchaseUnit(){
+    public function purchaseMonitorUnit(){
 
     }
     public function showMonitor() {
@@ -59,17 +59,9 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            //$monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
-            $item = new MonitorGateway();
-            $arr  = $item->getByCondition([]);
-            $monitors = array();
-            $count = 0 ;
-            for($i = 0; $i < count($arr);$i++){
-                for($j = 0; $j < $arr[$i]['quantity'];$j++){
-                    array_push($monitors,$arr[$i]);
-                }
-            }
+            $monitors = $this->returnItemUnits(1);
             $result = array();
+            
             foreach ($monitors as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {
@@ -108,7 +100,7 @@ class MonitorsController extends Controller
                     ]);
                 } else {
                     return view('pages.viewMonitor', [
-                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
+                        'monitors' => $this->returnItemUnits(1),
                         'noResults' => true
                     ]);
                 }
