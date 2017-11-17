@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitMapper;
+use App\Models\Unit;
 
 class ComputerController extends Controller
 {
@@ -392,6 +394,41 @@ class ComputerController extends Controller
             return view('items.computer.show-tablet', [
                 'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE)
             ]);
+        }
+    }
+
+    public function addDesktopUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['desktop-id'];
+        $units = array();
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", $_SESSION['currentLoggedInId'], "", "", "");
+        }
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+    }
+
+    public function addTabletUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['tablet-id'];
+        $units = array();
+        $accountId = null;
+        if(isset($_SESSION['currentLoggedInId'])) {
+            $accountId = $_SESSION['currentLoggedInId'];
+        }
+        for ($i = 0; $i < $numOfUnits; $i++) {
+//            __construct($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", $accountId, "", "", "");
+        }
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
         }
     }
 }

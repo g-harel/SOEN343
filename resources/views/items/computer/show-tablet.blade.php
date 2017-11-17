@@ -411,12 +411,12 @@
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
                 <div class="modal-body" id="edit-tablet-form-body">
-                    <form id="tablet-form-units" class="form-horizontal unit-form" action="" method="POST">
+                    <form id="tablet-form-units" class="form-horizontal unit-form" action="/items/computer/tablet/addTabletUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" type="number" min="0" max="10" id="tablet-units" class="form-control">
+                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="tablet-units" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>

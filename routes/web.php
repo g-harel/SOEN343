@@ -66,6 +66,8 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('laptop/modify', 'ComputerController@modifyLaptop');
             Route::post('laptop/delete', 'ComputerController@deleteLaptop');
             Route::get('search', 'ComputerController@search'); // computer filter
+            Route::post('desktop/addDesktopUnits', 'ComputerController@addDesktopUnits');
+            Route::post('tablet/addTabletUnits', 'ComputerController@addTabletUnits');
         }
     );
 
