@@ -84,33 +84,26 @@ $(document).ready(() => {
         for(let i = 0; i < fields; i++){
             appendElem(`<div class="form-group serial-number">
                 <label>Serial #</label>
-                <input type="text" id="serial-number" value="${randomString()}" class="form-control">
+                <input type="text" id="serial-number" name="serial${i}" value="${randomString()}" class="form-control">
                 </div>`)
         }
         formUnits.displayNext();
     })
+
+    $('#addUnitsMonitorLink').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget); // Button that triggered the modal
+        const itemID = button.data('id'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        const modal = $(this);
+        console.log(itemID);
+        modal.find('.modal-body input[type=hidden]#monitor-id').attr('value',itemID);
+
+    })
 });
 
-function bindDeleteActions() {
-    const deleteLinks = [
-        editDeleteLaptop.deleteLink,
-        editDeleteTablet.deleteLink,
-        editDeleteDesktop.deleteLink,
-        editDeleteMonitor.deleteLink,
-    ];
-    for (let i = 0; i < deleteLinks.length; ++i) {
-        deleteLinks[i].on('show.bs.modal', function (event) {
-            const link = $(event.relatedTarget);
-            const qty = link.data('qty');
-            const itemId = link.data('id');
-            const modal = $(this);
-            modal.find('.modal-body input[type=hidden]').attr('value', itemId);
-            modal.find('.modal-body input[type=number]').attr('max', (qty - 1));
-        });
-    }
-}
 
-function randomString()
+function randomString(){
         const editDeleteMonitor = {
             editLink: $('.edit-monitor-link'),
             modal: $('.bs-edit-monitor-modal-lg'),

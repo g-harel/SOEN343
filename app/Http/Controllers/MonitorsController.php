@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitMapper;
+use App\Models\Unit;
 
 class MonitorsController extends Controller
 {
@@ -18,6 +20,18 @@ class MonitorsController extends Controller
 
     public function addMonitorUnits(){
 
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['monitor-id'];
+        $units = array();
+        for($i = 0; $i< $numOfUnits; $i++){
+            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",$_SESSION['currentLoggedInId'],"","","");
+        }
+        $unitMapper =  UnitMapper :: getInstance();
+        foreach($units as $unit){
+            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+
+        }
     }
     public function searchMonitor()
     {

@@ -290,11 +290,12 @@
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
                     <form id="monitor-form-units" class="form-horizontal unit-form" action="/items/monitor/AddUnits" method="POST">
+                        {{ csrf_field() }}
                         <div class="col-md-12">
-                            <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                            <input type="hidden" name="monitor-id" id="monitor-id" class="form-control" value="">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" type="number" min="0" max="10" id="monitor-units" class="form-control">
+                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="monitor-units" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>
