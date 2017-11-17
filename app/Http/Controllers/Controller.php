@@ -251,7 +251,6 @@ class Controller extends BaseController
         for($i = 0; $i < count($arr);$i++){
             for($j = 0; $j < $arr[$i]['quantity'];$j++){
                 $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
-
                 $arr[$i]['serial'] = $serialnum[$j]['serial'];
                 array_push($monitors,$arr[$i]);
             }

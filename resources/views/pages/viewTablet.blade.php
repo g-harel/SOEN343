@@ -42,18 +42,18 @@
                                             <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                             <p>Price: <b>${{$value['price']}}</b></p>
                                             <p>Brand: <b>{{$value['brand']}}</b></p>
-                                            <p>Processor Type: <b>{{$value['processorType']}}</b></p>
+                                            <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
                                             <p>OS: <b>{{$value['os']}}</b></p>
-                                            <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b></p>
-                                            <p>Ram Size: <b>{{$value['ramSize']}} GB</b></p>
-                                            <p>Display Size: <b>{{$value['displaySize']}} inches</b></p>
+                                            <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
+                                            <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
+                                            <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
                                             <p>Width: <b>{{$value['width']}} cm</b></p>
                                             <p>Height: <b>{{$value['height']}} cm</b></p>
                                             <p>Weight: <b>{{$value['weight']}} kg</b></p>
                                             <p>Thickness: <b>{{$value['thickness']}} cm</b></p>
                                             <p>Battery: <b>{{$value['battery']}}</b></p>
                                             <p>Camera: <b>{{$value['camera']}}</b></p>
-                                            @if($value["isTouchscreen"] == 0)
+                                            @if($value["is_touchscreen"] == 0)
                                                 <p>Touchscreen: <b>No</b></p>
                                             @else
                                                 <p>Touchscreen: <b>Yes</b></p>
@@ -78,7 +78,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $tablet['brand'] }} {{ $tablet['hddSize'] }} GB {{ $tablet["displaySize"] }}"
+                            {{ $tablet['brand'] }} {{ $tablet['hdd_size'] }} GB {{ $tablet["display_size"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -92,10 +92,10 @@
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li>Processor Type: <b>{{ $tablet['processorType'] }}</b></li>
-                                <li>Ram Size: <b>{{ $tablet['ramSize'] }} GB</b></li>
-                                <li>Cpu cores: <b>{{ $tablet['cpuCores'] }}</b></li>
-                                <li>Hard Disk Size: <b>{{ $tablet['hddSize'] }} GB</b></li>
+                                <li>Processor Type: <b>{{ $tablet['processor_type'] }}</b></li>
+                                <li>Ram Size: <b>{{ $tablet['ram_size'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $tablet['cpu_cores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $tablet['hdd_size'] }} GB</b></li>
                             </ul>
                         </div>
                     </div>

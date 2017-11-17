@@ -8,6 +8,18 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
+    @if(Session::has('unitsAdded'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were successfully added.</p>
+        </div>
+    @endif
+    @if(Session::has('unitsNotAdded'))
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were not added.</p>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -125,7 +137,6 @@
                 <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
-                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                 <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
                 <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
                 <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
@@ -204,7 +215,6 @@
                 <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
                 <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
                 <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
-                <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
                 <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
                 <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
                 <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>

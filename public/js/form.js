@@ -274,6 +274,7 @@ $(document).ready(() => {
     $(itemsTable.tablet.link).DataTable({
         pageLength: itemsTable.tablet.pageLength,
         scrollX: itemsTable.tablet.scrollX,
+        searching: false,
     });
     $(itemsTable.monitor.link).DataTable({
         pageLength: itemsTable.monitor.pageLength,
