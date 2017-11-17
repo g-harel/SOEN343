@@ -13,7 +13,6 @@ class ComputerController extends Controller
 
     public function showDesktop()
     {
-
         return view('items.computer.show-desktop', [
             'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
         ]);
@@ -117,7 +116,7 @@ class ComputerController extends Controller
                     "category" => "desktop",
                     "brand" => $sanitizedInputs['desktop-brand'],
                     "price" => $sanitizedInputs['desktop-price'],
-                    "quantity" => $sanitizedInputs['desktop-qty'],
+                    "quantity" => 0,
                     "width" => $sanitizedInputs['desktop-width'],
                     "height" => $sanitizedInputs['desktop-height'],
                     "thickness" => $sanitizedInputs['desktop-thickness'],
@@ -158,7 +157,7 @@ class ComputerController extends Controller
                     "isTouchscreen" => $sanitizedInputs["laptop-touchscreen"],
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
-                    "quantity" => $sanitizedInputs['laptop-qty'],
+                    "quantity" =>0
                 ];
                 $addLaptopItem = ItemCatalogMapper::getInstance();
                 $addLaptopItem->addNewItem($_SESSION['session_id'], Controller::LAPTOP_ITEM_TYPE, $laptopItem); // ufw
@@ -191,7 +190,7 @@ class ComputerController extends Controller
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
-                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],
@@ -285,7 +284,7 @@ class ComputerController extends Controller
                     "category" => "desktop",
                     "brand" => $sanitizedInputs["desktop-brand"],
                     "price" => $sanitizedInputs["desktop-price"],
-                    "quantity" => $sanitizedInputs["desktop-qty"],
+                    "quantity" => 0,
                     "height" => $sanitizedInputs["desktop-height"],
                     "width" => $sanitizedInputs["desktop-width"],
                     "thickness" => $sanitizedInputs["desktop-thickness"]
@@ -327,7 +326,7 @@ class ComputerController extends Controller
                     "category" => "laptop",
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
-                    "quantity" => $sanitizedInputs['laptop-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['laptop-display-size'],
                     "os" => $sanitizedInputs['laptop-os'],
                     "battery" => $sanitizedInputs['laptop-battery'],
@@ -371,7 +370,7 @@ class ComputerController extends Controller
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
-                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "quantity" =>0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],

@@ -210,10 +210,6 @@
                                 <div class="col-md-7">
                                     <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
                                     <div class="form-group">
-                                        Quantity:
-                                        <input type="number" min="0" max="100" required name="monitor-qty" id="monitor-qty" class="form-control">
-                                    </div>
-                                    <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control">
                                             <option title="Select brands" selected disabled>Select brands</option>
@@ -293,7 +289,7 @@
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
                 <div class="modal-body" id="edit-monitor-form-body">
-                    <form id="monitor-form-units" class="form-horizontal unit-form" action="" method="POST">
+                    <form id="monitor-form-units" class="form-horizontal unit-form" action="/items/monitor/AddUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
                             <div class="form-group">

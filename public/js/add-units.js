@@ -1,6 +1,12 @@
 $(document).ready(() => {
     const formUnits = {
         unitForm: $('#serial-next'),
+        itemNextBtn: [
+            'monitor-serial-next-btn',
+            'desktop-serial-next-btn',
+            'laptop-serial-next-btn',
+            'tablet-serial-next-btn'
+        ],
         hideNext: function() {
             formUnits.unitForm.removeClass('hidden');
         },
@@ -11,6 +17,7 @@ $(document).ready(() => {
             form: $('form#monitor-form-units'),
             unitInput: $('#monitor-units'),
             modal: '.addUnitsMonitorLink',
+            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.monitor.form.find('#units-inputs-container').empty();
                 formUnits.monitor.unitInput.val(0);
@@ -21,6 +28,7 @@ $(document).ready(() => {
             form: $('form#desktop-form-units'),
             unitInput: $('#desktop-units'),
             modal: '.addUnitsDesktopLink',
+            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.desktop.form.find('#units-inputs-container').empty();
                 formUnits.desktop.unitInput.val(0);
@@ -31,6 +39,7 @@ $(document).ready(() => {
             form: $('form#laptop-form-units'),
             unitInput: $('#laptop-units'),
             modal: '.addUnitsLaptopLink',
+            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.laptop.form.find('#units-inputs-container').empty();
                 formUnits.laptop.unitInput.val(0);
@@ -41,6 +50,7 @@ $(document).ready(() => {
             form: $('form#tablet-form-units'),
             unitInput: $('#tablet-units'),
             modal: '.addUnitsTabletLink',
+            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.tablet.form.find('#units-inputs-container').empty();
                 formUnits.tablet.unitInput.val(0);
@@ -63,10 +73,12 @@ $(document).ready(() => {
     $('.generate-serial-form').on('click', function () {
         let fields = null;
         let appendElem = null;
-        if($(this).attr('name', 'monitor-serial')) {
-            fields = formUnits.monitor.unitInput.val();
-            appendElem = function(h) {
-                formUnits.monitor.form.find('#units-inputs-container').append(h);
+        for(let i = 0; i < formUnits.itemNextBtn.length; i++) {
+            if($(this).attr('name', formUnits.itemNextBtn[i])) {
+                fields = formUnits.monitor.unitInput.val();
+                appendElem = function(h) {
+                    formUnits.monitor.form.find('#units-inputs-container').append(h);
+                }
             }
         }
         for(let i = 0; i < fields; i++){

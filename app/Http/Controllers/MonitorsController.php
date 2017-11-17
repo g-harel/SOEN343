@@ -16,6 +16,9 @@ class MonitorsController extends Controller
         ]);
     }
 
+    public function addMonitorUnits(){
+
+    }
     public function searchMonitor()
     {
         if ($this->isFormSubmitted($_GET)) {
@@ -85,10 +88,9 @@ class MonitorsController extends Controller
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
-                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                 ];
-
                 $addMonitorItem = ItemCatalogMapper::getInstance();
                 $addMonitorItem->addNewItem($_SESSION['session_id'], Controller::MONITOR_ITEM_TYPE, $params); // ufw
                 $addMonitorItem->commit($_SESSION['session_id']);
@@ -120,7 +122,7 @@ class MonitorsController extends Controller
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
-                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];

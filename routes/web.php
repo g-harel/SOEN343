@@ -75,6 +75,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('insert', 'MonitorsController@insertMonitor');
             Route::post('delete', 'MonitorsController@deleteMonitor');
             Route::post('modify', 'MonitorsController@modifyMonitor');
+            Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
         }
     );
 }

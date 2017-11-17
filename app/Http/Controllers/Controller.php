@@ -42,7 +42,6 @@ class Controller extends BaseController
     public function desktopValidationFormInputs()
     {
         return [
-            'desktop-qty' => $this->filterIntInputQty,
             'desktop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-ram-size' => FILTER_VALIDATE_INT,
@@ -65,7 +64,6 @@ class Controller extends BaseController
     public function laptopValidationFormInputs()
     {
         return [
-            'laptop-qty' => $this->filterIntInputQty,
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-ram-size' => FILTER_VALIDATE_INT,
@@ -90,7 +88,6 @@ class Controller extends BaseController
     public function tabletValidationFormInputs()
     {
         return $params = [
-            'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-ram-size' => FILTER_VALIDATE_INT,
@@ -136,7 +133,6 @@ class Controller extends BaseController
     public function monitorValidationFormInputs()
     {
         return [
-            'monitor-qty' => $this->filterIntInputQty,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'monitor-price' => $this->filterInputFloatArr,
             'monitor-display-size' => $this->filterInputFloatArr,
