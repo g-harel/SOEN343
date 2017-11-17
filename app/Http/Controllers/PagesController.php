@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Gateway\ItemGateway;
+use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Gateway\MonitorGateway;
@@ -168,8 +170,13 @@ class PagesController extends Controller
     {
         $unit = UnitMapper::getInstance();
         $cart = $unit->getCart($_SESSION['currentLoggedInId']);
+        $result = array();
+        foreach($cart as $unit){
+             array_push($result,$unit);
+        }
+
         return view('pages.shoppingCart', [
-            'cart' =>$cart
+            'cart' =>$result
         ]);
     }
 

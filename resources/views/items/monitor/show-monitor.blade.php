@@ -109,7 +109,7 @@
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
-                    <td data-display_size="{{ $value["display_size"] }}">{{ $value["display_size"] }}</td>
+                    <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
                     <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -163,7 +163,7 @@
                 <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
                 <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
                 <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
-                <td data-display_size="{{ $monitor["display_size"] }}">{{ $monitor["display_size"] }}</td>
+                <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
                 <td data-weight="{{ $monitor["weight"] }}">{{ $monitor["weight"] }}</td>
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">

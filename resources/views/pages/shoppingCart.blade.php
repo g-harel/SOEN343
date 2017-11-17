@@ -31,81 +31,40 @@
             <div class="row">
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
                     <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th class="text-center">Price</th>
-                            <th class="text-center">Total</th>
-                            <th> </th>
-                        </tr>
-                        </thead>
                         <tbody>
                         @foreach($cart as $unit)
-                        <td class="col-sm-8 col-md-6">
-                            <div class="media">
-                                <a class="thumbnail pull-left" href="#"><i class="fa fa-laptop fa-5x"></i></a>
-                                <div class="media-body" style="padding-left:4px;">
-                                    <h4 class="media-heading"><a href="#">{{$unit['brand']}}</a></h4>
-                                    <h5 class="media-heading">Apple</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-sm-1 col-md-1" style="text-align: center">
-                            <input type="number" class="quantity form-control" value="1" min="1">
-                        </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="price">1000</span></strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="total">1000</span></strong></td>
-                        <td class="col-sm-1 col-md-1">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove"></span> Remove
-                            </button>
-                        </td>
-                        </tr>
+                            <tr>
+                                <td class="col-sm-8 col-md-6">
+                                    <div class="media">
+                                        <div class="media-body" style="padding-left:4px;">
+                                            <h4 class="media-heading">{{$unit['serial']}} </h4>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
-                        <td class="cold-sm-8 col-md-6">
-                            <div class="media">
-                                <a class="thumbnail pull-left" href="#"><i class="fa fa-tv fa-5x"></i></a>
-                                <div class="media-body" style="padding-left:4px;">
-                                    <h4 class="media-heading"><a href="#">Flat Screen Tv 64"</a></h4>
-                                    <h5 class="media-heading">Samsung</h5>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-md-1" style="text-align: center">
-                            <input type="number" class="quantity form-control" value="1" min="1">
-                        </td>
-                        <td class="col-md-1 text-center"><strong>$<span class="price">2500</span></strong></td>
-                        <td class="col-md-1 text-center"><strong>$<span class="total">2500</span></strong></td>
-                        <td class="col-md-1">
-                            <button type="button" class="btn btn-danger">
-                                <span class="glyphicon glyphicon-remove"></span> Remove
-                            </button>
-                        </td>
-                        </tr>
                         <tr>
-                            <td>  </td>
-                            <td>  </td>
-                            <td>  </td>
-                            <td><h3>Total</h3></td>
-                            <td class="text-right"><h3><strong>$<span class="grand-total">3500</span></strong></h3></td>
-                        </tr>
-                        <tr>
-                            <td>  </td>
-                            <td>  </td>
-                            <td>  </td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                             <td>
                                 <button type="button" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-shopping-cart"></span><a href="/items"
-                                                                                              style="color:white">Continue
-                                        Shopping</a>
-
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                    <a href="/view" style="color:white">Continue Shopping</a>
                                 </button>
                             </td>
+
+
                             <td>
-                                <button type="button" class="btn btn-success">
-                                    Checkout <span class="glyphicon glyphicon-play"></span>
-                                </button>
+                                <form action="items/monitor/purchase" method="post">
+                                    {{ csrf_field() }}
+                                    @for($i = 0; $i < count($cart);$i++)
+                                        <input type="hidden"  name="serial{{$i}}" value="{{$cart[$i]['serial']}}" />
+                                        <input type="hidden"  name="item_id{{$i}}" value="{{$cart[$i]['item_id']}}" />
+                                    @endfor
+                                <input type="submit" class="btn btn-success" value="checkout"/>
+
+                                </form>
                             </td>
                         </tr>
                         </tbody>

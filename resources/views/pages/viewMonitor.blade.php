@@ -83,6 +83,9 @@
                             {{ csrf_field() }}
                             <div class="panel-footer">
                                 <input type="hidden" name="serial" value="{{$monitor['serial']}}">
+                                <input type="hidden" name="brand" value="{{$monitor['brand']}}">
+                                <input type="hidden" name="display_size" value="{{$monitor['display_size']}}">
+                                <input type="hidden" name="price" value="{{$monitor['price']}}">
                                 <input type="hidden" name="monitor-id" value="{{$monitor['id']}}">
                                 <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
                             </div>

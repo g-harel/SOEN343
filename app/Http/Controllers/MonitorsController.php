@@ -16,7 +16,11 @@ class MonitorsController extends Controller
     public function index(){
 
     }
+    //ublic function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
 
+    public function purchaseUnit(){
+
+    }
     public function showMonitor() {
         return view('items.monitor.show-monitor', [
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
@@ -24,13 +28,7 @@ class MonitorsController extends Controller
     }
 
     public function reserveMonitorUnit(){
-        $serial = $_POST['serial'];
-        $transactionID = $_SESSION['session_id'];
-        $accountID  = $_SESSION['currentLoggedInId'];
-        $id = $_POST['monitor-id'];
-        $timestamp = '"'.date('Y-m-d G:i:s').'"';
-        $unitGateway = UnitGateway::getInstance();
-        $unitGateway->update($serial, $id, 'RESERVED', $accountID,$timestamp , 0, $timestamp);
+
     }
     public function addMonitorUnits(){
 

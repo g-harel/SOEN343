@@ -35,6 +35,8 @@ abstract class ItemGateway implements iItemCategory {
         }
         return implode(", ", $list);
     }
+
+
     public function getSerialNumberByID($itemID,$tableName){
         $arr = ['item_id' => $itemID];
         return singleTableSelectAccountQuery($arr,$tableName);

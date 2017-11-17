@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+use App\Gateway\DatabaseGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -243,7 +244,6 @@ class Controller extends BaseController
         $item = new MonitorGateway();
         $arr  = $item->getByCondition([]);
         $monitors = array();
-        $count = 0 ;
         for($i = 0; $i < count($arr);$i++){
             for($j = 0; $j < $arr[$i]['quantity'];$j++){
                 $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
@@ -254,5 +254,6 @@ class Controller extends BaseController
         }
         return $monitors;
     }
+
 
 }
