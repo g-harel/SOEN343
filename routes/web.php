@@ -45,6 +45,8 @@ Route::prefix('/view')->group(
         Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
         Route::get('profile', 'PagesController@viewProfile');
         Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
+        Route::post('items/desktop/reserve', 'ComputerController@reserveDesktopUnit');
+        Route::post('items/laptop/reserve', 'ComputerController@reserveLaptopUnit');
 
 
 
@@ -74,7 +76,6 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('desktop/addDesktopUnits', 'ComputerController@addDesktopUnits');
             Route::post('tablet/addTabletUnits', 'ComputerController@addTabletUnits');
             Route::post('laptop/addLaptopUnits', 'ComputerController@addLaptopUnits');
-//            Route::post('laptop/addLaptopUnits', 'ComputerController@addLaptopUnits');
         }
     );
 

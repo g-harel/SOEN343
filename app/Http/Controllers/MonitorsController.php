@@ -26,7 +26,7 @@ class MonitorsController extends Controller
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
-//public function reserve($transactionId, $serial, $accountId): bool {
+
     public function reserveMonitorUnit(){
 
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
@@ -45,6 +45,9 @@ class MonitorsController extends Controller
         }
 
     }
+
+
+
     public function addMonitorUnits(){
 
         $numOfUnits = $_POST['numOfUnits'];
@@ -67,6 +70,7 @@ class MonitorsController extends Controller
             return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
+
     public function searchMonitor()
     {
         if ($this->isFormSubmitted($_GET)) {

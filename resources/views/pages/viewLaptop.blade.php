@@ -6,6 +6,18 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(Session::has('unitNotReserved'))
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>You need to be logged in to add to cart!</p>
+            </div>
+        @endif
+        @if(Session::has('unitReserved'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully added to your Shopping Cart</p>
+            </div>
+        @endif
         @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -57,9 +69,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                            </div>
+                            <form method="post" action="items/laptop/reserve">
+                                <div class="panel-footer">
+                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                </div>
+                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -93,10 +109,13 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/{{ $laptop['id'] }}" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/desktop/{{$laptop['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$laptop['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
             @endforeach
@@ -138,9 +157,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$details['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
         @endif

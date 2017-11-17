@@ -86,8 +86,11 @@ class ComputerController extends Controller
                 }
             } else {
                 if($this->isAdminSearching()) {
+//                    echo '<pre>';
+//                    print_r($this->returnItemUnits($searchItem['itemType']));
+//                    die;
                     return view($searchItem['adminView'], [
-                        $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
+                        $searchItem['collection'] => $this->returnItemUnits($searchItem['itemType']),
                         'noResults' => true
                     ]);
                 } else {
@@ -463,6 +466,46 @@ class ComputerController extends Controller
             return redirect()->back()->with(['unitsAdded' => true]);
         } else{
             return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
+    }
+
+    public function reserveDesktopUnit(){
+
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
+    }
+
+    public function reserveLaptopUnit(){
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
+    }
+
+    public function reserveTabletUnit(){
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
         }
     }
 }

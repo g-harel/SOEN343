@@ -7,6 +7,18 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(Session::has('unitNotReserved'))
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>You need to be logged in to add to cart!</p>
+            </div>
+        @endif
+        @if(Session::has('unitReserved'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully added to your Shopping Cart</p>
+            </div>
+        @endif
         @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -50,12 +62,17 @@
                                         <p>Width: <b>{{$value['width']}} cm</b> </p>
                                         <p>Thickness: <b>{{$value['thickness']}} cm</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                            </div>
+                            <form method="post" action="items/desktop/reserve">
+                                <div class="panel-footer">
+                                    <span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                </div>
+                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -89,10 +106,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
-                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                        </div>
+                        <form method="post" action="items/desktop/reserve">
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
+                                <input type="hidden" name="serial" value="{{$desktop['serial']}}">
+                                <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                            </div>
+                        </form>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             @endforeach
@@ -125,9 +145,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                        </div>
+                        <form method="post" action="items/desktop/reserve">
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="/view/desktop/{{$details['id']}}" role="button">View details »</a></span>
+                                <input type="hidden" name="serial" value="{{$details['serial']}}">
+                                <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                            </div>
+                        </form>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             </div>

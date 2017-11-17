@@ -41,6 +41,7 @@ class PagesController extends Controller
     public function viewDesktop()
     {
         $desktops = $this->returnItemUnits(3);
+//        print_r($desktops);
         return view('pages.viewDesktop', [
             'desktops' => $desktops
         ]);
