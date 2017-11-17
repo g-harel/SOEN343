@@ -51,9 +51,6 @@ Route::prefix('/view')->group(
         Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
         Route::post('items/desktop/reserve', 'ComputerController@reserveDesktopUnit');
         Route::post('items/laptop/reserve', 'ComputerController@reserveLaptopUnit');
-
-
-
     }
 );
 Route::post('items/monitor/purchase', 'MonitorsController@purchaseMonitorUnit');
