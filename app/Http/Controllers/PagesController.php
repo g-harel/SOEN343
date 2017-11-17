@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\AccountMapper;
+use App\gateway\AccountGateway;
 
 class PagesController extends Controller
 {
@@ -214,17 +215,19 @@ class PagesController extends Controller
     }
     
     public function viewProfile() {
-        return view('pages.client-profile');
+        $id =$_SESSION['currentLoggedInId'];
+        /*$accountMapper = AccountMapper::createAccountMapper($id);
+        $currentUser = $accountMapper->getAccountById($id);*/
+        $accountGateway = new AccountGateway();
+        $currentUser =$accountGateway->getAccountById($id);
+        
+        return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
     
     public function deleteAccount(){
-        $accountMapper = new AccountMapper();
         $id =$_SESSION['currentLoggedInId'];
-        
-        $result=$accountMapper->setAccountFromRecordById($id);
+        $accountMapper = AccountMapper::createAccountMapper($id);
         $success=$accountMapper->deleteAccountInRecord();
-        
-        //$this->logout();
         
         // logout
         $sessionMapper = new SessionMapper();

@@ -15,9 +15,15 @@ class AccountMapper
         $this->gateway = new AccountGateway();
     }
 
-    public static function createAccountMapper($account) {
+    /*public static function createAccountMapper($account) {
         $instance = new self();
         $instance->setAccount($account);
+        return $instance;
+    }*/
+    
+    public static function createAccountMapper($id) {
+        $instance = new self();
+        $instance->setAccountFromRecordById($id);
         return $instance;
     }
 
