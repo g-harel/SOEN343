@@ -24,6 +24,9 @@ Route::post('registerUser', 'PagesController@registerUser');
 Route::post('deleteAccount', 'PagesController@deleteAccount');
 Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
 
+Route::get('showPurchase', 'UnitsController@showPurchase');
+Route::post('returnPurchase', 'UnitsController@returnPurchase');
+
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }

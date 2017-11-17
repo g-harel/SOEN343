@@ -2,9 +2,10 @@
 namespace App\Http\Controllers;
 use App\Mappers\UnitMapper;
 use App\Mappers\AccountMapper;
-class UnitsController extends Controllers {
+class UnitsController extends Controller {
     public function showPurchase() {
-        return view('pages.purchaseHistory', ['units' => UnitMapper::getPurchased($_SESSION['currentLoggedInId'])]);
+        $units = UnitMapper::getInstance()->getPurchased($_SESSION['currentLoggedInId']);
+        return view('pages.purchaseHistory', ['units' => $units ]);
         /*return view('purchaseHistory', ['units' => UnitMapper::getPurchased($_SESSION['currentLoggedInId']), 
                                        'returns' => UnitMapper::getReturned($_SESSION['currentLoggedInId']]);*/
     }
