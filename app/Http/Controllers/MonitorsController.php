@@ -35,13 +35,7 @@ class MonitorsController extends Controller
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['monitor-id'];
         $units = array();
-        $item = new MonitorGateway();
-        $arr  = $item->getByCondition([]);
-        //$cata = UnitCatalog::getInstance();
-        /*echo '<pre>';
-        print_r($arr);
-        print_r($arr2);
-        die;*/
+        $cond =  false;
         for($i = 0; $i< $numOfUnits; $i++){
             $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
         }
@@ -49,7 +43,13 @@ class MonitorsController extends Controller
         foreach($units as $unit){
             $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
             $unitMapper->commit($_SESSION['session_id']);
-
+        }
+        $cond = true;
+        if($cond ){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        }
+        else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
     public function searchMonitor()

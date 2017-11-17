@@ -7,6 +7,18 @@
         <li><a href="/items">Items</a></li>
         <li class="active">Monitors</li>
     </ol>
+    @if(Session::has('unitsAdded'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were successfully added.</p>
+        </div>
+    @endif
+    @if(Session::has('unitsNotAdded'))
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were not added</p>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyDeleted'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -94,7 +106,6 @@
                 <th>#</th>
                 <th>Brand</th>
                 <th>Price</th>
-                <th>Qty</th>
                 <th>Display Size (inches)</th>
                 <th>Weight (kg)</th>
                 <th class="text-center">Edit</th>
@@ -108,7 +119,6 @@
                     <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
-                    <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
                     <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
                     <td class="text-center">
@@ -148,7 +158,6 @@
             <th>#</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Qty</th>
             <th>Display Size (inches)</th>
             <th>Weight (kg)</th>
             <th class="text-center">Edit</th>
@@ -162,7 +171,6 @@
                 <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
                 <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
                 <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
-                <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
                 <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
                 <td data-weight="{{ $monitor["weight"] }}">{{ $monitor["weight"] }}</td>
                 <td class="text-center">
