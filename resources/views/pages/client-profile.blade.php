@@ -28,7 +28,7 @@
                             <div class="col-lg-2"></div>
                             <div class="col-lg-8">
                                 
-                                <form class="form-horizontal ng-pristine ng-valid" action="/deleteAccount" method="post" role="form">
+                                <form id="delete-form" class="form-horizontal ng-pristine ng-valid" action="/deleteAccount" method="post" role="form">
                                     {{ csrf_field() }}
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact1">Name</label>
@@ -43,13 +43,18 @@
                                         <div class="col-sm-10"> <input class="form-control" id="inputContact3" type="text" value="{{ $currentUser->getPhoneNumber() }}" readonly></div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="inputContact3">Address</label>
+                                        <label class="col-sm-2 control-label" for="inputContact4">Postal Code</label>
+                                        <div class="col-sm-10"> <input class="form-control" id="inputContact" type="text" value="{{ $currentUser->getPostalCode() }}" readonly></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="inputContact5">Address</label>
                                         <div class="col-sm-10">
-                                            <pre>{{ $currentUser->getDoorNumber() }} {{ $currentUser->getStreet() }}, {{ $currentUser->getCity() }}, {{ $currentUser->getCountry() }}</pre>
+                                            <pre>{{ $currentUser->getDoorNumber() }} {{ $currentUser->getStreet() }}, {{ $currentUser->getCity() }}, {{ $currentUser->getProvince() }}, {{ $currentUser->getCountry() }}</pre>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-danger" type="submit">Delete My Account</button></div>
+                                        <!--<input type="submit" name="delete-submit" id="delete-submit" class="col-sm-offset-2 col-sm-10" value="Delete My Account">-->
                                     </div>
                                 </form>
                             </div>

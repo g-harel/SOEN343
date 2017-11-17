@@ -210,7 +210,7 @@ class PagesController extends Controller
             } else {
                 $registerThis->createAccount();
             }
-            return view('pages.view');
+            return view('pages.login', ['registrationSuccess' => true]);
         }
     }
     
@@ -224,17 +224,19 @@ class PagesController extends Controller
     
     public function deleteAccount(){
         $id =$_SESSION['currentLoggedInId'];
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $success=$accountMapper->deleteAccountInRecord();
-        
-        // logout
+        // Delete session
         $sessionMapper = new SessionMapper();
         if (isset($_SESSION['currentLoggedInId'])) {
-            $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
+            $sessionMapper->closeSession($id);
         }
         $_SESSION = array();
         session_destroy();
-        return view('pages.login');
+        
+        //Delete user 
+        $accountMapper = AccountMapper::createAccountMapper($id);
+        $success = $accountMapper->deleteAccountInRecord();
+        
+        return view('pages.index');
     }
 }
 

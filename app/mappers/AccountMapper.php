@@ -14,12 +14,6 @@ class AccountMapper
     public function __construct() {
         $this->gateway = new AccountGateway();
     }
-
-    /*public static function createAccountMapper($account) {
-        $instance = new self();
-        $instance->setAccount($account);
-        return $instance;
-    }*/
     
     public static function createAccountMapper($id) {
         $instance = new self();
@@ -116,11 +110,6 @@ class AccountMapper
         );
         return $success;
     }
-
-    /*public function deleteAccountInRecord() {
-        $success = $this->gateway->deleteAccountByEmail($this->account->getEmail());
-        return $success;
-    }*/
     
     public function deleteAccountInRecord() {
         $success = $this->gateway->deleteAccountById($this->account->getId());
