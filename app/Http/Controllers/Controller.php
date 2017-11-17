@@ -6,11 +6,17 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+use App\Gateway\DatabaseGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Mappers\ItemCatalogMapper;
+use App\Gateway\MonitorGateway;
+use App\Gateway\TabletGateway;
+use App\Gateway\LaptopGateway;
+use App\Gateway\DesktopGateway;
+
 
 class Controller extends BaseController
 {
@@ -42,7 +48,6 @@ class Controller extends BaseController
     public function desktopValidationFormInputs()
     {
         return [
-            'desktop-qty' => $this->filterIntInputQty,
             'desktop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-ram-size' => FILTER_VALIDATE_INT,
@@ -65,7 +70,6 @@ class Controller extends BaseController
     public function laptopValidationFormInputs()
     {
         return [
-            'laptop-qty' => $this->filterIntInputQty,
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-ram-size' => FILTER_VALIDATE_INT,
@@ -90,7 +94,6 @@ class Controller extends BaseController
     public function tabletValidationFormInputs()
     {
         return $params = [
-            'tablet-qty' => $this->filterIntInputQty,
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-ram-size' => FILTER_VALIDATE_INT,
@@ -136,7 +139,6 @@ class Controller extends BaseController
     public function monitorValidationFormInputs()
     {
         return [
-            'monitor-qty' => $this->filterIntInputQty,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'monitor-price' => $this->filterInputFloatArr,
             'monitor-display-size' => $this->filterInputFloatArr,
@@ -233,5 +235,48 @@ class Controller extends BaseController
         );
         return in_array((int)$idToSearch, $ids);
     }
+
+    public function isIdExistInCatalog2($idToSearch, $arr) {
+        $ids = array_column(
+            $arr,
+            'id'
+        );
+        return in_array((int)$idToSearch, $ids);
+    }
+
+
+    public function returnItemUnits($itemType)
+    {
+        $item = null;
+        if($itemType == $this::MONITOR_ITEM_TYPE) {
+            $item = new MonitorGateway();
+        } else if($itemType == $this::DESKTOP_ITEM_TYPE) {
+            $item = new DesktopGateway();
+        } else if($itemType == $this::LAPTOP_ITEM_TYPE) {
+            $item = new LaptopGateway();
+        } else if($itemType == $this::TABLET_ITEM_TYPE) {
+            $item = new TabletGateway();
+        }
+        $arr = $item->getByCondition([]);
+        $units_arr = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+            for ($j = 0; $j < count($units); $j++) {
+                if($units[$j]['status'] != 'AVAILABLE') {
+                    continue;
+                }
+                $serial = $units[$j]['serial'];
+                $units[$j] = $arr[$i];
+                $units[$j]['serial'] = $serial;
+                array_push($units_arr, $units[$j]);
+            }
+//            $units_arr = array_merge($units_arr, $units);
+        }
+//        echo '<pre>';
+//        print_r($units_arr);
+//        die;
+        return $units_arr;
+    }
+
 
 }

@@ -1,16 +1,20 @@
 <nav class="navbar navbar-inverse" style="border-radius: 0;">
-<div class="container-fluid">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="/">{{config('app.name', 'soen343')}}</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About </a></li>
-        @if(isset($_SESSION) && !empty($_SESSION))
-            @if($_SESSION['isAdmin'] == 1)
-                <li><a href="/items">Items</a></li>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">iShop Electronics</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            @if(isset($_SESSION) && !empty($_SESSION))
+                @if($_SESSION['isAdmin'] == 1)
+                    <li><a href="/items">Items</a></li>
+                @endif
             @endif
-        @endif
+            @if(isset($_SESSION) && !empty($_SESSION))
+                @if($_SESSION['isAdmin'] == 1)
+                    <li><a href="/admin">Admin</a></li>
+                @endif
+            @endif
         @if(isset($_SESSION)  && !empty($_SESSION))
             @if($_SESSION['isAdmin'] != 1)
                 <li><a href="/view">Products</a></li>
