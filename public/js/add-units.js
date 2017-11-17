@@ -70,27 +70,38 @@ $(document).ready(() => {
     $(".modal"+formUnits.tablet.modal+"").on("hidden.bs.modal", function() {
         formUnits.tablet.emptyVal();
     });
-    $('.generate-serial-form').on('click', function () {
-        let fields = null;
-        let appendElem = null;
-        for(let i = 0; i < formUnits.itemNextBtn.length; i++) {
-            if($(this).attr('name', formUnits.itemNextBtn[i])) {
-                fields = formUnits.monitor.unitInput.val();
-                appendElem = function(h) {
-                    formUnits.monitor.form.find('#units-inputs-container').append(h);
-                }
-            }
-        }
-        for(let i = 0; i < fields; i++){
-            appendElem(`<div class="form-group serial-number">
-                <label>Serial #</label>
-                <input type="text" id="serial-number" value="${randomString()}" class="form-control">
-                </div>`)
-        }
+    $('input[name=monitor-serial]').on('click', function () {
+        let fields = formUnits.monitor.unitInput.val();
+        serialInputs(fields, formUnits.monitor.form);
         formUnits.displayNext();
-    })
+    });
+    $('input[name=laptop-serial]').on('click', function () {
+        let fields = formUnits.laptop.unitInput.val();
+        serialInputs(fields, formUnits.laptop.form);
+        formUnits.displayNext();
+    });
+    $('input[name=desktop-serial]').on('click', function () {
+        let fields = formUnits.desktop.unitInput.val();
+        serialInputs(fields, formUnits.desktop.form);
+        formUnits.displayNext();
+    });
+    $('input[name=tablet-serial]').on('click', function () {
+        let fields = formUnits.tablet.unitInput.val();
+        serialInputs(fields, formUnits.tablet.form);
+        formUnits.displayNext();
+    });
 });
 
+function serialInputs(fields, form) {
+    let h = null;
+    for(let i = 0; i < fields; i++){
+        form.find('#units-inputs-container').append(`<div class="form-group serial-number">
+        <label>Serial #</label>
+        <input type="text" id="serial-number" value="${randomString()}" class="form-control">
+        </div>`);
+    }
+    return h;
+}
 function randomString() {
     let chars ='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let len = 5;
