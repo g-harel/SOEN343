@@ -412,6 +412,9 @@ class ComputerController extends Controller
         }
     }
 
+    /**
+     * for tablet units
+     */
     public function addTabletUnits()
     {
         $numOfUnits = $_POST['numOfUnits'];
