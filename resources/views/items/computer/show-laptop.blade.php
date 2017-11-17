@@ -404,13 +404,12 @@
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
                 <div class="modal-body" id="edit-laptop-form-body">
-                    <form id="laptop-form-units" class="form-horizontal unit-form" action="/items/computer/laptop/AddUnits" method="POST">
-                        {{ csrf_field() }}
+                    <form id="laptop-form-units" class="form-horizontal unit-form" action="/items/computer/laptop/addLaptopUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" type="number" name="numOfUnits" min="0" max="10" id="laptop-units" class="form-control">
+                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="laptop-units" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>
@@ -423,7 +422,7 @@
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" name="submit-laptop-form"
-                                        id="submit-monitor-form">Add Units
+                                        id="submit-laptop-form">Add Units
                                 </button>
                             </div>
                         </div>

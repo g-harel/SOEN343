@@ -35,7 +35,7 @@
                             <div class="panel-body">
                                 <div class="col-md-12">
                                     <div class="col-md-4">
-                                        <i class="fa fa-desktop fa-5x"></i>
+                                        <i class="fa fa-tablet fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="col-md-8">

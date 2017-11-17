@@ -61,7 +61,7 @@ class MonitorsController extends Controller
             $minPrice = filter_input(INPUT_GET, 'min-price');
             $monitors = $this->returnItemUnits(1);
             $result = array();
-            
+
             foreach ($monitors as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {

@@ -113,12 +113,9 @@ $(document).ready(() => {
 });
 
 $('#addUnitsMonitorLink').on('show.bs.modal', function (event) {
-    const button = $(event.relatedTarget); // Button that triggered the modal
-    const itemID = button.data('id'); // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    const button = $(event.relatedTarget);
+    const itemID = button.data('id');
     const modal = $(this);
-    console.log(itemID);
     modal.find('.modal-body input[type=hidden]#monitor-id').attr('value', itemID);
 });
 
@@ -134,4 +131,11 @@ $('#addUnitsTabletLink').on('show.bs.modal', function (event) {
     const itemID = button.data('id');
     const modal = $(this);
     modal.find('.modal-body input[type=hidden]#tablet-id').attr('value', itemID);
+});
+
+$('#addUnitsLaptopLink').on('show.bs.modal', function (event) {
+    const button = $(event.relatedTarget);
+    const itemID = button.data('id');
+    const modal = $(this);
+    modal.find('.modal-body input[type=hidden]#laptop-id').attr('value', itemID);
 });

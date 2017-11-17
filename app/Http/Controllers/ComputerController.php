@@ -425,7 +425,6 @@ class ComputerController extends Controller
      */
     public function addTabletUnits()
     {
-
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['tablet-id'];
         $units = array();

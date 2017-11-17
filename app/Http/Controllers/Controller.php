@@ -7,7 +7,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Gateway\DatabaseGateway;
-use App\Gateway\DesktopGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -16,6 +15,7 @@ use App\Mappers\ItemCatalogMapper;
 use App\Gateway\MonitorGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\LaptopGateway;
+use App\Gateway\DesktopGateway;
 
 
 class Controller extends BaseController
@@ -244,34 +244,6 @@ class Controller extends BaseController
         return in_array((int)$idToSearch, $ids);
     }
 
-    public function returnMonitorUnits(){
-        $item = new MonitorGateway();
-        $arr  = $item->getByCondition([]);
-        $monitors = array();
-        for($i = 0; $i < count($arr);$i++){
-            for($j = 0; $j < $arr[$i]['quantity'];$j++){
-                $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
-                $arr[$i]['serial'] = $serialnum[$j]['serial'];
-                array_push($monitors,$arr[$i]);
-            }
-        }
-        return $monitors;
-    }
-
-    public function returnDesktopUnits(){
-        $item = new DesktopGateway();
-        $arr  = $item->getByCondition([]);
-        $desktops = array();
-        for($i = 0; $i < count($arr);$i++){
-            for($j = 0; $j < $arr[$i]['quantity'];$j++){
-                $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
-
-                $arr[$i]['serial'] = $serialnum[$j]['serial'];
-                array_push($desktops,$arr[$i]);
-            }
-        }
-        return $desktops;
-    }
 
     public function returnItemUnits($itemType)
     {

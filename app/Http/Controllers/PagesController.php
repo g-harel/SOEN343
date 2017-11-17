@@ -42,7 +42,7 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
-        $desktops = $this->returnDesktopUnits();
+        $desktops = $this->returnItemUnits(3);
         return view('pages.viewDesktop', [
             'desktops' => $desktops
         ]);
@@ -51,13 +51,13 @@ class PagesController extends Controller
     public function viewLaptop()
     {
         return view('pages.viewLaptop', [
-            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE)
+            'laptops' => $this->returnItemUnits(4)
         ]);
     }
 
     public function viewMonitor()
     {
-        $monitors = $this->returnMonitorUnits();
+        $monitors = $this->returnItemUnits(1);
         return view('pages.viewMonitor', [
             'monitors' => $monitors
         ]);
@@ -65,7 +65,7 @@ class PagesController extends Controller
 
     public function viewTablet()
     {
-        $tablets = $this->returnTabletUnits();
+        $tablets = $this->returnItemUnits(5);
         return view('pages.viewTablet', [
             'tablets' => $tablets
         ]);
@@ -73,7 +73,7 @@ class PagesController extends Controller
 
     public function monitorDetails($id)
     {
-        $monitors = $this->returnMonitorUnits();
+        $monitors = $this->returnItemUnits(1);
         $details = [];
         if($this->isIdExistInCatalog2($id, $monitors)) {
             foreach($monitors as $monitor){
