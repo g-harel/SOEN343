@@ -403,7 +403,7 @@ class ComputerController extends Controller
         $itemID = $_POST['desktop-id'];
         $units = array();
         for ($i = 0; $i < $numOfUnits; $i++) {
-            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", $_SESSION['currentLoggedInId'], "", "", "");
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
         }
         $unitMapper = UnitMapper:: getInstance();
         foreach ($units as $unit) {
@@ -418,12 +418,8 @@ class ComputerController extends Controller
         $itemID = $_POST['tablet-id'];
         $units = array();
         $accountId = null;
-        if(isset($_SESSION['currentLoggedInId'])) {
-            $accountId = $_SESSION['currentLoggedInId'];
-        }
         for ($i = 0; $i < $numOfUnits; $i++) {
-//            __construct($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
-            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", $accountId, "", "", "");
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
         }
         $unitMapper = UnitMapper:: getInstance();
         foreach ($units as $unit) {
