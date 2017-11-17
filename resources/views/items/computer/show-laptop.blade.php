@@ -208,19 +208,19 @@
                 <td data-brand="{{ $laptop["brand"] }}">{{ $laptop["brand"] }}</td>
                 <td data-price="{{ $laptop["price"] }}">{{ $laptop["price"] }}</td>
                 <td data-qty="{{ $laptop["quantity"] }}">{{ $laptop["quantity"] }}</td>
-                <td data-processor="{{ $laptop["processor_type"] }}">{{ $laptop["processor_type"] }}</td>
-                <td data-ramSize="{{ $laptop["ram_size"] }}">{{ $laptop["ram_size"] }}</td>
+                <td data-processor="{{ $laptop["processorType"] }}">{{ $laptop["processorType"] }}</td>
+                <td data-ramSize="{{ $laptop["ramSize"] }}">{{ $laptop["ramSize"] }}</td>
                 <td data-weight="{{ $laptop["weight"] }}">{{ $laptop["weight"] }}</td>
-                <td data-cpuCores="{{ $laptop["cpu_cores"] }}">{{ $laptop["cpu_cores"] }}</td>
-                <td data-hddSize="{{ $laptop["hdd_size"] }}">{{ $laptop["hdd_size"] }}</td>
-                <td data-displaySize="{{ $laptop["display_size"] }}">{{ $laptop["display_size"] }}</td>
+                <td data-cpuCores="{{ $laptop["cpuCores"] }}">{{ $laptop["cpuCores"] }}</td>
+                <td data-hddSize="{{ $laptop["hddSize"] }}">{{ $laptop["hddSize"] }}</td>
+                <td data-displaySize="{{ $laptop["displaySize"] }}">{{ $laptop["displaySize"] }}</td>
                 <td data-battery="{{ $laptop["battery"] }}">{{ $laptop["battery"] }}</td>
                 <td data-os="{{ $laptop["os"] }}">{{ $laptop["os"] }}</td>
                 <td data-camera="{{ $laptop["camera"] }}">{{ $laptop["camera"] }}</td>
-                @if($laptop["is_touchscreen"] == 0)
-                    <td data-touchscreen="{{ $laptop["is_touchscreen"] }}">No</td>
+                @if($laptop["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">No</td>
                 @else
-                    <td data-touchscreen="{{ $laptop["is_touchscreen"] }}">Yes</td>
+                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">Yes</td>
                 @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -265,10 +265,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
-                                    <div class="form-group">
-                                        Quantity:
-                                        <input type="number" min="0" max="100" required name="laptop-qty" id="laptop-qty" class="form-control">
-                                    </div>
+                                    {{--<div class="form-group">--}}
+                                        {{--Quantity:--}}
+                                        {{--<input type="number" min="0" max="100" required name="laptop-qty" id="laptop-qty" class="form-control">--}}
+                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
@@ -322,8 +322,7 @@
                                     <div class="form-group">
                                         Display size (inches):
                                         <select name="laptop-display-size" id="laptop-display-size" class="form-control">
-                                            <option title="Select display size" selected disabled>Select display size
-                                            </option>
+                                            <option title="Select display size" selected disabled>Select display size</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

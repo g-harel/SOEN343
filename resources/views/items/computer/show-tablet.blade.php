@@ -215,22 +215,22 @@
                 <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
                 <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
                 <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
-                <td data-processor="{{ $tablet["processor_type"] }}">{{ $tablet["processor_type"] }}</td>
-                <td data-ramSize="{{ $tablet["ram_size"] }}">{{ $tablet["ram_size"] }}</td>
+                <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
+                <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
                 <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
-                <td data-cpuCores="{{ $tablet["cpu_cores"] }}">{{ $tablet["cpu_cores"] }}</td>
-                <td data-hddSize="{{ $tablet["hdd_size"] }}">{{ $tablet["hdd_size"] }}</td>
-                <td data-displaySize="{{ $tablet["display_size"] }}">{{ $tablet["display_size"] }}</td>
+                <td data-cpuCores="{{ $tablet["cpuCores"] }}">{{ $tablet["cpuCores"] }}</td>
+                <td data-hddSize="{{ $tablet["hddSize"] }}">{{ $tablet["hddSize"] }}</td>
+                <td data-displaySize="{{ $tablet["displaySize"] }}">{{ $tablet["displaySize"] }}</td>
                 <td data-height="{{ $tablet["height"] }}">{{ $tablet["height"] }}</td>
                 <td data-width="{{ $tablet["width"] }}">{{ $tablet["width"] }}</td>
                 <td data-thickness="{{ $tablet["thickness"] }}">{{ $tablet["thickness"] }}</td>
                 <td data-battery="{{ $tablet["battery"] }}">{{ $tablet["battery"] }}</td>
                 <td data-os="{{ $tablet["os"] }}">{{ $tablet["os"] }}</td>
                 <td data-camera="{{ $tablet["camera"] }}">{{ $tablet["camera"] }}</td>
-                @if($tablet["is_touchscreen"] == 0)
-                    <td data-touchscreen="{{ $tablet["is_touchscreen"] }}">No</td>
+                @if($tablet["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">No</td>
                 @else
-                    <td data-touchscreen="{{ $tablet["is_touchscreen"] }}">Yes</td>
+                    <td data-touchscreen="{{ $tablet["isTouchscreen"] }}">Yes</td>
                 @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -275,10 +275,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
-                                    <div class="form-group">
-                                        Quantity:
-                                        <input type="number" min="0" max="100" required name="tablet-qty" id="tablet-qty" class="form-control">
-                                    </div>
+                                    {{--<div class="form-group">--}}
+                                        {{--Quantity:--}}
+                                        {{--<input type="number" min="0" max="100" required name="tablet-qty" value="0" id="tablet-qty" class="form-control">--}}
+                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
