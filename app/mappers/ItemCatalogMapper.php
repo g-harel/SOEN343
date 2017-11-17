@@ -326,7 +326,7 @@ class ItemCatalogMapper implements CollectionMapper {
         }
     }
 
-    private function getItemParams(Item $item) {
+    private function getItemParams($item) {
         $array = array();
         $array["id"] = $item->getId();
         $array["category"] = $item->getCategory();

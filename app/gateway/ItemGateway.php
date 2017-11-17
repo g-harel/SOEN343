@@ -4,25 +4,6 @@ namespace App\Gateway;
 
 use App\Gateway\DatabaseGateway;
 
-/*
-
--- example select query
-SELECT * FROM desktops
-LEFT JOIN computers ON computers.item_id = desktops.item_id
-LEFT JOIN items ON items.id = desktops.item_id
-WHERE id = 1;
-
--- example insert queries
-INSERT INTO items (brand, price, quantity) VALUES ("brand", 12.0, 1);
-INSERT INTO computers (item_id, processor_type, ram_size, cpu_cores, weight, type) VALUES (LAST_INSERT_ID(), "ptype", 1, 2, 12.0, "type");
-INSERT INTO desktops (item_id, height, width, thickness) VALUES (LAST_INSERT_ID(), 1.0, 2.0, 3.0);
-
--- example update queries
-UPDATE items SET brand = samsung, price = 42.00;
-UPDATE computers SET weight = 32;
-
-*/
-
 Interface iItemCategory {
     public function buildSelect();
     public function buildInsert($id);
@@ -55,17 +36,36 @@ abstract class ItemGateway implements iItemCategory {
         return implode(", ", $list);
     }
 
-    public function getAll() {
-        $sql = $this->buildSelect();
-        $result = $this->gateway->queryDB($sql.";");
-        return parseSelectResult($result);
-    }
-
     public function getByCondition($condition) {
         $sql = $this->buildSelect();
+        $sql .= " ".
+            "LEFT JOIN ( ".
+                "SELECT item_id, COUNT(*) AS 'quantity' FROM units ".
+                "WHERE status='AVAILABLE' ".
+                "GROUP BY item_id ".
+            ") counts ".
+            "ON counts.item_id = items.id";
         $conditionString = transformConditionsToString($condition);
-        $result = $this->gateway->queryDB($sql." WHERE $conditionString;");
-        return parseSelectResult($result);
+        if (trim($conditionString)) {
+            $sql .= " WHERE $conditionString;";
+        } else {
+            $sql .= ";";
+        }
+        $result = $this->gateway->queryDB($sql);
+        $parsedResult = parseSelectResult($result);
+        if (!$parsedResult) {
+            return array();
+        }
+        foreach ($parsedResult as $index => $item) {
+            if (is_null($item["quantity"])) {
+                $parsedResult[$index]["quantity"] = 0;
+            }
+        }
+        return $parsedResult;
+    }
+
+    public function getAll() {
+        return $this->getByCondition(array());
     }
 
     public function getById($id) {

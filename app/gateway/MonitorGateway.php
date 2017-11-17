@@ -23,9 +23,4 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
       $values = $this->updateList(self::$fields, $item);
       return parent::buildUpdate($item)."UPDATE monitors SET $values WHERE item_id = $id;";
   }
-
-  public function getAll()
-  {
-      return getAllFromSelectQuery($this->buildSelect());
-  }
 }
