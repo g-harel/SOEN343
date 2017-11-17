@@ -2,18 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Gateway\DesktopGateway;
+use App\Gateway\MonitorGateway;
+use App\Gateway\UnitGateway;
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitCatalog;
+use App\Mappers\UnitMapper;
+use App\Models\Desktop;
+use App\Models\Unit;
 
 class MonitorsController extends Controller
 {
     public function index(){
 
     }
+    //ublic function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
 
+    public function purchaseMonitorUnit(){
+
+    }
     public function showMonitor() {
         return view('items.monitor.show-monitor', [
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
+    }
+
+    public function reserveMonitorUnit(){
+
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+//            print_r($res);
+//            die;
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
+
+    }
+
+
+
+    public function addMonitorUnits(){
+
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['monitor-id'];
+        $units = array();
+        $cond =  false;
+        for($i = 0; $i< $numOfUnits; $i++){
+            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
+        }
+        $unitMapper =  UnitMapper :: getInstance();
+        foreach($units as $unit){
+            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond ){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        }
+        else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
     }
 
     public function searchMonitor()
@@ -23,13 +78,14 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+            $monitors = $this->returnItemUnits(1);
             $result = array();
+
             foreach ($monitors as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                            ($monitor['display_size'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
@@ -37,7 +93,7 @@ class MonitorsController extends Controller
                 } else if ($maxPrice > 0) {
                     if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                            ($monitor['display_size'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
@@ -63,7 +119,7 @@ class MonitorsController extends Controller
                     ]);
                 } else {
                     return view('pages.viewMonitor', [
-                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
+                        'monitors' => $this->returnItemUnits(1),
                         'noResults' => true
                     ]);
                 }
@@ -85,10 +141,9 @@ class MonitorsController extends Controller
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
-                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                 ];
-
                 $addMonitorItem = ItemCatalogMapper::getInstance();
                 $addMonitorItem->addNewItem($_SESSION['session_id'], Controller::MONITOR_ITEM_TYPE, $params); // ufw
                 $addMonitorItem->commit($_SESSION['session_id']);
@@ -120,7 +175,7 @@ class MonitorsController extends Controller
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
-                    "quantity" => $sanitizedInputs['monitor-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];

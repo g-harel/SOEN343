@@ -142,7 +142,7 @@ class ItemCatalog {
     }
 
     private function setMonitorParams(Monitor $item, $param) {
-        $this->setItemParams($item, $param);        
+        $this->setItemParams($item, $param);
         $item->setDisplaySize($param["displaySize"]);
         $item->setWeight($param["weight"]);
     }

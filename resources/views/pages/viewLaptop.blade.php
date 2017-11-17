@@ -6,6 +6,18 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(Session::has('unitNotReserved'))
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>You need to be logged in to add to cart!</p>
+            </div>
+        @endif
+        @if(Session::has('unitReserved'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully added to your Shopping Cart</p>
+            </div>
+        @endif
         @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -41,15 +53,15 @@
                                         <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                         <p>Price: <b>${{$value['price']}}</b></p>
                                         <p>Brand: <b>{{$value['brand']}}</b></p>
-                                        <p>Processor Type: <b>{{$value['processorType']}}</b></p>
+                                        <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
                                         <p>OS: <b>{{$value['os']}}</b></p>
-                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b></p>
-                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b></p>
-                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b></p>
+                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
+                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
+                                        <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b></p>
                                         <p>Battery: <b>{{$value['battery']}}</b></p>
                                         <p>Camera: <b>{{$value['camera']}}</b></p>
-                                        @if($value["isTouchscreen"] == 0)
+                                        @if($value["is_touchscreen"] == 0)
                                             <p>Touchscreen: <b>No</b></p>
                                         @else
                                             <p>Touchscreen: <b>Yes</b></p>
@@ -57,9 +69,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                            </div>
+                            <form method="post" action="items/laptop/reserve">
+                                <div class="panel-footer">
+                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                </div>
+                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -72,7 +88,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $laptop['brand'] }}, {{ $laptop['hddSize'] }} GB {{ $laptop["displaySize"] }}"
+                            {{ $laptop['brand'] }}, {{ $laptop['hdd_size'] }} GB {{ $laptop["display_size"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -86,17 +102,20 @@
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li>Processor Type: <b>{{ $laptop['processorType'] }}</b></li>
-                                <li>Ram Size: <b>{{ $laptop['ramSize'] }} GB</b></li>
-                                <li>Cpu cores: <b>{{ $laptop['cpuCores'] }}</b></li>
-                                <li>Hard Disk Size: <b>{{ $laptop['hddSize'] }} GB</b></li>
+                                <li>Processor Type: <b>{{ $laptop['processor_type'] }}</b></li>
+                                <li>Ram Size: <b>{{ $laptop['ram_size'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $laptop['cpu_cores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $laptop['hdd_size'] }} GB</b></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/{{ $laptop['id'] }}" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/desktop/{{$laptop['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$laptop['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
             @endforeach
@@ -110,7 +129,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $details['brand'] }}, {{ $details['hddSize'] }} GB {{ $details["displaySize"] }}"
+                            {{ $details['brand'] }}, {{ $details['hdd_size'] }} GB {{ $details["display_size"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -122,15 +141,15 @@
                                 <p>Quantity: <b>{{$details['quantity']}}</b></p>
                                 <p>Price: <b>${{$details['price']}}</b></p>
                                 <p>Brand: <b>{{$details['brand']}}</b></p>
-                                <p>Processor Type: <b>{{$details['processorType']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processor_type']}}</b></p>
                                 <p>OS: <b>{{$details['os']}}</b></p>
-                                <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b></p>
-                                <p>Ram Size: <b>{{$details['ramSize']}} GB</b></p>
-                                <p>Display Size: <b>{{$details['displaySize']}} inches</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ram_size']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['display_size']}} inches</b></p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b></p>
                                 <p>Battery: <b>{{$details['battery']}}</b></p>
                                 <p>Camera: <b>{{$details['camera']}}</b></p>
-                                @if($details["isTouchscreen"] == 0)
+                                @if($details["is_touchscreen"] == 0)
                                     <p>Touchscreen: <b>No</b></p>
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
@@ -138,9 +157,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$details['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
             </div>
         @endif

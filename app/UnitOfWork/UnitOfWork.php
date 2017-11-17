@@ -1,10 +1,10 @@
 <?php
 
 namespace App\UnitOfWork;
+
 use App\UnitOfWork\UnitOfWorkPair;
 
-class UnitOfWork{
-
+class UnitOfWork {
     const STATE_NEW = "NEW";
     const STATE_DIRTY = "DIRTY";
     const STATE_DELETED = "DELETED";
@@ -30,7 +30,7 @@ class UnitOfWork{
     }
 
     private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null) {
-        
+
         /*
         DATA STRUCTURE FOR STORAGE
         storage = [
@@ -108,20 +108,18 @@ class UnitOfWork{
         }
     }
 
-    public function registerNew($transactionId, $mapper, $object) {
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
         $state = self::STATE_NEW;
         $this->registerEntity($transactionId, $mapper, $object, $state);
     }
 
-    public function registerDirty($transactionId, $objectId, $mapper, $object) {
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object) {
         $state = self::STATE_DIRTY;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
     }
 
-    public function registerDeleted($transactionId, $objectId, $mapper, $object) {
-//        echo ' here now';
-
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object) {
         $state = self::STATE_DELETED;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
