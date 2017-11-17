@@ -19,24 +19,27 @@
             @else
                 <table>
                     <tr>
-                        <th>Product</th>
                         <th>Serial Number</th>
+                        <th>Price</th>
+                        <th>Purchase date</th>
                         <td></td>
                     </tr>
                 @foreach($units as $unit)
                     <tr>
-                        <td>{{ $unit['name'] }}, {{ $unit['serial'] }},{{ $unit['price'] }}$, purchased on {{ $unit['purchased_date'] }}</td> 
+                        <td style="text-align: left;">{{ $unit['serial'] }}</td>
+                        <td style="text-align: left;">{{ $unit['purchased_price'] }}$</td> 
+                        <td style="text-align: left;">{{ $unit['purchased_date'] }}</td>
                         <td>
                             <form action="/returnPurchase" method="post">
                             {{ csrf_field() }}
-                                <input type="hidden" name="transaction-id" id="transaction-id" value="{{ $unit['id'] }}" />
+                                <input type="hidden" name="transaction-id" id="transaction-id" value="{{ 42 }}" />
                                 <input type="hidden" name="serial-nb" id="serial-nb" value="{{ $unit['serial'] }}" />  
                                 <!-- Trigger the modal with a button -->
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Return</button>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin:12px 12px 0;">Return</button>
                                 <div id="myModal" class="modal fade" role="dialog">
                                   <div class="modal-dialog">
                                     <!-- Modal content-->
-                                    <div class="modal-content">
+                                    <div class="modal-content" style="text-align:left;">
                                       <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                           <h3 class="modal-title">Return purchased item</h3>
