@@ -215,25 +215,26 @@ class PagesController extends Controller
     {
         return view('pages.clients', ['clients' => AccountCatalogMapper::getInstance()->getAllAccounts()]);
     }
-    
+
     public function viewProfile() {
         $currentUser = AccountCatalogMapper::getInstance()->getAccountFromRecordById($_SESSION['currentLoggedInId']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
-    
-    public function deleteAccount(){
 
-        //Delete user
-        AccountCatalogMapper::getInstance()->deleteAccountInRecord($_SESSION['currentLoggedInId'],$_SESSION['currentLoggedInId']);
-        AccountCatalogMapper::getInstance()->commit($_SESSION['currentLoggedInId']);
+    public function deleteAccount(){
+        $id =$_SESSION['currentLoggedInId'];
         // Delete session
         $sessionMapper = new SessionMapper();
         if (isset($_SESSION['currentLoggedInId'])) {
-            $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
+            $sessionMapper->closeSession($id);
         }
         $_SESSION = array();
         session_destroy();
+
+        //Delete user
+        AccountCatalogMapper::getInstance()->deleteAccountInRecord($id);
         return view('pages.index');
     }
+
 }
 
