@@ -8,6 +8,18 @@
         <li>Computer</li>
         <li class="active">Laptop</li>
     </ol>
+    @if(Session::has('unitsAdded'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were successfully added.</p>
+        </div>
+    @endif
+    @if(Session::has('unitsNotAdded'))
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were not added.</p>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

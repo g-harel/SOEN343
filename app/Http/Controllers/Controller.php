@@ -7,6 +7,9 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Gateway\DatabaseGateway;
+use App\Gateway\DesktopGateway;
+use App\Gateway\LaptopGateway;
+use App\Gateway\TabletGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -247,12 +250,65 @@ class Controller extends BaseController
         for($i = 0; $i < count($arr);$i++){
             for($j = 0; $j < $arr[$i]['quantity'];$j++){
                 $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
-
                 $arr[$i]['serial'] = $serialnum[$j]['serial'];
                 array_push($monitors,$arr[$i]);
             }
         }
         return $monitors;
+    }
+
+    public function returnTabletUnits()
+    {
+        $item = new TabletGateway();
+        $arr = $item->getByCondition([]);
+        $tablets = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            for ($j = 0; $j < $arr[$i]['quantity']; $j++) {
+                $serialNum = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+                $arr[$i]['serial'] = $serialNum[$j]['serial'];
+                array_push($tablets, $arr[$i]);
+            }
+        }
+        return $tablets;
+    }
+
+    public function returnLaptopUnits()
+    {
+        $item = new LaptopGateway();
+        $arr = $item->getByCondition([]);
+        $laptops = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            for ($j = 0; $j < $arr[$i]['quantity']; $j++) {
+                $serialNum = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+                $arr[$i]['serial'] = $serialNum[$j]['serial'];
+                array_push($laptops, $arr[$i]);
+            }
+        }
+        return $laptops;
+    }
+
+    public function returnItemUnits($itemType)
+    {
+        $item = null;
+        if($itemType == $this::MONITOR_ITEM_TYPE) {
+            $item = new MonitorGateway();
+        } else if($itemType == $this::DESKTOP_ITEM_TYPE) {
+            $item = new DesktopGateway();
+        } else if($itemType == $this::LAPTOP_ITEM_TYPE) {
+            $item = new LaptopGateway();
+        } else if($itemType == $this::TABLET_ITEM_TYPE) {
+            $item = new TabletGateway();
+        }
+        $arr = $item->getByCondition([]);
+        $units = array();
+        for ($i = 0; $i < count($arr); $i++) {
+            for ($j = 0; $j < $arr[$i]['quantity']; $j++) {
+                $serialNum = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
+                $arr[$i]['serial'] = $serialNum[$j]['serial'];
+                array_push($units, $arr[$i]);
+            }
+        }
+        return $units;
     }
 
 

@@ -34,21 +34,6 @@ class ComputerController extends Controller
         ]);
     }
 
-    public function addLaptopUnits(){
-
-        $numOfUnits = $_POST['numOfUnits'];
-        $itemID = $_POST['laptop-id'];
-        $units = array();
-        for($i = 0; $i< $numOfUnits; $i++){
-            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available","","","","");
-        }
-        $unitMapper =  UnitMapper :: getInstance();
-        foreach($units as $unit){
-            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
-            $unitMapper->commit($_SESSION['session_id']);
-
-        }
-    }
     public function search() {
         if ($this->isFormSubmitted($_GET)) {
             $searchItem = array();
@@ -65,14 +50,14 @@ class ComputerController extends Controller
             } else if (isset($_GET['admin-search-tablet-form']) ||
                 isset($_GET['client-search-tablet-form'])) {
                 $searchItem = $this->tabletFilteringFields();
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
+                $computers = $this->returnTabletUnits();
             }
             foreach ($computers as $computer) {
                 if ($searchItem['maxPrice'] == 0) {
                     if ($computer['price'] > $searchItem['minPrice']) {
                         if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
-                            ($computer['hddSize'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
-                            ($computer['ramSize'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
+                            ($computer['hdd_size'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
+                            ($computer['ram_size'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
                         ) {
                             array_push($result, $computer);
                         }
@@ -432,17 +417,45 @@ class ComputerController extends Controller
      */
     public function addTabletUnits()
     {
+
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['tablet-id'];
         $units = array();
-        $accountId = null;
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
         }
-        $unitMapper = UnitMapper:: getInstance();
+        $unitMapper = UnitMapper::getInstance();
+        $cond = null;
         foreach ($units as $unit) {
             $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
             $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        } else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
+    }
+
+    public function addLaptopUnits(){
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['laptop-id'];
+        $units = array();
+        for($i = 0; $i< $numOfUnits; $i++){
+            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available","","","","");
+        }
+        $unitMapper =  UnitMapper::getInstance();
+        $cond = null;
+        foreach($units as $unit){
+            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        } else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
 }

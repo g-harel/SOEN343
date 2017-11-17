@@ -65,8 +65,9 @@ class PagesController extends Controller
 
     public function viewTablet()
     {
+        $tablets = $this->returnTabletUnits();
         return view('pages.viewTablet', [
-            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE)
+            'tablets' => $tablets
         ]);
     }
 
@@ -77,7 +78,6 @@ class PagesController extends Controller
         if($this->isIdExistInCatalog2($id, $monitors)) {
             foreach($monitors as $monitor){
                 $details = $monitor;
-//
             }
             return view('pages.viewMonitor', [
                 'details' => $details,
