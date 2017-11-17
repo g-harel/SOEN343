@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitCatalog;
 use App\Mappers\UnitMapper;
 use App\Models\Unit;
 
@@ -23,6 +24,9 @@ class MonitorsController extends Controller
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['monitor-id'];
         $units = array();
+        $cata = UnitCatalog::getInstance();
+        print_r($cata);
+        die;
         for($i = 0; $i< $numOfUnits; $i++){
             $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
         }
