@@ -1,12 +1,6 @@
 $(document).ready(() => {
     const formUnits = {
         unitForm: $('#serial-next'),
-        itemNextBtn: [
-            'monitor-serial-next-btn',
-            'desktop-serial-next-btn',
-            'laptop-serial-next-btn',
-            'tablet-serial-next-btn'
-        ],
         hideNext: function() {
             formUnits.unitForm.removeClass('hidden');
         },
@@ -17,7 +11,6 @@ $(document).ready(() => {
             form: $('form#monitor-form-units'),
             unitInput: $('#monitor-units'),
             modal: '.addUnitsMonitorLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.monitor.form.find('#units-inputs-container').empty();
                 formUnits.monitor.unitInput.val(0);
@@ -28,7 +21,6 @@ $(document).ready(() => {
             form: $('form#desktop-form-units'),
             unitInput: $('#desktop-units'),
             modal: '.addUnitsDesktopLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.desktop.form.find('#units-inputs-container').empty();
                 formUnits.desktop.unitInput.val(0);
@@ -39,7 +31,6 @@ $(document).ready(() => {
             form: $('form#laptop-form-units'),
             unitInput: $('#laptop-units'),
             modal: '.addUnitsLaptopLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.laptop.form.find('#units-inputs-container').empty();
                 formUnits.laptop.unitInput.val(0);
