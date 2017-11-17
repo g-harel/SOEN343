@@ -18,7 +18,7 @@ class UnitsController extends Controllers {
             $transId = filter_input(INPUT_POST, 'transaction-id', FILTER_SANITIZE_SPECIAL_CHARS);
             $serialNb = filter_input(INPUT_POST, 'serial-nb', FILTER_SANITIZE_SPECIAL_CHARS);
             if(!empty($transId) && !empty($serial)) {
-                $unitMapper = UnitMapper::return($transId, $serialNb);
+                UnitMapper::getInstance()->return($transId, $serialNb);
                 //return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
                 return view('pages.purchaseHistory');
