@@ -43,12 +43,16 @@
                                         <p>Quantity: <b>{{$value['quantity']}}</b> </p>
                                         <p>Display Size: <b>{{$value['display_size']}} inches</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
+                                            <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
+                            <form method="post" action="items/monitor/reserve">
                             <div class="panel-footer">
-                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                                <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                <span><input class="btn btn-default" role="submit" value="Add to Cart"></span>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -69,12 +73,20 @@
                             </div>
                             <div class="col-md-6">
                                 <p>Price: ${{$monitor['price']}}</p>
+                                <p>Serial #: {{$monitor['serial']}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <span><a class="btn btn-default" href="/view/monitor/{{$monitor['id']}}" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                        <form method="post" action="items/monitor/reserve">
+                            {{ csrf_field() }}
+                            <div class="panel-footer">
+                                <input type="hidden" name="serial" value="{{$monitor['serial']}}">
+                                <input type="hidden" name="monitor-id" value="{{$monitor['id']}}">
+                                <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->
@@ -99,11 +111,12 @@
                                 <p>Quantity: <b>{{$details['quantity']}}</b> </p>
                                 <p>Display Size: <b>{{$details['display_size']}} inches</b> </p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b> </p>
+                                <p>Serial #: <b>{{$details['serial']}} </b> </p>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
+                        <span><a class="btn btn-default" href="" role="button">Add to Cart »</a></span>
                     </div>
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->

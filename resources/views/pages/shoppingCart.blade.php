@@ -41,11 +41,12 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($cart as $unit)
                         <td class="col-sm-8 col-md-6">
                             <div class="media">
                                 <a class="thumbnail pull-left" href="#"><i class="fa fa-laptop fa-5x"></i></a>
                                 <div class="media-body" style="padding-left:4px;">
-                                    <h4 class="media-heading"><a href="#">Macbook air 13"</a></h4>
+                                    <h4 class="media-heading"><a href="#">{{$unit['brand']}}</a></h4>
                                     <h5 class="media-heading">Apple</h5>
                                 </div>
                             </div>
@@ -61,6 +62,7 @@
                             </button>
                         </td>
                         </tr>
+                        @endforeach
                         <td class="cold-sm-8 col-md-6">
                             <div class="media">
                                 <a class="thumbnail pull-left" href="#"><i class="fa fa-tv fa-5x"></i></a>

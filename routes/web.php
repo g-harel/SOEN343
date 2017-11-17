@@ -43,6 +43,9 @@ Route::prefix('/view')->group(
         Route::get('search', 'ComputerController@search'); // computer filter
         Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
         Route::get('profile', 'PagesController@viewProfile');
+        Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
+
+
     }
 );
 
@@ -78,6 +81,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('insert', 'MonitorsController@insertMonitor');
             Route::post('delete', 'MonitorsController@deleteMonitor');
             Route::post('modify', 'MonitorsController@modifyMonitor');
+            Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
             Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
         }
     );

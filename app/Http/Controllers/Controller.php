@@ -11,6 +11,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Mappers\ItemCatalogMapper;
+use App\Gateway\MonitorGateway;
 
 class Controller extends BaseController
 {
@@ -228,6 +229,30 @@ class Controller extends BaseController
             'id'
         );
         return in_array((int)$idToSearch, $ids);
+    }
+
+    public function isIdExistInCatalog2($idToSearch, $arr) {
+        $ids = array_column(
+            $arr,
+            'id'
+        );
+        return in_array((int)$idToSearch, $ids);
+    }
+
+    public function returnMonitorUnits(){
+        $item = new MonitorGateway();
+        $arr  = $item->getByCondition([]);
+        $monitors = array();
+        $count = 0 ;
+        for($i = 0; $i < count($arr);$i++){
+            for($j = 0; $j < $arr[$i]['quantity'];$j++){
+                $serialnum = $item->getSerialNumberByID($arr[$i]['item_id'],'units');
+
+                $arr[$i]['serial'] = $serialnum[$j]['serial'];
+                array_push($monitors,$arr[$i]);
+            }
+        }
+        return $monitors;
     }
 
 }

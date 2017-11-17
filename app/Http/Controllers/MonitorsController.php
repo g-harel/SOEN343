@@ -23,6 +23,15 @@ class MonitorsController extends Controller
         ]);
     }
 
+    public function reserveMonitorUnit(){
+        $serial = $_POST['serial'];
+        $transactionID = $_SESSION['session_id'];
+        $accountID  = $_SESSION['currentLoggedInId'];
+        $id = $_POST['monitor-id'];
+        $timestamp = '"'.date('Y-m-d G:i:s').'"';
+        $unitGateway = UnitGateway::getInstance();
+        $unitGateway->update($serial, $id, 'RESERVED', $accountID,$timestamp , 0, $timestamp);
+    }
     public function addMonitorUnits(){
 
         $numOfUnits = $_POST['numOfUnits'];
@@ -52,13 +61,22 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+            //$monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+            $item = new MonitorGateway();
+            $arr  = $item->getByCondition([]);
+            $monitors = array();
+            $count = 0 ;
+            for($i = 0; $i < count($arr);$i++){
+                for($j = 0; $j < $arr[$i]['quantity'];$j++){
+                    array_push($monitors,$arr[$i]);
+                }
+            }
             $result = array();
             foreach ($monitors as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                            ($monitor['display_size'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
@@ -66,7 +84,7 @@ class MonitorsController extends Controller
                 } else if ($maxPrice > 0) {
                     if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
+                            ($monitor['display_size'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }

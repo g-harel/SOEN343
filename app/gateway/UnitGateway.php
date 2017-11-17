@@ -50,7 +50,6 @@ class UnitGateway {
             "purchased_date = $purchasedDate";
 
         $sql = "UPDATE $this->tableName SET $valuePairs WHERE $conditions;";
-
         return $this->db->queryDB($sql);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Gateway\MonitorGateway;
+use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
 {
@@ -54,25 +55,9 @@ class PagesController extends Controller
 
     public function viewMonitor()
     {
-        $item = new MonitorGateway();
-        $arr  = $item->getByCondition([]);
-        $monitors = array();
-        $count = 0 ;
-        $arr1 = array();
-
-        foreach($arr as $value){
-            array_push($arr1, [$value['quantity'], $value['id']]);
-        }
-        for($i = 0;$i < count($arr1);$i++){
-            for($j=0; $count < $arr1['quantity'];$j++){
-                array_push($arr,$arr1);
-            }
-        }
-        echo '<pre>';
-        print_r($arr);
-        die;
+        $monitors = $this->returnMonitorUnits();
         return view('pages.viewMonitor', [
-            'monitors' => $arr
+            'monitors' => $monitors
         ]);
     }
 
@@ -85,11 +70,12 @@ class PagesController extends Controller
 
     public function monitorDetails($id)
     {
+        $monitors = $this->returnMonitorUnits();
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::MONITOR_ITEM_TYPE)) {
-            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+        if($this->isIdExistInCatalog2($id, $monitors)) {
             foreach($monitors as $monitor){
                 $details = $monitor;
+//
             }
             return view('pages.viewMonitor', [
                 'details' => $details,
@@ -180,7 +166,11 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        return view('pages.shoppingCart');
+        $unit = UnitMapper::getInstance();
+        $cart = $unit->getCart($_SESSION['currentLoggedInId']);
+        return view('pages.shoppingCart', [
+            'cart' =>$cart
+        ]);
     }
 
     public function loginVerify()
