@@ -107,6 +107,16 @@
                     </div>
                 </div>
             @endif
+            @if(isset($registrationSuccess) && $registrationSuccess==true)
+                <div class="row">
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p>Registration successful! You can now login.</p>
+                    </div>
+                </div>
+            @endif
+            
+            
 			<div class="panel panel-login">
 				<div class="panel-heading">
 					<div class="row">

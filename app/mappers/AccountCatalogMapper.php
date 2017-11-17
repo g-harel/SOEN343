@@ -60,6 +60,52 @@ class AccountCatalogMapper implements CollectionMapper
         return $account;
     }
 
+    public function getAccountFromRecordById($id) {
+
+
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
+        $item = null;
+        if ($isItemInIdentityMap) {
+            $item = $this->identityMap->getObject($identityMapId);
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $item = $this->itemCatalog->getItem($itemId);
+        }
+
+        if ($item === null) {
+            return null;
+        } else {
+            return $this->mapItemToDomainArray($item);
+        }
+
+        $record = $this->gateway->getAccountById($id);
+        if ($record != null || $record != false) {
+            $recordAccount = $record[0];
+            $id = $recordAccount["id"];
+            $email = $recordAccount["email"];
+            $password = $recordAccount["password"];
+            $firstName = $recordAccount["first_name"];
+            $lastName = $recordAccount["last_name"];
+            $phoneNumber = $recordAccount["phone_number"];
+            $doorNumber = $recordAccount["door_number"];
+            $appartement = $recordAccount["appartement"];
+            $street = $recordAccount["street"];
+            $city = $recordAccount["city"];
+            $province = $recordAccount["province"];
+            $country = $recordAccount["country"];
+            $postalCode = $recordAccount["postal_code"];
+            $isAdmin = $recordAccount["isAdmin"];
+
+            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+                $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
+        }
+        return $account;
+    }
+
+    private function getAccountId($id) {
+        return $id . "account";
+    }
+
     public function addAccount($account)
     {
         $result = null;
@@ -81,10 +127,10 @@ class AccountCatalogMapper implements CollectionMapper
         return $isSuccessful;
     }
 
-    public function deleteAccountInRecord()
+    public function deleteAccountInRecord($transactionId, $accountId)
     {
-        $success = $this->gateway->deleteAccountByEmail($this->account->getEmail());
-        return $success;
+        $account = $this->getAccountFromRecordById($accountId);
+        $this->unitOfWork->registerDeleted($transactionId, $account->getId(), self::$instance, $account);
     }
 
     public function updateCatalog()
@@ -120,19 +166,31 @@ class AccountCatalogMapper implements CollectionMapper
         return $this->gateway->getAccountByEmailPassword($email, $password);
     }
 
+    //For UoW
     public function add($object)
     {
-        // TODO: Implement add() method.
+        //Not Needed
     }
 
+    //For UoW
     public function edit($object)
     {
-        // TODO: Implement edit() method.
     }
 
-    public function delete($object)
+    //For UoW
+    public function delete($account)
     {
-        // TODO: Implement delete() method.
+        $gateway = $this->getGateway($account);
+        if ($gateway === null) {
+            return false;
+        }
+        $id = $account->getId();
+        $identityMapId = $this->getItemId($id);
+        $deleted = $gateway->deleteById($id);
+        if ($deleted) {
+            $this->identityMap->removeObject($identityMapId);
+            $this->itemCatalog->removeItem($id);
+        }
     }
 
     public function commit($transactionId)
