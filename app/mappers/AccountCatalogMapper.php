@@ -34,13 +34,6 @@ class AccountCatalogMapper implements CollectionMapper
         return self::$instance;
     }
 
-    public static function createAccountMapper($account)
-    {
-        $instance = new self();
-        $instance->setAccount($account);
-        return $instance;
-    }
-
     public function getAccountFromRecordByEmail($email)
     {
         $record = $this->gateway->getAccountByEmail($email);
@@ -67,14 +60,18 @@ class AccountCatalogMapper implements CollectionMapper
         return $account;
     }
 
-    public function saveAccountInRecord()
+    public function addAccount($account)
     {
-        $result = $this->gateway->addAccount(
-            $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
-            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
-            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
-            $this->account->getPostalCode(), $this->account->getIsAdmin()
-        );
+        $result = null;
+        if(!($this->isEmailExists($account->getEmail())))
+        {
+            $result = $this->gateway->addAccount(
+                $account->getEmail(), $account->getPassword(), $account->getFirstName(), $account->getLastName(),
+                $account->getPhoneNumber(), $account->getDoorNumber(), $account->getAppartement(),
+                $account->getStreet(), $account->getCity(), $account->getProvince(), $account->getCountry(),
+                $account->getPostalCode(), $account->getIsAdmin()
+            );
+        }
         $isSuccessful = false;
         if ($result !== null) {
             /*$id = $result[0]["id"];
@@ -82,17 +79,6 @@ class AccountCatalogMapper implements CollectionMapper
             $isSuccessful = true;
         }
         return $isSuccessful;
-    }
-
-    public function editAccountInRecord()
-    {
-        $success = $this->gateway->editAccount(
-            $this->account->getId(), $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
-            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
-            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
-            $this->account->getPostalCode(), $this->account->getIsAdmin()
-        );
-        return $success;
     }
 
     public function deleteAccountInRecord()
@@ -118,20 +104,9 @@ class AccountCatalogMapper implements CollectionMapper
         return AccountCatalog::getInstance()::getCatalog();
     }
 
-    public function getAccount()
-    {
-        return $this->account;
-    }
-
     public function isEmailExists($email)
     {
         return AccountCatalog::getInstance()::isEmailExist($email);
-    }
-
-    public function setAccount($account)
-    {
-        $this->account = $account;
-        return $this;
     }
 
     //UTILITY

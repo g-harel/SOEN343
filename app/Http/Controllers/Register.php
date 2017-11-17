@@ -40,18 +40,17 @@ class Register
         $this->country = $country;
         $this->postalCode = $postalCode;
 
-        $this->accountMapper = AccountCatalogMapper()::getInstance();
         $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
-        $this->accountMapper->setAccount($newAccount);
+        AccountCatalogMapper::getInstance()->addAccount($newAccount);
     }
 
-    public function createAccount()
+   /* public function createAccount()
     {
-        $result = $this->accountMapper->saveAccountInRecord();
+        $result = AccountCatalogMapper::getInstance()->saveAccountInRecord();
         return $result;
 
-    }
+    }*/
 
     public function isEmailExists()
     {

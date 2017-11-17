@@ -210,8 +210,6 @@ class PagesController extends Controller
             $exists = $registerThis->isEmailExists();
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
-            } else {
-                $registerThis->createAccount();
             }
             return view('pages.view');
         }
