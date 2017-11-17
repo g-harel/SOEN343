@@ -70,7 +70,7 @@ class ItemCatalogMapper implements CollectionMapper {
     // Used by the controllers
     public function removeItem($transactionId, $itemId) {
         $item = $this->itemCatalog->getItem($itemId);
-        $this->unitOfWork->registerDeleted($transactionId, $item->getId(), self::$instance, $item);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
     }
 
     // Used by the controllers
@@ -79,7 +79,7 @@ class ItemCatalogMapper implements CollectionMapper {
         if ($itemInCatalog !== null) {
             $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
-            $this->unitOfWork->registerDirty($transactionId, $itemId, self::$instance, $item);
+            $this->unitOfWork->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
             return true;
         } else {
             return false;
@@ -94,7 +94,17 @@ class ItemCatalogMapper implements CollectionMapper {
 
     // Used by the controllers
     public function getItem($itemId){
-        $item = $this->itemCatalog->getItem($itemId);
+
+        $identityMapId = $this->getItemId($itemId);
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
+        $item = null;
+        if ($isItemInIdentityMap) {
+            $item = $this->identityMap->getObject($identityMapId);
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $item = $this->itemCatalog->getItem($itemId);
+        }
+
         if ($item === null) {
             return null;
         } else {
@@ -131,11 +141,12 @@ class ItemCatalogMapper implements CollectionMapper {
         $param = $this->mapDomainArrayToStorage($domainArray);
 
         $id = $gateway->insert($param);
-        if ($this->identityMap->hasId($id)){
+        $identityMapId = $this->getItemId($id);
+        if ($this->identityMap->hasId($identityMapId)){
             return false;
         }
         $item->setId($id);
-        $this->identityMap->set($id, $item);
+        $this->identityMap->set($identityMapId, $item);
         $this->itemCatalog->addItem($item);
         return true;
     }
@@ -147,9 +158,10 @@ class ItemCatalogMapper implements CollectionMapper {
             return false;
         }
         $id = $item->getId();
+        $identityMapId = $this->getItemId($id);
         $deleted = $gateway->deleteById($id);
         if ($deleted) {
-            $this->identityMap->removeObject($id);
+            $this->identityMap->removeObject($identityMapId);
             $this->itemCatalog->removeItem($id);
         }
     }
@@ -215,7 +227,7 @@ class ItemCatalogMapper implements CollectionMapper {
 
         // REMOVING THE KEYS THAT HAVEN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
         foreach($unvisitedKeysInCatalog as $key => $value) {
-            if ($this->identityMap->hasId($key)) {
+            if ($this->identityMap->hasId($key . "item")) {
                 $this->identityMap->removeObject($key);
 
             }
@@ -278,6 +290,10 @@ class ItemCatalogMapper implements CollectionMapper {
         }
     }
 
+    private function getItemId($id) {
+        return $id . "item";
+    }
+
     private function mapDomainArrayToStorage($domainArray) {
         $storageArray = null;
         foreach (self::DOMAIN_STORAGE_ARRAY_KEY_PAIRS as $pair){
@@ -310,7 +326,7 @@ class ItemCatalogMapper implements CollectionMapper {
         }
     }
 
-    private function getItemParams(Item $item) {
+    private function getItemParams($item) {
         $array = array();
         $array["id"] = $item->getId();
         $array["category"] = $item->getCategory();

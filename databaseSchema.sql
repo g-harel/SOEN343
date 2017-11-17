@@ -121,35 +121,34 @@ CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
   `category` varchar(20) NOT NULL,
   `brand` varchar(100) NOT NULL,
-  `price` float(10,2) NOT NULL,
-  `quantity` int(10) UNSIGNED NOT NULL
+  `price` float(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `items`
 --
 
-INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
-(1, 'test', 'test', 12.00, 1),
-(2, 'test2', 'test2', 99.00, 99),
-(3, 'laptop', 'IBM', 1500.00, 2),
-(4, 'desktop', 'Dell', 1055.00, 20),
-(5, 'tablet', 'Apple', 900.00, 43),
-(6, 'laptop', 'Apple', 9999.00, 9),
-(7, 'desktop', 'Alienware', 2400.00, 23),
-(8, 'desktop', 'Alienware3333', 240022.00, 23),
-(9, 'desktop', 'Alienware', 2400.00, 23),
-(10, 'desktop', 'Alienware3333', 240022.00, 23),
-(11, 'desktop', 'Alienware', 2400.00, 23),
-(12, 'desktop', 'Alienware3333', 240022.00, 23),
-(13, 'desktop', 'Alienware', 2400.00, 23),
-(14, 'desktop', 'Alienware3333', 240022.00, 23),
-(15, 'desktop', 'Alienware', 2400.00, 23),
-(16, 'desktop', 'Alienware3333', 240022.00, 23),
-(17, 'desktop', 'Alienware', 2400.00, 23),
-(18, 'desktop', 'Alienware3333', 240022.00, 23),
-(23, 'desktop', 'Alienware6666', 111111.00, 23),
-(24, 'desktop', 'Alienware3333', 240022.00, 23);
+INSERT INTO `items` (`id`, `category`, `brand`, `price`) VALUES
+(1, 'test', 'test', 12.00),
+(2, 'test2', 'test2', 99.00),
+(3, 'laptop', 'IBM', 1500.00),
+(4, 'desktop', 'Dell', 1055.00),
+(5, 'tablet', 'Apple', 900.00),
+(6, 'laptop', 'Apple', 9999.00),
+(7, 'desktop', 'Alienware', 2400.00),
+(8, 'desktop', 'Alienware3333', 240022.00),
+(9, 'desktop', 'Alienware', 2400.00),
+(10, 'desktop', 'Alienware3333', 240022.00),
+(11, 'desktop', 'Alienware', 2400.00),
+(12, 'desktop', 'Alienware3333', 240022.00),
+(13, 'desktop', 'Alienware', 2400.00),
+(14, 'desktop', 'Alienware3333', 240022.00),
+(15, 'desktop', 'Alienware', 2400.00),
+(16, 'desktop', 'Alienware3333', 240022.00),
+(17, 'desktop', 'Alienware', 2400.00),
+(18, 'desktop', 'Alienware3333', 240022.00),
+(23, 'desktop', 'Alienware6666', 111111.00),
+(24, 'desktop', 'Alienware3333', 240022.00);
 
 -- --------------------------------------------------------
 
