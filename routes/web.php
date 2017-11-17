@@ -35,6 +35,7 @@ Route::prefix('/purchaseHistory')->group(
     function () {
         Route::get('showPurchase', 'UnitsController@searchPurchase');
         Route::get('returnPurchase', 'UnitsController@returnPurchase');
+        Route::get('showPurchaseTemplate', 'UnitsController@showPurchase');
     }
 );
 

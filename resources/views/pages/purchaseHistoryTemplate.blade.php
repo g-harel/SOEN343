@@ -3,29 +3,21 @@
     <div class='jumbotron'>
         <h3>Purchase History</h3>
         
-        @if(isset($itemSuccessfullyReturned) && $itemSuccessfullyReturned==true)
           <div class="row">
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <p>Your purchased item was successfully returned.</p>
                 </div>
-            </div>
-        @endif
-        
-        @if(isset($_SESSION)  && !empty($_SESSION))
-            @if(empty($units))
-                <p>Your purchase history is empty.</p>
-            <!-- still need to display purchase name -->
-            @else
+          </div>
                 <table>
                     <tr>
                         <th>Product</th>
                         <th>Serial Number</th>
                         <td></td>
                     </tr>
-                @foreach($units as $unit)
+
                     <tr>
-                        <td>{{ $unit['name'] }}, {{ $unit['serial'] }},{{ $unit['price'] }}$, purchased on {{ $unit['purchased_date'] }}</td> 
+                        <td>Name, Serial, 100.00$, DATE</td> 
                         <td>
                             <form action="/returnPurchase" method="post">
                             {{ csrf_field() }}
@@ -59,9 +51,6 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
-            @endif
-        @endif
         </table>
     </div>
 @endsection

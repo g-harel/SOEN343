@@ -12,6 +12,10 @@ class UnitsController extends Controllers {
         /*return view('purchaseHistory', ['units' => UnitMapper::getPurchased($_SESSION['currentLoggedInId']), 
                                        'returns' => UnitMapper::getReturned($_SESSION['currentLoggedInId']]);*/
     }
+    
+    public function showPurchaseTemplate() {
+        return view('pages.purchaseHistoryTemplate');
+    }
 
     public function returnPurchase() {  
          if($this->isFormSubmitted($_POST)) {
@@ -19,7 +23,7 @@ class UnitsController extends Controllers {
             $serialNb = filter_input(INPUT_POST, 'serial-nb', FILTER_SANITIZE_SPECIAL_CHARS);
             if(!empty($transId) && !empty($serial)) {
                 UnitMapper::getInstance()->return($transId, $serialNb);
-                //return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
+                return redirect()->back()->with(['itemSuccessfullyReturned' => true]);
             } else {
                 return view('pages.purchaseHistory');
             }
