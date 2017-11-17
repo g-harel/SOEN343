@@ -1,12 +1,6 @@
 $(document).ready(() => {
     const formUnits = {
         unitForm: $('#serial-next'),
-        itemNextBtn: [
-            'monitor-serial-next-btn',
-            'desktop-serial-next-btn',
-            'laptop-serial-next-btn',
-            'tablet-serial-next-btn'
-        ],
         hideNext: function() {
             formUnits.unitForm.removeClass('hidden');
         },
@@ -17,7 +11,6 @@ $(document).ready(() => {
             form: $('form#monitor-form-units'),
             unitInput: $('#monitor-units'),
             modal: '.addUnitsMonitorLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.monitor.form.find('#units-inputs-container').empty();
                 formUnits.monitor.unitInput.val(0);
@@ -28,7 +21,6 @@ $(document).ready(() => {
             form: $('form#desktop-form-units'),
             unitInput: $('#desktop-units'),
             modal: '.addUnitsDesktopLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.desktop.form.find('#units-inputs-container').empty();
                 formUnits.desktop.unitInput.val(0);
@@ -39,7 +31,6 @@ $(document).ready(() => {
             form: $('form#laptop-form-units'),
             unitInput: $('#laptop-units'),
             modal: '.addUnitsLaptopLink',
-            nextBtn: 'monitor-serial-next-btn',
             emptyVal: function () {
                 formUnits.laptop.form.find('#units-inputs-container').empty();
                 formUnits.laptop.unitInput.val(0);
@@ -70,45 +61,50 @@ $(document).ready(() => {
     $(".modal"+formUnits.tablet.modal+"").on("hidden.bs.modal", function() {
         formUnits.tablet.emptyVal();
     });
-    $('.generate-serial-form').on('click', function () {
-        let fields = null;
-        let appendElem = null;
-        for(let i = 0; i < formUnits.itemNextBtn.length; i++) {
-            if($(this).attr('name', formUnits.itemNextBtn[i])) {
-                fields = formUnits.monitor.unitInput.val();
-                appendElem = function(h) {
-                    formUnits.monitor.form.find('#units-inputs-container').append(h);
-                }
-            }
-        }
-        for(let i = 0; i < fields; i++){
-            appendElem(`<div class="form-group serial-number">
-                <label>Serial #</label>
-                <input type="text" id="serial-number" name="serial${i}" value="${randomString()}" class="form-control">
-                </div>`)
-        }
+    $('input[name=monitor-serial]').on('click', function () {
+        let fields = formUnits.monitor.unitInput.val();
+        serialInputs(fields, formUnits.monitor.form);
         formUnits.displayNext();
-    })
-
-    $('#addUnitsMonitorLink').on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget); // Button that triggered the modal
-        const itemID = button.data('id'); // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        const modal = $(this);
-        console.log(itemID);
-        modal.find('.modal-body input[type=hidden]#monitor-id').attr('value',itemID);
-
-    })
+    });
+    $('input[name=laptop-serial]').on('click', function () {
+        let fields = formUnits.laptop.unitInput.val();
+        serialInputs(fields, formUnits.laptop.form);
+        formUnits.displayNext();
+    });
+    $('input[name=desktop-serial]').on('click', function () {
+        let fields = formUnits.desktop.unitInput.val();
+        serialInputs(fields, formUnits.desktop.form);
+        formUnits.displayNext();
+    });
+    $('input[name=tablet-serial]').on('click', function () {
+        let fields = formUnits.tablet.unitInput.val();
+        serialInputs(fields, formUnits.tablet.form);
+        formUnits.displayNext();
+    });
 });
 
+function serialInputs(fields, form) {
+    let h = null;
+    for(let i = 0; i < fields; i++){
+        form.find('#units-inputs-container').append(`<div class="form-group serial-number">
+        <label>Serial #</label>
+        <input type="text" id="serial-number" name="serial${i}" value="${randomString()}" class="form-control">
+        </div>`);
+    }
+    return h;
+}
+$('#addUnitsMonitorLink').on('show.bs.modal', function (event) {
+    const button = $(event.relatedTarget); // Button that triggered the modal
+    const itemID = button.data('id'); // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    const modal = $(this);
+    console.log(itemID);
+    modal.find('.modal-body input[type=hidden]#monitor-id').attr('value',itemID);
 
-function randomString(){
-        const editDeleteMonitor = {
-            editLink: $('.edit-monitor-link'),
-            modal: $('.bs-edit-monitor-modal-lg'),
-            deleteLink: $('#delMonitorLink'),
-        };
+});
+
+function randomString() {
     let chars ='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let len = 5;
     let result = '';
