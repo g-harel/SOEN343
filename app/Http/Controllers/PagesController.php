@@ -29,6 +29,10 @@ class PagesController extends Controller
         return view('pages.admin');
     }
 
+    public function purchaseHistory(){
+        return view('pages.purchaseHistory');
+    }
+    
     public function view()
     {
         return view('pages.view');
