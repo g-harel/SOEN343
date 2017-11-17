@@ -74,6 +74,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('desktop/addDesktopUnits', 'ComputerController@addDesktopUnits');
             Route::post('tablet/addTabletUnits', 'ComputerController@addTabletUnits');
             Route::post('laptop/addLaptopUnits', 'ComputerController@addLaptopUnits');
+//            Route::post('laptop/addLaptopUnits', 'ComputerController@addLaptopUnits');
         }
     );
 
