@@ -127,7 +127,7 @@ class ItemCatalogMapper implements CollectionMapper {
     }
 
     // Used by the unitofwork when commit happens
-    public function add(Item $item) {
+    public function add($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -152,7 +152,7 @@ class ItemCatalogMapper implements CollectionMapper {
     }
 
     // Used by the unitofwork when commit happens
-    public function delete(Item $item) {
+    public function delete($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -169,7 +169,7 @@ class ItemCatalogMapper implements CollectionMapper {
     // Used by the unitofwork when commit happens
     // NOTE: CURRENTLY, THE ITEM IN THE UNIT OF WORK POINTS TOWARDS THE ITEM IN THE IDENTITY MAP.
     // NEED TO DECOUPLE THOSE TWO FOR THIS METHOD TO BE USEFUL!
-    public function edit(Item $item) {
+    public function edit($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -326,7 +326,7 @@ class ItemCatalogMapper implements CollectionMapper {
         }
     }
 
-    private function getItemParams(Item $item) {
+    private function getItemParams($item) {
         $array = array();
         $array["id"] = $item->getId();
         $array["category"] = $item->getCategory();

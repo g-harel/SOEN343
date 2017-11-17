@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use Illuminate\Support\Facades\DB;
-
 class TabletGateway extends ComputerGateway implements iItemCategory {
     public static $fields = array(
         "display_size",
@@ -30,10 +28,5 @@ class TabletGateway extends ComputerGateway implements iItemCategory {
         $id = $item["id"];
         $values = $this->updateList(self::$fields, $item);
         return parent::buildUpdate($item)."UPDATE tablets SET $values WHERE item_id = $id;";
-    }
-
-    public function getAll()
-    {
-        return DB::select($this->buildSelect());
     }
 }
