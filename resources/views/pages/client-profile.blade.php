@@ -15,7 +15,7 @@
                             <img class="center-block img-responsive img-circle img-thumbnail thumb96"
                                  src="https://api.adorable.io/avatars/285/audreyhunt">
                         </div>
-                        <h3 class="m0 text-bold">{{ $currentUser['id'] }}</h3>
+                        <h3 class="m0 text-bold">{{ $currentUser->getFirstName() }} {{ $currentUser->getLastName() }}</h3>
                     </div>
                 </div>
             </div>
@@ -32,20 +32,20 @@
                                     {{ csrf_field() }}
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact1">Name</label>
-                                        <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="" readonly></div>
+                                        <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="{{ $currentUser->getFirstName() }} {{ $currentUser->getLastName() }}" readonly></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact2">Email</label>
-                                        <div class="col-sm-10"> <input class="form-control" id="inputContact2" type="email" value="" readonly></div>
+                                        <div class="col-sm-10"> <input class="form-control" id="inputContact2" type="email" value="{{ $currentUser->getEmail() }}" readonly></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact3">Phone</label>
-                                        <div class="col-sm-10"> <input class="form-control" id="inputContact3" type="text" value="" readonly></div>
+                                        <div class="col-sm-10"> <input class="form-control" id="inputContact3" type="text" value="{{ $currentUser->getPhoneNumber() }}" readonly></div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact3">Address</label>
                                         <div class="col-sm-10">
-                                            <pre></pre>
+                                            <pre>{{ $currentUser->getDoorNumber() }} {{ $currentUser->getStreet() }}, {{ $currentUser->getCity() }}, {{ $currentUser->getCountry() }}</pre>
                                         </div>
                                     </div>
                                     <div class="form-group">

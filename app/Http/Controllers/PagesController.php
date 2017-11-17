@@ -216,10 +216,8 @@ class PagesController extends Controller
     
     public function viewProfile() {
         $id =$_SESSION['currentLoggedInId'];
-        /*$accountMapper = AccountMapper::createAccountMapper($id);
-        $currentUser = $accountMapper->getAccountById($id);*/
-        $accountGateway = new AccountGateway();
-        $currentUser =$accountGateway->getAccountById($id);
+        $accountMapper = AccountMapper::createAccountMapper($id);
+        $currentUser = $accountMapper->getAccount();
         
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
