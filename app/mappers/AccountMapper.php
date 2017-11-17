@@ -14,10 +14,10 @@ class AccountMapper
     public function __construct() {
         $this->gateway = new AccountGateway();
     }
-
-    public static function createAccountMapper($account) {
+    
+    public static function createAccountMapper($id) {
         $instance = new self();
-        $instance->setAccount($account);
+        $instance->setAccountFromRecordById($id);
         return $instance;
     }
 
@@ -33,6 +33,33 @@ class AccountMapper
 
     public function setAccountFromRecordByEmail($email) {
         $record = $this->gateway->getAccountByEmail($email);
+        if ($record != null || $record != false) {
+            $recordAccount = $record[0];
+            $id = $recordAccount["id"];
+            $email = $recordAccount["email"];
+            $password = $recordAccount["password"];
+            $firstName = $recordAccount["first_name"];
+            $lastName = $recordAccount["last_name"];
+            $phoneNumber = $recordAccount["phone_number"];
+            $doorNumber = $recordAccount["door_number"];
+            $appartement = $recordAccount["appartement"];
+            $street = $recordAccount["street"];
+            $city = $recordAccount["city"];
+            $province = $recordAccount["province"];
+            $country = $recordAccount["country"];
+            $postalCode = $recordAccount["postal_code"];
+            $isAdmin = $recordAccount["isAdmin"];
+    
+            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
+            $this->account = $account;
+        }
+
+        return $this;
+    }
+    
+    public function setAccountFromRecordById($id) {
+        $record = $this->gateway->getAccountById($id);
         if ($record != null || $record != false) {
             $recordAccount = $record[0];
             $id = $recordAccount["id"];
@@ -83,11 +110,11 @@ class AccountMapper
         );
         return $success;
     }
-
+    
     public function deleteAccountInRecord() {
-        $success = $this->gateway->deleteAccountByEmail($this->account->getEmail());
+        $success = $this->gateway->deleteAccountById($this->account->getId());
         return $success;
-    }
+    } 
 
     public function getAccount() {
         return $this->account;
@@ -95,6 +122,10 @@ class AccountMapper
 
     public function getAccountByEmail($email) {
         return $this->gateway->getAccountByEmail($email);
+    }
+    
+    public function getAccountById($id) {
+        return $this->gateway->getAccountById($id);
     }
 
     public function getId() {
