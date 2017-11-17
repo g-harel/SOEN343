@@ -13,7 +13,7 @@
                     <div class="panel-body text-center">
                         <div class="pv-lg">
                             <img class="center-block img-responsive img-circle img-thumbnail thumb96"
-                                 src="https://api.adorable.io/avatars/285/audreyhunt">
+                                 src="https://api.adorable.io/avatars/285/{{ $currentUser->getFirstName() }}{{ $currentUser->getLastName() }}">
                         </div>
                         <h3 class="m0 text-bold">{{ $currentUser->getFirstName() }} {{ $currentUser->getLastName() }}</h3>
                     </div>

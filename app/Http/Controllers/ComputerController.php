@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitMapper;
+use App\Models\Unit;
 
 class ComputerController extends Controller
 {
@@ -40,22 +42,22 @@ class ComputerController extends Controller
             if (isset($_GET['admin-search-desktop-form']) ||
                 isset($_GET['client-search-desktop-form'])) {
                 $searchItem = $this->desktopFilteringFields();
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
+                $computers = $this->returnItemUnits($searchItem['itemType']);
             } else if (isset($_GET['admin-search-laptop-form']) ||
                 isset($_GET['client-search-laptop-form'])) {
                 $searchItem = $this->laptopFilteringFields();
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
+                $computers = $this->returnItemUnits($searchItem['itemType']);
             } else if (isset($_GET['admin-search-tablet-form']) ||
                 isset($_GET['client-search-tablet-form'])) {
                 $searchItem = $this->tabletFilteringFields();
-                $computers = ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']);
+                $computers =$this->returnItemUnits($searchItem['itemType']);
             }
             foreach ($computers as $computer) {
                 if ($searchItem['maxPrice'] == 0) {
                     if ($computer['price'] > $searchItem['minPrice']) {
                         if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
-                            ($computer['hddSize'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
-                            ($computer['ramSize'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
+                            ($computer['hdd_size'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
+                            ($computer['ram_size'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
                         ) {
                             array_push($result, $computer);
                         }
@@ -63,8 +65,8 @@ class ComputerController extends Controller
                 } else if ($searchItem['maxPrice'] > 0) {
                     if ($computer['price'] > $searchItem['minPrice'] && $computer['price'] < $searchItem['maxPrice']) {
                         if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
-                            ($computer['hddSize'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
-                            ($computer['ramSize'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
+                            ($computer['hdd_size'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
+                            ($computer['ram_size'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
                         ) {
                             array_push($result, $computer);
                         }
@@ -84,13 +86,16 @@ class ComputerController extends Controller
                 }
             } else {
                 if($this->isAdminSearching()) {
+//                    echo '<pre>';
+//                    print_r($this->returnItemUnits($searchItem['itemType']));
+//                    die;
                     return view($searchItem['adminView'], [
-                        $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
+                        $searchItem['collection'] => $this->returnItemUnits($searchItem['itemType']),
                         'noResults' => true
                     ]);
                 } else {
                     return view($searchItem['clientView'], [
-                        $searchItem['collection'] => ItemCatalogMapper::getInstance()->selectAllItemType($searchItem['itemType']),
+                        $searchItem['collection'] =>  $this->returnItemUnits($searchItem['itemType']),
                         'noResults' => true
                     ]);
                 }
@@ -116,7 +121,7 @@ class ComputerController extends Controller
                     "category" => "desktop",
                     "brand" => $sanitizedInputs['desktop-brand'],
                     "price" => $sanitizedInputs['desktop-price'],
-                    "quantity" => $sanitizedInputs['desktop-qty'],
+                    "quantity" => 0,
                     "width" => $sanitizedInputs['desktop-width'],
                     "height" => $sanitizedInputs['desktop-height'],
                     "thickness" => $sanitizedInputs['desktop-thickness'],
@@ -157,7 +162,7 @@ class ComputerController extends Controller
                     "isTouchscreen" => $sanitizedInputs["laptop-touchscreen"],
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
-                    "quantity" => $sanitizedInputs['laptop-qty'],
+                    "quantity" =>0
                 ];
                 $addLaptopItem = ItemCatalogMapper::getInstance();
                 $addLaptopItem->addNewItem($_SESSION['session_id'], Controller::LAPTOP_ITEM_TYPE, $laptopItem); // ufw
@@ -190,7 +195,7 @@ class ComputerController extends Controller
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
-                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],
@@ -284,7 +289,7 @@ class ComputerController extends Controller
                     "category" => "desktop",
                     "brand" => $sanitizedInputs["desktop-brand"],
                     "price" => $sanitizedInputs["desktop-price"],
-                    "quantity" => $sanitizedInputs["desktop-qty"],
+                    "quantity" => 0,
                     "height" => $sanitizedInputs["desktop-height"],
                     "width" => $sanitizedInputs["desktop-width"],
                     "thickness" => $sanitizedInputs["desktop-thickness"]
@@ -326,7 +331,7 @@ class ComputerController extends Controller
                     "category" => "laptop",
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
-                    "quantity" => $sanitizedInputs['laptop-qty'],
+                    "quantity" => 0,
                     "displaySize" => $sanitizedInputs['laptop-display-size'],
                     "os" => $sanitizedInputs['laptop-os'],
                     "battery" => $sanitizedInputs['laptop-battery'],
@@ -370,7 +375,7 @@ class ComputerController extends Controller
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
-                    "quantity" => $sanitizedInputs['tablet-qty'],
+                    "quantity" =>0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],
@@ -392,6 +397,115 @@ class ComputerController extends Controller
             return view('items.computer.show-tablet', [
                 'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE)
             ]);
+        }
+    }
+
+    public function addDesktopUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['desktop-id'];
+        $units = array();
+        $cond = false;
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
+        }
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond ){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        }
+        else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
+    }
+
+    /**
+     * for tablet units
+     */
+    public function addTabletUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['tablet-id'];
+        $units = array();
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
+        }
+        $unitMapper = UnitMapper::getInstance();
+        $cond = null;
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        } else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
+    }
+
+    public function addLaptopUnits(){
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['laptop-id'];
+        $units = array();
+        for($i = 0; $i< $numOfUnits; $i++){
+            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available","","","","");
+        }
+        $unitMapper =  UnitMapper::getInstance();
+        $cond = null;
+        foreach($units as $unit){
+            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+        $cond = true;
+        if($cond){
+            return redirect()->back()->with(['unitsAdded' => true]);
+        } else{
+            return redirect()->back()->with(['unitsNotAdded' => true]);
+        }
+    }
+
+    public function reserveDesktopUnit(){
+
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
+    }
+
+    public function reserveLaptopUnit(){
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
+    }
+
+    public function reserveTabletUnit(){
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
+            $serial = $_POST['serial'];
+            $unitMapper = UnitMapper::getInstance();
+            $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
+            $unitMapper->commit($_SESSION['session_id']);
+            $cond = true;
+            return redirect()->back()->with(['unitReserved' => true]);
+        } else {
+            return redirect()->back()->with(['unitNotReserved' => true]);
         }
     }
 }
