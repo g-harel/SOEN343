@@ -166,16 +166,13 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        $unit = UnitMapper::getInstance();
-        $cart = $unit->getCart($_SESSION['currentLoggedInId']);
-        $result = array();
-        foreach($cart as $unit){
-             array_push($result,$unit);
-        }
+        $cart = UnitMapper::getInstance();
 
-        return view('pages.shoppingCart', [
-            'cart' =>$result
-        ]);
+        $units = $cart->getCart($_SESSION['currentLoggedInId']);
+        echo '<pre>';
+        print_r($units);
+        die;
+        return view('pages.shoppingCart');
     }
 
     public function loginVerify()
@@ -250,8 +247,8 @@ class PagesController extends Controller
         //Delete user 
         $accountMapper = AccountMapper::createAccountMapper($id);
         $success = $accountMapper->deleteAccountInRecord();
-        
-        return view('pages.index');
+
+        return view('pages.login', ['accountDeleted' => 'Your Account has been successfully deleted!']);
     }
 }
 

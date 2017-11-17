@@ -39,6 +39,12 @@ class UnitGateway {
     public function update($serial, $itemId, $status, $accountId, $reservedDate, $purchasedPrice, $purchasedDate) {
         $conditionsAssociativeArray = ["serial" => $serial];
         $conditions = transformConditionsToString($conditionsAssociativeArray);
+        if ($reservedDate !== "NULL") {
+            $reservedDate = "'$reservedDate'";
+        }
+        if ($purchasedDate !== "NULL") {
+            $purchasedDate = "'$purchasedDate'";
+        }
         $valuePairs =
             "item_id = '$itemId"."', ".
             "status = '$status"."', ".

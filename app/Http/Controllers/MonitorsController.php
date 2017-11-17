@@ -26,8 +26,22 @@ class MonitorsController extends Controller
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
-
+//public function reserve($transactionId, $serial, $accountId): bool {
     public function reserveMonitorUnit(){
+
+        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1){
+        $serial = $_POST['serial'];
+
+        $unitMapper =  UnitMapper :: getInstance();
+        $unitMapper->reserve($_SESSION['session_id'],$serial,$_SESSION['currentLoggedInId']);
+        $unitMapper->commit($_SESSION['session_id']);
+        $cond = true;
+
+        return redirect()->back()->with(['unitReserved' => true]);
+        }
+        else{
+            return redirect()->back()->with(['unitNotReserved' => true]);
+        }
 
     }
     public function addMonitorUnits(){
