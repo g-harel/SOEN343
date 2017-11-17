@@ -94,7 +94,16 @@ class ItemCatalogMapper implements CollectionMapper {
 
     // Used by the controllers
     public function getItem($itemId){
-        $item = $this->itemCatalog->getItem($itemId);
+
+        $isItemInIdentityMap = $this->identityMap->hasId($itemId . "item");
+        $item = null;
+        if ($isItemInIdentityMap) {
+            $item = $this->identityMap->getObject($itemId . "item");
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $item = $this->itemCatalog->getItem($itemId);
+        }
+
         if ($item === null) {
             return null;
         } else {
@@ -130,7 +139,7 @@ class ItemCatalogMapper implements CollectionMapper {
         unset($domainArray["id"]);
         $param = $this->mapDomainArrayToStorage($domainArray);
 
-        $id = $gateway->insert($param);
+        $id = $gateway->insert($param) . "item";
         if ($this->identityMap->hasId($id)){
             return false;
         }
@@ -149,7 +158,7 @@ class ItemCatalogMapper implements CollectionMapper {
         $id = $item->getId();
         $deleted = $gateway->deleteById($id);
         if ($deleted) {
-            $this->identityMap->removeObject($id);
+            $this->identityMap->removeObject($id . "item");
             $this->itemCatalog->removeItem($id);
         }
     }
@@ -215,7 +224,7 @@ class ItemCatalogMapper implements CollectionMapper {
 
         // REMOVING THE KEYS THAT HAVEN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
         foreach($unvisitedKeysInCatalog as $key => $value) {
-            if ($this->identityMap->hasId($key)) {
+            if ($this->identityMap->hasId($key . "item")) {
                 $this->identityMap->removeObject($key);
 
             }
