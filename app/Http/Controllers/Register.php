@@ -40,7 +40,7 @@ class Register
         $this->country = $country;
         $this->postalCode = $postalCode;
 
-        $this->accountMapper = new AccountCatalogMapper();
+        $this->accountMapper = AccountCatalogMapper()::getInstance();
         $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
         $this->accountMapper->setAccount($newAccount);
@@ -53,10 +53,8 @@ class Register
 
     }
 
-    public function checkExistingEmail(){
-
-        $email = $this->email;
-
-        return $this->accountMapper->getAccountByEmail($email) ;
+    public function isEmailExists()
+    {
+        return AccountCatalogMapper::getInstance()->isEmailExists($this->email);
     }
 }

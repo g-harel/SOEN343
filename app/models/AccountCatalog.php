@@ -9,11 +9,13 @@ class AccountCatalog
     private static $catalog;
     private static $instance;
 
-    private function __construct() {
+    private function __construct()
+    {
         self::$catalog = new SplObjectStorage();
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new AccountCatalog();
         }
@@ -24,6 +26,20 @@ class AccountCatalog
     {
         self::$catalog->attach($account);
     }
+
+    public static function isEmailExist($email)
+    {
+        $accounts = self::$catalog;
+        foreach($accounts as $account)
+        {
+            if(($account->getEmail() == $email))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static function getCatalog()
     {

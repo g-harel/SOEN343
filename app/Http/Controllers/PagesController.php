@@ -207,7 +207,7 @@ class PagesController extends Controller
                 $sanitizedInputs['country'],
                 $sanitizedInputs['postal_code']
             );
-            $exists = $registerThis->checkExistingEmail();
+            $exists = $registerThis->isEmailExists();
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
             } else {
@@ -219,8 +219,7 @@ class PagesController extends Controller
 
     public function clients()
     {
-        $accountCatalog = new AccountCatalogMapper();
-        return view('pages.clients', ['clients' => $accountCatalog->getAllAccounts()]);
+        return view('pages.clients', ['clients' => AccountCatalogMapper::getInstance()->getAllAccounts()]);
     }
 }
 

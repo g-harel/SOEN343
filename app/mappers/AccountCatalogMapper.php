@@ -6,19 +6,32 @@ use App\Models\Account;
 use App\Models\AccountCatalog;
 use App\Gateway\AccountGateway;
 use App\Models\Address;
+use App\UnitOfWork\CollectionMapper;
+use App\IdentityMap\IdentityMap;
+use App\UnitOfWork\UnitOfWork;
 
 
-class AccountCatalogMapper
+class AccountCatalogMapper implements CollectionMapper
 {
-    private $account;
     private $gateway;
     private $accountCatalog;
+    private static $instance;
 
-    public function __construct()
+    private function __construct()
     {
         $this->gateway = new AccountGateway();
         $this->accountCatalog = AccountCatalog::getInstance();
+        $this->identityMap = IdentityMap::getInstance();
+        $this->unitOfWork = UnitOfWork::getInstance();
         $this->updateCatalog();
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new AccountCatalogMapper();
+        }
+        return self::$instance;
     }
 
     public static function createAccountMapper($account)
@@ -28,17 +41,7 @@ class AccountCatalogMapper
         return $instance;
     }
 
-    public static function createAccountMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-                                                      $doorNumber, $appartement, $street, $city, $province,
-                                                      $country, $postalCode, $isAdmin = false)
-    {
-        $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
-        $instance = self::createAccountMapper($account);
-        return $instance;
-    }
-
-    public function setAccountFromRecordByEmail($email)
+    public function getAccountFromRecordByEmail($email)
     {
         $record = $this->gateway->getAccountByEmail($email);
         if ($record != null || $record != false) {
@@ -60,10 +63,8 @@ class AccountCatalogMapper
 
             $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
                 $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-            $this->account = $account;
         }
-
-        return $this;
+        return $account;
     }
 
     public function saveAccountInRecord()
@@ -114,7 +115,7 @@ class AccountCatalogMapper
 
     public function getAllAccounts()
     {
-        return AccountCatalog::getCatalog();
+        return AccountCatalog::getInstance()::getCatalog();
     }
 
     public function getAccount()
@@ -122,173 +123,14 @@ class AccountCatalogMapper
         return $this->account;
     }
 
-    public function getAccountByEmail($email)
+    public function isEmailExists($email)
     {
-        return $this->gateway->getAccountByEmail($email);
-    }
-
-    public function getId()
-    {
-        return $this->account->getId();
-    }
-
-    public function getEmail()
-    {
-        return $this->account->getEmail();
-    }
-
-    public function getPassword()
-    {
-        return $this->account->getPassword();
-    }
-
-    public function getFirstName()
-    {
-        return $this->account->getFirstName();
-    }
-
-    public function getLastName()
-    {
-        return $this->account->getLastName();
-    }
-
-    public function getPhoneNumber()
-    {
-        return $this->account->getPhoneNumber();
-    }
-
-    public function getAddress()
-    {
-        return $this->account->getAddress();
-    }
-
-    public function getIsAdmin()
-    {
-        return $this->account->getIsAdmin();
-    }
-
-    public function getDoorNumber()
-    {
-        return $this->account->getDoorNumber();
-    }
-
-    public function getAppartement()
-    {
-        return $this->account->getAppartement();
-    }
-
-    public function getStreet()
-    {
-        return $this->account->getStreet();
-    }
-
-    public function getCity()
-    {
-        return $this->account->getCity();
-    }
-
-    public function getProvince()
-    {
-        return $this->account->getProvince();
-    }
-
-    public function getCountry()
-    {
-        return $this->account->getCountry();
-    }
-
-    public function getPostalCode()
-    {
-        return $this->account->getPostalCode();
+        return AccountCatalog::getInstance()::isEmailExist($email);
     }
 
     public function setAccount($account)
     {
         $this->account = $account;
-        return $this;
-    }
-
-    public function setId($id)
-    {
-        $this->account->setId($id);
-        return $this;
-    }
-
-    public function setEmail($email)
-    {
-        $this->account->setEmail($email);
-        return $this;
-    }
-
-    public function setPassword($password)
-    {
-        $this->account->setPassword($password);
-        return $this;
-    }
-
-    public function setFirstName($firstName)
-    {
-        $this->account->setFirstName($firstName);
-        return $this;
-    }
-
-    public function setLastName($lastName)
-    {
-        $this->account->setLastName($lastName);
-        return $this;
-    }
-
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->account->setPhoneNumber($phoneNumber);
-        return $this;
-    }
-
-    public function setAddress($address)
-    {
-        $this->account->setAddress($address);
-        return $this;
-    }
-
-    public function setDoorNumber($doorNumber)
-    {
-        $this->account->setDoorNumber($doorNumber);
-        return $this;
-    }
-
-    public function setAppartement($appartement)
-    {
-        $this->account->setAppartement($appartement);
-        return $this;
-    }
-
-    public function setStreet($street)
-    {
-        $this->account->setStreet($street);
-        return $this;
-    }
-
-    public function setCity($city)
-    {
-        $this->account->setCity($city);
-        return $this;
-    }
-
-    public function setProvince($province)
-    {
-        $this->account->setProvince($province);
-        return $this;
-    }
-
-    public function setCountry($country)
-    {
-        $this->account->setCountry($country);
-        return $this;
-    }
-
-    public function setPostalCode($postalCode)
-    {
-        $this->account->setPostalCode($postalCode);
         return $this;
     }
 
@@ -301,5 +143,25 @@ class AccountCatalogMapper
     public function isAccountExist($email, $password)
     {
         return $this->gateway->getAccountByEmailPassword($email, $password);
+    }
+
+    public function add($object)
+    {
+        // TODO: Implement add() method.
+    }
+
+    public function edit($object)
+    {
+        // TODO: Implement edit() method.
+    }
+
+    public function delete($object)
+    {
+        // TODO: Implement delete() method.
+    }
+
+    public function commit($transactionId)
+    {
+        $this->unitOfWork->commit($transactionId);
     }
 }
