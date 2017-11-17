@@ -411,5 +411,39 @@ class ComputerController extends Controller
             ]);
         }
     }
+
+    public function addDesktopUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['desktop-id'];
+        $units = array();
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
+        }
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+    }
+
+    /**
+     * for tablet units
+     */
+    public function addTabletUnits()
+    {
+        $numOfUnits = $_POST['numOfUnits'];
+        $itemID = $_POST['tablet-id'];
+        $units = array();
+        $accountId = null;
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
+        }
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
+            $unitMapper->commit($_SESSION['session_id']);
+        }
+    }
 }
 
