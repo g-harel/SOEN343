@@ -21,7 +21,10 @@ Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
+//TODO REVIEW THESE TWO (Make sure its okay, may conflict)
 Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
+Route::post('deleteAccount', 'PagesController@deleteAccount');
+
 
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
