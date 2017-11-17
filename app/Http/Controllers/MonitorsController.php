@@ -24,7 +24,7 @@ class MonitorsController extends Controller
         $itemID = $_POST['monitor-id'];
         $units = array();
         for($i = 0; $i< $numOfUnits; $i++){
-            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",$_SESSION['currentLoggedInId'],"","","");
+            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
         }
         $unitMapper =  UnitMapper :: getInstance();
         foreach($units as $unit){
