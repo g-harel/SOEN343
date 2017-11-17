@@ -7,6 +7,18 @@
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
+        @if(Session::has('unitNotReserved'))
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>You need to be logged in to add to cart!</p>
+            </div>
+        @endif
+        @if(Session::has('unitReserved'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully added to your Shopping Cart</p>
+            </div>
+        @endif
         @if(Session::has('notFound'))
             <div class="alert alert-info">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -42,20 +54,25 @@
                                         <p>Price: <b>${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
                                         <p>Quantity: <b>{{$value['quantity']}}</b> </p>
-                                        <p>Processor Type: <b>{{$value['processorType']}} </b> </p>
-                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b> </p>
-                                        <p>CPU Cores: <b>{{$value['cpuCores']}} </b> </p>
-                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b> </p>
+                                        <p>Processor Type: <b>{{$value['processor_type']}} </b> </p>
+                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b> </p>
+                                        <p>CPU Cores: <b>{{$value['cpu_cores']}} </b> </p>
+                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b> </p>
                                         <p>Height: <b>{{$value['height']}} cm</b> </p>
                                         <p>Width: <b>{{$value['width']}} cm</b> </p>
                                         <p>Thickness: <b>{{$value['thickness']}} cm</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                            </div>
+                            <form method="post" action="items/desktop/reserve">
+                                <div class="panel-footer">
+                                    <span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                </div>
+                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -72,7 +89,7 @@
                         <div class="panel-body">
                             <div class="col-md-12">
                                 <div class="col-md-6">
-                                    <i class="fa fa-television fa-5x"></i>
+                                    <i class="fa fa-desktop fa-5x"></i>
                                 </div>
                                 <div class="col-md-6">
                                     <p>Price: ${{$desktop['price']}}</p>
@@ -81,18 +98,21 @@
                             <div class="col-md-12">
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li>Processor Type: <b>{{$desktop['processorType']}}</b></li>
-                                        <li>Ram Size: <b>{{$desktop['ramSize']}} GB</b></li>
-                                        <li>CPU Cores: <b>{{$desktop['cpuCores']}}</b></li>
-                                        <li>Hard Disk Size: <b>{{$desktop['hddSize']}} GB</b></li>
+                                        <li>Processor Type: <b>{{$desktop['processor_type']}}</b></li>
+                                        <li>Ram Size: <b>{{$desktop['ram_size']}} GB</b></li>
+                                        <li>CPU Cores: <b>{{$desktop['cpu_cores']}}</b></li>
+                                        <li>Hard Disk Size: <b>{{$desktop['hdd_size']}} GB</b></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
-                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                        </div>
+                        <form method="post" action="items/desktop/reserve">
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
+                                <input type="hidden" name="serial" value="{{$desktop['serial']}}">
+                                <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                            </div>
+                        </form>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             @endforeach
@@ -114,10 +134,10 @@
                                     <p>Price: <b>${{$details['price']}}</b> </p>
                                     <p>Brand: <b>{{$details['brand']}}</b> </p>
                                     <p>Quantity: <b>{{$details['quantity']}}</b> </p>
-                                    <p>Processor Type: <b>{{$details['processorType']}} </b> </p>
-                                    <p>Ram Size: <b>{{$details['ramSize']}} GB</b> </p>
-                                    <p>CPU Cores: <b>{{$details['cpuCores']}} </b> </p>
-                                    <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b> </p>
+                                    <p>Processor Type: <b>{{$details['processor_type']}} </b> </p>
+                                    <p>Ram Size: <b>{{$details['ram_size']}} GB</b> </p>
+                                    <p>CPU Cores: <b>{{$details['cpu_cores']}} </b> </p>
+                                    <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b> </p>
                                     <p>Height: <b>{{$details['height']}} cm</b> </p>
                                     <p>Width: <b>{{$details['width']}} cm</b> </p>
                                     <p>Thickness: <b>{{$details['thickness']}} cm</b> </p>
@@ -125,9 +145,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                        </div>
+                        <form method="post" action="items/desktop/reserve">
+                            <div class="panel-footer">
+                                <span><a class="btn btn-default" href="/view/desktop/{{$details['id']}}" role="button">View details »</a></span>
+                                <input type="hidden" name="serial" value="{{$details['serial']}}">
+                                <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                            </div>
+                        </form>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             </div>

@@ -8,6 +8,18 @@
         <li>Computer</li>
         <li class="active">Desktop</li>
     </ol>
+    @if(Session::has('unitsAdded'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were successfully added.</p>
+        </div>
+    @endif
+    @if(Session::has('unitsNotAdded'))
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were not added</p>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -97,7 +109,7 @@
     </div><!-- end filtering form -->
     <!-- start filtering result -->
     @if(!empty($result))
-        <table class="table table-bordered table-responsive">
+        <table class="table table-bordered table-responsive" id="desktopTable" >
             <thead>
             <tr>
                 <th>#</th>
@@ -114,6 +126,7 @@
                 <th>Thickness (cm)</th>
                 <th class="text-center">Edit</th>
                 <th class="text-center">Delete</th>
+                <th class="text-center">Add Units</th>
             </tr>
             </thead>
             <tbody>
@@ -147,6 +160,14 @@
                             </a>
                         </p>
                     </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                            <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                               data-target="#addUnitsDesktopLink">
+                                <span class="fa fa-plus"></span>
+                            </a>
+                        </p>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -154,7 +175,7 @@
     @endif
     <!-- end filtering result -->
     @if(empty($result))
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive" id="desktopTable">
         <thead>
         <tr>
             <th>#</th>
@@ -171,6 +192,7 @@
             <th>Thickness (cm)</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>
+            <th class="text-center">Add Units</th>
         </tr>
         </thead>
         <tbody>
@@ -204,6 +226,14 @@
                         </a>
                     </p>
                 </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                        <a class="btn btn-success btn-xs" data-id="{{ $desktop["id"] }}" data-toggle="modal"
+                           data-target="#addUnitsDesktopLink">
+                            <span class="fa fa-plus"></span>
+                        </a>
+                    </p>
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -223,10 +253,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
-                                    <div class="form-group">
-                                        Quantity:
-                                        <input type="number" min="0" max="100" required name="desktop-qty" id="desktop-qty" class="form-control">
-                                    </div>
+                                    {{--<div class="form-group">--}}
+                                        {{--Quantity:--}}
+                                        {{--<input type="number" min="0" max="100" required name="desktop-qty" id="desktop-qty" class="form-control">--}}
+                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select required name="desktop-brand" id="desktop-brand" class="form-control">
@@ -323,6 +353,43 @@
                         <div class="form-group">
                             <input type="button" data-dismiss="modal" aria-label="Close" class="form-control"
                                    value="Cancel" name="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade addUnitsDesktopLink" id="addUnitsDesktopLink" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Adding Units</h4>
+                </div>
+                <div class="modal-body" id="edit-desktop-form-body">
+                    <form id="desktop-form-units" class="form-horizontal unit-form" action="/items/computer/desktop/addDesktopUnits" method="POST">
+                        <div class="col-md-12">
+                            <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                            <div class="form-group">
+                                How many unit(s) with this specification would you like to add?
+                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="desktop-units" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="units-inputs-container"></div>
+                        <div class="col-md-12" id="serial-next">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-primary" name="desktop-serial" value="Next">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="submit-desktop-form"
+                                        id="submit-desktop-form">Add Units
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -15,14 +15,17 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 Route::get('/', 'PagesController@index');
-Route::get('/about', 'PagesController@about');
 Route::get('/login', 'PagesController@login');
 Route::post('/login/verify', 'PagesController@loginVerify');
 Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
+Route::get('/shoppingCart', 'PagesController@shoppingCart');
 Route::post('deleteAccount', 'PagesController@deleteAccount');
+Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
 
+Route::get('showPurchase', 'UnitsController@showPurchase');
+Route::post('returnPurchase', 'UnitsController@returnPurchase');
 
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
@@ -47,9 +50,12 @@ Route::prefix('/view')->group(
         Route::get('search', 'ComputerController@search'); // computer filter
         Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
         Route::get('profile', 'PagesController@viewProfile');
+        Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
+        Route::post('items/desktop/reserve', 'ComputerController@reserveDesktopUnit');
+        Route::post('items/laptop/reserve', 'ComputerController@reserveLaptopUnit');
     }
 );
-
+Route::post('items/monitor/purchase', 'MonitorsController@purchaseMonitorUnit');
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
@@ -71,6 +77,9 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('laptop/modify', 'ComputerController@modifyLaptop');
             Route::post('laptop/delete', 'ComputerController@deleteLaptop');
             Route::get('search', 'ComputerController@search'); // computer filter
+            Route::post('desktop/addDesktopUnits', 'ComputerController@addDesktopUnits');
+            Route::post('tablet/addTabletUnits', 'ComputerController@addTabletUnits');
+            Route::post('laptop/addLaptopUnits', 'ComputerController@addLaptopUnits');
         }
     );
 
@@ -80,6 +89,8 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('insert', 'MonitorsController@insertMonitor');
             Route::post('delete', 'MonitorsController@deleteMonitor');
             Route::post('modify', 'MonitorsController@modifyMonitor');
+            Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
+            Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
         }
     );
 }

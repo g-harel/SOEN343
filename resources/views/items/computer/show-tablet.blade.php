@@ -8,6 +8,18 @@
         <li>Computer</li>
         <li class="active">Tablet</li>
     </ol>
+    @if(Session::has('unitsAdded'))
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were successfully added.</p>
+        </div>
+    @endif
+    @if(Session::has('unitsNotAdded'))
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p>Units were not added.</p>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -116,6 +128,7 @@
             <th>Touchscreen</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>
+            <th class="text-center">Add Units</th>
         </tr>
         </thead>
         <tbody>
@@ -124,23 +137,22 @@
                 <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
-                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
-                <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
-                <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
+                <td data-processor="{{ $value["processor_type"] }}">{{ $value["processor_type"] }}</td>
+                <td data-ramSize="{{ $value["ram_size"] }}">{{ $value["ram_size"] }}</td>
                 <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
-                <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
-                <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
-                <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
+                <td data-cpuCores="{{ $value["cpu_cores"] }}">{{ $value["cpu_cores"] }}</td>
+                <td data-hddSize="{{ $value["hdd_size"] }}">{{ $value["hdd_size"] }}</td>
+                <td data-displaySize="{{ $value["display_size"] }}">{{ $value["display_size"] }}</td>
                 <td data-height="{{ $value["height"] }}">{{ $value["height"] }}</td>
                 <td data-width="{{ $value["width"] }}">{{ $value["width"] }}</td>
                 <td data-thickness="{{ $value["thickness"] }}">{{ $value["thickness"] }}</td>
                 <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
                 <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
                 <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
-                @if($value["isTouchscreen"] == 0)
-                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
+                @if($value["is_touchscreen"] == 0)
+                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">No</td>
                 @else
-                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
+                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">Yes</td>
                 @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -155,6 +167,14 @@
                         <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
                            data-target="#delTabletLink">
                             <span class="fa fa-trash"></span>
+                        </a>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                        <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                           data-target="#tablet-form-units">
+                            <span class="fa fa-plus"></span>
                         </a>
                     </p>
                 </td>
@@ -186,6 +206,7 @@
             <th>Touchscreen</th>
             <th class="text-center">Edit</th>
             <th class="text-center">Delete</th>
+            <th class="text-center">Add Units</th>
         </tr>
         </thead>
         <tbody>
@@ -194,7 +215,6 @@
                 <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
                 <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
                 <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
-                <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
                 <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
                 <td data-ramSize="{{ $tablet["ramSize"] }}">{{ $tablet["ramSize"] }}</td>
                 <td data-weight="{{ $tablet["weight"] }}">{{ $tablet["weight"] }}</td>
@@ -228,6 +248,14 @@
                         </a>
                     </p>
                 </td>
+                <td class="text-center">
+                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                        <a class="btn btn-success btn-xs" data-id="{{ $tablet["id"] }}" data-toggle="modal"
+                           data-target="#addUnitsTabletLink">
+                            <span class="fa fa-plus"></span>
+                        </a>
+                    </p>
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -247,10 +275,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
-                                    <div class="form-group">
-                                        Quantity:
-                                        <input type="number" min="0" max="100" required name="tablet-qty" id="tablet-qty" class="form-control">
-                                    </div>
+                                    {{--<div class="form-group">--}}
+                                        {{--Quantity:--}}
+                                        {{--<input type="number" min="0" max="100" required name="tablet-qty" value="0" id="tablet-qty" class="form-control">--}}
+                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
@@ -377,6 +405,43 @@
                         <div class="form-group">
                             <input type="button" data-dismiss="modal" aria-label="Close" class="form-control"
                                    value="Cancel" name="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade addUnitsTabletLink" id="addUnitsTabletLink" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Adding Units</h4>
+                </div>
+                <div class="modal-body" id="edit-tablet-form-body">
+                    <form id="tablet-form-units" class="form-horizontal unit-form" action="/items/computer/tablet/addTabletUnits" method="POST">
+                        <div class="col-md-12">
+                            <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                            <div class="form-group">
+                                How many unit(s) with this specification would you like to add?
+                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="tablet-units" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="units-inputs-container"></div>
+                        <div class="col-md-12" id="serial-next">
+                            <div class="form-group">
+                                <input type="button" class="btn btn-primary" name="tablet-serial" value="Next">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="submit-tablet-form"
+                                        id="submit-tablet-form">Add Units
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

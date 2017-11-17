@@ -1,3 +1,9 @@
+.custom-jumbo {
+    position: relative !important;
+    /*background-color: #ccc !important;*/
+    color: white;
+    font-size:  30px;
+}
 .panel-green {
     border-color: #5cb85c;
     color: white;
@@ -37,4 +43,52 @@ tbody th, td {
 }
 .modal-larger {
     width: 1120px !important;
+}
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+/* ---- particles.js container ---- */
+body {
+    margin: 0;
+    font:normal 75% Arial, Helvetica, sans-serif;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.92);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.btn.register-btn {
+    border: 2px solid #5cb85c;
+    color: white;
+}
+.btn.login-btn {
+    border: 2px solid #428bca;
+    color: white;
+}
+.register-btn {
+    background-color: transparent;
+}
+.login-btn {
+    background-color: transparent;
+    border: 1px solid #428bca;
+}
+.login-btn:hover  {
+    background-color: #428bca;
+    border: 1px solid #428bca;
+    color: white !important;
+}
+.register-btn:hover {
+    background-color: #5cb85c;
+    border: 1px solid #5cb85c;
+    color: white !important;
+}
+.alert {
+    color: black !important;
 }

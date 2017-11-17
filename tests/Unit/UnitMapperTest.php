@@ -15,7 +15,7 @@ class UnitMapperTest extends TestCase {
     public function testGatewayCanRead() {
         $gateway = UnitGateway::getInstance();
         $rows = $gateway->select(array());
-        $this->assertTrue(count($rows) === 2);
+        $this->assertTrue(count($rows) > 0);
     }
 
     public function testGatewayCanWrite() {
@@ -51,7 +51,7 @@ class UnitMapperTest extends TestCase {
         $itemId = 1;
         $reservedDate = "2017-11-16 11:24:00";
         $gateway->insert($serial, $itemId);
-        $gateway->update($serial, $itemId, "RESERVED", 1, "'$reservedDate'", "NULL", "NULL");
+        $gateway->update($serial, $itemId, "RESERVED", 1, "$reservedDate", "NULL", "NULL");
         $unit = $gateway->select(array("serial" => $serial))[0];
         $this->assertEquals($unit, array(
             "serial" => $serial,

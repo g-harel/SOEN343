@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mappers\SessionMapper;
 use App\Mappers\AccountCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
+use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
 {
@@ -28,6 +29,10 @@ class PagesController extends Controller
         return view('pages.admin');
     }
 
+    public function purchaseHistory(){
+        return view('pages.purchaseHistory');
+    }
+    
     public function view()
     {
         return view('pages.view');
@@ -35,37 +40,41 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
+        $desktops = $this->returnItemUnits(3);
+//        print_r($desktops);
         return view('pages.viewDesktop', [
-            'desktops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE)
+            'desktops' => $desktops
         ]);
     }
 
     public function viewLaptop()
     {
         return view('pages.viewLaptop', [
-            'laptops' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE)
+            'laptops' => $this->returnItemUnits(4)
         ]);
     }
 
     public function viewMonitor()
     {
+        $monitors = $this->returnItemUnits(1);
         return view('pages.viewMonitor', [
-            'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
+            'monitors' => $monitors
         ]);
     }
 
     public function viewTablet()
     {
+        $tablets = $this->returnItemUnits(5);
         return view('pages.viewTablet', [
-            'tablets' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE)
+            'tablets' => $tablets
         ]);
     }
 
     public function monitorDetails($id)
     {
+        $monitors = $this->returnItemUnits(1);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::MONITOR_ITEM_TYPE)) {
-            $monitors = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+        if($this->isIdExistInCatalog2($id, $monitors)) {
             foreach($monitors as $monitor){
                 $details = $monitor;
             }
@@ -158,7 +167,22 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        return view('pages.shoppingCart');
+        $cart = UnitMapper::getInstance();
+
+        $units = $cart->getCart($_SESSION['currentLoggedInId']);
+        $itemMapper = ItemCatalogMapper::getInstance();
+
+        $specs = [];
+        foreach ($units as $unit) {
+            array_push($specs, $itemMapper->getItem($unit['item_id']));
+        }
+//        echo '<pre>';
+//        print_r($specs);
+//        die;
+        return view('pages.shoppingCart', [
+            'cart' => $specs
+        ]);
+//        return view('pages.shoppingCart');
     }
 
     public function loginVerify()
@@ -185,9 +209,8 @@ class PagesController extends Controller
         $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
         $emptyArrayKeys = array_keys($sanitizedInputs, "");
         if (!empty($emptyArrayKeys)) {
-            return view('pages.register', [
-                'inputErrors' => $emptyArrayKeys,
-                'alertType' => 'warning'
+            return redirect()->back()->with([
+                'inputErrors' => $emptyArrayKeys
             ]);
         } else {
             $registerThis = new Register($sanitizedInputs['first_name'],
@@ -233,7 +256,7 @@ class PagesController extends Controller
 
         //Delete user
         AccountCatalogMapper::getInstance()->deleteAccountInRecord($id);
-        return view('pages.index');
+        return view('pages.login', ['accountDeleted' => 'Your Account has been successfully deleted!']);
     }
 
 }

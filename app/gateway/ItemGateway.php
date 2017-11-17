@@ -36,11 +36,16 @@ abstract class ItemGateway implements iItemCategory {
         return implode(", ", $list);
     }
 
+
+    public function getSerialNumberByID($itemID,$tableName){
+        $arr = ['item_id' => $itemID];
+        return singleTableSelectAccountQuery($arr,$tableName);
+    }
     public function getByCondition($condition) {
         $sql = $this->buildSelect();
         $sql .= " ".
             "LEFT JOIN ( ".
-                "SELECT item_id, COUNT(*) AS 'quantity' FROM units ".
+                "SELECT serial,item_id, COUNT(*) AS 'quantity' FROM units ".
                 "WHERE status='AVAILABLE' ".
                 "GROUP BY item_id ".
             ") counts ".
