@@ -247,22 +247,21 @@ class PagesController extends Controller
         
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
-    
-    public function deleteAccount(){
-        $id =$_SESSION['currentLoggedInId'];
-        // Delete session
-        $sessionMapper = new SessionMapper();
-        if (isset($_SESSION['currentLoggedInId'])) {
-            $sessionMapper->closeSession($id);
-        }
-        $_SESSION = array();
-        session_destroy();
-        
-        //Delete user 
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $success = $accountMapper->deleteAccountInRecord();
 
-        return view('pages.login', ['accountDeleted' => 'Your Account has been successfully deleted!']);
+    public function deleteAccount(){
+        if($this->isFormSubmitted($_POST)) {
+            $userId = filter_input(INPUT_POST, 'current-user-id');
+            $sessionMapper = new SessionMapper();
+            $sessionMapper->closeSession($userId);
+            $_SESSION = array();
+            session_destroy();
+            //Delete user
+            $accountMapper = AccountMapper::createAccountMapper($userId);
+            $accountMapper->deleteAccountInRecord();
+            return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
+        } else {
+            return view('pages.index', ['accountNotDeleted' => 'Something went wrong. Please try again later.']);
+        }
     }
 }
 

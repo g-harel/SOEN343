@@ -27,9 +27,9 @@
                         <div class="row pv-lg">
                             <div class="col-lg-2"></div>
                             <div class="col-lg-8">
-                                
                                 <form id="delete-form" class="form-horizontal ng-pristine ng-valid" action="/deleteAccount" method="post" role="form">
                                     {{ csrf_field() }}
+                                    <input type="hidden" value="{{$currentUser->getId()}}" name="current-user-id" />
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="inputContact1">Name</label>
                                         <div class="col-sm-10"> <input class="form-control" id="inputContact1" type="text" placeholder="" value="{{ $currentUser->getFirstName() }} {{ $currentUser->getLastName() }}" readonly></div>
