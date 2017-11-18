@@ -110,9 +110,9 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Qty</th>
             <th>Processor</th>
             <th>Ram size</th>
             <th>Weight</th>
@@ -135,24 +135,25 @@
         @foreach($result as $value)
             <tr>
                 <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
-                <td data-processor="{{ $value["processor_type"] }}">{{ $value["processor_type"] }}</td>
-                <td data-ramSize="{{ $value["ram_size"] }}">{{ $value["ram_size"] }}</td>
+                <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
+                <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
                 <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
-                <td data-cpuCores="{{ $value["cpu_cores"] }}">{{ $value["cpu_cores"] }}</td>
-                <td data-hddSize="{{ $value["hdd_size"] }}">{{ $value["hdd_size"] }}</td>
-                <td data-displaySize="{{ $value["display_size"] }}">{{ $value["display_size"] }}</td>
+                <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
+                <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
+                <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
                 <td data-height="{{ $value["height"] }}">{{ $value["height"] }}</td>
                 <td data-width="{{ $value["width"] }}">{{ $value["width"] }}</td>
                 <td data-thickness="{{ $value["thickness"] }}">{{ $value["thickness"] }}</td>
                 <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
                 <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
                 <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
-                @if($value["is_touchscreen"] == 0)
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">No</td>
+                @if($value["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
                 @else
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">Yes</td>
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
                 @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -188,9 +189,9 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
-            <th>Qty</th>
             <th>Processor</th>
             <th>Ram size</th>
             <th>Weight</th>
@@ -213,6 +214,7 @@
         @foreach($tablets as $tablet)
             <tr>
                 <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
+                <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
                 <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
                 <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
                 <td data-processor="{{ $tablet["processorType"] }}">{{ $tablet["processorType"] }}</td>
@@ -275,10 +277,6 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
-                                    {{--<div class="form-group">--}}
-                                        {{--Quantity:--}}
-                                        {{--<input type="number" min="0" max="100" required name="tablet-qty" value="0" id="tablet-qty" class="form-control">--}}
-                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
