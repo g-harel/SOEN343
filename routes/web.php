@@ -27,9 +27,11 @@ Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
 Route::get('showPurchase', 'UnitsController@showPurchase');
 Route::post('returnPurchase', 'UnitsController@returnPurchase');
 
+
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
 }
+
 
 Route::prefix('/view')->group(
     function () {
@@ -58,6 +60,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
     Route::get('/items', 'ItemsController@index');
     Route::get('/admin', 'PagesController@admin');
     Route::get('items/create', 'ItemsController@create');
+    Route::get('/clients', 'PagesController@clients');
 
     Route::prefix('items/computer/')->group(
         function () {

@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use App\Gateway\DatabaseGateway;
-
 class AccountGateway
 {
     private $db;
@@ -61,5 +59,10 @@ class AccountGateway
     public function deleteAccountById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
+    }
+
+    public function getAll()
+    {
+        return getAllFromTable($this->tableName);
     }
 }

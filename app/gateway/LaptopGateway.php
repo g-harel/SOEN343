@@ -2,8 +2,6 @@
 
 namespace App\Gateway;
 
-use App\Gateway\ComputerGateway;
-
 class LaptopGateway extends ComputerGateway implements iItemCategory {
     public static $fields = array(
         "display_size",

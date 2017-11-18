@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\ItemGateway;
-use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
+use App\Mappers\AccountCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\AccountMapper;
-use App\gateway\AccountGateway;
-use App\Gateway\MonitorGateway;
 use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
@@ -230,24 +226,24 @@ class PagesController extends Controller
                 $sanitizedInputs['country'],
                 $sanitizedInputs['postal_code']
             );
-            $exists = $registerThis->checkExistingEmail();
+            $exists = $registerThis->isEmailExists();
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
-            } else {
-                $registerThis->createAccount();
             }
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-    
+
+    public function clients()
+    {
+        return view('pages.clients', ['clients' => AccountCatalogMapper::getInstance()->getAllAccounts()]);
+    }
+
     public function viewProfile() {
-        $id =$_SESSION['currentLoggedInId'];
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $currentUser = $accountMapper->getAccount();
-        
+        $currentUser = AccountCatalogMapper::getInstance()->getAccountFromRecordById($_SESSION['currentLoggedInId']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
-    
+
     public function deleteAccount(){
         $id =$_SESSION['currentLoggedInId'];
         // Delete session
@@ -257,12 +253,11 @@ class PagesController extends Controller
         }
         $_SESSION = array();
         session_destroy();
-        
-        //Delete user 
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $success = $accountMapper->deleteAccountInRecord();
 
+        //Delete user
+        AccountCatalogMapper::getInstance()->deleteAccountInRecord($id);
         return view('pages.login', ['accountDeleted' => 'Your Account has been successfully deleted!']);
     }
+
 }
 

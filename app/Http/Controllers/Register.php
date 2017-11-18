@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mappers\AccountMapper;
+use App\Mappers\AccountCatalogMapper;
 use App\Models\Account;
 
 class Register
@@ -14,7 +14,6 @@ class Register
     private $lastName;
     private $email;
     private $password;
-    private $is_Admin;
     private $phoneNumber;
     private $doorNumber;
     private $street;
@@ -41,23 +40,20 @@ class Register
         $this->country = $country;
         $this->postalCode = $postalCode;
 
-        $this->accountMapper = new AccountMapper();
         $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
-        $this->accountMapper->setAccount($newAccount);
+        AccountCatalogMapper::getInstance()->addAccount($newAccount);
     }
 
-    public function createAccount()
+   /* public function createAccount()
     {
-        $result = $this->accountMapper->saveAccountInRecord();
+        $result = AccountCatalogMapper::getInstance()->saveAccountInRecord();
         return $result;
 
-    }
+    }*/
 
-    public function checkExistingEmail(){
-
-        $email = $this->email;
-
-        return $this->accountMapper->getAccountByEmail($email) ;
+    public function isEmailExists()
+    {
+        return AccountCatalogMapper::getInstance()->isEmailExists($this->email);
     }
 }

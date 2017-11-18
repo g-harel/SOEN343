@@ -26,7 +26,7 @@ class Account
     public static function createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false) {
         $address = new Address($doorNumber, $appartement, $street, $city, $province, $country, $postalCode);
-        $instance = new self($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
+        $instance = new Account($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
         return $instance;
     }
 
@@ -97,9 +97,6 @@ class Account
     // SETTERS
     public function setId($id) {
         $this->id = $id;
-        if ($this->address != null) {
-            $this->address->setId($id);
-        }
         return $this;
     }
 
