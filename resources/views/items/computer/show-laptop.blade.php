@@ -265,10 +265,6 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
-                                    {{--<div class="form-group">--}}
-                                        {{--Quantity:--}}
-                                        {{--<input type="number" min="0" max="100" required name="laptop-qty" id="laptop-qty" class="form-control">--}}
-                                    {{--</div>--}}
                                     <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
@@ -358,6 +354,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="delLaptopLink" tabindex="-1" role="dialog" aria-labelledby="delLaptopLink">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
