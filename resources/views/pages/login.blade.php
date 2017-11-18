@@ -17,19 +17,14 @@
                             new account.</p>
                     </div>
                 @endif
-                    @if(isset($registrationSuccess) && $registrationSuccess==true)
-                        <div class="row">
-                            <div class="alert alert-success">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <p>Registration successful! You can now login.</p>
-                            </div>
+                @if(isset($registrationSuccess) && $registrationSuccess==true)
+                    <div class="row">
+                        <div class="alert alert-success">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <p>Registration successful! You can now login.</p>
                         </div>
-                    @endif
-                    @if(!empty($accountDeleted))
-                        <div class="alert alert-danger">
-                            <p>{{$accountDeleted}}</p>
-                        </div>
-                    @endif
+                    </div>
+                @endif
                 <div class="panel panel-login">
                     <div class="panel-heading">
                         <div class="row">
