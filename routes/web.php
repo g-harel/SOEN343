@@ -21,7 +21,7 @@ Route::get('/logout', 'PagesController@logout');
 Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
-Route::post('deleteAccount', 'PagesController@deleteAccount');
+Route::post('/deleteAccount', 'PagesController@deleteAccount');
 Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
 
 Route::get('showPurchase', 'UnitsController@showPurchase');
