@@ -7,9 +7,9 @@ const dropDownOptions = {
      * https://www.staples.ca/en/
      * https://en.wikipedia.org/wiki/List_of_computer_hardware_manufacturers
      */
-    displaySizes: ["4.30", "5.00", "7.00", "7.90", "8.00", "12.00", "13.30",
-        "14.00", "15.00", "15.40", "15.70", "19.55", "21.55", "23.00", "23.80", "27.00", "28.00", "34.00",
-        "57.00"],
+    displaySizes: ['4.30', '5.00', '7.00', '7.90', '8.00', '12.00', '13.30',
+        '14.00', '15.00', '15.40', '15.70', '19.55', '21.55', '23.00', '23.80', '27.00', '28.00', '34.00',
+        '57.00'],
     computer: {
         brands: [
             'Hewlett Packard',
@@ -52,7 +52,7 @@ const dropDownOptions = {
         ],
         width: [70.9, 88.6, 95.3, 110.7, 121.7, 132.8, 144.0, 154.9, 166.1],
         height: [39.9, 49.8, 53.6, 62.2, 68.6, 74.7, 81.0, 87.1, 93.5],
-        cpuCores: [2, 3, 4, 6, 8]
+        cpuCores: [2, 3, 4, 6, 8],
     },
     tv: {
         brands: [
@@ -135,7 +135,7 @@ const dropDownOptions = {
             'Tatung Company',
             'ViewSonic',
             'Zalman',
-        ]
+        ],
     },
 
 };
