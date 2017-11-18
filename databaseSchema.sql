@@ -56,12 +56,10 @@ CREATE TABLE `accounts` (
 --
 -- Contenu de la table `accounts`
 --
-
 INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
 (1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1),
-(2, 'mikehawk@gmail.com', 'mikey', 'Mike', 'Hawk', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1),
-(3, 'munch@gmail.com', 'qwerty', 'Munchma', 'Quchi', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1);
-
+(2, 'admin2@gmail.com', 'admin1234', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1),
+(3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1);
 -- --------------------------------------------------------
 
 --
@@ -252,7 +250,10 @@ CREATE TABLE `units` (
 
 INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
 ('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
-('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW());
+('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW()),
+('411ATEGBH', 3, 'PURCHASED', 3, NOW(), 99.99, NOW()),
+('678GYDHBN', 4, 'PURCHASED', 4, NOW(), 299.99, NOW()),
+('492AGVELO', 5, 'PURCHASED', 5, NOW(), 79.99, NOW());
 
 -- --------------------------------------------------------
 
