@@ -158,7 +158,7 @@ const itemsTable = {
     },
     desktop: {
         link: '#desktopTable',
-        scrollX: false,
+        scrollX: true,
         pageLength: 50,
     },
 };
