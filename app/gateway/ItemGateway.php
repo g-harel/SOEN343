@@ -109,7 +109,6 @@ abstract class ItemGateway implements iItemCategory {
         "category",
         "brand",
         "price",
-        "quantity",
     );
 
     public function buildSelect() {

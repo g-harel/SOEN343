@@ -25,18 +25,16 @@
 </script>
 @section('content')
     <div class="container">
-        @if(!(isset($_SESSION))  ||  empty($_SESSION))
-            <h1>Your shopping cart is empty. Please <a href="/login">Sign in</a> and try again!</h1>
+        @if(empty($cart))
+            <h1>Your shopping cart is empty!</h1>
         @else
             <div class="row">
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
                     <table class="table table-hover">
                         <thead>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Total</th>
-                        <th>Action</th>
+                            <th>Product</th>
+                            <th class="text-center">Price</th>
+                            <th></th>
                         </thead>
                         <tbody>
                         @foreach($cart as $unit)
@@ -45,16 +43,11 @@
                                     <div class="media">
                                         <a class="thumbnail pull-left" href="#"><i class="fa fa-laptop fa-5x"></i></a>
                                         <div class="media-body" style="padding-left:4px;">
-                                            <h4 class="media-heading"><a href="#">{{$unit['brand']}} {{$unit['displaySize']}}"</a></h4>
+                                            <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="col-sm-1 col-md-1" style="text-align: center">
-                                    <input type="number" class="quantity form-control" value="1" min="1">
-                                </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="price">{{$unit['price']}}</span></strong>
-                                </td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="total"></span></strong>
                                 </td>
                                 <td class="col-sm-1 col-md-1">
                                     <button type="button" class="btn btn-danger">
@@ -70,7 +63,7 @@
                             <td>
                                 <button type="button" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    <a href="/items" style="color:white">Continue Shopping</a>
+                                    <a href="/view" style="color:white">Continue Shopping</a>
                                 </button>
                             </td>
                             <td>
