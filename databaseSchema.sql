@@ -250,7 +250,10 @@ CREATE TABLE `units` (
 
 INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
 ('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
-('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW());
+('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW()),
+('411ATEGBH', 3, 'PURCHASED', 3, NOW(), 99.99, NOW()),
+('678GYDHBN', 4, 'PURCHASED', 4, NOW(), 299.99, NOW()),
+('492AGVELO', 5, 'PURCHASED', 5, NOW(), 79.99, NOW());
 
 -- --------------------------------------------------------
 

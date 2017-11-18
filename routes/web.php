@@ -22,6 +22,10 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
 Route::post('deleteAccount', 'PagesController@deleteAccount');
+Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
+
+Route::get('showPurchase', 'UnitsController@showPurchase');
+Route::post('returnPurchase', 'UnitsController@returnPurchase');
 
 if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
     Route::get('/shoppingCart', 'PagesController@shoppingCart');
@@ -47,9 +51,6 @@ Route::prefix('/view')->group(
         Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
         Route::post('items/desktop/reserve', 'ComputerController@reserveDesktopUnit');
         Route::post('items/laptop/reserve', 'ComputerController@reserveLaptopUnit');
-
-
-
     }
 );
 Route::post('items/monitor/purchase', 'MonitorsController@purchaseMonitorUnit');

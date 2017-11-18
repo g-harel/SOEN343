@@ -8,11 +8,11 @@ function generateNum() {
 
 function generateAlphaNumStr() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let alphaLen = 6;
-    let alphaNumLen = 9;
+    const alphaLen = 6;
+    const alphaNumLen = 9;
     let result = '';
     for (let i = alphaLen; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    let generated = (generateNum() + result);
+    const generated = (generateNum() + result);
     return generated.substr(0, alphaNumLen);
 }
 
