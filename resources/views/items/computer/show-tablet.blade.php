@@ -58,11 +58,11 @@
         </div>
         <div class="col-md-11">
             <div class="input-group" id="adv-search">
-                <input type="text" readonly="" class="form-control" placeholder="Search by" />
+                <input type="text" readonly="" class="form-control search-by" placeholder="Search by" />
                 <div class="input-group-btn">
                     <div class="btn-group" role="group">
                         <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <form id="tablet-form" class="form-horizontal" action="/items/computer/search" method="GET">
                                     <div class="col-md-12">
@@ -99,7 +99,7 @@
                                 </form>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-primary search-by"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </div>
                 </div>
             </div>
