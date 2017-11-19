@@ -42,6 +42,9 @@ Route::prefix('/view')->group(
         Route::get('/computer/search', 'ComputerController@search');
 
         Route::get('/monitor/{id}/{serial}', ['uses' => 'PagesController@monitorDetails']);
+        Route::get('/desktop/{id}/{serial}', ['uses' => 'PagesController@desktopDetails']);
+        Route::get('/laptop/{id}/{serial}', ['uses' => 'PagesController@laptopDetails']);
+        Route::get('/tablet/{id}/{serial}', ['uses' => 'PagesController@tabletDetails']);
         Route::get('/desktop/{id}', ['uses' => 'PagesController@desktopDetails']);
         Route::get('/laptop/{id}', ['uses' => 'PagesController@laptopDetails']);
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);

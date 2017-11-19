@@ -71,7 +71,7 @@
                             </div>
                             <form method="post" action="items/laptop/reserve">
                                 <div class="panel-footer">
-                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                                     <input type="hidden" name="serial" value="{{$value['serial']}}">
                                     <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                                 </div>
@@ -111,7 +111,7 @@
                     </div>
                     <form method="post" action="items/laptop/reserve">
                         <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/desktop/{{$laptop['id']}}" role="button">View details »</a></span>
+                            <span><a class="btn btn-default" href="/view/laptop/{{$laptop['id']}}/{{$laptop['serial']}}" role="button">View details »</a></span>
                             <input type="hidden" name="serial" value="{{$laptop['serial']}}">
                             <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                         </div>
@@ -159,7 +159,7 @@
                     </div>
                     <form method="post" action="items/laptop/reserve">
                         <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}" role="button">View details »</a></span>
+                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}/{{$details['serial']}}" role="button">View details »</a></span>
                             <input type="hidden" name="serial" value="{{$details['serial']}}">
                             <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                         </div>

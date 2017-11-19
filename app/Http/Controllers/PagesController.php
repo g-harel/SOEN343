@@ -95,7 +95,7 @@ class PagesController extends Controller
 
     public function desktopDetails($id, $serial)
     {
-        $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+        $desktops = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
         $details = [];
         $desktops_ids = array_column($desktops, 'id');
         if(in_array((int)$id, $desktops_ids)) {
@@ -115,7 +115,7 @@ class PagesController extends Controller
 
     public function laptopDetails($id, $serial)
     {
-        $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+        $laptops = $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE);
         $details = [];
         $laptops_ids = array_column($laptops, 'id');
         if(in_array((int)$id, $laptops_ids)) {
@@ -135,16 +135,16 @@ class PagesController extends Controller
 
     public function tabletDetails($id, $serial)
     {
-        $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+        $tablets = $this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
         $details = [];
         $tablets_ids = array_column($tablets, 'id');
         if(in_array((int)$id, $tablets_ids)) {
             foreach($tablets as $tablet){
                 if($tablet['serial'] == $serial)
-                    $details = $tablets;
+                    $details = $tablet;
             }
-            return view('pages.viewLaptop', [
-                'details' => $details,
+            return view('pages.viewTablet', [
+                'details' => $details
             ]);
         } else {
             return redirect()->back()->with([
