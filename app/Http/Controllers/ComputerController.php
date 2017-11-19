@@ -90,6 +90,7 @@ class ComputerController extends Controller
                             ($computer['hddSize'] == $params['storage'] || $params['storage'] == "") &&
                             ($computer['ramSize'] == $params['ramSize'] || $params['ramSize'] == "")
                         ) {
+
                             array_push($result, $computer);
                         }
                     }
@@ -107,6 +108,7 @@ class ComputerController extends Controller
                 }
                 return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
             }
+            return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
         }
 
         return view('pages.view');
@@ -462,9 +464,9 @@ class ComputerController extends Controller
             $unitMapper->commit($_SESSION['session_id']);
         }
         $cond = true;
-        if($cond){
+        if ($cond) {
             return redirect()->back()->with(['unitsAdded' => true]);
-        } else{
+        } else {
             return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
