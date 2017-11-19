@@ -7,6 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 use App\Gateway\DatabaseGateway;
+use App\Models\Monitor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -155,45 +156,33 @@ class Controller extends BaseController
         }
     }
 
-    public function desktopFilteringFields() {
+    public function desktopSearchParams() {
         return [
             'brand' => filter_input(INPUT_GET, 'desktop-brand'),
             'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewDesktop',
-            'adminView' => 'items.computer.show-desktop',
-            'collection' => 'desktops',
-            'itemType' => 3
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
-    public function laptopFilteringFields() {
+    public function laptopSearchParams() {
         return  [
             'brand' => filter_input(INPUT_GET, 'laptop-brand'),
             'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewLaptop',
-            'adminView' => 'items.computer.show-laptop',
-            'collection' => 'laptops',
-            'itemType' => 4
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
-    public function tabletFilteringFields() {
+    public function tabletSearchParams() {
         return [
             'brand' => filter_input(INPUT_GET, 'tablet-brand'),
             'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewTablet',
-            'adminView' => 'items.computer.show-tablet',
-            'collection' => 'tablets',
-            'itemType' => 5
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
@@ -258,7 +247,7 @@ class Controller extends BaseController
             $item = new TabletGateway();
         }
         $arr = $item->getByCondition([]);
-        $units_arr = array();
+        $unitsArr = array();
         for ($i = 0; $i < count($arr); $i++) {
             $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
             for ($j = 0; $j < count($units); $j++) {
@@ -268,14 +257,44 @@ class Controller extends BaseController
                 $serial = $units[$j]['serial'];
                 $units[$j] = $arr[$i];
                 $units[$j]['serial'] = $serial;
-                array_push($units_arr, $units[$j]);
+                /*
+                 * returnItemUnits returns an array of results
+                 * where keys are the same as units column name
+                 * e.g. display_size
+                 *
+                 * but in ItemCatalogMapper, the keys are camelcase
+                 * so to use the same pattern (camelcase)
+                 * need to unset and use the same key naming
+                 *
+                 */
+                if(array_key_exists('processor_type', $units[$j])) {
+                    $units[$j]['processorType'] = $units[$j]['processor_type'];
+                    unset($units[$j]['processor_type']);
+                }
+                if(array_key_exists('ram_size', $units[$j])) {
+                    $units[$j]['ramSize'] = $units[$j]['ram_size'];
+                    unset($units[$j]['ram_size']);
+                }
+                if(array_key_exists('cpu_cores', $units[$j])) {
+                    $units[$j]['cpuCores'] = $units[$j]['cpu_cores'];
+                    unset($units[$j]['cpu_cores']);
+                }
+                if(array_key_exists('hdd_size', $units[$j])) {
+                    $units[$j]['hddSize'] = $units[$j]['hdd_size'];
+                    unset($units[$j]['hdd_size']);
+                }
+                if(array_key_exists('display_size', $units[$j])) {
+                    $units[$j]['displaySize'] = $units[$j]['display_size'];
+                    unset($units[$j]['display_size']);
+                }
+                if(array_key_exists('is_touchscreen', $units[$j])) {
+                    $units[$j]['isTouchscreen'] = $units[$j]['is_touchscreen'];
+                    unset($units[$j]['is_touchscreen']);
+                }
+                array_push($unitsArr, $units[$j]);
             }
-//            $units_arr = array_merge($units_arr, $units);
         }
-//        echo '<pre>';
-//        print_r($units_arr);
-//        die;
-        return $units_arr;
+        return $unitsArr;
     }
 
 
