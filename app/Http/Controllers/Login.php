@@ -1,29 +1,30 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\AccountMapper;
 
-class Login {
+class Login
+{
 
-    private $accountMapper;
     private $sessionMapper;
     private $email;
     private $password;
 
-    public function __construct($email, $password) {
+    public function __construct($email, $password)
+    {
         $this->sessionMapper = new SessionMapper();
-        $this->accountMapper = AccountMapper::getInstance();
         $this->email = $email;
         $this->password = $password;
     }
 
     public function validate()
     {
-        if ($this->accountMapper->isAccountExist($this->email, $this->password)) {
-            $_SESSION['isAdmin'] = $this->accountMapper->setAccountFromRecordByEmail($this->email)->getIsAdmin();
-            $_SESSION['currentLoggedInId'] = $this->accountMapper->setAccountFromRecordByEmail($this->email)->getId();
-            $accountId = $this->accountMapper->setAccountFromRecordByEmail($this->email)->getId();
+        if (AccountMapper::getInstance()->isAccountExist($this->email, $this->password)) {
+            $_SESSION['isAdmin'] = AccountMapper::getInstance()->getAccountFromRecordByEmail($this->email)->getIsAdmin();
+            $_SESSION['currentLoggedInId'] = AccountMapper::getInstance()->getAccountFromRecordByEmail($this->email)->getId();
+            $accountId = AccountMapper::getInstance()->getAccountFromRecordByEmail($this->email)->getId();
             $sessionMapper = new SessionMapper();
             $sessionMapper->openSession2($accountId);
             // get the session id by the account
@@ -33,8 +34,4 @@ class Login {
             return false;
         }
     }
-
 }
-
-
-?>
