@@ -54,10 +54,10 @@
                                         <p>Price: <b>${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
                                         <p>Quantity: <b>{{$value['quantity']}}</b> </p>
-                                        <p>Processor Type: <b>{{$value['processor_type']}} </b> </p>
-                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b> </p>
-                                        <p>CPU Cores: <b>{{$value['cpu_cores']}} </b> </p>
-                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b> </p>
+                                        <p>Processor Type: <b>{{$value['processorType']}} </b> </p>
+                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b> </p>
+                                        <p>CPU Cores: <b>{{$value['cpuCores']}} </b> </p>
+                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b> </p>
                                         <p>Height: <b>{{$value['height']}} cm</b> </p>
                                         <p>Width: <b>{{$value['width']}} cm</b> </p>
                                         <p>Thickness: <b>{{$value['thickness']}} cm</b> </p>
@@ -98,10 +98,10 @@
                             <div class="col-md-12">
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li>Processor Type: <b>{{$desktop['processor_type']}}</b></li>
-                                        <li>Ram Size: <b>{{$desktop['ram_size']}} GB</b></li>
-                                        <li>CPU Cores: <b>{{$desktop['cpu_cores']}}</b></li>
-                                        <li>Hard Disk Size: <b>{{$desktop['hdd_size']}} GB</b></li>
+                                        <li>Processor Type: <b>{{$desktop['processorType']}}</b></li>
+                                        <li>Ram Size: <b>{{$desktop['ramSize']}} GB</b></li>
+                                        <li>CPU Cores: <b>{{$desktop['cpuCores']}}</b></li>
+                                        <li>Hard Disk Size: <b>{{$desktop['hddSize']}} GB</b></li>
                                     </ul>
                                 </div>
                             </div>
@@ -134,10 +134,10 @@
                                     <p>Price: <b>${{$details['price']}}</b> </p>
                                     <p>Brand: <b>{{$details['brand']}}</b> </p>
                                     <p>Quantity: <b>{{$details['quantity']}}</b> </p>
-                                    <p>Processor Type: <b>{{$details['processor_type']}} </b> </p>
-                                    <p>Ram Size: <b>{{$details['ram_size']}} GB</b> </p>
-                                    <p>CPU Cores: <b>{{$details['cpu_cores']}} </b> </p>
-                                    <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b> </p>
+                                    <p>Processor Type: <b>{{$details['processorType']}} </b> </p>
+                                    <p>Ram Size: <b>{{$details['ramSize']}} GB</b> </p>
+                                    <p>CPU Cores: <b>{{$details['cpuCores']}} </b> </p>
+                                    <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b> </p>
                                     <p>Height: <b>{{$details['height']}} cm</b> </p>
                                     <p>Width: <b>{{$details['width']}} cm</b> </p>
                                     <p>Thickness: <b>{{$details['thickness']}} cm</b> </p>
