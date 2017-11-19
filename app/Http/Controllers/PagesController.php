@@ -36,7 +36,7 @@ class PagesController extends Controller
     public function purchaseHistory(){
         return view('pages.purchaseHistory');
     }
-    
+
     public function view()
     {
         return view('pages.view');
@@ -45,7 +45,6 @@ class PagesController extends Controller
     public function viewDesktop()
     {
         $desktops = $this->returnItemUnits(3);
-//        print_r($desktops);
         return view('pages.viewDesktop', [
             'desktops' => $desktops
         ]);
@@ -74,13 +73,15 @@ class PagesController extends Controller
         ]);
     }
 
-    public function monitorDetails($id)
+    public function monitorDetails($id, $serial)
     {
-        $monitors = $this->returnItemUnits(1);
+        $monitors = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog2($id, $monitors)) {
+        $monitor_ids = array_column($monitors, 'id');
+        if(in_array((int)$id, $monitor_ids)) {
             foreach($monitors as $monitor){
-                $details = $monitor;
+                if($monitor['serial'] == $serial)
+                    $details = $monitor;
             }
             return view('pages.viewMonitor', [
                 'details' => $details,
@@ -239,12 +240,12 @@ class PagesController extends Controller
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-    
+
     public function viewProfile() {
         $id =$_SESSION['currentLoggedInId'];
         $accountMapper = AccountMapper::createAccountMapper($id);
         $currentUser = $accountMapper->getAccount();
-        
+
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
