@@ -29,7 +29,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-12">
-                                <a href="#" class="active" id="login-form-link">Log in here!</a>
+                                <a href="#" class="active" id="login-form-link">Please log in here!</a>
                             </div>
                         </div>
                         <hr>
