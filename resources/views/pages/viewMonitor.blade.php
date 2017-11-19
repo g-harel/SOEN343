@@ -91,8 +91,8 @@
                     <div class="panel-footer">
                         <form method="post" action="items/monitor/reserve">
                             {{ csrf_field() }}
-                                <input type="hidden" name="serial" value="{{$monitor['serial']}}">
-                                <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
+                            <input type="hidden" name="serial" value="{{$monitor['serial']}}">
+                            <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
                             <span><a class="btn btn-default" href="/view/monitor/{{$monitor['id']}}/{{$monitor['serial']}}" role="button">View details »</a></span>
                         </form>
                     </div>
