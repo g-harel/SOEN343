@@ -27,7 +27,7 @@
     @endif
     @if(Session::has('itemSuccessfullyModified'))
         <div class="alert alert-info">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p>You have successfully <b>modified</b> this item.</p>
         </div>
     @endif
@@ -48,7 +48,7 @@
     @if(!empty($numResult))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <label>{{$numResult}} result(s) found.</label>
+            <label>{{$numResult}} result(s) found. Go <a href="/items/monitor/showMonitor">back</a>.</label>
         </div>
     @endif
     <!-- filtering form -->
@@ -64,7 +64,7 @@
                         <div class="dropdown dropdown-lg">
                             <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form id="monitor-form" class="form-horizontal" action="/view/monitor/search" method="get">
+                                <form id="monitor-form" class="form-horizontal" action="/items/monitor/search" method="get">
                                     <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control" >
@@ -99,7 +99,7 @@
     </div>
     <!-- end filtering monitor form -->
     <!-- filtering result -->
-    @if(!empty($result))
+    @if(!empty($searchResult))
         <table class="table table-bordered bg-color-white" id="monitorTable">
             <thead>
             <tr>
@@ -114,9 +114,10 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($result as $value)
+            @foreach($searchResult as $value)
                 <tr>
                     <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
@@ -139,7 +140,7 @@
                     </td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Add Units">
-                            <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                            <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
                                data-target="#addMonitorLink">
                                 <span class="fa fa-plus"></span>
                             </a>
@@ -151,56 +152,58 @@
         </table>
     @endif
     <!-- end filtering -->
-    @if(empty($result))
-    <table class="table table-bordered bg-color-white" id="monitorTable">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Display Size (inches)</th>
-            <th>Weight (kg)</th>
-            <th class="text-center">Edit</th>
-            <th class="text-center">Delete</th>
-            <th class="text-center">Add Units</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($monitors as $monitor)
+    @if(empty($searchResult))
+        <table class="table table-bordered bg-color-white" id="monitorTable">
+            <thead>
             <tr>
-                <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
-                <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
-                <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
-                <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
-                <td data-weight="{{ $monitor["weight"] }}">{{ $monitor["weight"] }}</td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal"
-                           data-target=".bs-edit-monitor-modal-lg">
-                            <span class="fa fa-scissors"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Delete">
-                        <a class="btn btn-danger btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
-                           data-target="#delMonitorLink">
-                            <span class="fa fa-trash"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
-                        <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
-                           data-target="#addUnitsMonitorLink">
-                            <span class="fa fa-plus"></span>
-                        </a>
-                    </p>
-                </td>
+                <th>#</th>
+                <th>Qty</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Display Size (inches)</th>
+                <th>Weight (kg)</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+                <th class="text-center">Add Units</th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($monitors as $monitor)
+                <tr>
+                    <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
+                    <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
+                    <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
+                    <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
+                    <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
+                    <td data-weight="{{ $monitor["weight"] }}">{{ $monitor["weight"] }}</td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <a class="btn btn-primary btn-xs edit-monitor-link" href="" data-toggle="modal"
+                               data-target=".bs-edit-monitor-modal-lg">
+                                <span class="fa fa-scissors"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Delete">
+                            <a class="btn btn-danger btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                               data-target="#delMonitorLink">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                            <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                               data-target="#addUnitsMonitorLink">
+                                <span class="fa fa-plus"></span>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     @endif
     <div class="modal fade bs-edit-monitor-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
