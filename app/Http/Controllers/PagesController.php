@@ -36,7 +36,7 @@ class PagesController extends Controller
     public function purchaseHistory(){
         return view('pages.purchaseHistory');
     }
-    
+
     public function view()
     {
         return view('pages.view');
@@ -240,12 +240,12 @@ class PagesController extends Controller
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-    
+
     public function viewProfile() {
         $id =$_SESSION['currentLoggedInId'];
         $accountMapper = AccountMapper::createAccountMapper($id);
         $currentUser = $accountMapper->getAccount();
-        
+
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
