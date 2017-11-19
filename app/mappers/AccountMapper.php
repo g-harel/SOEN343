@@ -3,22 +3,33 @@
 namespace App\Mappers;
 
 use App\Models\Account;
+use App\UnitOfWork\UnitOfWork;
+use App\UnitOfWork\CollectionMapper;
+use App\IdentityMap\IdentityMap;
 use App\Gateway\AccountGateway;
 
 
-class AccountMapper
+class AccountMapper implements CollectionMapper
 {
-    private $account;
+    private static $instance;
+    private $itemCatalog;
+    private $unitOfWork;
+    private $identityMap;
     private $gateway;
 
-    public function __construct() {
+    private function __construct() {
+        $this->itemCatalog = ItemCatalog::getInstance();
+        $this->identityMap = IdentityMap::getInstance();
+        $this->unitOfWork = UnitOfWork::getInstance();
         $this->gateway = new AccountGateway();
+        $this->updateCatalog();
     }
-    
-    public static function createAccountMapper($id) {
-        $instance = new self();
-        $instance->setAccountFromRecordById($id);
-        return $instance;
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new ItemAccountMapper();
+        }
+        return self::$instance;
     }
 
     public static function createAccountMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
@@ -100,16 +111,6 @@ class AccountMapper
         }
         return $isSuccessful;
     }
-
-    public function editAccountInRecord() {
-        $success = $this->gateway->editAccount(
-            $this->account->getId(), $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
-            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
-            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
-            $this->account->getPostalCode(), $this->account->getIsAdmin()
-        );
-        return $success;
-    }
     
     public function deleteAccountInRecord() {
         $success = $this->gateway->deleteAccountById($this->account->getId());
@@ -128,141 +129,6 @@ class AccountMapper
         return $this->gateway->getAccountById($id);
     }
 
-    public function getId() {
-        return $this->account->getId();
-    }
-
-    public function getEmail() {
-        return $this->account->getEmail();    
-    }
-
-    public function getPassword() {
-        return $this->account->getPassword();
-    }
-
-    public function getFirstName() {
-        return $this->account->getFirstName();
-    }
-
-    public function getLastName() {
-        return $this->account->getLastName();
-    }
-
-    public function getPhoneNumber() {
-        return $this->account->getPhoneNumber();
-    }
-
-    public function getAddress() {
-        return $this->account->getAddress();
-    }
-
-    public function getIsAdmin() {
-        return $this->account->getIsAdmin();
-    }
-
-    public function getDoorNumber() {
-        return $this->account->getDoorNumber();    
-    }
-
-    public function getAppartement() {
-        return $this->account->getAppartement();
-    }
-
-    public function getStreet() {
-        return $this->account->getStreet();
-    }
-
-    public function getCity() {
-        return $this->account->getCity();
-    }
-
-    public function getProvince() {
-        return $this->account->getProvince();
-    }
-
-    public function getCountry() {
-        return $this->account->getCountry();
-    }
-
-    public function getPostalCode() {
-        return $this->account->getPostalCode();
-    }
-
-    public function setAccount($account) {
-        $this->account = $account;
-        return $this;
-    }
-
-    public function setId($id) {
-        $this->account->setId($id);
-        return $this;
-    }
-
-    public function setEmail($email) {
-        $this->account->setEmail($email);
-        return $this;  
-    }
-
-    public function setPassword($password) {
-        $this->account->setPassword($password);
-        return $this;
-    }
-
-    public function setFirstName($firstName) {
-        $this->account->setFirstName($firstName);
-        return $this;
-    }
-
-    public function setLastName($lastName) {
-        $this->account->setLastName($lastName);
-        return $this;
-    }
-
-    public function setPhoneNumber($phoneNumber) {
-        $this->account->setPhoneNumber($phoneNumber);
-        return $this;
-    }
-
-    public function setAddress($address) {
-        $this->account->setAddress($address);
-        return $this;
-    }
-
-    public function setDoorNumber($doorNumber) {
-        $this->account->setDoorNumber($doorNumber);
-        return $this; 
-    }
-
-    public function setAppartement($appartement) {
-        $this->account->setAppartement($appartement);
-        return $this;
-    }
-
-    public function setStreet($street) {
-        $this->account->setStreet($street);
-        return $this;
-    }
-
-    public function setCity($city) {
-        $this->account->setCity($city);
-        return $this;
-    }
-
-    public function setProvince($province) {
-        $this->account->setProvince($province);
-        return $this;
-    }
-
-    public function setCountry($country) {
-        $this->account->setCountry($country);
-        return $this;
-    }
-
-    public function setPostalCode($postalCode) {
-        $this->account->setPostalCode($postalCode);
-        return $this;
-    }
-
     //UTILITY
     public function getFullName() {
         return $this->account->getFullName();
@@ -270,5 +136,22 @@ class AccountMapper
 
     public function isAccountExist($email, $password) {
         return $this->gateway->getAccountByEmailPassword($email, $password);
+    }
+
+
+    /* For Controllers */
+    public function add($object)
+    {
+        //Not needed
+    }
+
+    public function edit($object)
+    {
+        //Not needed
+    }
+
+    public function delete($object)
+    {
+        // TODO: Implement delete() method.
     }
 }
