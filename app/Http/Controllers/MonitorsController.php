@@ -71,20 +71,17 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            $monitorItemDisplaySize = null;
             if ($this->isAdminSearching()) {
                 $monitorsToSearch = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
-                $monitorItemDisplaySize = 'displaySize';
             } else {
                 $monitorsToSearch = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
-                $monitorItemDisplaySize = 'display_size';
             }
             $result = array();
             foreach ($monitorsToSearch as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] > $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor[$monitorItemDisplaySize] == $displaySize || $displaySize == "")
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
@@ -92,7 +89,7 @@ class MonitorsController extends Controller
                 } else if ($maxPrice > 0) {
                     if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor[$monitorItemDisplaySize] == $displaySize || $displaySize == "")
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
