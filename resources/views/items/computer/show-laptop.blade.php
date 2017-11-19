@@ -106,150 +106,150 @@
         </div>
     </div>
     @if(!empty($result))
-    <table class="table table-bordered table-responsive" id="laptopTable">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Processor type</th>
-            <th>Ram size</th>
-            <th>Weight</th>
-            <th>CPU cores</th>
-            <th>HDD size</th>
-            <th>Display Size (inches)</th>
-            <th>Battery</th>
-            <th>OS</th>
-            <th>Camera</th>
-            <th>Touchscreen</th>
-            <th class="text-center">Edit</th>
-            <th class="text-center">Delete</th>
-            <th class="text-center">Add Units</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($result as $value)
+        <table class="table table-bordered table-responsive" id="laptopTable">
+            <thead>
             <tr>
-                <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
-                <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
-                <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
-                <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
-                <td data-processor="{{ $value["processor_type"] }}">{{ $value["processor_type"] }}</td>
-                <td data-ramSize="{{ $value["ram_size"] }}">{{ $value["ram_size"] }}</td>
-                <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
-                <td data-cpuCores="{{ $value["cpu_cores"] }}">{{ $value["cpu_cores"] }}</td>
-                <td data-hddSize="{{ $value["hdd_size"] }}">{{ $value["hdd_size"] }}</td>
-                <td data-displaySize="{{ $value["display_size"] }}">{{ $value["display_size"] }}</td>
-                <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
-                <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
-                <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
-                @if($value["is_touchscreen"] == 0)
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">No</td>
-                @else
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">Yes</td>
-                @endif
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
-                           data-target=".bs-edit-laptop-modal-lg">
-                            <span class="fa fa-scissors"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Delete">
-                        <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
-                           data-target="#delLaptopLink">
-                            <span class="fa fa-trash"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
-                        <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
-                           data-target="#addLaptopLink">
-                            <span class="fa fa-plus"></span>
-                        </a>
-                    </p>
-                </td>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Processor type</th>
+                <th>Ram size</th>
+                <th>Weight</th>
+                <th>CPU cores</th>
+                <th>HDD size</th>
+                <th>Display Size (inches)</th>
+                <th>Battery</th>
+                <th>OS</th>
+                <th>Camera</th>
+                <th>Touchscreen</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+                <th class="text-center">Add Units</th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($result as $value)
+                <tr>
+                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
+                    <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
+                    <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
+                    <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
+                    <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
+                    <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
+                    <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
+                    <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
+                    <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
+                    <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
+                    <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
+                    <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
+                    @if($value["isTouchscreen"] == 0)
+                        <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
+                    @else
+                        <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
+                    @endif
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
+                               data-target=".bs-edit-laptop-modal-lg">
+                                <span class="fa fa-scissors"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Delete">
+                            <a class="btn btn-danger btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                               data-target="#delLaptopLink">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                            <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
+                               data-target="#addLaptopLink">
+                                <span class="fa fa-plus"></span>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     @endif
     @if(empty($result))
-    <table class="table table-bordered table-responsive" id="laptopTable">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Processor type</th>
-            <th>Ram size</th>
-            <th>Weight</th>
-            <th>CPU cores</th>
-            <th>HDD size</th>
-            <th>Display Size (inches)</th>
-            <th>Battery</th>
-            <th>OS</th>
-            <th>Camera</th>
-            <th>Touchscreen</th>
-            <th class="text-center">Edit</th>
-            <th class="text-center">Delete</th>
-            <th class="text-center">Add Units</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($laptops as $laptop)
+        <table class="table table-bordered table-responsive" id="laptopTable">
+            <thead>
             <tr>
-                <td data-id="{{ $laptop["id"] }}">{{ $laptop["id"] }}</td>
-                <td data-brand="{{ $laptop["brand"] }}">{{ $laptop["brand"] }}</td>
-                <td data-price="{{ $laptop["price"] }}">{{ $laptop["price"] }}</td>
-                <td data-qty="{{ $laptop["quantity"] }}">{{ $laptop["quantity"] }}</td>
-                <td data-processor="{{ $laptop["processorType"] }}">{{ $laptop["processorType"] }}</td>
-                <td data-ramSize="{{ $laptop["ramSize"] }}">{{ $laptop["ramSize"] }}</td>
-                <td data-weight="{{ $laptop["weight"] }}">{{ $laptop["weight"] }}</td>
-                <td data-cpuCores="{{ $laptop["cpuCores"] }}">{{ $laptop["cpuCores"] }}</td>
-                <td data-hddSize="{{ $laptop["hddSize"] }}">{{ $laptop["hddSize"] }}</td>
-                <td data-displaySize="{{ $laptop["displaySize"] }}">{{ $laptop["displaySize"] }}</td>
-                <td data-battery="{{ $laptop["battery"] }}">{{ $laptop["battery"] }}</td>
-                <td data-os="{{ $laptop["os"] }}">{{ $laptop["os"] }}</td>
-                <td data-camera="{{ $laptop["camera"] }}">{{ $laptop["camera"] }}</td>
-                @if($laptop["isTouchscreen"] == 0)
-                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">No</td>
-                @else
-                    <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">Yes</td>
-                @endif
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Edit">
-                        <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
-                           data-target=".bs-edit-laptop-modal-lg">
-                            <span class="fa fa-scissors"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Delete">
-                        <a class="btn btn-danger btn-xs" data-id="{{ $laptop["id"] }}" data-toggle="modal"
-                           data-target="#delLaptopLink">
-                            <span class="fa fa-trash"></span>
-                        </a>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <p data-placement="top" data-toggle="tooltip" title="Add Units">
-                        <a class="btn btn-success btn-xs" data-id="{{ $laptop["id"] }}" data-toggle="modal"
-                           data-target="#addUnitsLaptopLink">
-                            <span class="fa fa-plus"></span>
-                        </a>
-                    </p>
-                </td>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Processor type</th>
+                <th>Ram size</th>
+                <th>Weight</th>
+                <th>CPU cores</th>
+                <th>HDD size</th>
+                <th>Display Size (inches)</th>
+                <th>Battery</th>
+                <th>OS</th>
+                <th>Camera</th>
+                <th>Touchscreen</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+                <th class="text-center">Add Units</th>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            @foreach($laptops as $laptop)
+                <tr>
+                    <td data-id="{{ $laptop["id"] }}">{{ $laptop["id"] }}</td>
+                    <td data-brand="{{ $laptop["brand"] }}">{{ $laptop["brand"] }}</td>
+                    <td data-price="{{ $laptop["price"] }}">{{ $laptop["price"] }}</td>
+                    <td data-qty="{{ $laptop["quantity"] }}">{{ $laptop["quantity"] }}</td>
+                    <td data-processor="{{ $laptop["processorType"] }}">{{ $laptop["processorType"] }}</td>
+                    <td data-ramSize="{{ $laptop["ramSize"] }}">{{ $laptop["ramSize"] }}</td>
+                    <td data-weight="{{ $laptop["weight"] }}">{{ $laptop["weight"] }}</td>
+                    <td data-cpuCores="{{ $laptop["cpuCores"] }}">{{ $laptop["cpuCores"] }}</td>
+                    <td data-hddSize="{{ $laptop["hddSize"] }}">{{ $laptop["hddSize"] }}</td>
+                    <td data-displaySize="{{ $laptop["displaySize"] }}">{{ $laptop["displaySize"] }}</td>
+                    <td data-battery="{{ $laptop["battery"] }}">{{ $laptop["battery"] }}</td>
+                    <td data-os="{{ $laptop["os"] }}">{{ $laptop["os"] }}</td>
+                    <td data-camera="{{ $laptop["camera"] }}">{{ $laptop["camera"] }}</td>
+                    @if($laptop["isTouchscreen"] == 0)
+                        <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">No</td>
+                    @else
+                        <td data-touchscreen="{{ $laptop["isTouchscreen"] }}">Yes</td>
+                    @endif
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                            <a class="btn btn-primary btn-xs edit-laptop-link" href="" data-toggle="modal"
+                               data-target=".bs-edit-laptop-modal-lg">
+                                <span class="fa fa-scissors"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Delete">
+                            <a class="btn btn-danger btn-xs" data-id="{{ $laptop["id"] }}" data-toggle="modal"
+                               data-target="#delLaptopLink">
+                                <span class="fa fa-trash"></span>
+                            </a>
+                        </p>
+                    </td>
+                    <td class="text-center">
+                        <p data-placement="top" data-toggle="tooltip" title="Add Units">
+                            <a class="btn btn-success btn-xs" data-id="{{ $laptop["id"] }}" data-toggle="modal"
+                               data-target="#addUnitsLaptopLink">
+                                <span class="fa fa-plus"></span>
+                            </a>
+                        </p>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
     @endif
     <div class="modal fade bs-edit-laptop-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
         <div class="modal-dialog modal-lg" role="document">
