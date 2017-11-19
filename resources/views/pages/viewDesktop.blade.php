@@ -78,6 +78,9 @@
                 </div>
             @endforeach
         @endif
+        @if(empty($laptops))
+            <p>Desktop item catalog is currently empty.</p>
+        @endif
         @if(empty($details) && empty($result))
         <div class="row">
             @foreach($desktops as $desktop)

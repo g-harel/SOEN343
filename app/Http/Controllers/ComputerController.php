@@ -59,17 +59,17 @@ class ComputerController extends Controller
                 if (isset($_GET['client-search-desktop-form'])) {
                     $params = $this->desktopSearchParams();
                     $computers = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
-                    $specs['blade'] = 'viewDesktop';
+                    $specs['blade'] = 'pages.viewDesktop';
                     $specs['collection'] = 'desktops';
                 } else if (isset($_GET['client-search-laptop-form'])) {
                     $params = $this->laptopSearchParams();
                     $computers = $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE);
-                    $specs['blade'] = 'viewLaptop';
+                    $specs['blade'] = 'pages.viewLaptop';
                     $specs['collection'] = 'laptops';
                 } else if (isset($_GET['client-search-tablet-form'])) {
                     $params = $this->tabletSearchParams();
                     $computers =$this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
-                    $specs['blade'] = 'viewTablet';
+                    $specs['blade'] = 'pages.viewTablet';
                     $specs['collection'] = 'tablets';
                 }
             }
@@ -108,7 +108,6 @@ class ComputerController extends Controller
                 }
                 return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
             }
-            return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
         }
 
         return view('pages.view');
