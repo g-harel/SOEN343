@@ -48,7 +48,7 @@
     @if(!empty($numResult))
         <div class="alert alert-info">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <label>{{$numResult}} result(s) found.</label>
+            <label>{{$numResult}} result(s) found. Go <a href="/items/monitor/showMonitor">back</a>.</label>
         </div>
     @endif
     <!-- filtering form -->
@@ -64,7 +64,7 @@
                         <div class="dropdown dropdown-lg">
                             <button type="button" class="btn btn-default dropdown-toggle btn-lg" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form id="monitor-form" class="form-horizontal" action="/view/monitor/search" method="get">
+                                <form id="monitor-form" class="form-horizontal" action="/items/monitor/search" method="get">
                                     <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control" >
@@ -99,7 +99,7 @@
     </div>
     <!-- end filtering monitor form -->
     <!-- filtering result -->
-    @if(!empty($result))
+    @if(!empty($searchResult))
         <table class="table table-bordered bg-color-white" id="monitorTable">
             <thead>
             <tr>
@@ -114,9 +114,10 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($result as $value)
+            @foreach($searchResult as $value)
                 <tr>
                     <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
@@ -139,7 +140,7 @@
                     </td>
                     <td class="text-center">
                         <p data-placement="top" data-toggle="tooltip" title="Add Units">
-                            <a class="btn btn-success btn-xs" data-id="{{ $monitor["id"] }}" data-toggle="modal"
+                            <a class="btn btn-success btn-xs" data-id="{{ $value["id"] }}" data-toggle="modal"
                                data-target="#addMonitorLink">
                                 <span class="fa fa-plus"></span>
                             </a>
@@ -151,11 +152,12 @@
         </table>
     @endif
     <!-- end filtering -->
-    @if(empty($result))
+    @if(empty($searchResult))
     <table class="table table-bordered bg-color-white" id="monitorTable">
         <thead>
         <tr>
             <th>#</th>
+            <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Display Size (inches)</th>
@@ -169,6 +171,7 @@
         @foreach($monitors as $monitor)
             <tr>
                 <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
+                <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
                 <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
                 <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
                 <td data-displaySize="{{ $monitor["displaySize"] }}">{{ $monitor["displaySize"] }}</td>
