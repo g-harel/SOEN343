@@ -135,19 +135,19 @@
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                 <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
-                <td data-processor="{{ $value["processor_type"] }}">{{ $value["processor_type"] }}</td>
-                <td data-ramSize="{{ $value["ram_size"] }}">{{ $value["ram_size"] }}</td>
+                <td data-processor="{{ $value["processorType"] }}">{{ $value["processorType"] }}</td>
+                <td data-ramSize="{{ $value["ramSize"] }}">{{ $value["ramSize"] }}</td>
                 <td data-weight="{{ $value["weight"] }}">{{ $value["weight"] }}</td>
-                <td data-cpuCores="{{ $value["cpu_cores"] }}">{{ $value["cpu_cores"] }}</td>
-                <td data-hddSize="{{ $value["hdd_size"] }}">{{ $value["hdd_size"] }}</td>
-                <td data-displaySize="{{ $value["display_size"] }}">{{ $value["display_size"] }}</td>
+                <td data-cpuCores="{{ $value["cpuCores"] }}">{{ $value["cpuCores"] }}</td>
+                <td data-hddSize="{{ $value["hddSize"] }}">{{ $value["hddSize"] }}</td>
+                <td data-displaySize="{{ $value["displaySize"] }}">{{ $value["displaySize"] }}</td>
                 <td data-battery="{{ $value["battery"] }}">{{ $value["battery"] }}</td>
                 <td data-os="{{ $value["os"] }}">{{ $value["os"] }}</td>
                 <td data-camera="{{ $value["camera"] }}">{{ $value["camera"] }}</td>
-                @if($value["is_touchscreen"] == 0)
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">No</td>
+                @if($value["isTouchscreen"] == 0)
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">No</td>
                 @else
-                    <td data-touchscreen="{{ $value["is_touchscreen"] }}">Yes</td>
+                    <td data-touchscreen="{{ $value["isTouchscreen"] }}">Yes</td>
                 @endif
                 <td class="text-center">
                     <p data-placement="top" data-toggle="tooltip" title="Edit">

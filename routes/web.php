@@ -41,7 +41,7 @@ Route::prefix('/view')->group(
         Route::get('/tablet', 'PagesController@viewTablet');
         Route::get('/computer/search', 'ComputerController@search');
 
-        Route::get('/monitor/{id}', ['uses' => 'PagesController@monitorDetails']);
+        Route::get('/monitor/{id}/{serial}', ['uses' => 'PagesController@monitorDetails']);
         Route::get('/desktop/{id}', ['uses' => 'PagesController@desktopDetails']);
         Route::get('/laptop/{id}', ['uses' => 'PagesController@laptopDetails']);
         Route::get('/tablet/{id}', ['uses' => 'PagesController@tabletDetails']);
@@ -86,7 +86,7 @@ if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {
             Route::post('insert', 'MonitorsController@insertMonitor');
             Route::post('delete', 'MonitorsController@deleteMonitor');
             Route::post('modify', 'MonitorsController@modifyMonitor');
-            Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
+            Route::get('search', 'MonitorsController@searchMonitor');
             Route::post('AddUnits', 'MonitorsController@addMonitorUnits');
         }
     );

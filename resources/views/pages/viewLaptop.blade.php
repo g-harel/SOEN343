@@ -53,15 +53,15 @@
                                         <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                         <p>Price: <b>${{$value['price']}}</b></p>
                                         <p>Brand: <b>{{$value['brand']}}</b></p>
-                                        <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
+                                        <p>Processor Type: <b>{{$value['processorType']}}</b></p>
                                         <p>OS: <b>{{$value['os']}}</b></p>
-                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
-                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
-                                        <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
+                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b></p>
+                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b></p>
+                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b></p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b></p>
                                         <p>Battery: <b>{{$value['battery']}}</b></p>
                                         <p>Camera: <b>{{$value['camera']}}</b></p>
-                                        @if($value["is_touchscreen"] == 0)
+                                        @if($value["isTouchscreen"] == 0)
                                             <p>Touchscreen: <b>No</b></p>
                                         @else
                                             <p>Touchscreen: <b>Yes</b></p>
@@ -88,7 +88,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $laptop['brand'] }}, {{ $laptop['hdd_size'] }} GB {{ $laptop["display_size"] }}"
+                            {{ $laptop['brand'] }}, {{ $laptop['hddSize'] }} GB {{ $laptop["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -102,10 +102,10 @@
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li>Processor Type: <b>{{ $laptop['processor_type'] }}</b></li>
-                                <li>Ram Size: <b>{{ $laptop['ram_size'] }} GB</b></li>
-                                <li>Cpu cores: <b>{{ $laptop['cpu_cores'] }}</b></li>
-                                <li>Hard Disk Size: <b>{{ $laptop['hdd_size'] }} GB</b></li>
+                                <li>Processor Type: <b>{{ $laptop['processorType'] }}</b></li>
+                                <li>Ram Size: <b>{{ $laptop['ramSize'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $laptop['cpuCores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $laptop['hddSize'] }} GB</b></li>
                             </ul>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $details['brand'] }}, {{ $details['hdd_size'] }} GB {{ $details["display_size"] }}"
+                            {{ $details['brand'] }}, {{ $details['hddSize'] }} GB {{ $details["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -141,15 +141,15 @@
                                 <p>Quantity: <b>{{$details['quantity']}}</b></p>
                                 <p>Price: <b>${{$details['price']}}</b></p>
                                 <p>Brand: <b>{{$details['brand']}}</b></p>
-                                <p>Processor Type: <b>{{$details['processor_type']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processorType']}}</b></p>
                                 <p>OS: <b>{{$details['os']}}</b></p>
-                                <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b></p>
-                                <p>Ram Size: <b>{{$details['ram_size']}} GB</b></p>
-                                <p>Display Size: <b>{{$details['display_size']}} inches</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ramSize']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b></p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b></p>
                                 <p>Battery: <b>{{$details['battery']}}</b></p>
                                 <p>Camera: <b>{{$details['camera']}}</b></p>
-                                @if($details["is_touchscreen"] == 0)
+                                @if($details["isTouchscreen"] == 0)
                                     <p>Touchscreen: <b>No</b></p>
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
