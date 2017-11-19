@@ -92,3 +92,6 @@ body {
 .alert {
     color: black !important;
 }
+.search-by {
+    height: 27px !important;
+}
