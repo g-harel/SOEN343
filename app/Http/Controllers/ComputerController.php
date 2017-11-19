@@ -36,72 +36,95 @@ class ComputerController extends Controller
 
     public function search() {
         if ($this->isFormSubmitted($_GET)) {
-            $searchItem = array();
-            $computers = array();
-            $result = array();
-            if (isset($_GET['admin-search-desktop-form']) ||
-                isset($_GET['client-search-desktop-form'])) {
-                $searchItem = $this->desktopFilteringFields();
-                $computers = $this->returnItemUnits($searchItem['itemType']);
-            } else if (isset($_GET['admin-search-laptop-form']) ||
-                isset($_GET['client-search-laptop-form'])) {
-                $searchItem = $this->laptopFilteringFields();
-                $computers = $this->returnItemUnits($searchItem['itemType']);
-            } else if (isset($_GET['admin-search-tablet-form']) ||
-                isset($_GET['client-search-tablet-form'])) {
-                $searchItem = $this->tabletFilteringFields();
-                $computers =$this->returnItemUnits($searchItem['itemType']);
-            }
-            foreach ($computers as $computer) {
-                if ($searchItem['maxPrice'] == 0) {
-                    if ($computer['price'] > $searchItem['minPrice']) {
-                        if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
-                            ($computer['hdd_size'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
-                            ($computer['ram_size'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
-                        ) {
-                            array_push($result, $computer);
-                        }
-                    }
-                } else if ($searchItem['maxPrice'] > 0) {
-                    if ($computer['price'] > $searchItem['minPrice'] && $computer['price'] < $searchItem['maxPrice']) {
-                        if (($computer['brand'] == $searchItem['brand'] || $searchItem['brand'] == "") &&
-                            ($computer['hdd_size'] == $searchItem['storage'] || $searchItem['storage'] == "") &&
-                            ($computer['ram_size'] == $searchItem['ramSize'] || $searchItem['ramSize'] == "")
-                        ) {
-                            array_push($result, $computer);
-                        }
-                    }
-                }
-            }
-            if (!empty($result)) {
-                $numResult = count($result);
-                if($this->isAdminSearching()) {
-                    return view($searchItem['adminView'], [
-                        'result' => $result, 'numResult' => $numResult
-                    ]);
-                } else {
-                    return view($searchItem['clientView'], [
-                        'result' => $result, 'numResult' => $numResult
-                    ]);
+            $params = []; $computers = []; $result = [];
+            $specs = ['blade' => null, 'collection' => null, 'type' => null];
+            if ($this->isAdminSearching()) {
+                if (isset($_GET['admin-search-desktop-form'])) {
+                    $params = $this->desktopSearchParams();
+                    $computers = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+                    $specs['blade'] = 'items.computer.show-desktop';
+                    $specs['collection'] = 'desktops';
+                } else if(isset($_GET['admin-search-laptop-form'])) {
+                    $params = $this->laptopSearchParams();
+                    $computers = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+                    $specs['blade'] = 'items.computer.show-laptop';
+                    $specs['collection'] = 'laptops';
+                } else if(isset($_GET['admin-search-tablet-form'])) {
+                    $params = $this->tabletSearchParams();
+                    $computers = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+                    $specs['blade'] = 'items.computer.show-tablet';
+                    $specs['collection'] = 'tablets';
                 }
             } else {
-                if($this->isAdminSearching()) {
-//                    echo '<pre>';
-//                    print_r($this->returnItemUnits($searchItem['itemType']));
-//                    die;
-                    return view($searchItem['adminView'], [
-                        $searchItem['collection'] => $this->returnItemUnits($searchItem['itemType']),
-                        'noResults' => true
-                    ]);
-                } else {
-                    return view($searchItem['clientView'], [
-                        $searchItem['collection'] =>  $this->returnItemUnits($searchItem['itemType']),
-                        'noResults' => true
-                    ]);
+                if (isset($_GET['client-search-desktop-form'])) {
+                    $params = $this->desktopSearchParams();
+                    $computers = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
+                    $specs['blade'] = 'viewDesktop';
+                    $specs['collection'] = 'desktops';
+                } else if (isset($_GET['client-search-laptop-form'])) {
+                    $params = $this->laptopSearchParams();
+                    $computers = $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE);
+                    $specs['blade'] = 'viewLaptop';
+                    $specs['collection'] = 'laptops';
+                } else if (isset($_GET['client-search-tablet-form'])) {
+                    $params = $this->tabletSearchParams();
+                    $computers =$this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
+                    $specs['blade'] = 'viewTablet';
+                    $specs['collection'] = 'tablets';
                 }
             }
+            foreach ($computers as $computer) {
+                if ($params['maxPrice'] == 0) {
+                    if ($computer['price'] > $params['minPrice']) {
+                        if (($computer['brand'] == $params['brand'] || $params['brand'] == "") &&
+                            ($computer['hddSize'] == $params['storage'] || $params['storage'] == "") &&
+                            ($computer['ramSize'] == $params['ramSize'] || $params['ramSize'] == "")
+                        ) {
+
+                            array_push($result, $computer);
+                        }
+                    }
+                } else if ($params['maxPrice'] > 0) {
+                    if ($computer['price'] > $params['minPrice'] && $computer['price'] < $params['maxPrice']) {
+                        if (($computer['brand'] == $params['brand'] || $params['brand'] == "") &&
+                            ($computer['hddSize'] == $params['storage'] || $params['storage'] == "") &&
+                            ($computer['ramSize'] == $params['ramSize'] || $params['ramSize'] == "")
+                        ) {
+                            array_push($result, $computer);
+                        }
+                    }
+                }
+            }
+            $numResult = count($result);
+            if($this->isAdminSearching()) {
+                if ($numResult > 0) {
+                    return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
+                }
+                return view($specs['blade'], [$specs['collection'] => $computers, 'noResults' => true]);
+            } else {
+                if ($numResult > 0) {
+                    return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
+                }
+                return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
+            }
         }
+
         return view('pages.view');
+    }
+
+    public function redirectionSearchResults($specs, $result, $computers) {
+        $numResult = count($result);
+        if($this->isAdminSearching()) {
+            if ($numResult > 0) {
+                return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
+            }
+            return view($specs['blade'], [$specs['collection'] => $computers, 'noResults' => true]);
+        } else {
+            if ($numResult > 0) {
+                return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
+            }
+            return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
+        }
     }
 
     public function insertDesktop()
@@ -405,7 +428,6 @@ class ComputerController extends Controller
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['desktop-id'];
         $units = array();
-        $cond = false;
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
         }
@@ -415,10 +437,9 @@ class ComputerController extends Controller
             $unitMapper->commit($_SESSION['session_id']);
         }
         $cond = true;
-        if($cond ){
+        if ($cond) {
             return redirect()->back()->with(['unitsAdded' => true]);
-        }
-        else{
+        } else {
             return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
@@ -448,61 +469,61 @@ class ComputerController extends Controller
         }
     }
 
-    public function addLaptopUnits(){
+    public function addLaptopUnits()
+    {
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['laptop-id'];
         $units = array();
-        for($i = 0; $i< $numOfUnits; $i++){
-            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available","","","","");
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", "", "", "", "");
         }
-        $unitMapper =  UnitMapper::getInstance();
+        $unitMapper = UnitMapper::getInstance();
         $cond = null;
-        foreach($units as $unit){
-            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
             $unitMapper->commit($_SESSION['session_id']);
         }
         $cond = true;
-        if($cond){
+        if ($cond) {
             return redirect()->back()->with(['unitsAdded' => true]);
-        } else{
+        } else {
             return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
 
-    public function reserveDesktopUnit(){
-
+    public function reserveDesktopUnit()
+    {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
             $unitMapper = UnitMapper::getInstance();
             $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
             $unitMapper->commit($_SESSION['session_id']);
-            $cond = true;
             return redirect()->back()->with(['unitReserved' => true]);
         } else {
             return redirect()->back()->with(['unitNotReserved' => true]);
         }
     }
 
-    public function reserveLaptopUnit(){
+    public function reserveLaptopUnit()
+    {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
             $unitMapper = UnitMapper::getInstance();
             $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
             $unitMapper->commit($_SESSION['session_id']);
-            $cond = true;
             return redirect()->back()->with(['unitReserved' => true]);
         } else {
             return redirect()->back()->with(['unitNotReserved' => true]);
         }
     }
 
-    public function reserveTabletUnit(){
+    public function reserveTabletUnit()
+    {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
             $unitMapper = UnitMapper::getInstance();
             $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
             $unitMapper->commit($_SESSION['session_id']);
-            $cond = true;
             return redirect()->back()->with(['unitReserved' => true]);
         } else {
             return redirect()->back()->with(['unitNotReserved' => true]);
