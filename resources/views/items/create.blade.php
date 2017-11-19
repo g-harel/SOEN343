@@ -65,6 +65,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    Model #:
+                                    <input required type="text"  placeholder="Enter a Model Number" name="desktop-model" id="desktop-model" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     Processor Type:
                                     <select required name="desktop-processor" id="desktop-processor" class="form-control">
                                         <option title="Select processor" value="">Select processor</option>
@@ -134,6 +138,10 @@
                                     <select name="laptop-brand" id="laptop-brand" class="form-control" required>
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <input required type="text"  placeholder="Enter a Model Number" name="laptop-model" id="laptop-model" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -219,6 +227,10 @@
                                     <select required name="tablet-brand" id="tablet-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <input required type="text"  placeholder="Enter a Model Number" name="tablet-model" id="tablet-model" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -317,6 +329,10 @@
                                     <select name="monitor-brand" id="monitor-brand" class="form-control" required>
                                         <option title="Select brands" value="">Select Brand</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <input required type="text"  placeholder="Enter a Model Number" name="monior-model" id="monitor-model" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     Price:

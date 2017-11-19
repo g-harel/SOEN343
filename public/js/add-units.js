@@ -20,8 +20,8 @@ function serialInputs(fields, form) {
     const h = null;
     for (let i = 0; i < fields; i++) {
         form.find('#units-inputs-container').append(`<div class="form-group serial-number">
-        <label>Serial #</label>
-        <input type="text" id="serial-number" name="serial${i}" value="${generateAlphaNumStr()}" class="form-control">
+        <label>Serial #${i +1}</label>
+        <input type="text" id="serial-number" name="serial${i}" value="${generateAlphaNumStr()}" class="form-control" readonly>
         </div>`);
     }
     return h;

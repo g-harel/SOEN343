@@ -113,6 +113,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>Model #</th>
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Qty</th>
@@ -133,6 +134,7 @@
             @foreach($result as $value)
                 <tr>
                     <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-brand="123abc">abc123</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
