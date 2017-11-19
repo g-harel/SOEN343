@@ -93,13 +93,15 @@ class PagesController extends Controller
         }
     }
 
-    public function desktopDetails($id)
+    public function desktopDetails($id, $serial)
     {
+        $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::DESKTOP_ITEM_TYPE)) {
-            $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+        $desktops_ids = array_column($desktops, 'id');
+        if(in_array((int)$id, $desktops_ids)) {
             foreach($desktops as $desktop){
-                $details = $desktop;
+                if($desktop['serial'] == $serial)
+                    $details = $desktop;
             }
             return view('pages.viewDesktop', [
                 'details' => $details,
@@ -109,19 +111,20 @@ class PagesController extends Controller
                 'notFound' => true
             ]);
         }
-
     }
 
-    public function laptopDetails($id)
+    public function laptopDetails($id, $serial)
     {
+        $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::LAPTOP_ITEM_TYPE)) {
-            $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+        $laptops_ids = array_column($laptops, 'id');
+        if(in_array((int)$id, $laptops_ids)) {
             foreach($laptops as $laptop){
-                $details = $laptop;
+                if($laptop['serial'] == $serial)
+                    $details = $laptop;
             }
             return view('pages.viewLaptop', [
-                'details' => $details
+                'details' => $details,
             ]);
         } else {
             return redirect()->back()->with([
@@ -130,16 +133,18 @@ class PagesController extends Controller
         }
     }
 
-    public function tabletDetails($id)
+    public function tabletDetails($id, $serial)
     {
+        $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::TABLET_ITEM_TYPE)) {
-            $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+        $tablets_ids = array_column($tablets, 'id');
+        if(in_array((int)$id, $tablets_ids)) {
             foreach($tablets as $tablet){
-                $details = $tablet;
+                if($tablet['serial'] == $serial)
+                    $details = $tablets;
             }
             return view('pages.viewLaptop', [
-                'details' => $details
+                'details' => $details,
             ]);
         } else {
             return redirect()->back()->with([
