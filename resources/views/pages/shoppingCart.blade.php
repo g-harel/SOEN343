@@ -26,7 +26,7 @@
 @section('content')
     <div class="container">
         @if(empty($cart))
-            <h1>Your shopping cart is empty!</h1>
+            <h1>Your shopping cart is empty! Please <a href="/login">Sign</a> in to view your cart.</h1>
         @else
             <div class="row">
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
