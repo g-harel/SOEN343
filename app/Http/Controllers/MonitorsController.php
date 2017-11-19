@@ -79,7 +79,7 @@ class MonitorsController extends Controller
             $result = array();
             foreach ($monitorsToSearch as $monitor) {
                 if ($maxPrice == 0) {
-                    if ($monitor['price'] > $minPrice) {
+                    if ($monitor['price'] >= $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
                             ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
@@ -87,7 +87,7 @@ class MonitorsController extends Controller
                         }
                     }
                 } else if ($maxPrice > 0) {
-                    if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
+                    if ($monitor['price'] > $minPrice && $monitor['price'] <= $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
                             ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
