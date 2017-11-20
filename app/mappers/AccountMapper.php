@@ -73,7 +73,7 @@ class AccountMapper implements CollectionMapper
                 $account['email'], $account['password'], $account['firstName'], $account['lastName'],
                 $account['phoneNumber'], $account['doorNumber'], $account['appt'],
                 $account['street'], $account['city'], $account['province'], $account['country'],
-                $account['postalCode'], false
+                $account['postalCode'], $account['isAdmin']
             );
         }
         $isSuccessful = false;
