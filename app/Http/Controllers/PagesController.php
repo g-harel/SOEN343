@@ -242,7 +242,8 @@ class PagesController extends Controller
     }
 
     public function viewProfile() {
-        $currentUser = AccountMapper::getInstance()->getAccountFromRecordById($_SESSION['currentLoggedInId']);
+        $accountMapper = AccountMapper::getInstance();
+        $currentUser = $accountMapper->getAccountFromRecordById($_SESSION['currentLoggedInId']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
@@ -254,8 +255,9 @@ class PagesController extends Controller
             $_SESSION = array();
             session_destroy();
             //Delete user
-            AccountMapper::getInstance()->deleteAccount($userId, $userId);
-            AccountMapper::getInstance()->commit($userId);
+            $accountMapper = AccountMapper::getInstance();
+            $accountMapper->deleteAccount($userId, $userId);
+            $accountMapper->commit($userId);
             return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
         } else {
             return view('pages.index', ['accountNotDeleted' => 'Something went wrong. Please try again later.']);

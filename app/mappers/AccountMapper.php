@@ -38,7 +38,7 @@ class AccountMapper implements CollectionMapper
 
     public function getAccountFromRecordByEmail($email)
     {
-        return AccountCatalog::getInstance()->getAccountFromEmail($email);
+        return $this->accountCatalog->getAccountFromEmail($email);
     }
 
     public function getAccountFromRecordById($accountId) {
@@ -115,7 +115,7 @@ class AccountMapper implements CollectionMapper
 
     public function isAccountExist($email, $password)
     {
-        return AccountCatalog::getInstance()->isAccountExist($email, $password);
+        return $this->accountCatalog->isAccountExist($email, $password);
     }
 
     //For UoW
