@@ -58,12 +58,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/monitor/reserve">
                             <div class="panel-footer">
-                                <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                <span><input class="btn btn-default" role="submit" value="Add to Cart"></span>
+                                <span><a class="btn btn-default" href="/view/monitor/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -121,9 +118,6 @@
                                 <p>Serial #: <b>{{$details['serial']}} </b> </p>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="" role="button">Add to Cart »</a></span>
                     </div>
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->

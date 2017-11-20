@@ -74,13 +74,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/tablet/reserve">
                                 <div class="panel-footer">
                                     <span><a class="btn btn-default" href="/view/tablet/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
-                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                                 </div>
-                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -117,9 +113,9 @@
                     </div>
                     <form method="post" action="items/tablet/reserve">
                         <div class="panel-footer">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                             <span><a class="btn btn-default" href="/view/tablet/{{$tablet['id']}}/{{$tablet['serial']}}" role="button">View details »</a></span>
                             <input type="hidden" name="serial" value="{{$tablet['serial']}}">
-                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                         </div>
                     </form>
                 </div>
@@ -168,19 +164,11 @@
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="items/tablet/reserve">
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/tablet/{{$details['id']}}/{{$details['serial']}}" role="button">View details »</a></span>
-                            <input type="hidden" name="serial" value="{{$details['serial']}}">
-                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
         @endif
     </div>
-
     <!-- category filter -->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">

@@ -175,21 +175,22 @@ class PagesController extends Controller
         return view('pages.registerVerification');
     }
 
+
     public function shoppingCart()
     {
+        $total = 0;
         $specs = [];
         $cart = UnitMapper::getInstance();
         if(isset($_SESSION['currentLoggedInId'])){
         $units = $cart->getCart($_SESSION['currentLoggedInId']);
         $itemMapper = ItemCatalogMapper::getInstance();
-
-
         foreach ($units as $unit) {
-            array_push($specs, $itemMapper->getItem($unit['item_id']));
+            array_push($specs, $itemMapper->getItem($unit['id']));
         }
         }
         return view('pages.shoppingCart', [
-            'cart' => $specs
+            'cart' => $specs,
+            'total' => $total
         ]);
 
     }

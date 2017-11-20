@@ -26,6 +26,9 @@
 @section('content')
     <div class="container">
         @if(empty($cart))
+            <h1>Your shopping cart is empty!</h1>
+        @endif
+        @if(empty($cart) && empty($_SESSION['currentLoggedInId']))
             <h1>Your shopping cart is empty! Please <a href="/login">Sign</a> in to view your cart.</h1>
         @else
             <div class="row">
@@ -41,10 +44,30 @@
                             <tr>
                                 <td class="col-sm-8 col-md-6">
                                     <div class="media">
-                                        <a class="thumbnail pull-left" href="#"><i class="fa fa-laptop fa-5x"></i></a>
-                                        <div class="media-body" style="padding-left:4px;">
-                                            <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
-                                        </div>
+                                                @if($unit['category'] == 'laptop')
+                                                <a class="thumbnail pull-left" ><i class="fa fa-laptop fa-5x"></i></a>
+                                                <div class="media-body" style="padding-left:4px;">
+                                                    <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                                </div>
+                                                @endif
+                                                @if($unit['category'] == 'desktop')
+                                                    <a class="thumbnail pull-left" ><i class="fa fa-desktop fa-5x"></i></a>
+                                                    <div class="media-body" style="padding-left:4px;">
+                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                                    </div>
+                                                @endif
+                                                @if($unit['category'] == 'tablet')
+                                                    <a class="thumbnail pull-left" ><i class="fa fa-tablet fa-5x"></i></a>
+                                                    <div class="media-body" style="padding-left:4px;">
+                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                                    </div>
+                                                @endif
+                                                @if($unit['category'] == 'monitor')
+                                                    <a class="thumbnail pull-left" ><i class="fa fa-tv fa-5x"></i></a>
+                                                    <div class="media-body" style="padding-left:4px;">
+                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                                    </div>
+                                                @endif
                                     </div>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="price">{{$unit['price']}}</span></strong>
@@ -57,7 +80,10 @@
                             </tr>
                         @endforeach
                         <tr>
-                            <td>&nbsp;</td>
+                            <td c><strong>Total: $ {{$total}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
