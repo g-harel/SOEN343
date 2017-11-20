@@ -180,13 +180,16 @@ class PagesController extends Controller
     {
         $total = 0;
         $specs = [];
+        $finalSpecs = [];
         $cart = UnitMapper::getInstance();
-        if(isset($_SESSION['currentLoggedInId'])){
-        $units = $cart->getCart($_SESSION['currentLoggedInId']);
-        $itemMapper = ItemCatalogMapper::getInstance();
-        foreach ($units as $unit) {
-            array_push($specs, $itemMapper->getItem($unit['id']));
-        }
+        if (isset($_SESSION['currentLoggedInId'])) {
+            $account_id = $_SESSION['currentLoggedInId'];
+            $units = $cart->getCart($account_id); // returns reserved units by account id
+            $itemMapper = ItemCatalogMapper::getInstance();
+            foreach ($specs as $key => &$subArray) {
+                $subArray += $units[$key];
+                array_push($finalSpecs, $subArray);
+            }
         }
         return view('pages.shoppingCart', [
             'cart' => $specs,

@@ -75,7 +75,7 @@ class ComputerController extends Controller
             }
             foreach ($computers as $computer) {
                 if ($params['maxPrice'] == 0) {
-                    if ($computer['price'] > $params['minPrice']) {
+                    if ($computer['price'] >= $params['minPrice']) {
                         if (($computer['brand'] == $params['brand'] || $params['brand'] == "") &&
                             ($computer['hddSize'] == $params['storage'] || $params['storage'] == "") &&
                             ($computer['ramSize'] == $params['ramSize'] || $params['ramSize'] == "")
@@ -85,7 +85,7 @@ class ComputerController extends Controller
                         }
                     }
                 } else if ($params['maxPrice'] > 0) {
-                    if ($computer['price'] > $params['minPrice'] && $computer['price'] < $params['maxPrice']) {
+                    if ($computer['price'] > $params['minPrice'] && $computer['price'] <= $params['maxPrice']) {
                         if (($computer['brand'] == $params['brand'] || $params['brand'] == "") &&
                             ($computer['hddSize'] == $params['storage'] || $params['storage'] == "") &&
                             ($computer['ramSize'] == $params['ramSize'] || $params['ramSize'] == "")

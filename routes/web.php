@@ -51,6 +51,7 @@ Route::prefix('/view')->group(
         Route::get('search', 'ComputerController@search'); // computer filter
         Route::get('search', 'MonitorsController@searchMonitor'); // monitor filter
         Route::get('profile', 'PagesController@viewProfile');
+        Route::post('/monitor/{id}/items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
         Route::post('items/monitor/reserve', 'MonitorsController@reserveMonitorUnit');
         Route::post('items/desktop/reserve', 'ComputerController@reserveDesktopUnit');
         Route::post('items/laptop/reserve', 'ComputerController@reserveLaptopUnit');
