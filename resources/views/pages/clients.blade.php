@@ -20,20 +20,20 @@
         <td>Postal Code</td>
         </thead>
         @foreach($clients as $client)
-            @if($client->getIsAdmin() == false)
+            @if($client['isAdmin'] == false)
                 <tr>
-                    <td>{{ $client->getId() }}</td>
-                    <td>{{ $client->getEmail() }}</td>
-                    <td>{{ $client->getFirstName() }}</td>
-                    <td>{{ $client->getLastName() }}</td>
-                    <td>{{ $client->getPhoneNumber() }}</td>
-                    <td>{{ $client->getDoorNumber() }}</td>
-                    <td>{{ $client->getAppartement() }}</td>
-                    <td>{{ $client->getStreet() }}</td>
-                    <td>{{ $client->getCity() }}</td>
-                    <td>{{ $client->getProvince() }}</td>
-                    <td>{{ $client->getCountry() }}</td>
-                    <td>{{ $client->getCountry() }}</td>
+                    <td>{{ $client['id'] }}</td>
+                    <td>{{ $client['email'] }}</td>
+                    <td>{{ $client['firstName'] }}</td>
+                    <td>{{ $client['lastName'] }}</td>
+                    <td>{{ $client['phoneNumber'] }}</td>
+                    <td>{{ $client['doorNumber'] }}</td>
+                    <td>{{ $client['appartement'] }}</td>
+                    <td>{{ $client['street'] }}</td>
+                    <td>{{ $client['city'] }}</td>
+                    <td>{{ $client['province'] }}</td>
+                    <td>{{ $client['country'] }}</td>
+                    <td>{{ $client['postalCode'] }}</td>
                 </tr>
             @endif
         @endforeach

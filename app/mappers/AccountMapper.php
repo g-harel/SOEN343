@@ -95,7 +95,13 @@ class AccountMapper implements CollectionMapper
 
     public function getAllAccounts()
     {
-        return $this->accountCatalog->getCatalog();
+        $accounts = $this->accountCatalog->getCatalog();
+        $accountArray = array();
+        foreach($accounts as $account)
+        {
+            $accountArray[] = $account->toArray();
+        }
+        return $accountArray;
     }
 
     public function isEmailExists($email)

@@ -178,4 +178,24 @@ class Account
     public function getFullName() {
         return $this->firstName . " " . $this->lastName;
     }
+
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'phoneNumber' => $this->getPhoneNumber(),
+            'doorNumber' => $this->getDoorNumber(),
+            'appartement' => $this->getAppartement(),
+            'street' => $this->getStreet(),
+            'city' => $this->getCity(),
+            'province' => $this->getProvince(),
+            'country' => $this->getCountry(),
+            'postalCode' => $this->getPostalCode(),
+            'isAdmin' => $this->getIsAdmin()
+        );
+    }
 }
