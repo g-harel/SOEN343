@@ -38,29 +38,7 @@ class AccountMapper implements CollectionMapper
 
     public function getAccountFromRecordByEmail($email)
     {
-        $record = $this->gateway->getAccountByEmail($email);
-        $account = null;
-        if ($record != null || $record != false) {
-            $recordAccount = $record[0];
-            $id = $recordAccount["id"];
-            $email = $recordAccount["email"];
-            $password = $recordAccount["password"];
-            $firstName = $recordAccount["first_name"];
-            $lastName = $recordAccount["last_name"];
-            $phoneNumber = $recordAccount["phone_number"];
-            $doorNumber = $recordAccount["door_number"];
-            $appartement = $recordAccount["appartement"];
-            $street = $recordAccount["street"];
-            $city = $recordAccount["city"];
-            $province = $recordAccount["province"];
-            $country = $recordAccount["country"];
-            $postalCode = $recordAccount["postal_code"];
-            $isAdmin = $recordAccount["isAdmin"];
-
-            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-                $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-        }
-        return $account;
+        return AccountCatalog::getInstance()->getAccountFromEmail($email);
     }
 
     public function getAccountFromRecordById($accountId) {
@@ -72,7 +50,7 @@ class AccountMapper implements CollectionMapper
             $account = $this->identityMap->getObject($identityMapId);
         } else {
             // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
-            $account = $this->accountCatalog->getAccount((string)$accountId);
+            $account = $this->accountCatalog->getAccount($accountId);
         }
 
         if ($account === null) {

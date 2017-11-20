@@ -63,7 +63,20 @@ class AccountCatalog
         $accounts = self::$catalog;
         foreach($accounts as $account)
         {
-            if($account->getId() === (string)$accountId)
+            if($account->getId() === $accountId)
+            {
+                return $account;
+            }
+        }
+        return null;
+    }
+
+    public function getAccountFromEmail($email)
+    {
+        $accounts = self::$catalog;
+        foreach($accounts as $account)
+        {
+            if($account->getEmail() === $email)
             {
                 return $account;
             }
