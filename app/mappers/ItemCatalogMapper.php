@@ -11,6 +11,7 @@ use App\Models\Laptop;
 use App\Models\Monitor;
 use App\Models\Computer;
 use App\UnitOfWork\UnitOfWork;
+use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\Gateway\ComputerGateway;
 use App\Gateway\DesktopGateway;
@@ -18,9 +19,8 @@ use App\Gateway\LaptopGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\MonitorGateway;
 
-class ItemCatalogMapper {
-
-    private const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
+class ItemCatalogMapper implements CollectionMapper {
+    const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
         ["category", "category"],
         ["brand", "brand"],
@@ -70,16 +70,16 @@ class ItemCatalogMapper {
     // Used by the controllers
     public function removeItem($transactionId, $itemId) {
         $item = $this->itemCatalog->getItem($itemId);
-        $this->unitOfWork->registerDeleted($transactionId, $item->getId(), self::$instance, $item);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
     }
 
     // Used by the controllers
     public function modifyItem($transactionId, $itemId, $param) {
         $itemInCatalog = $this->itemCatalog->getItem($itemId);
         if ($itemInCatalog !== null) {
-            $itemType = ItemType::getItemTypeStringToEnum($itemInCatalog->getCategory());
+            $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
-            $this->unitOfWork->registerDirty($transactionId, $itemId, self::$instance, $item);
+            $this->unitOfWork->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
             return true;
         } else {
             return false;
@@ -97,7 +97,17 @@ class ItemCatalogMapper {
 
     // Used by the controllers
     public function getItem($itemId){
-        $item = $this->itemCatalog->getItem($itemId);
+
+        $identityMapId = $this->getItemId($itemId);
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
+        $item = null;
+        if ($isItemInIdentityMap) {
+            $item = $this->identityMap->getObject($identityMapId);
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $item = $this->itemCatalog->getItem($itemId);
+        }
+
         if ($item === null) {
             return null;
         } else {
@@ -120,7 +130,7 @@ class ItemCatalogMapper {
     }
 
     // Used by the unitofwork when commit happens
-    public function add(Item $item) {
+    public function add($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -134,34 +144,35 @@ class ItemCatalogMapper {
         $param = $this->mapDomainArrayToStorage($domainArray);
 
         $id = $gateway->insert($param);
-        if ($this->identityMap->hasId($id)){
+        $identityMapId = $this->getItemId($id);
+        if ($this->identityMap->hasId($identityMapId)){
             return false;
         }
         $item->setId($id);
-        $this->identityMap->set($id, $item);
+        $this->identityMap->set($identityMapId, $item);
         $this->itemCatalog->addItem($item);
         return true;
     }
 
     // Used by the unitofwork when commit happens
-    public function delete(Item $item) {
+    public function delete($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
         }
         $id = $item->getId();
+        $identityMapId = $this->getItemId($id);
         $deleted = $gateway->deleteById($id);
         if ($deleted) {
-            $this->identityMap->removeObject($id);
+            $this->identityMap->removeObject($identityMapId);
             $this->itemCatalog->removeItem($id);
         }
-
     }
 
     // Used by the unitofwork when commit happens
     // NOTE: CURRENTLY, THE ITEM IN THE UNIT OF WORK POINTS TOWARDS THE ITEM IN THE IDENTITY MAP.
     // NEED TO DECOUPLE THOSE TWO FOR THIS METHOD TO BE USEFUL!
-    public function edit(Item $item) {
+    public function edit($item) {
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;
@@ -217,9 +228,9 @@ class ItemCatalogMapper {
             }
         }
 
-        // REMOVING THE KEYS THAT HAVN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
+        // REMOVING THE KEYS THAT HAVEN'T BEEN VISITED (MEANING THEY ARE IN THE CATALOG BUT NOT IN DB)
         foreach($unvisitedKeysInCatalog as $key => $value) {
-            if ($this->identityMap->hasId($key)) {
+            if ($this->identityMap->hasId($key . "item")) {
                 $this->identityMap->removeObject($key);
 
             }
@@ -228,22 +239,22 @@ class ItemCatalogMapper {
     }
 
     private function getGateway($item) {
-        $itemType = ItemType::getItemTypeEnum($item);
+      $itemType = ItemType::getItemTypeEnum($item);
         switch($itemType) {
             case ItemType::monitor:
-            return new MonitorGateway();            
+            return new MonitorGateway();
             break;
             case ItemType::computer:
-            return new ComputerGateway();            
+            return new ComputerGateway();
             break;
             case ItemType::desktop:
-            return new DesktopGateway();            
+            return new DesktopGateway();
             break;
             case ItemType::laptop:
-            return new LaptopGateway();            
+            return new LaptopGateway();
             break;
             case ItemType::tablet:
-            return new TabletGateway();            
+            return new TabletGateway();
             break;
             default:
             return null;
@@ -282,6 +293,10 @@ class ItemCatalogMapper {
         }
     }
 
+    private function getItemId($id) {
+        return $id . "item";
+    }
+
     private function mapDomainArrayToStorage($domainArray) {
         $storageArray = null;
         foreach (self::DOMAIN_STORAGE_ARRAY_KEY_PAIRS as $pair){
@@ -314,7 +329,7 @@ class ItemCatalogMapper {
         }
     }
 
-    private function getItemParams(Item $item) {
+    private function getItemParams($item) {
         $array = array();
         $array["id"] = $item->getId();
         $array["category"] = $item->getCategory();
@@ -338,7 +353,7 @@ class ItemCatalogMapper {
         $array["cpuCores"] = $item->getCpuCores();
         $array["weight"] = $item->getWeight();
         $array["hddSize"] = $item->getHddSize();
-        return $array;        
+        return $array;
     }
 
     private function getDesktopParams(Desktop $item) {
@@ -346,7 +361,7 @@ class ItemCatalogMapper {
         $array["height"] = $item->getHeight();
         $array["width"] = $item->getWidth();
         $array["thickness"] = $item->getThickness();
-        return $array;        
+        return $array;
     }
 
     private function getLaptopParams(Laptop $item) {
@@ -356,7 +371,7 @@ class ItemCatalogMapper {
         $array["battery"] = $item->getBattery();
         $array["camera"] = $item->getCamera();
         $array["isTouchscreen"] = $item->getIsTouchscreen();
-        return $array;        
+        return $array;
     }
 
     private function getTabletParams(Tablet $item) {

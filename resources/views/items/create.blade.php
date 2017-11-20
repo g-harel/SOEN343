@@ -1,23 +1,24 @@
 @extends('layouts.app')
 @section('page-title')
-    Create
 @endsection
 @section('content')
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="/items">Items</a></li>
-            <li>Create Items</li>
+            <li>Create Item Specs</li>
         </ol>
     </div>
-    @if(Session::has('succeedInsertingItem'))
+    @if(Session::has('itemSuccessfullyAdded'))
         <div class="row">
             <div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p>You have successfully added a new <b>{{Session::get('for')}}</b> item.</p>
+                <p>
+                    You have successfully added a new <b>{{Session::get('for')}}</b> item.
+                    Click <a href="{{Session::get('link')}}">here</a> to view.
+                </p>
             </div>
         </div>
     @endif
-
     @if(!empty($inputErrors))
         @foreach($inputErrors as $value)
             <div class="row">
@@ -32,7 +33,7 @@
     <div class="row">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h2 class="size-font-30">Create Items</h2>
+                <h2 class="size-font-30">Create Item Specifications</h2>
             </div>
             <div class="panel-body">
                 <!-- radio buttons category -->
@@ -58,12 +59,8 @@
                         <div class="col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    Quantity:
-                                    <input type="number" min="1" required name="desktop-qty" id="this-desktop-qty" class="form-control">
-                                </div>
-                                <div class="form-group">
                                     Brand:
-                                    <select required name="computer-brand" id="computer-brand" class="form-control">
+                                    <select required name="desktop-brand" id="desktop-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
                                 </div>
@@ -81,7 +78,7 @@
                                 </div>
                                 <div class="form-group">
                                     Hard Drive Size (GB):
-                                    <select required name="storage-capacity" id="storage-capacity" class="form-control">
+                                    <select required name="desktop-storage-capacity" id="desktop-storage-capacity" class="form-control">
                                         <option title="Select storage qty" value="">Select storage size</option>
                                     </select>
                                 </div>
@@ -132,10 +129,6 @@
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-5">
-                                <div class="form-group">
-                                    Quantity:
-                                    <input type="number" min="1" name="laptop-qty" id="this-laptop-qty" class="form-control" required>
-                                </div>
                                 <div class="form-group">
                                     Brand:
                                     <select name="laptop-brand" id="laptop-brand" class="form-control" required>
@@ -221,10 +214,6 @@
                         {{ csrf_field() }}
                         <div class="col-md-12">
                             <div class="col-md-5">
-                                <div class="form-group">
-                                    Quantity:
-                                    <input required type="number" min="1" name="tablet-qty" id="this-tablet-qty" class="form-control">
-                                </div>
                                 <div class="form-group">
                                     Brand:
                                     <select required name="tablet-brand" id="tablet-brand" class="form-control">
@@ -323,10 +312,6 @@
                         <div class="col-md-12">
                             <div class="2"></div>
                             <div class="col-md-7">
-                                <div class="form-group">
-                                    Quantity:
-                                    <input type="number" min="1" name="monitor-qty" id="this-monitor-qty" class="form-control" required>
-                                </div>
                                 <div class="form-group">
                                     Brand Name:
                                     <select name="monitor-brand" id="monitor-brand" class="form-control" required>

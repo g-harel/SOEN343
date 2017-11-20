@@ -3,16 +3,19 @@
 namespace App\Gateway;
 
 use Mysqli;
+use Illuminate\Support\Facades\Log;
 
-// log result in the client console.
-Function console_log($str) {
+// log result in the client console and storage/logs/laravel.logs
+Function log_info($str) {
     echo "<script>console.log('".addslashes(json_encode($str))."');</script>\n";
+    Log::info(json_encode($str));
 }
 
-// log errors in the client console.
-Function console_error($str) {
+// log errors in the client console and storage/logs/laravel.logs
+Function log_error($str) {
     if ($str) {
         echo "<script>console.error('".addslashes(json_encode($str))."');</script>\n";
+        Log::error(json_encode($str));
     }
 }
 
@@ -24,7 +27,12 @@ Function getAllSessions($tableName) {
 
 Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
-    $sql = "SELECT * FROM $tableName WHERE $conditions;";
+    $sql = "SELECT * FROM $tableName";
+    if (trim($conditions)) {
+        $sql .= " WHERE $conditions;";
+    } else {
+        $sql .= ";";
+    }
     $db = new DatabaseGateway();
     $result = $db->queryDB($sql);
     if ($result !== null) {
@@ -94,7 +102,7 @@ class DatabaseGateway
     private $databaseName;
 
     public function __construct() {
-        $configPath = dirname(__FILE__, 3) . "\databaseConfig.ini";
+        $configPath = dirname(__FILE__, 3) . "/databaseConfig.ini";
         $configArray = parse_ini_file($configPath);
         $this->serverName = $configArray["serverName"];
         $this->userName = $configArray["userName"];
@@ -128,13 +136,13 @@ class DatabaseGateway
     }
 
     public function manualQueryDB($sql, $returnIndex = null) {
-        console_log($sql);
+        log_info($sql);
         $conn = $this->DBConnection;
         $result = $conn->multi_query($sql);
         $returned = array();
         if (!$result) {
             // TODO remove
-            console_error($conn->error);
+            log_error($conn->error);
             return null;
         }
         $returned[0] = $conn->store_result();
@@ -147,7 +155,7 @@ class DatabaseGateway
                 $returned[$count] = $result;
             } else {
                 // TODO remove
-                console_error($conn->error);
+                log_error($conn->error);
             }
         }
         // if the return index is not a number or if it is larger than the

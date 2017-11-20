@@ -30,7 +30,7 @@ class SessionGateway
 
     public function addSession($accountId) {
         $loginTimeStamp = date('Y-m-d G:i:s');
-        $sql = "INSERT INTO `sessions`(`user_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
+        $sql = "INSERT INTO `sessions`(`account_id`, `login_time_stamp`) VALUES ('$accountId', '$loginTimeStamp');";
         return $this->db->queryDB($sql);
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 01 Novembre 2017 à 21:08
+-- Généré le :  Mer 15 Novembre 2017 à 20:23
 -- Version du serveur :  5.7.17-log
 -- Version de PHP :  7.1.1
 
@@ -23,8 +23,8 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS units;
 DROP TABLE IF EXISTS accounts;
-DROP TABLE IF EXISTS carts;
 DROP TABLE IF EXISTS desktops;
 DROP TABLE IF EXISTS laptops;
 DROP TABLE IF EXISTS monitors;
@@ -35,6 +35,7 @@ DROP TABLE IF EXISTS items;
 --
 -- Structure de la table `accounts`
 --
+
 CREATE TABLE `accounts` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(100) CHARACTER SET latin1 NOT NULL,
@@ -49,40 +50,22 @@ CREATE TABLE `accounts` (
   `province` varchar(100) CHARACTER SET latin1 NOT NULL,
   `country` varchar(50) CHARACTER SET latin1 NOT NULL,
   `postal_code` varchar(12) CHARACTER SET latin1 NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
-  `cart_id` int(10) UNSIGNED DEFAULT NULL
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Contenu de la table `accounts`
 --
-
-INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`, `cart_id`) VALUES
-(1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, NULL),
-(2, 'mikehawk@gmail.com', 'mikey', 'Mike', 'Hawk', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, NULL),
-(3, 'munch@gmail.com', 'qwerty', 'Munchma', 'Quchi', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, NULL);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `carts`
---
-CREATE TABLE `carts` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `item1_id` int(10) UNSIGNED DEFAULT NULL,
-  `item2_id` int(10) UNSIGNED DEFAULT NULL,
-  `item3_id` int(10) UNSIGNED DEFAULT NULL,
-  `item4_id` int(10) UNSIGNED DEFAULT NULL,
-  `item5_id` int(10) UNSIGNED DEFAULT NULL,
-  `item6_id` int(10) UNSIGNED DEFAULT NULL,
-  `item7_id` int(10) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`) VALUES
+(1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1),
+(2, 'admin2@gmail.com', 'admin1234', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1),
+(3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1);
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `computers`
 --
+
 CREATE TABLE `computers` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `processor_type` varchar(100) NOT NULL,
@@ -100,13 +83,16 @@ INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `
 (3, 'Intel', 12, 4, 5.00, 128),
 (4, 'Rockchip', 16, 6, 13.20, 1000),
 (5, 'AMD', 2, 4, 1.00, 2000),
-(6, 'Intel', 8, 2, 3.00, 256);
+(6, 'Intel', 8, 2, 3.00, 256),
+(23, 'NoIdea', 16, 8, 31.20, 1000),
+(24, 'NoIdea', 16, 8, 31.20, 1000);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `desktops`
 --
+
 CREATE TABLE `desktops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `height` float(10,2) NOT NULL,
@@ -119,38 +105,55 @@ CREATE TABLE `desktops` (
 --
 
 INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
-(4, 43.00, 24.00, 13.00);
+(4, 43.00, 24.00, 13.00),
+(23, 12.00, 12.00, 4.00),
+(24, 12.00, 12.00, 4.00);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `items`
 --
+
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
   `category` varchar(20) NOT NULL,
   `brand` varchar(100) NOT NULL,
-  `price` float(10,2) NOT NULL,
-  `quantity` int(10) UNSIGNED NOT NULL
+  `price` float(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `items`
 --
 
-INSERT INTO `items` (`id`, `category`, `brand`, `price`, `quantity`) VALUES
-(1, 'monitor', 'test', 12.00, 1),
-(2, 'monitor', 'test2', 99.00, 99),
-(3, 'laptop', 'IBM', 1500.00, 2),
-(4, 'desktop', 'Dell', 1055.00, 20),
-(5, 'tablet', 'Apple', 900.00, 43),
-(6, 'laptop', 'Apple', 9999.00, 9);
+INSERT INTO `items` (`id`, `category`, `brand`, `price`) VALUES
+(1, 'test', 'test', 12.00),
+(2, 'test2', 'test2', 99.00),
+(3, 'laptop', 'IBM', 1500.00),
+(4, 'desktop', 'Dell', 1055.00),
+(5, 'tablet', 'Apple', 900.00),
+(6, 'laptop', 'Apple', 9999.00),
+(7, 'desktop', 'Alienware', 2400.00),
+(8, 'desktop', 'Alienware3333', 240022.00),
+(9, 'desktop', 'Alienware', 2400.00),
+(10, 'desktop', 'Alienware3333', 240022.00),
+(11, 'desktop', 'Alienware', 2400.00),
+(12, 'desktop', 'Alienware3333', 240022.00),
+(13, 'desktop', 'Alienware', 2400.00),
+(14, 'desktop', 'Alienware3333', 240022.00),
+(15, 'desktop', 'Alienware', 2400.00),
+(16, 'desktop', 'Alienware3333', 240022.00),
+(17, 'desktop', 'Alienware', 2400.00),
+(18, 'desktop', 'Alienware3333', 240022.00),
+(23, 'desktop', 'Alienware6666', 111111.00),
+(24, 'desktop', 'Alienware3333', 240022.00);
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `laptops`
 --
+
 CREATE TABLE `laptops` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -173,6 +176,7 @@ INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is
 --
 -- Structure de la table `monitors`
 --
+
 CREATE TABLE `monitors` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -192,9 +196,10 @@ INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 --
 -- Structure de la table `sessions`
 --
+
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `account_id` int(10) UNSIGNED NOT NULL,
   `login_time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -203,6 +208,7 @@ CREATE TABLE `sessions` (
 --
 -- Structure de la table `tablets`
 --
+
 CREATE TABLE `tablets` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `display_size` float(10,2) NOT NULL,
@@ -222,9 +228,34 @@ CREATE TABLE `tablets` (
 INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`, `battery`, `os`, `camera`, `is_touchscreen`) VALUES
 (5, 7.00, 3.00, 2.00, 6.00, 'Mac', 'iOS', 'Yes', 0);
 
+-- --------------------------------------------------------
+
 --
--- Index pour les tables exportées
+-- Structure de la table `units`
 --
+
+CREATE TABLE `units` (
+  `serial` varchar(32) NOT NULL,
+  `item_id` int(11) UNSIGNED NOT NULL,
+  `status` ENUM('AVAILABLE', 'RESERVED', 'PURCHASED'),
+  `account_id` int(11) UNSIGNED,
+  `reserved_date` timestamp NULL,
+  `purchased_price` float(10,2) NULL,
+  `purchased_date` timestamp NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `units`
+--
+
+INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
+('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
+('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW()),
+('411ATEGBH', 3, 'PURCHASED', 3, NOW(), 99.99, NOW()),
+('678GYDHBN', 4, 'PURCHASED', 4, NOW(), 299.99, NOW()),
+('492AGVELO', 5, 'PURCHASED', 5, NOW(), 79.99, NOW());
+
+-- --------------------------------------------------------
 
 --
 -- Index pour la table `accounts`
@@ -232,21 +263,7 @@ INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`),
-  ADD UNIQUE KEY `cart_id` (`cart_id`);
-
---
--- Index pour la table `carts`
---
-ALTER TABLE `carts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `item1_id` (`item1_id`),
-  ADD KEY `item2_id` (`item2_id`),
-  ADD KEY `item3_id` (`item3_id`),
-  ADD KEY `item4_id` (`item4_id`),
-  ADD KEY `item5_id` (`item5_id`),
-  ADD KEY `item6_id` (`item6_id`),
-  ADD KEY `item7_id` (`item7_id`);
+  ADD UNIQUE KEY `email_UNIQUE` (`email`);
 
 --
 -- Index pour la table `computers`
@@ -289,7 +306,7 @@ ALTER TABLE `monitors`
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD UNIQUE KEY `user_id_UNIQUE` (`user_id`);
+  ADD UNIQUE KEY `account_id_UNIQUE` (`account_id`);
 
 --
 -- Index pour la table `tablets`
@@ -297,6 +314,14 @@ ALTER TABLE `sessions`
 ALTER TABLE `tablets`
   ADD PRIMARY KEY (`item_id`),
   ADD UNIQUE KEY `id_UNIQUE` (`item_id`);
+
+--
+-- Index pour la table `units`
+--
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`serial`),
+  ADD KEY `item_id_fk` (`item_id`),
+  ADD KEY `account_id_fk` (`account_id`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -308,15 +333,10 @@ ALTER TABLE `tablets`
 ALTER TABLE `accounts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT pour la table `carts`
---
-ALTER TABLE `carts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT pour la table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT pour la table `sessions`
 --
@@ -325,24 +345,6 @@ ALTER TABLE `sessions`
 --
 -- Contraintes pour les tables exportées
 --
-
---
--- Contraintes pour la table `accounts`
---
-ALTER TABLE `accounts`
-  ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `cart`
---
-ALTER TABLE `carts`
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`item1_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_3` FOREIGN KEY (`item2_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_4` FOREIGN KEY (`item3_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_5` FOREIGN KEY (`item4_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_6` FOREIGN KEY (`item5_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_7` FOREIGN KEY (`item6_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_8` FOREIGN KEY (`item7_id`) REFERENCES `items` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `computers`
@@ -372,13 +374,20 @@ ALTER TABLE `monitors`
 -- Contraintes pour la table `sessions`
 --
 ALTER TABLE `sessions`
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `account_id` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `tablets`
 --
 ALTER TABLE `tablets`
   ADD CONSTRAINT `fk_tablet_item_id` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `units`
+--
+ALTER TABLE `units`
+  ADD CONSTRAINT `account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `item_id_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

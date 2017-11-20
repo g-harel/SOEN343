@@ -7,6 +7,9 @@ const dropDownOptions = {
      * https://www.staples.ca/en/
      * https://en.wikipedia.org/wiki/List_of_computer_hardware_manufacturers
      */
+    displaySizes: ['4.30', '5.00', '7.00', '7.90', '8.00', '12.00', '13.30',
+        '14.00', '15.00', '15.40', '15.70', '19.55', '21.55', '23.00', '23.80', '27.00', '28.00', '34.00',
+        '57.00'],
     computer: {
         brands: [
             'Hewlett Packard',
@@ -50,7 +53,6 @@ const dropDownOptions = {
         width: [70.9, 88.6, 95.3, 110.7, 121.7, 132.8, 144.0, 154.9, 166.1],
         height: [39.9, 49.8, 53.6, 62.2, 68.6, 74.7, 81.0, 87.1, 93.5],
         cpuCores: [2, 3, 4, 6, 8],
-        displaySize: [4.3, 5, 7, 7.9, 8, 12, 13.3, 14, 15, 15.4, 15.7, 19.5, 21.5, 23, 23.8, 27, 28, 34, 57],
     },
     tv: {
         brands: [
@@ -134,29 +136,31 @@ const dropDownOptions = {
             'ViewSonic',
             'Zalman',
         ],
-        displaySize: [
-            4.3,
-            5,
-            7,
-            7.9,
-            8,
-            12,
-            13.3,
-            14,
-            15,
-            15.4,
-            15.7,
-            19.5,
-            21.5,
-            23,
-            23.8,
-            27,
-            28,
-            34,
-            57,
-        ],
     },
 
+};
+
+const itemsTable = {
+    monitor: {
+        link: '#monitorTable',
+        scrollX: false,
+        pageLength: 50,
+    },
+    tablet: {
+        link: '#tabletTable',
+        scrollX: true,
+        pageLength: 50,
+    },
+    laptop: {
+        link: '#laptopTable',
+        scrollX: true,
+        pageLength: 50,
+    },
+    desktop: {
+        link: '#desktopTable',
+        scrollX: true,
+        pageLength: 50,
+    },
 };
 
 /**
@@ -191,7 +195,7 @@ const FormDropDownFields = (() => {
                 monitorFormSelector: $('form#monitor-form'),
             };
             forBrandDropDown = [
-                formsObj.desktopFormSelector.find('select#computer-brand'),
+                formsObj.desktopFormSelector.find('select#desktop-brand'),
                 formsObj.laptopFormSelector.find('select#laptop-brand'),
                 formsObj.tabletFormSelector.find('select#tablet-brand'),
             ];
@@ -201,7 +205,7 @@ const FormDropDownFields = (() => {
                 formsObj.tabletFormSelector.find('select#tablet-ram-size'),
             ];
             forStorageSizeDropDown = [
-                formsObj.desktopFormSelector.find('select#storage-capacity'),
+                formsObj.desktopFormSelector.find('select#desktop-storage-capacity'),
                 formsObj.laptopFormSelector.find('select#laptop-storage-capacity'),
                 formsObj.tabletFormSelector.find('select#tablet-storage-capacity'),
             ];
@@ -232,14 +236,14 @@ const FormDropDownFields = (() => {
             populateDropDownWithOptions(dropDownOptions.computer.storageSize, forStorageSizeDropDown);
             populateDropDownWithOptions(dropDownOptions.computer.processorType, forProcessorTypeDropDown);
             populateDropDownWithOptions(dropDownOptions.computer.cpuCores, forCpuCoresDropDown);
-            populateDropDownWithOptions(dropDownOptions.computer.displaySize, forDisplaySizeDropDown);
+            populateDropDownWithOptions(dropDownOptions.displaySizes, forDisplaySizeDropDown);
             populateDropDownWithOptions(dropDownOptions.computer.os, forOsDropDown);
             populateDropDownWithOptions(
                 dropDownOptions.monitor.brands,
                 [formsObj.monitorFormSelector.find('select#monitor-brand')],
             );
             populateDropDownWithOptions(
-                dropDownOptions.monitor.displaySize,
+                dropDownOptions.displaySizes,
                 [formsObj.monitorFormSelector.find('select#monitor-display-size')],
             );
         },
@@ -248,12 +252,26 @@ const FormDropDownFields = (() => {
 
 $(document).ready(() => {
     FormDropDownFields.init();
-    $('#tabletTable').DataTable({
-        "aoColumnDefs": [{ "bVisible": false }],
-        "pageLength": 50,
-        "scrollX": true
+    $(itemsTable.tablet.link).DataTable({
+        pageLength: itemsTable.tablet.pageLength,
+        scrollX: itemsTable.tablet.scrollX,
+        searching: false,
     });
-
+    $(itemsTable.monitor.link).DataTable({
+        pageLength: itemsTable.monitor.pageLength,
+        scrollX: itemsTable.monitor.scrollX,
+        searching: false,
+    });
+    $(itemsTable.laptop.link).DataTable({
+        pageLength: itemsTable.laptop.pageLength,
+        scrollX: itemsTable.laptop.scrollX,
+        searching: false,
+    });
+    $(itemsTable.desktop.link).DataTable({
+        pageLength: itemsTable.desktop.pageLength,
+        scrollX: itemsTable.desktop.scrollX,
+        searching: false,
+    });
 });
 
 /**

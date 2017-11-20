@@ -1,21 +1,95 @@
 @extends('layouts.app')
 @section('content')
 
-
 <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-xs-12 col-sm-9">
         <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
-        @if(empty($id))
-        <div class="row">
-            <div class="col-lg-12">
-               <h1> <small>Here are some weekly hot sellers!</small></h1>
+        @if(Session::has('unitNotReserved'))
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>You need to be logged in to add to cart!</p>
             </div>
+        @endif
+        @if(Session::has('unitReserved'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully added to your Shopping Cart</p>
+            </div>
+        @endif
+        @if(Session::has('notFound'))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <label>Monitor not found.</label>
+            </div>
+        @endif
+        @if(!empty($noResults))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>No results were found for your search.</p>
+            </div>
+        @endif
+        @if(!empty($numResult))
+            <div class="alert alert-info">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <label>{{$numResult}} result(s) found.</label>
+            </div>
+        @endif
+        @if(!empty($result))
+            @foreach($result as $value)
+                <div class="row">
+                    <div class="col-xs-12 col-lg-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{$value['brand']}} Laptop</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <i class="fa fa-desktop fa-5x"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>Quantity: <b>{{$value['quantity']}}</b></p>
+                                        <p>Price: <b>${{$value['price']}}</b></p>
+                                        <p>Brand: <b>{{$value['brand']}}</b></p>
+                                        <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
+                                        <p>OS: <b>{{$value['os']}}</b></p>
+                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
+                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
+                                        <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
+                                        <p>Weight: <b>{{$value['weight']}} kg</b></p>
+                                        <p>Battery: <b>{{$value['battery']}}</b></p>
+                                        <p>Camera: <b>{{$value['camera']}}</b></p>
+                                        @if($value["is_touchscreen"] == 0)
+                                            <p>Touchscreen: <b>No</b></p>
+                                        @else
+                                            <p>Touchscreen: <b>Yes</b></p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <form method="post" action="items/laptop/reserve">
+                                <div class="panel-footer">
+                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}" role="button">View details »</a></span>
+                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
+                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!--/.col-xs-6.col-lg-4-->
+                </div>
+            @endforeach
+        @endif
+        @if(empty($details)  && empty($result))
+        <div class="row">
+            @foreach($laptops as $laptop)
             <div class="col-xs-6 col-lg-4">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
+                        <h3 class="panel-title">
+                            {{ $laptop['brand'] }}, {{ $laptop['hdd_size'] }} GB {{ $laptop["display_size"] }}"
+                        </h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -23,79 +97,40 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-6">
-                                <p >Price: $199.99</p>
+                                <p>Price: ${{ $laptop['price'] }}</p>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="col-md-6">
-                            <p>Item Info</p>
-                            </div>
+                            <ul class="list-group">
+                                <li>Processor Type: <b>{{ $laptop['processor_type'] }}</b></li>
+                                <li>Ram Size: <b>{{ $laptop['ram_size'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $laptop['cpu_cores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $laptop['hdd_size'] }} GB</b></li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/desktop/{{$laptop['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$laptop['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-laptop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-                <div class="panel panel-warning">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Razr Laptop</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <i class="fa fa-laptop fa-5x"></i>
-                            </div>
-                            <div class="col-md-6">
-                                <p >Price: $199.99</p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <p>Item Info</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="/view/laptop/1" role="button">View details »</a></span>
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
-                </div>
-            </div><!--/.col-xs-6.col-lg-4-->
-        </div><!--/row-->
-        @else
+            </div>
+            @endforeach
+            @if(empty($laptops))
+                <p>Laptop item catalog is currently empty.</p>
+            @endif
+        </div>
+        @endif
+        @if(!empty($details))
             <div class="col-xs-12 col-lg-12">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Razr Monitor</h3>
+                        <h3 class="panel-title">
+                            {{ $details['brand'] }}, {{ $details['hdd_size'] }} GB {{ $details["display_size"] }}"
+                        </h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -103,21 +138,36 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Price: $199.99</p>
-                                <p>Brand: Samsung</p>
-                                <p>quantity: 2</p>
-                                <p>Brand: Samsung</p>
-                                <p>Camera: Yes</p>
+                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
+                                <p>Price: <b>${{$details['price']}}</b></p>
+                                <p>Brand: <b>{{$details['brand']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processor_type']}}</b></p>
+                                <p>OS: <b>{{$details['os']}}</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ram_size']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['display_size']}} inches</b></p>
+                                <p>Weight: <b>{{$details['weight']}} kg</b></p>
+                                <p>Battery: <b>{{$details['battery']}}</b></p>
+                                <p>Camera: <b>{{$details['camera']}}</b></p>
+                                @if($details["is_touchscreen"] == 0)
+                                    <p>Touchscreen: <b>No</b></p>
+                                @else
+                                    <p>Touchscreen: <b>Yes</b></p>
+                                @endif
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="#" role="button">Add to Cart »</a></span>
-                    </div>
+                    <form method="post" action="items/laptop/reserve">
+                        <div class="panel-footer">
+                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$details['serial']}}">
+                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        </div>
+                    </form>
                 </div>
-            </div><!--/.col-xs-6.col-lg-4-->
+            </div>
         @endif
-    </div><!--/.col-xs-12.col-sm-9-->
+    </div>
 
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">
@@ -132,27 +182,33 @@
                 <h3 class="panel-title">Advanced Search</h3>
             </div>
             <div class="panel-body">
-                <form id="laptop-form" class="form-horizontal" action="" method="POST">
+                <form id="laptop-form" class="form-horizontal" action="/view/computer/search" method="GET">
                     <div class="col-md-12">
                         <div class="form-group">
                             Brand:
-                            <select required="" name="laptop-brand" id="laptop-brand" class="form-control">
+                            <select name="laptop-brand" id="laptop-brand" class="form-control">
                                 <option title="Select brands" value="">Select brands</option>
                             </select>
                         </div>
                         <div class="form-group">
                             Hard Drive Size (GB):
-                            <select required="" name="laptop-storage-capacity" id="laptop-storage-capacity" class="form-control">
+                            <select  name="laptop-storage-capacity" id="laptop-storage-capacity" class="form-control">
                                 <option title="Select storage qty" value="">Select storage size</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            Price: <br>
-                            min:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="laptop-price" id="laptop-price" class="form-control">
-                            max:<input type="number" min="1" step="0.01" placeholder="0.00" max="99999" name="laptop-price" id="laptop-price" class="form-control" >
+                            Ram Size (GB):
+                            <select  name="laptop-ram-size" id="laptop-ram-size" class="form-control">
+                                <option title="Select laptop ram size" value="">Select ram size</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-sm" name="search-laptop-form" id="search-laptop-form">Search</button>
+                            Price: <br>
+                            min:<input type="number"  step="0.01" placeholder="0.00" max="99999" name="min-price" id="laptop-price" class="form-control" value="0">
+                            max:<input type="number"  step="0.01" placeholder="0.00" max="99999" name="max-price" id="laptop-price" class="form-control" value="0">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-sm" name="client-search-laptop-form" id="client-search-laptop-form">Search</button>
                         </div>
                     </div>
                 </form>

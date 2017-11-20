@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
+use App\Gateway\ItemGateway;
+use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
-use App\Mappers\UserMapper;
+use App\Mappers\ItemCatalogMapper;
+use App\Mappers\AccountMapper;
+use App\gateway\AccountGateway;
+use App\Gateway\MonitorGateway;
+use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
 {
@@ -25,59 +27,128 @@ class PagesController extends Controller
     {
         return view('pages.register');
     }
-  
-    public function admin(){
-        if($this->isAdminLoggedIn()) {
-            return view('pages.admin');
-        }
-        return view('pages.index');
+
+    public function admin()
+    {
+        return view('pages.admin');
     }
 
-    public function view(){
+    public function purchaseHistory(){
+        return view('pages.purchaseHistory');
+    }
+    
+    public function view()
+    {
         return view('pages.view');
     }
 
     public function viewDesktop()
     {
-        return view('pages.viewDesktop');
+        $desktops = $this->returnItemUnits(3);
+//        print_r($desktops);
+        return view('pages.viewDesktop', [
+            'desktops' => $desktops
+        ]);
     }
 
     public function viewLaptop()
     {
-        return view('pages.viewLaptop');
+        return view('pages.viewLaptop', [
+            'laptops' => $this->returnItemUnits(4)
+        ]);
     }
 
     public function viewMonitor()
     {
-        return view('pages.viewMonitor');
+        $monitors = $this->returnItemUnits(1);
+        return view('pages.viewMonitor', [
+            'monitors' => $monitors
+        ]);
     }
 
     public function viewTablet()
     {
-        return view('pages.viewTablet');
+        $tablets = $this->returnItemUnits(5);
+        return view('pages.viewTablet', [
+            'tablets' => $tablets
+        ]);
     }
 
     public function monitorDetails($id)
     {
-        return view('pages.viewMonitor')->with('id', $id);
+        $monitors = $this->returnItemUnits(1);
+        $details = [];
+        if($this->isIdExistInCatalog2($id, $monitors)) {
+            foreach($monitors as $monitor){
+                $details = $monitor;
+            }
+            return view('pages.viewMonitor', [
+                'details' => $details,
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
+            ]);
+        }
     }
 
     public function desktopDetails($id)
     {
-        return view('pages.viewDesktop')->with('id', $id);
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::DESKTOP_ITEM_TYPE)) {
+            $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+            foreach($desktops as $desktop){
+                $details = $desktop;
+            }
+            return view('pages.viewDesktop', [
+                'details' => $details,
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
+            ]);
+        }
+
     }
 
     public function laptopDetails($id)
     {
-        return view('pages.viewLaptop')->with('id', $id);
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::LAPTOP_ITEM_TYPE)) {
+            $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+            foreach($laptops as $laptop){
+                $details = $laptop;
+            }
+            return view('pages.viewLaptop', [
+                'details' => $details
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
+            ]);
+        }
     }
 
     public function tabletDetails($id)
     {
-        return view('pages.viewTablet')->with('id', $id);
+        $details = [];
+        if($this->isIdExistInCatalog($id, Controller::TABLET_ITEM_TYPE)) {
+            $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+            foreach($tablets as $tablet){
+                $details = $tablet;
+            }
+            return view('pages.viewLaptop', [
+                'details' => $details
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'notFound' => true
+            ]);
+        }
     }
 
-    public function login(){
+    public function login()
+    {
         return view('pages.login');
     }
 
@@ -85,7 +156,7 @@ class PagesController extends Controller
     {
         // on log out close session item in session table as well
         $sessionMapper = new SessionMapper();
-        if(isset($_SESSION['currentLoggedInId'])) {
+        if (isset($_SESSION['currentLoggedInId'])) {
             $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
         }
         $_SESSION = array();
@@ -100,10 +171,22 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        if ($this->isAdminLoggedIn()) {
-            return view('pages.admin');
+        $cart = UnitMapper::getInstance();
+
+        $units = $cart->getCart($_SESSION['currentLoggedInId']);
+        $itemMapper = ItemCatalogMapper::getInstance();
+
+        $specs = [];
+        foreach ($units as $unit) {
+            array_push($specs, $itemMapper->getItem($unit['item_id']));
         }
-        return view('pages.shoppingCart');
+//        echo '<pre>';
+//        print_r($specs);
+//        die;
+        return view('pages.shoppingCart', [
+            'cart' => $specs
+        ]);
+//        return view('pages.shoppingCart');
     }
 
     public function loginVerify()
@@ -113,11 +196,9 @@ class PagesController extends Controller
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             $login = new Login($email, $password);
             if ($login->validate() && $this->isAdminLoggedIn()) {
-                // for admin redirection
-                return view('pages.admin');
+                return redirect('admin');
             } elseif ($login->validate() && !$this->isAdminLoggedIn()) {
-                // for client redirection
-                return view('pages.view');
+                return redirect('view');
             } else {
                 return redirect()->back()->with(
                     'loginError', true
@@ -127,34 +208,60 @@ class PagesController extends Controller
         return view('pages.index');
     }
 
-    public function registerUser() {
-        // check if email exist
-        // if not then you can add this user
-        // return confirm message or error message
-
+    public function registerUser()
+    {
         $sanitizedInputs = filter_input_array(INPUT_POST, $this->registerValidateFormInputs());
         $emptyArrayKeys = array_keys($sanitizedInputs, "");
-
-
         if (!empty($emptyArrayKeys)) {
-            return view('pages.register', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
+            return redirect()->back()->with([
+                'inputErrors' => $emptyArrayKeys
+            ]);
         } else {
-            $registerThis = new Register($sanitizedInputs['first_name'], $sanitizedInputs['last_name'], $sanitizedInputs['email'],
-                $sanitizedInputs['password'], $sanitizedInputs['phone_number'],
-                $sanitizedInputs['door_number'], $sanitizedInputs['street'], $_POST['appartment'], $sanitizedInputs['city'],
-                $sanitizedInputs['province'], $sanitizedInputs['country'], $sanitizedInputs['postal_code']);
-
+            $registerThis = new Register($sanitizedInputs['first_name'],
+                $sanitizedInputs['last_name'],
+                $sanitizedInputs['email'],
+                $sanitizedInputs['password'],
+                $sanitizedInputs['phone_number'],
+                $sanitizedInputs['door_number'],
+                $sanitizedInputs['street'],
+                $_POST['appartment'],
+                $sanitizedInputs['city'],
+                $sanitizedInputs['province'],
+                $sanitizedInputs['country'],
+                $sanitizedInputs['postal_code']
+            );
             $exists = $registerThis->checkExistingEmail();
-
-            if($exists){
-                return redirect()->back()->with(['emailExists' => true, 'for' => 'laptop']);
+            if ($exists) {
+                return redirect()->back()->with(['emailExists' => true]);
+            } else {
+                $registerThis->createAccount();
             }
-            else{
-                $registerThis->createUser();
-            }
-            return view('pages.view');
+            return view('pages.login', ['registrationSuccess' => true]);
         }
+    }
+    
+    public function viewProfile() {
+        $id =$_SESSION['currentLoggedInId'];
+        $accountMapper = AccountMapper::createAccountMapper($id);
+        $currentUser = $accountMapper->getAccount();
+        
+        return view('pages.client-profile', ['currentUser' => $currentUser]);
+    }
 
+    public function deleteAccount(){
+        if($this->isFormSubmitted($_POST)) {
+            $userId = filter_input(INPUT_POST, 'current-user-id');
+            $sessionMapper = new SessionMapper();
+            $sessionMapper->closeSession($userId);
+            $_SESSION = array();
+            session_destroy();
+            //Delete user
+            $accountMapper = AccountMapper::createAccountMapper($userId);
+            $accountMapper->deleteAccountInRecord();
+            return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
+        } else {
+            return view('pages.index', ['accountNotDeleted' => 'Something went wrong. Please try again later.']);
+        }
     }
 }
 
