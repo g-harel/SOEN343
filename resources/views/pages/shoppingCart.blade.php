@@ -35,10 +35,30 @@
         @endif
         @if(empty($cart))
             <h1>Your shopping cart is empty!</h1>
+        @if(!empty($itemSuccessfullyPurchased))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>Units were successfully purchased!</p>
+            </div>
         @endif
-        @if(empty($cart) && empty($_SESSION['currentLoggedInId']))
-            <h1>Your shopping cart is empty! Please <a href="/login">Sign</a> in to view your cart.</h1>
-        @else
+        @if(empty($cart) && !empty($_SESSION['currentLoggedInId']))
+            <div class="row">
+                <div class="text-center">
+                    <h1>Your shopping cart is empty!</h1>
+                    <button type="button" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        <a href="/view" style="color:white">Continue Shopping</a>
+                    </button>
+                </div>
+            </div>
+        @elseif (empty($cart) && empty($_SESSION['currentLoggedInId']))
+                <div class="row">
+                    <div class="text-center">
+                        <h1>Your shopping cart is empty! Please <a href="/login">Sign</a> in to view your cart.</h1>
+                    </div>
+                </div>
+            @endif
+        @if(!empty($cart) && !empty($_SESSION['currentLoggedInId']) )
             <div class="row">
                 <div class="col-sm-12 col-md-10 col-md-offset-1">
                     <table class="table table-hover">
@@ -106,9 +126,12 @@
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
-                                <button type="button" class="btn btn-success">
+                                <form action="/checkout" method="post" >
+                                    {{ csrf_field() }}
+                                <button type="submit" class="btn btn-success">
                                     Checkout <span class="glyphicon glyphicon-play"></span>
                                 </button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>
