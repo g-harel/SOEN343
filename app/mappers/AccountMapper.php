@@ -64,25 +64,15 @@ class AccountMapper implements CollectionMapper
         return $id . "account";
     }
 
-    public function addAccount($account)
+    public function addAccount($transactionId, $accountParams)
     {
-        $result = null;
-        if(!($this->isEmailExists($account['email'])))
-        {
-            $result = $this->gateway->addAccount(
-                $account['email'], $account['password'], $account['firstName'], $account['lastName'],
-                $account['phoneNumber'], $account['doorNumber'], $account['appt'],
-                $account['street'], $account['city'], $account['province'], $account['country'],
-                $account['postalCode'], $account['isAdmin']
-            );
-        }
-        $isSuccessful = false;
-        if ($result !== null) {
-            /*$id = $result[0]["id"];
-            $this->account->setId($id);*/
-            $isSuccessful = true;
-        }
-        return $isSuccessful;
+        $account = Account::createWithAddressDecomposed(
+            $accountParams['email'], $accountParams['password'], $accountParams['firstName'], $accountParams['lastName'],
+            $accountParams['phoneNumber'], $accountParams['doorNumber'], $accountParams['appt'],
+            $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
+            $accountParams['postalCode'], $accountParams['isAdmin']
+        );
+        $this->unitOfWork->registerNew($transactionId, self::$instance, $account);
     }
 
     public function deleteAccount($transactionId, $accountId)
@@ -119,14 +109,28 @@ class AccountMapper implements CollectionMapper
     }
 
     //For UoW
-    public function add($object)
+    public function add($account)
     {
-        //Not Needed
+        $id = $this->gateway->addAccount(
+            $account->getEmail(), $account->getPassword(), $account->getFirstName(), $account->getLastName(),
+            $account->getPhoneNumber(), $account->getDoorNumber(), $account->getAppartement(),
+            $account->getStreet(), $account->getCity(), $account->getProvince(), $account->getCountry(),
+            $account->getPostalCode(), $account->getIsAdmin()
+        );
+        $identityMapId = $this->getAccountId($id);
+        if ($this->identityMap->hasId($identityMapId)){
+            return false;
+        }
+        $account->setId($id);
+        $this->identityMap->set($identityMapId, $account);
+        $this->accountCatalog->addAccount($account);
+        return true;
     }
 
     //For UoW
     public function edit($object)
     {
+        //Not needed
     }
 
     //For UoW

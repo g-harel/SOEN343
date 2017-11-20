@@ -33,7 +33,8 @@ class Register
 
     public function createAccount()
     {
-        $this->accountMapper->addAccount($this->params);
+        $this->accountMapper->addAccount(0, $this->params);
+        $this->accountMapper->commit(0);
     }
 
     public function isEmailExists()
