@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\ItemGateway;
-use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\AccountMapper;
-use App\gateway\AccountGateway;
-use App\Gateway\MonitorGateway;
 use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
@@ -44,7 +40,7 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
-        $desktops = $this->returnItemUnits(3);
+        $desktops = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
         return view('pages.viewDesktop', [
             'desktops' => $desktops
         ]);
@@ -53,13 +49,13 @@ class PagesController extends Controller
     public function viewLaptop()
     {
         return view('pages.viewLaptop', [
-            'laptops' => $this->returnItemUnits(4)
+            'laptops' => $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE)
         ]);
     }
 
     public function viewMonitor()
     {
-        $monitors = $this->returnItemUnits(1);
+        $monitors = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
         return view('pages.viewMonitor', [
             'monitors' => $monitors
         ]);
@@ -67,7 +63,7 @@ class PagesController extends Controller
 
     public function viewTablet()
     {
-        $tablets = $this->returnItemUnits(5);
+        $tablets = $this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
         return view('pages.viewTablet', [
             'tablets' => $tablets
         ]);
@@ -175,7 +171,6 @@ class PagesController extends Controller
         return view('pages.registerVerification');
     }
 
-
     public function shoppingCart()
     {
         $total = 0;
@@ -256,16 +251,17 @@ class PagesController extends Controller
         }
     }
 
-    public function viewProfile() {
-        $id =$_SESSION['currentLoggedInId'];
+    public function viewProfile()
+    {
+        $id = $_SESSION['currentLoggedInId'];
         $accountMapper = AccountMapper::createAccountMapper($id);
         $currentUser = $accountMapper->getAccount();
-
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
-    public function deleteAccount(){
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteAccount()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $userId = filter_input(INPUT_POST, 'current-user-id');
             $sessionMapper = new SessionMapper();
             $sessionMapper->closeSession($userId);

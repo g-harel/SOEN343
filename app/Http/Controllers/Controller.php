@@ -6,13 +6,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-use App\Gateway\DatabaseGateway;
-use App\Models\Monitor;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Mappers\ItemCatalogMapper;
 use App\Gateway\MonitorGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\LaptopGateway;
@@ -29,16 +26,16 @@ class Controller extends BaseController
     const TABLET_ITEM_TYPE = 5;
 
     // utility
-    public $filterInputFloatArr = array(
+    public $filterInputFloatArr = [
         'filter' => FILTER_VALIDATE_FLOAT,
         'options' => "decimal"
-    );
+    ];
 
     // utility
-    public $filterIntInputQty = array(
+    public $filterIntInputQty = [
         'filter' => FILTER_VALIDATE_INT,
-        'options' => array('min_range' => 1, 'max_range' => 999)
-    );
+        'options' => ['min_range' => 1, 'max_range' => 999]
+    ];
 
     /**
      * Used for validating desktop form
@@ -210,30 +207,6 @@ class Controller extends BaseController
             $_SESSION['isAdmin'] == 1;
     }
 
-    /**
-     * e.g. /view/monitor/{id}
-     * return true if id exist, otherwise false
-     * @param $idToSearch
-     * @param $itemType
-     * @return bool
-     */
-    public function isIdExistInCatalog($idToSearch, $itemType) {
-        $ids = array_column(
-            ItemCatalogMapper::getInstance()->selectAllItemType($itemType),
-            'id'
-        );
-        return in_array((int)$idToSearch, $ids);
-    }
-
-    public function isIdExistInCatalog2($idToSearch, $arr) {
-        $ids = array_column(
-            $arr,
-            'id'
-        );
-        return in_array((int)$idToSearch, $ids);
-    }
-
-
     public function returnItemUnits($itemType)
     {
         $item = null;
@@ -247,7 +220,7 @@ class Controller extends BaseController
             $item = new TabletGateway();
         }
         $arr = $item->getByCondition([]);
-        $unitsArr = array();
+        $unitsArr = [];
         for ($i = 0; $i < count($arr); $i++) {
             $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
             for ($j = 0; $j < count($units); $j++) {

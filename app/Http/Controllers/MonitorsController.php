@@ -2,32 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\DesktopGateway;
-use App\Gateway\MonitorGateway;
-use App\Gateway\UnitGateway;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\UnitCatalog;
 use App\Mappers\UnitMapper;
-use App\Models\Desktop;
 use App\Models\Unit;
 
 class MonitorsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
     }
-    //ublic function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
 
-    public function purchaseMonitorUnit(){
-
-    }
-    public function showMonitor() {
+    public function showMonitor()
+    {
         return view('items.monitor.show-monitor', [
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
 
-    public function reserveMonitorUnit() {
+    public function reserveMonitorUnit()
+    {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
             $unitMapper = UnitMapper::getInstance();
@@ -41,11 +35,9 @@ class MonitorsController extends Controller
 
     public function addMonitorUnits()
     {
-
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['monitor-id'];
-        $units = array();
-        $cond = false;
+        $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", '', "", "", "");
         }
@@ -74,7 +66,7 @@ class MonitorsController extends Controller
             } else {
                 $monitorsToSearch = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
             }
-            $result = array();
+            $result = [];
             foreach ($monitorsToSearch as $monitor) {
                 if ($maxPrice == 0) {
                     if ($monitor['price'] >= $minPrice) {
@@ -186,10 +178,11 @@ class MonitorsController extends Controller
         }
     }
 
-    public function deleteMonitor() {
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteMonitor()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-            if(!empty($itemId)) {
+            if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);

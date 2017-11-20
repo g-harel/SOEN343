@@ -113,21 +113,6 @@ class ComputerController extends Controller
         return view('pages.view');
     }
 
-    public function redirectionSearchResults($specs, $result, $computers) {
-        $numResult = count($result);
-        if($this->isAdminSearching()) {
-            if ($numResult > 0) {
-                return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
-            }
-            return view($specs['blade'], [$specs['collection'] => $computers, 'noResults' => true]);
-        } else {
-            if ($numResult > 0) {
-                return view($specs['blade'], ['result' => $result, 'numResult' => $numResult]);
-            }
-            return view($specs['blade'], [$specs['collection'] =>  $computers, 'noResults' => true]);
-        }
-    }
-
     public function insertDesktop()
     {
         if ($this->isFormSubmitted($_POST)) {
@@ -166,7 +151,7 @@ class ComputerController extends Controller
 
     public function insertLaptop()
     {
-                if ($this->isFormSubmitted($_POST)) {
+        if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->laptopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
@@ -452,7 +437,7 @@ class ComputerController extends Controller
     {
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['tablet-id'];
-        $units = array();
+        $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
         }
@@ -474,7 +459,7 @@ class ComputerController extends Controller
     {
         $numOfUnits = $_POST['numOfUnits'];
         $itemID = $_POST['laptop-id'];
-        $units = array();
+        $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", "", "", "", "");
         }
