@@ -44,6 +44,7 @@
                                         <a class="thumbnail pull-left" href="#"><i class="fa fa-laptop fa-5x"></i></a>
                                         <div class="media-body" style="padding-left:4px;">
                                             <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                            <h4 class="media-heading">Serial:{{$unit['serial']}}</h4>
                                         </div>
                                     </div>
                                 </td>
@@ -54,6 +55,13 @@
                                         <span class="glyphicon glyphicon-remove"></span> Remove
                                     </button>
                                 </td>
+                                {{--<form method="post" action="items/desktop/reserve">--}}
+                                    {{--<div class="panel-footer">--}}
+                                        {{--<span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>--}}
+                                        {{--<input type="hidden" name="serial" value="{{$value['serial']}}">--}}
+                                        {{--<span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>--}}
+                                    {{--</div>--}}
+                                {{--</form>--}}
                             </tr>
                         @endforeach
                         <tr>

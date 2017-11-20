@@ -92,6 +92,7 @@
                         <form method="post" action="items/monitor/reserve">
                             {{ csrf_field() }}
                             <input type="hidden" name="serial" value="{{$monitor['serial']}}">
+                            <input type="hidden" name="item-type" value="1" />
                             <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
                             <span><a class="btn btn-default" href="/view/monitor/{{$monitor['id']}}/{{$monitor['serial']}}" role="button">View details »</a></span>
                         </form>
@@ -123,7 +124,13 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <span><a class="btn btn-default" href="" role="button">Add to Cart »</a></span>
+                        <form method="post" action="items/monitor/reserve">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="serial" value="{{$details['serial']}}">
+                            <input type="hidden" name="item-type" value="1" />
+                            <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
+                            <span><a class="btn btn-default" href="/view/monitor/{{$details['id']}}/{{$details['serial']}}" role="button">View details »</a></span>
+                        </form>
                     </div>
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->

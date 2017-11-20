@@ -27,8 +27,7 @@ class MonitorsController extends Controller
         ]);
     }
 
-    public function reserveMonitorUnit()
-    {
+    public function reserveMonitorUnit() {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
             $unitMapper = UnitMapper::getInstance();
@@ -39,7 +38,6 @@ class MonitorsController extends Controller
             return redirect()->back()->with(['unitNotReserved' => true]);
         }
     }
-
 
     public function addMonitorUnits()
     {
