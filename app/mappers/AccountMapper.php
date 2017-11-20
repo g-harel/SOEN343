@@ -118,9 +118,9 @@ class AccountMapper implements CollectionMapper
         $accounts = $this->gateway->getAll();
         foreach ($accounts as $account)
         {
-            $address = new Address($account->door_number, $account->appartement, $account->street, $account->city, $account->province, $account->country, $account->postal_code);
-            $accountObject = new Account($account->email, $account->password, $account->first_name, $account->last_name, $account->phone_number, $address, $account->isAdmin);
-            $accountObject->setId($account->id);
+            $address = new Address($account["door_number"], $account["appartement"], $account["street"], $account["city"], $account["province"], $account["country"], $account["postal_code"]);
+            $accountObject = new Account($account["email"], $account["password"], $account["first_name"], $account["last_name"], $account["phone_number"], $address, $account["isAdmin"]);
+            $accountObject->setId($account["id"]);
             $this->accountCatalog->addAccount($accountObject);
         }
     }

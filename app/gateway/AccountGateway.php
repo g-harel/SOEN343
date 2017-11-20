@@ -62,4 +62,9 @@ class AccountGateway
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
+
+    public function getAll()
+    {
+        return singleTableSelectAccountQuery(array(), $this->tableName);
+    }
 }

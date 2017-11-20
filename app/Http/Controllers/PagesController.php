@@ -230,7 +230,7 @@ class PagesController extends Controller
                 $sanitizedInputs['country'],
                 $sanitizedInputs['postal_code']
             );
-            $exists = $registerThis->checkExistingEmail();
+            $exists = $registerThis->isEmailExists();
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
             } else {

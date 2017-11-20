@@ -7,14 +7,11 @@ use App\Models\Account;
 
 class Register
 {
-
-    private $accountMapper;
     /*account info*/
     private $firstName;
     private $lastName;
     private $email;
     private $password;
-    private $is_Admin;
     private $phoneNumber;
     private $doorNumber;
     private $street;
@@ -23,6 +20,7 @@ class Register
     private $province;
     private $country;
     private $postalCode;
+    private $account;
 
     public function __construct($firstName, $lastName, $email, $password,
                                 $phoneNumber, $doorNumber, $street,
@@ -41,23 +39,17 @@ class Register
         $this->country = $country;
         $this->postalCode = $postalCode;
 
-        $this->accountMapper = new AccountMapper();
-        $newAccount = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
+        $this->account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
             $doorNumber, $appt, $street, $city, $province, $country, $postalCode, $is_Admin = false);
-        $this->accountMapper->setAccount($newAccount);
     }
 
     public function createAccount()
     {
-        $result = $this->accountMapper->saveAccountInRecord();
-        return $result;
-
+        AccountMapper::getInstance()->addAccount($this->account);
     }
 
-    public function checkExistingEmail(){
-
-        $email = $this->email;
-
-        return $this->accountMapper->getAccountByEmail($email) ;
+    public function isEmailExists()
+    {
+        return AccountMapper::getInstance()->isEmailExists($this->email);
     }
 }
