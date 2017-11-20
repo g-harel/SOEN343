@@ -24,15 +24,12 @@ class UnitsController extends Controller {
                     'itemSuccessfullyRemoved' => true
                 ]);
             } else {
-                return view('pages.purchaseHistory', [
+                return redirect()->back()->with([
                     'itemSuccessfullyReturned' => true]
                 );
             }
         }
-        return view('pages.purchaseHistory', [
-            'units' => $units,
-            'itemSuccessfullyReturned' => true]
-        );
+        return view('pages.purchaseHistory');
     }
 
     public function checkoutUnits(){

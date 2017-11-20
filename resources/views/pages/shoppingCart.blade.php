@@ -33,8 +33,6 @@
                 </div>
             </div>
         @endif
-        @if(empty($cart))
-            <h1>Your shopping cart is empty!</h1>
         @if(!empty($itemSuccessfullyPurchased))
             <div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

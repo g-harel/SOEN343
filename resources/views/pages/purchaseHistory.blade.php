@@ -1,23 +1,24 @@
 @extends('layouts.app')
 @section('content')
-    @if(isset($itemSuccessfullyReturned) && $itemSuccessfullyReturned==true)
+    @if(Session::has('itemSuccessfullyReturned'))
         <div class="row">
-            <div class="alert alert-success">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <p>Your purchased item was successfully returned.</p>
+            <div class="col-md-12">
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>Your purchased item was successfully returned.</p>
+                </div>
             </div>
         </div>
     @endif
     <div class='jumbotron'>
         <div class="row">
-            <h3>Purchase History</h3>
+            <div class="col-md-12">
+                <h3>Purchase History</h3>
+            </div>
         </div>
-
-        <div class="row">
         @if(isset($_SESSION)  && !empty($_SESSION))
-            @if(empty($units))
+            @if(Session::has('units'))
                 <p>Your purchase history is empty.</p>
-            <!-- still need to display purchase name -->
             @else
                 <table>
                     <tr>

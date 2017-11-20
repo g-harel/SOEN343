@@ -166,7 +166,7 @@ class ComputerController extends Controller
 
     public function insertLaptop()
     {
-        if ($this->isFormSubmitted($_POST)) {
+                if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->laptopValidationFormInputs());
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
