@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionMapper;
 use App\Mappers\AccountMapper;
-use App\Models\AccountCatalog;
 
 class Login
 {
