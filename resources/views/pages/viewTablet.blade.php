@@ -108,6 +108,7 @@
                                 <li>Ram Size: <b>{{ $tablet['ramSize'] }} GB</b></li>
                                 <li>Cpu cores: <b>{{ $tablet['cpuCores'] }}</b></li>
                                 <li>Hard Disk Size: <b>{{ $tablet['hddSize'] }} GB</b></li>
+                                <li>Serial #: <b>{{$tablet['serial']}}</b></li>
                             </ul>
                         </div>
                     </div>
@@ -161,6 +162,7 @@
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
                                 @endif
+                                <p>Serial #: <b>{{$details['serial']}}</b></p>
                             </div>
                         </div>
                     </div>
