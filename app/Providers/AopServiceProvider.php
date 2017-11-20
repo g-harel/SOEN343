@@ -26,8 +26,9 @@ class AopServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $this->app->singleton(UoWAspect::class, function (Application $app) {
-            return new UoWAspect($app->make(UoWAspect::class));
+            return new UoWAspect();
         });
 
         $this->app->tag([UoWAspect::class], 'goaop.aspect');

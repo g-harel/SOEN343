@@ -227,7 +227,9 @@ class UnitMapper implements CollectionMapper {
     ////////////////////////////
 
     public function commit($transactionId): void {
-        $this->unitOfWork->commit($transactionId);
+
+        // INTERCEPTED IN AOP!!!
+        // $this->unitOfWork->commit($transactionId);
     }
 
     // fetches an item from memory, and returns it as an

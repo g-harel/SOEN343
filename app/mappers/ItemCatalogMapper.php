@@ -131,6 +131,8 @@ class ItemCatalogMapper implements CollectionMapper {
 
     // Used by the unitofwork when commit happens
     public function add($item) {
+        echo "THE COMMIT WORKED!!!";
+        die;
         $gateway = $this->getGateway($item);
         if ($gateway === null) {
             return false;

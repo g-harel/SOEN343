@@ -16,6 +16,14 @@ use App\Gateway\MonitorGateway;
 use App\Gateway\TabletGateway;
 use App\Gateway\LaptopGateway;
 use App\Gateway\DesktopGateway;
+use Go\Laravel\GoAopBridge\Kernel\AspectLaravelKernel;
+
+// Initialize an application aspect container
+$applicationAspectKernel = AspectLaravelKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // Use 'false' for production mode
+));
+
 
 
 class Controller extends BaseController

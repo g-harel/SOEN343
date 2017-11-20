@@ -3,7 +3,10 @@ declare(strict_types = 1);
 /*
  * Go! AOP framework
  */
-include("UnitOfWork.php");
+
+namespace App\Aspect;
+
+use App\UnitOfWork\UnitOfWork;
 use Go\Aop\Aspect;
 use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\After;
@@ -21,12 +24,12 @@ class UoWAspect implements Aspect
      * Method that activates the UoW after committing to Mapper
      *
      * @param MethodInvocation $invocation
-     * @After("execution(public ItemCatalogMappers->commit(*))") // This is our PointCut
+     * @Before("execution(public App\Mappers\*->commit(*))")
      */
     protected function SaveAfterCommit(MethodInvocation $invocation)
     {
-        $transactionId = $invocation->func_get_args();
-        $UnitOfWork = new UnitOfWork();
+        $transactionId = $invocation->getArguments()[0];
+        $UnitOfWork = UnitOfWork::getInstance();
         $UnitOfWork->commit($transactionId);
     }
 }
