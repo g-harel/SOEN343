@@ -278,7 +278,8 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $cartSize = count($this->getCart($accountId));
-        if ($cartSize > 7) {
+        //This used to be ($cartSize > 7), abd ut allowed clients to have a Cart with 8 items, changed it so that it restrics to 7
+        if ($cartSize > 6) {
             return false;
         }
         $this->catalog->reserve($unit, $accountId);

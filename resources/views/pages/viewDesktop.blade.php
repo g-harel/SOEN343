@@ -74,7 +74,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($desktops))
+        @if(empty($desktops) && empty($details))
             <p>Desktop item catalog is currently empty.</p>
         @endif
         @if(empty($details) && empty($result))
@@ -101,6 +101,7 @@
                                         <li>Ram Size: <b>{{$desktop['ramSize']}} GB</b></li>
                                         <li>CPU Cores: <b>{{$desktop['cpuCores']}}</b></li>
                                         <li>Hard Disk Size: <b>{{$desktop['hddSize']}} GB</b></li>
+                                        <li>Serial #: <b>{{$desktop['serial']}}</b></li>
                                     </ul>
                                 </div>
                             </div>
@@ -141,6 +142,7 @@
                                     <p>Width: <b>{{$details['width']}} cm</b> </p>
                                     <p>Thickness: <b>{{$details['thickness']}} cm</b> </p>
                                     <p>Weight: <b>{{$details['weight']}} kg</b> </p>
+                                    <p>Serial #: <b>{{$details['serial']}}</b></p>
                                 </div>
                             </div>
                         </div>

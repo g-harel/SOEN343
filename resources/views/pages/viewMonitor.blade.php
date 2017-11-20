@@ -66,6 +66,9 @@
                 </div>
             @endforeach
         @endif
+        @if(empty($monitors) && empty($details))
+            <p>Monitor item catalog is currently empty.</p>
+        @endif
         @if(empty($details) && empty($clientSearchResult))
         <div class="row">
         @foreach($monitors as $monitor)
@@ -81,7 +84,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p>Price: ${{$monitor['price']}}</p>
-                                <p>Serial #: {{$monitor['serial']}}</p>
+                                <p>Serial #: <b>{{$monitor['serial']}}</b></p>
                             </div>
                         </div>
                     </div>
