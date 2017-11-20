@@ -25,6 +25,14 @@
 </script>
 @section('content')
     <div class="container">
+        @if(Session::has('itemSuccessfullyRemoved'))
+            <div class="row">
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p>This item was successfully removed from your cart.</p>
+                </div>
+            </div>
+        @endif
         @if(empty($cart))
             <h1>Your shopping cart is empty!</h1>
         @endif
@@ -44,24 +52,24 @@
                             <tr>
                                 <td class="col-sm-6 col-md-4">
                                     <div class="media">
-                                                @if($unit['category'] == 'laptop')
-                                                <a class="thumbnail pull-left" ><i class="fa fa-laptop fa-5x"></i></a>
-                                                @endif
-                                                @if($unit['category'] == 'desktop')
-                                                    <a class="thumbnail pull-left" ><i class="fa fa-desktop fa-5x"></i></a>
-                                                    <div class="media-body" style="padding-left:4px;">
-                                                    </div>
-                                                @endif
-                                                @if($unit['category'] == 'tablet')
-                                                    <a class="thumbnail pull-left" ><i class="fa fa-tablet fa-5x"></i></a>
-                                                    <div class="media-body" style="padding-left:4px;">
-                                                    </div>
-                                                @endif
-                                                @if($unit['category'] == 'monitor')
-                                                    <a class="thumbnail pull-left" ><i class="fa fa-tv fa-5x"></i></a>
-                                                    <div class="media-body" style="padding-left:4px;">
-                                                    </div>
-                                                @endif
+                                        @if($unit['category'] == 'laptop')
+                                            <a class="thumbnail pull-left"><i class="fa fa-laptop fa-5x"></i></a>
+                                        @endif
+                                        @if($unit['category'] == 'desktop')
+                                            <a class="thumbnail pull-left"><i class="fa fa-desktop fa-5x"></i></a>
+                                            <div class="media-body" style="padding-left:4px;">
+                                            </div>
+                                        @endif
+                                        @if($unit['category'] == 'tablet')
+                                            <a class="thumbnail pull-left"><i class="fa fa-tablet fa-5x"></i></a>
+                                            <div class="media-body" style="padding-left:4px;">
+                                            </div>
+                                        @endif
+                                        @if($unit['category'] == 'monitor')
+                                            <a class="thumbnail pull-left"><i class="fa fa-tv fa-5x"></i></a>
+                                            <div class="media-body" style="padding-left:4px;">
+                                            </div>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="text-left">
@@ -70,33 +78,33 @@
                                         <h4 class="media-heading">Serial:{{$unit['serial']}}</h4>
                                     </div>
                                 </td>
-                                <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="price">{{$unit['price']}}</span></strong>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>$<span
+                                                class="price">{{$unit['price']}}</span></strong>
                                 </td>
                                 <td class="col-sm-1 col-md-1">
-                                    <button type="button" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-remove"></span> Remove
-                                    </button>
+                                    <form action="/returnPurchase" method="post">
+                                        <input type="hidden" name="transaction-id" id="transaction-id" value="{{$_SESSION['session_id']}}" />
+                                        <input type="hidden" name="serial-nb" id="serial-nb" value="{{ $unit['serial'] }}" />
+                                        <input type="submit" class="btn btn-danger" value="Remove" name="remove-from-cart">
+                                    </form>
                                 </td>
-                                {{--<form method="post" action="items/desktop/reserve">--}}
-                                    {{--<div class="panel-footer">--}}
-                                        {{--<span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>--}}
-                                        {{--<input type="hidden" name="serial" value="{{$value['serial']}}">--}}
-                                        {{--<span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>--}}
-                                    {{--</div>--}}
-                                {{--</form>--}}
                             </tr>
                         @endforeach
                         <tr>
-                            <td><h3>Total: $ {{$total}}</h3></td>
+                            <td><h3>Total: </h3></td>
+                            <td>&nbsp;</td>
+                            <td><h3>${{$total}}</h3></td>
+                            <td>&nbsp;</td>
                         </tr>
                         <tr>
-                            <td>&nbsp;</td>
                             <td>
                                 <button type="button" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-shopping-cart"></span>
                                     <a href="/view" style="color:white">Continue Shopping</a>
                                 </button>
                             </td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
                             <td>
                                 <button type="button" class="btn btn-success">
                                     Checkout <span class="glyphicon glyphicon-play"></span>

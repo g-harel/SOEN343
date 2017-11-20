@@ -9,7 +9,10 @@
         </div>
     @endif
     <div class='jumbotron'>
-        <h3>Purchase History</h3>
+        <div class="row">
+            <h3>Purchase History</h3>
+        </div>
+
         <div class="row">
         @if(isset($_SESSION)  && !empty($_SESSION))
             @if(empty($units))
@@ -31,7 +34,7 @@
                         <td>
                             <form action="/returnPurchase" method="post">
                             {{ csrf_field() }}
-                                <input type="hidden" name="transaction-id" id="transaction-id" value="{{ 42 }}" />
+                                <input type="hidden" name="transaction-id" id="transaction-id" value="{{ $_SESSION['session_id'] }}" />
                                 <input type="hidden" name="serial-nb" id="serial-nb" value="{{ $unit['serial'] }}" />  
                                 <!-- Trigger the modal with a button -->
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin:12px 12px 0;">Return</button>
