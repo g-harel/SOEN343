@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\ItemGateway;
-use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\AccountMapper;
-use App\gateway\AccountGateway;
-use App\Gateway\MonitorGateway;
 use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
