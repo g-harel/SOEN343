@@ -36,38 +36,38 @@
                     <table class="table table-hover">
                         <thead>
                             <th>Product</th>
+                            <th>Description</th>
                             <th class="text-center">Price</th>
-                            <th></th>
                         </thead>
                         <tbody>
                         @foreach($cart as $unit)
                             <tr>
-                                <td class="col-sm-8 col-md-6">
+                                <td class="col-sm-6 col-md-4">
                                     <div class="media">
                                                 @if($unit['category'] == 'laptop')
                                                 <a class="thumbnail pull-left" ><i class="fa fa-laptop fa-5x"></i></a>
-                                                <div class="media-body" style="padding-left:4px;">
-                                                    <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
-                                                </div>
                                                 @endif
                                                 @if($unit['category'] == 'desktop')
                                                     <a class="thumbnail pull-left" ><i class="fa fa-desktop fa-5x"></i></a>
                                                     <div class="media-body" style="padding-left:4px;">
-                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
                                                     </div>
                                                 @endif
                                                 @if($unit['category'] == 'tablet')
                                                     <a class="thumbnail pull-left" ><i class="fa fa-tablet fa-5x"></i></a>
                                                     <div class="media-body" style="padding-left:4px;">
-                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
                                                     </div>
                                                 @endif
                                                 @if($unit['category'] == 'monitor')
                                                     <a class="thumbnail pull-left" ><i class="fa fa-tv fa-5x"></i></a>
                                                     <div class="media-body" style="padding-left:4px;">
-                                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
                                                     </div>
                                                 @endif
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <div class="media-body" style="padding-left:4px;">
+                                        <h4 class="media-heading">{{$unit['brand']}} {{$unit['category']}}</h4>
+                                        <h4 class="media-heading">Serial:{{$unit['serial']}}</h4>
                                     </div>
                                 </td>
                                 <td class="col-sm-1 col-md-1 text-center"><strong>$<span class="price">{{$unit['price']}}</span></strong>
@@ -87,11 +87,9 @@
                             </tr>
                         @endforeach
                         <tr>
-                            <td c><strong>Total: $ {{$total}}</strong></td>
+                            <td><h3>Total: $ {{$total}}</h3></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>
                                 <button type="button" class="btn btn-primary">

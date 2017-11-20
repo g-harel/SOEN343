@@ -186,13 +186,20 @@ class PagesController extends Controller
             $account_id = $_SESSION['currentLoggedInId'];
             $units = $cart->getCart($account_id); // returns reserved units by account id
             $itemMapper = ItemCatalogMapper::getInstance();
+            foreach ($units as $unit) {
+                $item_specs = $itemMapper->getItem($unit['item_id']);
+                array_push($specs, $item_specs);
+            }
             foreach ($specs as $key => &$subArray) {
                 $subArray += $units[$key];
                 array_push($finalSpecs, $subArray);
             }
         }
+        foreach($finalSpecs as $price){
+            $total += $price['price'];
+        }
         return view('pages.shoppingCart', [
-            'cart' => $specs,
+            'cart' => $finalSpecs,
             'total' => $total
         ]);
 
