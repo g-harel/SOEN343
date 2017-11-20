@@ -22,6 +22,7 @@ Route::get('/register', 'PagesController@register');
 Route::post('registerUser', 'PagesController@registerUser');
 Route::get('/shoppingCart', 'PagesController@shoppingCart');
 Route::get('/purchaseHistory', 'PagesController@purchaseHistory');
+Route::post('/checkout', 'UnitsController@checkoutUnits');
 
 Route::get('showPurchase', 'UnitsController@showPurchase');
 Route::post('returnPurchase', 'UnitsController@returnPurchase');
