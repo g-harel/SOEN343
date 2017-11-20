@@ -137,7 +137,7 @@ class AccountMapper implements CollectionMapper
 
     public function isAccountExist($email, $password)
     {
-        return $this->gateway->getAccountByEmailPassword($email, $password);
+        return AccountCatalog::getInstance()->isAccountExist($email, $password);
     }
 
     //For UoW

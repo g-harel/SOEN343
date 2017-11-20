@@ -45,6 +45,19 @@ class AccountCatalog
         return false;
     }
 
+    public function isAccountExist($email, $password)
+    {
+        $accounts = self::$catalog;
+        foreach($accounts as $account)
+        {
+            if(($account->getEmail() == $email) && ($account->getPassword() == $password))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getAccount($accountId)
     {
         $accounts = self::$catalog;
