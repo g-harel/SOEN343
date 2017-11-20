@@ -239,12 +239,14 @@ class PagesController extends Controller
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-    
+
+    public function clients()
+    {
+        return view('pages.clients', ['clients' => AccountMapper::getInstance()->getAllAccounts()]);
+    }
+
     public function viewProfile() {
-        $id =$_SESSION['currentLoggedInId'];
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $currentUser = $accountMapper->getAccount();
-        
+        $currentUser = AccountMapper::getInstance()->getAccountFromRecordById($_SESSION['currentLoggedInId']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
