@@ -107,10 +107,10 @@ class AccountMapper implements CollectionMapper
         return $isSuccessful;
     }
 
-    public function deleteAccountInRecord($accountId)
+    public function deleteAccount($transactionId, $accountId)
     {
-        return $this->gateway->deleteAccountById($accountId);
-        //$this->unitOfWork->registerDeleted($transactionId, $account->getId(), self::$instance, $account);
+        $account = $this->accountCatalog->getAccount($accountId);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getAccountId($account->getId()), self::$instance, $account);
     }
 
     public function updateCatalog()

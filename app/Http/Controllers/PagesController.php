@@ -258,7 +258,8 @@ class PagesController extends Controller
             $_SESSION = array();
             session_destroy();
             //Delete user
-            AccountMapper::getInstance()->deleteAccountInRecord($userId, $userId);
+            AccountMapper::getInstance()->deleteAccount($userId, $userId);
+            AccountMapper::getInstance()->commit($userId);
             return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
         } else {
             return view('pages.index', ['accountNotDeleted' => 'Something went wrong. Please try again later.']);
