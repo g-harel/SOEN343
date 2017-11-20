@@ -320,4 +320,11 @@ class UnitMapper implements CollectionMapper {
     public function getPurchased($accountId): array {
         return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
+
+    public function getUnitsAvailableByItemId($itemId) {
+        $availableUnits = $this->unitGateway->select([
+            'item_id' => $itemId, 'status' => StatusEnum::AVAILABLE
+        ]);
+        return $availableUnits;
+    }
 }

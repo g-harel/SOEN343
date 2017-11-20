@@ -10,11 +10,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Gateway\MonitorGateway;
-use App\Gateway\TabletGateway;
-use App\Gateway\LaptopGateway;
-use App\Gateway\DesktopGateway;
-
+use App\Mappers\UnitMapper;
+use App\Mappers\ItemCatalogMapper;
 
 class Controller extends BaseController
 {
@@ -209,62 +206,27 @@ class Controller extends BaseController
 
     public function returnItemUnits($itemType)
     {
-        $item = null;
-        if($itemType == $this::MONITOR_ITEM_TYPE) {
-            $item = new MonitorGateway();
-        } else if($itemType == $this::DESKTOP_ITEM_TYPE) {
-            $item = new DesktopGateway();
-        } else if($itemType == $this::LAPTOP_ITEM_TYPE) {
-            $item = new LaptopGateway();
-        } else if($itemType == $this::TABLET_ITEM_TYPE) {
-            $item = new TabletGateway();
+        $items = null;
+        if($itemType == Controller::MONITOR_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
         }
-        $arr = $item->getByCondition([]);
-        $unitsArr = [];
-        for ($i = 0; $i < count($arr); $i++) {
-            $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
-            for ($j = 0; $j < count($units); $j++) {
-                if($units[$j]['status'] != 'AVAILABLE') {
-                    continue;
-                }
-                $serial = $units[$j]['serial'];
-                $units[$j] = $arr[$i];
-                $units[$j]['serial'] = $serial;
-                /*
-                 * returnItemUnits returns an array of results
-                 * where keys are the same as units column name
-                 * e.g. display_size
-                 *
-                 * but in ItemCatalogMapper, the keys are camelcase
-                 * so to use the same pattern (camelcase)
-                 * need to unset and use the same key naming
-                 *
-                 */
-                if(array_key_exists('processor_type', $units[$j])) {
-                    $units[$j]['processorType'] = $units[$j]['processor_type'];
-                    unset($units[$j]['processor_type']);
-                }
-                if(array_key_exists('ram_size', $units[$j])) {
-                    $units[$j]['ramSize'] = $units[$j]['ram_size'];
-                    unset($units[$j]['ram_size']);
-                }
-                if(array_key_exists('cpu_cores', $units[$j])) {
-                    $units[$j]['cpuCores'] = $units[$j]['cpu_cores'];
-                    unset($units[$j]['cpu_cores']);
-                }
-                if(array_key_exists('hdd_size', $units[$j])) {
-                    $units[$j]['hddSize'] = $units[$j]['hdd_size'];
-                    unset($units[$j]['hdd_size']);
-                }
-                if(array_key_exists('display_size', $units[$j])) {
-                    $units[$j]['displaySize'] = $units[$j]['display_size'];
-                    unset($units[$j]['display_size']);
-                }
-                if(array_key_exists('is_touchscreen', $units[$j])) {
-                    $units[$j]['isTouchscreen'] = $units[$j]['is_touchscreen'];
-                    unset($units[$j]['is_touchscreen']);
-                }
-                array_push($unitsArr, $units[$j]);
+        if($itemType == Controller::DESKTOP_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+        }
+        if($itemType == Controller::LAPTOP_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+        }
+        if($itemType == Controller::TABLET_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+        }
+        $unitsArr = []; // returns units results set with specs
+        foreach($items as $item) {
+            // return available units given an id
+            $availableUnits = UnitMapper::getInstance()->getUnitsAvailableByItemId($item['id']);
+
+            foreach ($availableUnits as $availableUnit) {
+                $specsWithUnit = array_merge($availableUnit, $item);
+                array_push($unitsArr, $specsWithUnit);
             }
         }
         return $unitsArr;

@@ -175,14 +175,14 @@ class PagesController extends Controller
     {
         $total = 0;
         $specs = [];
-        $finalSpecs = [];
+        $finalSpecs = []; //specs with units values
         $cart = UnitMapper::getInstance();
         if (isset($_SESSION['currentLoggedInId'])) {
             $account_id = $_SESSION['currentLoggedInId'];
             $units = $cart->getCart($account_id); // returns reserved units by account id
             $itemMapper = ItemCatalogMapper::getInstance();
             foreach ($units as $unit) {
-                $item_specs = $itemMapper->getItem($unit['item_id']);
+                $item_specs = $itemMapper->getItem($unit['item_id']); // returns specs given an item id
                 array_push($specs, $item_specs);
             }
             foreach ($specs as $key => &$subArray) {
