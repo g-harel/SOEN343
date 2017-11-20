@@ -67,13 +67,13 @@ class AccountMapper implements CollectionMapper
     public function addAccount($account)
     {
         $result = null;
-        if(!($this->isEmailExists($account->getEmail())))
+        if(!($this->isEmailExists($account['email'])))
         {
             $result = $this->gateway->addAccount(
-                $account->getEmail(), $account->getPassword(), $account->getFirstName(), $account->getLastName(),
-                $account->getPhoneNumber(), $account->getDoorNumber(), $account->getAppartement(),
-                $account->getStreet(), $account->getCity(), $account->getProvince(), $account->getCountry(),
-                $account->getPostalCode(), $account->getIsAdmin()
+                $account['email'], $account['password'], $account['firstName'], $account['lastName'],
+                $account['phoneNumber'], $account['doorNumber'], $account['appt'],
+                $account['street'], $account['city'], $account['province'], $account['country'],
+                $account['postalCode'], false
             );
         }
         $isSuccessful = false;
