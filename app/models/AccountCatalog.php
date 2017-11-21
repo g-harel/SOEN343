@@ -88,4 +88,13 @@ class AccountCatalog
     {
         return self::$catalog;
     }
+
+    public function toArray()
+    {
+        $accountsArray = array();
+        $accounts = self::$catalog;
+        foreach($accounts as $account)
+            $accountsArray[] = $account->toArray();
+        return $accountsArray;
+    }
 }
