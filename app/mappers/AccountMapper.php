@@ -38,10 +38,23 @@ class AccountMapper implements CollectionMapper
 
     public function getAccountFromRecordByEmail($email)
     {
-        return $this->accountCatalog->getAccountFromEmail($email);
+        $identityMapId = $this->getAccountId($email);
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
+        $account = null;
+        if ($isItemInIdentityMap) {
+            $account = $this->identityMap->getObject($identityMapId);
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $account = $this->accountCatalog->getAccountFromEmail($email);
+        }
+        if ($account === null) {
+            return null;
+        } else {
+            return $account->toArray();
+        }
     }
 
-    public function getAccountFromRecordById($accountId) {
+    /*public function getAccountFromRecordById($accountId) {
 
         $identityMapId = $this->getAccountId($accountId);
         $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
@@ -58,27 +71,22 @@ class AccountMapper implements CollectionMapper
         } else {
             return $account;
         }
-    }
+    }*/
 
-    private function getAccountId($id) {
-        return $id . "account";
+    private function getAccountId($email) {
+        return $email . "account";
     }
 
     public function addAccount($transactionId, $accountParams)
     {
-        $account = Account::createWithAddressDecomposed(
-            $accountParams['email'], $accountParams['password'], $accountParams['firstName'], $accountParams['lastName'],
-            $accountParams['phoneNumber'], $accountParams['doorNumber'], $accountParams['appt'],
-            $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
-            $accountParams['postalCode'], $accountParams['isAdmin']
-        );
+        $account = $this->accountCatalog->createAccount($accountParams);
         $this->unitOfWork->registerNew($transactionId, self::$instance, $account);
     }
 
-    public function deleteAccount($transactionId, $accountId)
+    public function deleteAccount($transactionId, $email)
     {
-        $account = $this->accountCatalog->getAccount($accountId);
-        $this->unitOfWork->registerDeleted($transactionId, $this->getAccountId($account->getId()), self::$instance, $account);
+        $account = $this->accountCatalog->getAccountFromEmail($email);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getAccountId($account->getEmail()), self::$instance, $account);
     }
 
     public function updateCatalog()
@@ -136,12 +144,12 @@ class AccountMapper implements CollectionMapper
     //For UoW
     public function delete($account)
     {
-        $id = $account->getId();
-        $identityMapId = $this->getAccountId($id);
-        $deleted = $this->gateway->deleteAccountById($id);
+        $email = $account->getEmail();
+        $identityMapId = $this->getAccountId($email);
+        $deleted = $this->gateway->deleteAccountByEmail($email);
         if ($deleted) {
             $this->identityMap->removeObject($identityMapId);
-            $this->accountCatalog->removeAccount($id);
+            $this->accountCatalog->removeAccount($email);
         }
     }
 

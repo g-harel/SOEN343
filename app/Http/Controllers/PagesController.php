@@ -243,12 +243,13 @@ class PagesController extends Controller
 
     public function viewProfile() {
         $accountMapper = AccountMapper::getInstance();
-        $currentUser = $accountMapper->getAccountFromRecordById($_SESSION['currentLoggedInId']);
+        $currentUser = $accountMapper->getAccountFromRecordByEmail($_SESSION['currentLoggedInEmail']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
     public function deleteAccount(){
         if($this->isFormSubmitted($_POST)) {
+            $userEmail = $_SESSION['currentLoggedInEmail'];
             $userId = filter_input(INPUT_POST, 'current-user-id');
             $sessionMapper = new SessionMapper();
             $sessionMapper->closeSession($userId);
@@ -256,7 +257,7 @@ class PagesController extends Controller
             session_destroy();
             //Delete user
             $accountMapper = AccountMapper::getInstance();
-            $accountMapper->deleteAccount($userId, $userId);
+            $accountMapper->deleteAccount($userId, $userEmail);
             $accountMapper->commit($userId);
             return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
         } else {

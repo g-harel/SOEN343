@@ -22,6 +22,17 @@ class AccountCatalog
         return self::$instance;
     }
 
+    public function createAccount($accountParams)
+    {
+        $account = Account::createWithAddressDecomposed(
+            $accountParams['email'], $accountParams['password'], $accountParams['firstName'], $accountParams['lastName'],
+            $accountParams['phoneNumber'], $accountParams['doorNumber'], $accountParams['appt'],
+            $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
+            $accountParams['postalCode'], $accountParams['isAdmin']
+        );
+        return $account;
+    }
+
     public function addAccount($account)
     {
         self::$catalog->attach($account);
@@ -58,28 +69,13 @@ class AccountCatalog
         return false;
     }
 
-    public function getAccount($accountId)
-    {
-        $accounts = self::$catalog;
-        foreach($accounts as $account)
-        {
-            if($account->getId() === $accountId)
-            {
-                return $account;
-            }
-        }
-        return null;
-    }
-
     public function getAccountFromEmail($email)
     {
         $accounts = self::$catalog;
         foreach($accounts as $account)
         {
             if($account->getEmail() === $email)
-            {
                 return $account;
-            }
         }
         return null;
     }

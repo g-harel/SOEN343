@@ -23,9 +23,10 @@ class Login
     public function validate()
     {
         if ($this->accountMapper->isAccountExist($this->email, $this->password)) {
-            $_SESSION['isAdmin'] = $this->accountMapper->getAccountFromRecordByEmail($this->email)->getIsAdmin();
-            $_SESSION['currentLoggedInId'] = $this->accountMapper->getAccountFromRecordByEmail($this->email)->getId();
-            $accountId = $this->accountMapper->getAccountFromRecordByEmail($this->email)->getId();
+            $_SESSION['isAdmin'] = $this->accountMapper->getAccountFromRecordByEmail($this->email)['isAdmin'];
+            $_SESSION['currentLoggedInId'] = $this->accountMapper->getAccountFromRecordByEmail($this->email)['id'];
+            $_SESSION['currentLoggedInEmail'] = $this->email;
+            $accountId = $this->accountMapper->getAccountFromRecordByEmail($this->email)['id'];
             $sessionMapper = new SessionMapper();
             $sessionMapper->openSession2($accountId);
             // get the session id by the account
