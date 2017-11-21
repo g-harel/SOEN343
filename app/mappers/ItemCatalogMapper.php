@@ -64,13 +64,13 @@ class ItemCatalogMapper implements CollectionMapper {
         $paramArray = $param;
         $paramArray["id"] = "new";
         $item = $this->itemCatalog->createItem($itemType, $paramArray);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $item);
+        $this->registerNew($transactionId, self::$instance, $item);
     }
 
     // Used by the controllers
     public function removeItem($transactionId, $itemId) {
         $item = $this->itemCatalog->getItem($itemId);
-        $this->unitOfWork->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
+        $this->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
     }
 
     // Used by the controllers
@@ -79,7 +79,7 @@ class ItemCatalogMapper implements CollectionMapper {
         if ($itemInCatalog !== null) {
             $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
-            $this->unitOfWork->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
+            $this->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
             return true;
         } else {
             return false;
@@ -385,6 +385,18 @@ class ItemCatalogMapper implements CollectionMapper {
         $array["camera"] = $item->getCamera();
         $array["isTouchscreen"] = $item->getisTouchscreen();
         return $array;
+    }
+
+    private function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    private function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    private function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 
 }
