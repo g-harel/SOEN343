@@ -412,7 +412,7 @@ class ComputerController extends Controller
     public function addDesktopUnits()
     {
         $numOfUnits = $_POST['num-of-units'];
-        $itemID = $_POST['desktop-id'];
+        $itemID = $_POST['item-id'];
         $units = array();
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
@@ -433,7 +433,7 @@ class ComputerController extends Controller
     public function addTabletUnits()
     {
         $numOfUnits = $_POST['num-of-units'];
-        $itemID = $_POST['tablet-id'];
+        $itemID = $_POST['item-id'];
         $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "AVAILABLE", "", "", "", "");
@@ -455,7 +455,7 @@ class ComputerController extends Controller
     public function addLaptopUnits()
     {
         $numOfUnits = $_POST['num-of-units'];
-        $itemID = $_POST['laptop-id'];
+        $itemID = $_POST['item-id'];
         $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", "", "", "", "");

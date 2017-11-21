@@ -75,16 +75,16 @@ $(document).ready(() => {
             },
         },
     };
-    const specsNextBtn = [
+    const specs = [
         formUnits.monitor,
         formUnits.desktop,
         formUnits.laptop,
         formUnits.tablet,
     ];
-    specsNextBtn.forEach((element) => { // populate the units modal on click 'Next' btn
+    specs.forEach((element) => { // populate the units modal on click 'Next' btn
         $(element.nextBtn).on('click', () => {
             const fields = $(element.form).find('#num-of-units').val();
-            if (parseInt(fields) === 0 || fields === '') {
+            if (fields === '0' || fields === '') {
                 return false;
             }
             serialInputs(fields, element.form);
@@ -92,25 +92,18 @@ $(document).ready(() => {
             return true;
         });
     });
-    specsNextBtn.forEach((element) => { // empty the units modal on close
+    specs.forEach((element) => { // empty the units modal on close
         $(`.modal${element.modal}`).on('hidden.bs.modal', () => {
             element.emptyVal();
             element.form.find('input#num-of-units').val(0);
         });
     });
-
-    const addUnitsLink = [
-        formUnits.monitor.modal,
-        formUnits.desktop.modal,
-        formUnits.laptop.modal,
-        formUnits.tablet.modal,
-    ];
-    addUnitsLink.forEach((element) => { // passed unit number to the hidden input use for 'Add Units'
-        $(element).on('show.bs.modal', function (event) {
+    specs.forEach((element) => { // passed unit number to the hidden input use for 'Add Units'
+        $(element.modal).on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
             const itemID = button.data('id');
             const modal = $(this);
-            modal.find('.modal-body input[type=hidden].item-id').attr('value', itemID);
+            modal.find('.modal-body input[type=hidden][name=item-id]').attr('value', itemID);
         });
     });
 });

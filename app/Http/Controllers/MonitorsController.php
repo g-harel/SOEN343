@@ -36,7 +36,7 @@ class MonitorsController extends Controller
     public function addMonitorUnits()
     {
         $numOfUnits = $_POST['num-of-units'];
-        $itemID = $_POST['monitor-id'];
+        $itemID = $_POST['item-id'];
         $units = [];
         for ($i = 0; $i < $numOfUnits; $i++) {
             $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", '', "", "", "");
