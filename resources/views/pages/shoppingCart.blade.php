@@ -52,7 +52,7 @@
         @elseif (empty($cart) && empty($_SESSION['currentLoggedInId']))
                 <div class="row">
                     <div class="text-center">
-                        <h1>Your shopping cart is empty! Please <a href="/login">Sign</a> in to view your cart.</h1>
+                        <h1>Your shopping cart is empty! Please <a href="/login">Sign in</a> to view your cart.</h1>
                     </div>
                 </div>
             @endif

@@ -3,7 +3,7 @@
 ### Run php tests
 
 ```shell
-$ vendor/bin/phpunit
+$ vendor/bin/phpunit --stderr
 ```
 
 ### Run js linting (after `npm install`)
