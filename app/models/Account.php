@@ -13,7 +13,8 @@ class Account
     private $address;
     private $isAdmin;
 
-    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false) {
+    public function __construct($id, $email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin) {
+        $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;
@@ -23,10 +24,10 @@ class Account
         $this->isAdmin = $isAdmin;
     }
 
-    public static function createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false) {
+    public static function createWithAddressDecomposed($id, $email, $password, $firstName, $lastName, $phoneNumber,
+    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
         $address = new Address($doorNumber, $appartement, $street, $city, $province, $country, $postalCode);
-        $instance = new self($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
+        $instance = new self($id, $email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
         return $instance;
     }
 

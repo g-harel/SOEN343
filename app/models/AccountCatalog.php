@@ -25,8 +25,8 @@ class AccountCatalog
     public function createAccount($accountParams)
     {
         $account = Account::createWithAddressDecomposed(
-            $accountParams['email'], $accountParams['password'], $accountParams['firstName'], $accountParams['lastName'],
-            $accountParams['phoneNumber'], $accountParams['doorNumber'], $accountParams['appt'],
+            $accountParams["id"], $accountParams["email"], $accountParams["password"], $accountParams["firstName"], $accountParams["lastName"],
+            $accountParams["phoneNumber"], $accountParams["doorNumber"], $accountParams["appt"],
             $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
             $accountParams['postalCode'], $accountParams['isAdmin']
         );
@@ -38,9 +38,9 @@ class AccountCatalog
         self::$catalog->attach($account);
     }
 
-    public function removeAccount($accountId)
+    public function removeAccount($email)
     {
-        self::$catalog->detach($this->getAccount($accountId));
+        self::$catalog->detach($this->getAccountFromEmail($email));
     }
 
     public function isEmailExist($email)
