@@ -14,7 +14,7 @@ class Account
     private $isAdmin;
     private $isDeleted;
 
-    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false, $isDeleted = false) {
+    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false, $isDeleted = 0) {
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;

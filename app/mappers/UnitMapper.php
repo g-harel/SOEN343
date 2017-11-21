@@ -325,6 +325,6 @@ class UnitMapper implements CollectionMapper {
         $availableUnits = $this->unitGateway->select([
             'item_id' => $itemId, 'status' => StatusEnum::AVAILABLE
         ]);
-        return $availableUnits;
+        return $availableUnits ? $availableUnits : [];
     }
 }

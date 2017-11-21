@@ -60,7 +60,8 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`, `isDeleted`) VALUES
 (1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, 0),
 (2, 'admin2@gmail.com', 'admin1234', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, 0),
-(3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0);
+(3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0),
+(4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0);
 -- --------------------------------------------------------
 
 --
@@ -118,36 +119,38 @@ INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
 
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
+  `model` varchar(32) NOT NULL,
   `category` varchar(20) NOT NULL,
   `brand` varchar(100) NOT NULL,
-  `price` float(10,2) NOT NULL
+  `price` float(10,2) NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `items`
 --
 
-INSERT INTO `items` (`id`, `category`, `brand`, `price`) VALUES
-(1, 'test', 'test', 12.00),
-(2, 'test2', 'test2', 99.00),
-(3, 'laptop', 'IBM', 1500.00),
-(4, 'desktop', 'Dell', 1055.00),
-(5, 'tablet', 'Apple', 900.00),
-(6, 'laptop', 'Apple', 9999.00),
-(7, 'desktop', 'Alienware', 2400.00),
-(8, 'desktop', 'Alienware3333', 240022.00),
-(9, 'desktop', 'Alienware', 2400.00),
-(10, 'desktop', 'Alienware3333', 240022.00),
-(11, 'desktop', 'Alienware', 2400.00),
-(12, 'desktop', 'Alienware3333', 240022.00),
-(13, 'desktop', 'Alienware', 2400.00),
-(14, 'desktop', 'Alienware3333', 240022.00),
-(15, 'desktop', 'Alienware', 2400.00),
-(16, 'desktop', 'Alienware3333', 240022.00),
-(17, 'desktop', 'Alienware', 2400.00),
-(18, 'desktop', 'Alienware3333', 240022.00),
-(23, 'desktop', 'Alienware6666', 111111.00),
-(24, 'desktop', 'Alienware3333', 240022.00);
+INSERT INTO `items` (`id`, `model`, `category`, `brand`, `price`) VALUES
+(1, 'TES-623456-A', 'monitor', 'SONY', 12.00),
+(2, 'TES-523456-C', 'monitor', 'ASUS', 99.00),
+(3, 'LAP-323456-A', 'laptop', 'IBM', 1500.00),
+(4, 'DES-223456-Q', 'desktop', 'Dell', 1055.00),
+(5, 'TAB-023456-P', 'tablet', 'Apple', 900.00),
+(6, 'LAP-723456-M', 'laptop', 'Apple', 9999.00),
+(7, 'DES-523456-I', 'desktop', 'Alienware', 2400.00),
+(8, 'DES-223456-J', 'desktop', 'Alienware3333', 240022.00),
+(9, 'DES-183456-A', 'desktop', 'Alienware', 2400.00),
+(10, 'DES-523456-D', 'desktop', 'Alienware3333', 240022.00),
+(11, 'DES-123456-F', 'desktop', 'Alienware', 2400.00),
+(12, 'DES-223456-B', 'desktop', 'Alienware3333', 240022.00),
+(13, 'DES-223456-Y', 'desktop', 'Alienware', 2400.00),
+(14, 'DES-023456-O', 'desktop', 'Alienware3333', 240022.00),
+(15, 'DES-923456-C', 'desktop', 'Alienware', 2400.00),
+(16, 'DES-123456-B', 'desktop', 'Alienware3333', 240022.00),
+(17, 'DES-823456-L', 'desktop', 'Alienware', 2400.00),
+(18, 'DES-623456-Z', 'desktop', 'Alienware3333', 240022.00),
+(23, 'DES-523456-A', 'desktop', 'Alienware6666', 111111.00),
+(24, 'DES-223456-R', 'desktop', 'Alienware3333', 240022.00);
 
 -- --------------------------------------------------------
 
@@ -264,7 +267,7 @@ INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`);
+  ADD UNIQUE KEY `email_UNIQUE` (`email`, `isDeleted`);
 
 --
 -- Index pour la table `computers`
@@ -285,7 +288,8 @@ ALTER TABLE `desktops`
 --
 ALTER TABLE `items`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_UNIQUE` (`id`);
+  ADD UNIQUE KEY `id_UNIQUE` (`id`),
+  ADD UNIQUE KEY `model_UNIQUE` (`model`);
 
 --
 -- Index pour la table `laptops`
