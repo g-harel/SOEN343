@@ -123,12 +123,16 @@ class AccountMapper implements CollectionMapper
 
     public function isEmailExists($email)
     {
-        return $this->accountCatalog->isEmailExist($email);
+        if($this->getAccountFromRecordByEmail($email) != null)
+            return true;
+        return false;
     }
 
     public function isAccountExist($email, $password)
     {
-        return $this->accountCatalog->isAccountExist($email, $password);
+        if($this->gateway->getAccountByEmailPassword($email, $password) != null)
+            return true;
+        return false;
     }
 
     //For UoW

@@ -25,7 +25,7 @@ class AccountCatalog
     public function createAccount($accountParams)
     {
         $account = Account::createWithAddressDecomposed(
-            $accountParams["id"], $accountParams["email"], $accountParams["password"], $accountParams["firstName"], $accountParams["lastName"],
+            $accountParams["email"], $accountParams["password"], $accountParams["firstName"], $accountParams["lastName"],
             $accountParams["phoneNumber"], $accountParams["doorNumber"], $accountParams["appt"],
             $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
             $accountParams['postalCode'], $accountParams['isAdmin']
