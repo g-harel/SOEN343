@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\ItemGateway;
-use function App\Gateway\singleTableSelectAccountQuery;
 use App\Mappers\SessionMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\AccountMapper;
-use App\gateway\AccountGateway;
-use App\Gateway\MonitorGateway;
 use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
@@ -230,7 +226,7 @@ class PagesController extends Controller
                 $sanitizedInputs['country'],
                 $sanitizedInputs['postal_code']
             );
-            $exists = $registerThis->checkExistingEmail();
+            $exists = $registerThis->isEmailExists();
             if ($exists) {
                 return redirect()->back()->with(['emailExists' => true]);
             } else {
@@ -239,25 +235,30 @@ class PagesController extends Controller
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-    
+
+    public function clients()
+    {
+        return view('pages.clients', ['clients' => AccountMapper::getInstance()->getAllAccounts()]);
+    }
+
     public function viewProfile() {
-        $id =$_SESSION['currentLoggedInId'];
-        $accountMapper = AccountMapper::createAccountMapper($id);
-        $currentUser = $accountMapper->getAccount();
-        
+        $accountMapper = AccountMapper::getInstance();
+        $currentUser = $accountMapper->getAccountFromRecordByEmail($_SESSION['currentLoggedInEmail']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
     public function deleteAccount(){
         if($this->isFormSubmitted($_POST)) {
+            $userEmail = $_SESSION['currentLoggedInEmail'];
             $userId = filter_input(INPUT_POST, 'current-user-id');
             $sessionMapper = new SessionMapper();
             $sessionMapper->closeSession($userId);
             $_SESSION = array();
             session_destroy();
             //Delete user
-            $accountMapper = AccountMapper::createAccountMapper($userId);
-            $accountMapper->deleteAccountInRecord();
+            $accountMapper = AccountMapper::getInstance();
+            $accountMapper->deleteAccount($userId, $userEmail);
+            $accountMapper->commit($userId);
             return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);
         } else {
             return view('pages.index', ['accountNotDeleted' => 'Something went wrong. Please try again later.']);

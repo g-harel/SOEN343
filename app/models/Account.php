@@ -13,7 +13,7 @@ class Account
     private $address;
     private $isAdmin;
 
-    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false) {
+    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin) {
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;
@@ -24,7 +24,7 @@ class Account
     }
 
     public static function createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false) {
+    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin) {
         $address = new Address($doorNumber, $appartement, $street, $city, $province, $country, $postalCode);
         $instance = new self($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
         return $instance;
@@ -177,5 +177,25 @@ class Account
     //UTILITY
     public function getFullName() {
         return $this->firstName . " " . $this->lastName;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'phoneNumber' => $this->getPhoneNumber(),
+            'doorNumber' => $this->getDoorNumber(),
+            'appartement' => $this->getAppartement(),
+            'street' => $this->getStreet(),
+            'city' => $this->getCity(),
+            'province' => $this->getProvince(),
+            'country' => $this->getCountry(),
+            'postalCode' => $this->getPostalCode(),
+            'isAdmin' => $this->getIsAdmin()
+        );
     }
 }
