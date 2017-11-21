@@ -22,14 +22,14 @@ class UnitOfWork {
         $this->storage[self::STATE_DELETED] = array();
     }
 
-    public static function getInstance() {
+    public static function getInstance(): UnitOfWork {
         if (self::$unitOfWork === null) {
             self::$unitOfWork = new UnitOfWork();
         }
         return self::$unitOfWork;
     }
 
-    private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null) {
+    private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null): void {
 
         /*
         DATA STRUCTURE FOR STORAGE
@@ -83,7 +83,7 @@ class UnitOfWork {
 
 
     // Make sure that the same object isn't in both the DIRTY and DELETED state at the same time.
-    private function removeFromState($transactionId, $objectId, $state) {
+    private function removeFromState($transactionId, $objectId, $state): void {
         $sessionId = "0" . $transactionId;
         $stateStorage = null;
         if ($state === self::STATE_DIRTY) {
@@ -108,24 +108,24 @@ class UnitOfWork {
         }
     }
 
-    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+    public function registerNew($transactionId, CollectionMapper $mapper, $object): void {
         $state = self::STATE_NEW;
         $this->registerEntity($transactionId, $mapper, $object, $state);
     }
 
-    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object) {
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object): void {
         $state = self::STATE_DIRTY;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
     }
 
-    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object) {
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object): void {
         $state = self::STATE_DELETED;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
     }
 
-    private function mapperAction($actionToPerform, $mapper, $object) {
+    private function mapperAction($actionToPerform, $mapper, $object): void {
         if ($actionToPerform === self::ACTION_INSERT) {
             $mapper->add($object);
         } else if ($actionToPerform === self::ACTION_MODIFY) {
@@ -135,7 +135,7 @@ class UnitOfWork {
         }
     }
 
-    public function commit($transactionId, $objectId = null) {
+    public function commit($transactionId, $objectId = null): void {
         $sessionId = "0" . $transactionId;
         $actionToPerform = null;
         foreach ($this->storage as $key => $array) {
@@ -164,7 +164,7 @@ class UnitOfWork {
         $this->clear($sessionId);
     }
 
-    public function rollback($transactionId, $objectId) {
+    public function rollback($transactionId, $objectId): void {
         foreach ($this->storage as $array) {
             if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId]->delete($objectId);
@@ -172,7 +172,7 @@ class UnitOfWork {
         }
     }
 
-    public function clear($transactionId) {
+    public function clear($transactionId): void {
         foreach ($this->storage as $array) {
             if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId] = array();
