@@ -2,10 +2,8 @@
 
 namespace App\Mappers;
 
-use App\Models\Account;
 use App\Models\AccountCatalog;
 use App\Gateway\AccountGateway;
-use App\Models\Address;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\UnitOfWork\UnitOfWork;
@@ -53,25 +51,6 @@ class AccountMapper implements CollectionMapper
             return $account->toArray();
         }
     }
-
-    /*public function getAccountFromRecordById($accountId) {
-
-        $identityMapId = $this->getAccountId($accountId);
-        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
-        $account = null;
-        if ($isItemInIdentityMap) {
-            $account = $this->identityMap->getObject($identityMapId);
-        } else {
-            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
-            $account = $this->accountCatalog->getAccount($accountId);
-        }
-
-        if ($account === null) {
-            return null;
-        } else {
-            return $account;
-        }
-    }*/
 
     private function getAccountId($email) {
         return $email . "account";
@@ -130,8 +109,12 @@ class AccountMapper implements CollectionMapper
 
     public function isAccountExist($email, $password)
     {
-        if($this->gateway->getAccountByEmailPassword($email, $password) != null)
-            return true;
+        if($this->isEmailExists($email))
+        {
+            if($this->getAccountFromRecordByEmail($email)["password"] === $password)
+                return true;
+            return false;
+        }
         return false;
     }
 
