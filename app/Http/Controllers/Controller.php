@@ -222,7 +222,7 @@ class Controller extends BaseController
         $unitsArr = []; // returns units results set with specs
         foreach($items as $item) {
             // return available units given an id
-            $availableUnits = UnitMapper::getInstance()->getUnitsAvailableByItemId($item['id']);
+            $availableUnits = UnitMapper::getInstance()->getAvailableUnitsByItemId($item['id']);
 
             foreach ($availableUnits as $availableUnit) {
                 $specsWithUnit = array_merge($availableUnit, $item);

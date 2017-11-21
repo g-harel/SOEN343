@@ -98,6 +98,24 @@ class UnitCatalog {
         return $arr;
     }
 
+    /**
+     * Returns AVAILABLE units given an item id
+     * @param $itemId
+     * @param $status
+     * @return array
+     */
+    public function fetchAvailableUnitsByItemId($itemId, $status): array {
+        $arr = [];
+        foreach ($this->catalog as $unit) {
+            $isStatus = $unit->getStatus() === $status;
+            $isItemId = $unit->getItemId() === $itemId;
+            if($isStatus && $isItemId) {
+                array_push($arr, $this->toArray($unit));
+            }
+        }
+        return $arr;
+    }
+
     public function reserve(Unit $unit, $accountId): void {
         $unit->setStatus(StatusEnum::RESERVED);
         $unit->setAccountId($accountId);
@@ -321,10 +339,8 @@ class UnitMapper implements CollectionMapper {
         return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
 
-    public function getUnitsAvailableByItemId($itemId) {
-        $availableUnits = $this->unitGateway->select([
-            'item_id' => $itemId, 'status' => StatusEnum::AVAILABLE
-        ]);
-        return $availableUnits ? $availableUnits : [];
+    // fetch data from catalog not from gateway (db) directly, use by controller
+    public function getAvailableUnitsByItemId($itemId) {
+        return $this->catalog->fetchAvailableUnitsByItemId($itemId, StatusEnum::AVAILABLE);
     }
 }
