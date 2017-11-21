@@ -276,7 +276,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
-                                    <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                                    <input type="hidden" name="item-id" id="tablet-id" class="form-control">
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
@@ -424,7 +424,7 @@
                             <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="tablet-units" class="form-control">
+                                <input title="" name="num-of-units" id="num-of-units"  type="number" min="1" max="10" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>

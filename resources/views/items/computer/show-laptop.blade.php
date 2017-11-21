@@ -402,10 +402,10 @@
                 <div class="modal-body" id="edit-laptop-form-body">
                     <form id="laptop-form-units" class="form-horizontal unit-form" action="/items/computer/laptop/addLaptopUnits" method="POST">
                         <div class="col-md-12">
-                            <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
+                            <input type="hidden" name="item-id" id="laptop-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="laptop-units" class="form-control">
+                                <input title="" name="num-of-units" id="num-of-units" type="number" min="1" max="10" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>
