@@ -54,6 +54,7 @@
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
                                         <p>Display Size: <b>{{$value['displaySize']}} inches</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
+                                        <p>Model #: <b>{{$value['model']}} </b> </p>
                                         <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
@@ -84,6 +85,7 @@
                             </div>
                             <div class="col-md-6">
                                 <p>Price: ${{$monitor['price']}}</p>
+                                <p>Model #: <b>{{$monitor['model']}} </b> </p>
                                 <p>Serial #: <b>{{$monitor['serial']}}</b></p>
                             </div>
                         </div>
@@ -119,6 +121,7 @@
                                 <p>Brand: <b>{{$details['brand']}}</b> </p>
                                 <p>Display Size: <b>{{$details['displaySize']}} inches</b> </p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b> </p>
+                                <p>Model #: <b>{{$details['model']}} </b> </p>
                                 <p>Serial #: <b>{{$details['serial']}} </b> </p>
                             </div>
                         </div>

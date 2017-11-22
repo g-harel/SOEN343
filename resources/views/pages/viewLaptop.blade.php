@@ -65,6 +65,7 @@
                                         @else
                                             <p>Touchscreen: <b>Yes</b></p>
                                         @endif
+                                        <p>Model #: <b>{{$value['model']}} </b> </p>
                                         <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
@@ -102,6 +103,7 @@
                                 <li>Ram Size: <b>{{ $laptop['ramSize'] }} GB</b></li>
                                 <li>Cpu cores: <b>{{ $laptop['cpuCores'] }}</b></li>
                                 <li>Hard Disk Size: <b>{{ $laptop['hddSize'] }} GB</b></li>
+                                <li>Model #: <b>{{$laptop['model']}}</b></li>
                                 <li>Serial #: <b>{{$laptop['serial']}}</b></li>
                             </ul>
                         </div>
@@ -150,6 +152,7 @@
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
                                 @endif
+                                <p>Model #: <b>{{$details['model']}}</b></p>
                                 <p>Serial #: <b>{{$details['serial']}}</b></p>
                             </div>
                         </div>
