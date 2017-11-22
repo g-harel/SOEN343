@@ -54,7 +54,7 @@
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
                                         <p>Display Size: <b>{{$value['displaySize']}} inches</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
-                                            <p>Serial #: <b>{{$value['serial']}} </b> </p>
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($monitors) && empty($details))
+        @if(empty($monitors) && empty($details) && empty($clientSearchResult))
             <p>Monitor item catalog is currently empty.</p>
         @endif
         @if(empty($details) && empty($clientSearchResult))

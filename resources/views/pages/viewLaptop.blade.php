@@ -50,7 +50,6 @@
                                         <i class="fa fa-desktop fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
-                                        <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                         <p>Price: <b>${{$value['price']}}</b></p>
                                         <p>Brand: <b>{{$value['brand']}}</b></p>
                                         <p>Processor Type: <b>{{$value['processorType']}}</b></p>
@@ -66,6 +65,7 @@
                                         @else
                                             <p>Touchscreen: <b>Yes</b></p>
                                         @endif
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
@@ -106,13 +106,13 @@
                             </ul>
                         </div>
                     </div>
-                    <form method="post" action="items/laptop/reserve">
-                        <div class="panel-footer">
+                    <div class="panel-footer">
+                        <form method="post" action="items/laptop/reserve">
                             <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                             <span><a class="btn btn-default" href="/view/laptop/{{$laptop['id']}}/{{$laptop['serial']}}" role="button">View details »</a></span>
                             <input type="hidden" name="serial" value="{{$laptop['serial']}}">
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -135,7 +135,6 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
                                 <p>Price: <b>${{$details['price']}}</b></p>
                                 <p>Brand: <b>{{$details['brand']}}</b></p>
                                 <p>Processor Type: <b>{{$details['processorType']}}</b></p>
