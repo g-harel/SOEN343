@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <!-- Form for Computers -->
+                <!-- form for desktop -->
                 <div id="nextSetOfComputerOptions" class="row hidden"><hr>
                     <form id="desktop-form" class="form-horizontal" action="/items/computer/desktop/insert" method="POST">
                         {{ csrf_field() }}
@@ -65,10 +65,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                Model #:
+                                    Model #:
                                     <div class="input-group">
                                         <span class="input-group-addon">DES-</span>
-                                        <input required type="number"  placeholder="Enter a Model Number" name="desktop-model" id="desktop-model" class="form-control">
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -130,7 +130,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Laptops -->
+                <!-- form for laptop -->
                 <div id="nextSetOfLaptopOptions" class="row hidden"><hr>
                     <form id="laptop-form" class="form-horizontal" method="post" action="/items/computer/laptop/insert">
                         {{ csrf_field() }}
@@ -144,7 +144,10 @@
                                 </div>
                                 <div class="form-group">
                                     Model #:
-                                    <input required type="text"  placeholder="Enter a Model Number" name="laptop-model" id="laptop-model" class="form-control">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">LAP-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -219,7 +222,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Tablets -->
+                <!-- form for tablet -->
                 <div id="nextSetOfTabletOptions" class="row hidden"><hr>
                     <form id="tablet-form"  class="form-horizontal" action="/items/computer/tablet/insert" method="POST">
                         {{ csrf_field() }}
@@ -233,7 +236,10 @@
                                 </div>
                                 <div class="form-group">
                                     Model #:
-                                    <input required type="text"  placeholder="Enter a Model Number" name="tablet-model" id="tablet-model" class="form-control">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">TAB-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -320,7 +326,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Monitors -->
+                <!-- form for monitor -->
                 <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
                     <form id="monitor-form" class="form-horizontal" action="/items/monitor/insert" method="post">
                         {{ csrf_field() }}
@@ -335,7 +341,10 @@
                                 </div>
                                 <div class="form-group">
                                     Model #:
-                                    <input required type="text"  placeholder="Enter a Model Number" name="monior-model" id="monitor-model" class="form-control">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">MON-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Price:

@@ -105,6 +105,7 @@
             <tr>
                 <th class="hidden">#</th>
                 <th>Model #</th>
+                <th>Qty</th>
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Display Size (inches)</th>
@@ -117,8 +118,8 @@
             <tbody>
             @foreach($searchResult as $value)
                 <tr>
-                    <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
-                    <td data-qty="{{ $value["model"] }}">{{ $value["model"] }}</td>
+                    <td class=hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
@@ -159,7 +160,7 @@
         <thead>
         <tr>
             <th class="hidden">#</th>
-            <th>Model #</th>
+            <th>Model</th>
             <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
@@ -174,7 +175,7 @@
         @foreach($monitors as $monitor)
             <tr>
                 <td class="hidden" data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
-                <td data-qty="{{ $monitor["model"] }}">{{ $monitor["model"] }}</td>
+                <td data-model="{{ $monitor["model"] }}">{{ $monitor["model"] }}</td>
                 <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
                 <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
                 <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
@@ -223,7 +224,14 @@
                             <div class="col-md-12">
                                 <div class="2"></div>
                                 <div class="col-md-7">
-                                    <input type="hidden" name="item-id" id="monitor-id" class="form-control">
+                                    <input type="hidden" name="monitor-id" id="monitor-id" class="form-control">
+                                    <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">MON-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         Brand Name:
                                         <select name="monitor-brand" id="monitor-brand" class="form-control">

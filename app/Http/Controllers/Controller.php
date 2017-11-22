@@ -67,6 +67,7 @@ class Controller extends BaseController
     {
         return [
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'laptop-model' => FILTER_SANITIZE_STRING,
             'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-ram-size' => FILTER_VALIDATE_INT,
             'laptop-storage-capacity' => FILTER_VALIDATE_INT,
@@ -91,6 +92,7 @@ class Controller extends BaseController
     {
         return $params = [
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-model' => FILTER_SANITIZE_STRING,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-ram-size' => FILTER_VALIDATE_INT,
             'tablet-cpu-cores' => FILTER_VALIDATE_INT,
@@ -135,6 +137,7 @@ class Controller extends BaseController
     public function monitorValidationFormInputs()
     {
         return [
+            'monitor-model' => FILTER_SANITIZE_STRING,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'monitor-price' => $this->filterInputFloatArr,
             'monitor-display-size' => $this->filterInputFloatArr,

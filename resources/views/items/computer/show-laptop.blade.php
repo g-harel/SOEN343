@@ -270,6 +270,13 @@
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
                                     <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">LAP-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
                                             <option title="Select brands" selected disabled>Select brands</option>
@@ -403,7 +410,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
-                <div class="modal-body" id="edit-laptop-form-body">
+                <div class="modal-body">
                     <form id="laptop-form-units" class="form-horizontal unit-form" action="/items/computer/laptop/addLaptopUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="item-id" id="laptop-id" class="form-control">
