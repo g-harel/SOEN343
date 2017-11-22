@@ -10,8 +10,8 @@ class Laptop extends Computer
     private $camera;
     private $isTouchscreen;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $os, $battery, $camera, $isTouchscreen) {
-        parent::__construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $os, $battery, $camera, $isTouchscreen) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->displaySize = $displaySize;
         $this->os = $os;
         $this->battery = $battery;
