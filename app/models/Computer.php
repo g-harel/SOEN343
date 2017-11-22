@@ -9,8 +9,8 @@ class Computer extends Item
     private $cpuCores;
     private $weight;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize) {
-        parent::__construct($id, $category, $brand, $price, $quantity);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted);
         $this->processorType = $processorType;
         $this->ramSize = $ramSize;
         $this->weight = $weight;

@@ -26,6 +26,6 @@ class LaptopGateway extends ComputerGateway implements iItemCategory {
     public function buildUpdate($item) {
         $id = $item["id"];
         $values = $this->updateList(self::$fields, $item);
-        return parent::buildUpdate($item)."UPDATE laptops SET $values WHERE item_id = $id;";
+        return parent::buildUpdate($item)."UPDATE laptops SET $values WHERE item_id = $id AND isDeleted = '0';";
     }
 }

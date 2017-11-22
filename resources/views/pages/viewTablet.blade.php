@@ -51,36 +51,33 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="col-md-8">
-                                            <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                             <p>Price: <b>${{$value['price']}}</b></p>
                                             <p>Brand: <b>{{$value['brand']}}</b></p>
-                                            <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
+                                            <p>Processor Type: <b>{{$value['processorType']}}</b></p>
                                             <p>OS: <b>{{$value['os']}}</b></p>
-                                            <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
-                                            <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
-                                            <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
+                                            <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b></p>
+                                            <p>Ram Size: <b>{{$value['ramSize']}} GB</b></p>
+                                            <p>Display Size: <b>{{$value['displaySize']}} inches</b></p>
                                             <p>Width: <b>{{$value['width']}} cm</b></p>
                                             <p>Height: <b>{{$value['height']}} cm</b></p>
                                             <p>Weight: <b>{{$value['weight']}} kg</b></p>
                                             <p>Thickness: <b>{{$value['thickness']}} cm</b></p>
                                             <p>Battery: <b>{{$value['battery']}}</b></p>
                                             <p>Camera: <b>{{$value['camera']}}</b></p>
-                                            @if($value["is_touchscreen"] == 0)
+                                            @if($value["isTouchscreen"] == 0)
                                                 <p>Touchscreen: <b>No</b></p>
                                             @else
                                                 <p>Touchscreen: <b>Yes</b></p>
                                             @endif
+                                            <p>Model #: <b>{{$value['model']}} </b> </p>
+                                            <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/tablet/reserve">
                                 <div class="panel-footer">
-                                    <span><a class="btn btn-default" href="/view/tablet/{{$value['id']}}" role="button">View details »</a></span>
-                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                    <span><a class="btn btn-default" href="/view/tablet/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                                 </div>
-                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -94,7 +91,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $tablet['brand'] }} {{ $tablet['hdd_size'] }} GB {{ $tablet["display_size"] }}"
+                            {{ $tablet['brand'] }} {{ $tablet['hddSize'] }} GB {{ $tablet["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -108,20 +105,22 @@
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li>Processor Type: <b>{{ $tablet['processor_type'] }}</b></li>
-                                <li>Ram Size: <b>{{ $tablet['ram_size'] }} GB</b></li>
-                                <li>Cpu cores: <b>{{ $tablet['cpu_cores'] }}</b></li>
-                                <li>Hard Disk Size: <b>{{ $tablet['hdd_size'] }} GB</b></li>
+                                <li>Processor Type: <b>{{ $tablet['processorType'] }}</b></li>
+                                <li>Ram Size: <b>{{ $tablet['ramSize'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $tablet['cpuCores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $tablet['hddSize'] }} GB</b></li>
+                                <li>Model #: <b>{{ $tablet['model'] }}</b></li>
+                                <li>Serial #: <b>{{$tablet['serial']}}</b></li>
                             </ul>
                         </div>
                     </div>
+                    <div class="panel-footer">
                     <form method="post" action="items/tablet/reserve">
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/tablet/{{$tablet['id']}}" role="button">View details »</a></span>
-                            <input type="hidden" name="serial" value="{{$tablet['serial']}}">
-                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                        </div>
+                        <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                        <span><a class="btn btn-default" href="/view/tablet/{{$tablet['id']}}/{{$tablet['serial']}}" role="button">View details »</a></span>
+                        <input type="hidden" name="serial" value="{{$tablet['serial']}}">
                     </form>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -146,7 +145,6 @@
                                 <i class="fa fa-tablet fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
                                 <p>Price: <b>${{$details['price']}}</b></p>
                                 <p>Brand: <b>{{$details['brand']}}</b></p>
                                 <p>Processor Type: <b>{{$details['processorType']}}</b></p>
@@ -165,22 +163,16 @@
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
                                 @endif
+                                <p>Model #: <b>{{$details['model']}}</b></p>
+                                <p>Serial #: <b>{{$details['serial']}}</b></p>
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="items/tablet/reserve">
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/tablet/{{$details['id']}}" role="button">View details »</a></span>
-                            <input type="hidden" name="serial" value="{{$details['serial']}}">
-                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
         @endif
     </div>
-
     <!-- category filter -->
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
         <div class="list-group">

@@ -1,3 +1,4 @@
+const MODEL_PREFIX = 4;
 const ModifyDelete = (() => {
     let editDeleteMonitor = null;
     let editDeleteDesktop = null;
@@ -7,6 +8,7 @@ const ModifyDelete = (() => {
     let genericOptionSelector = null;
     const dataAttr = {
         id: '[data-id]',
+        model: '[data-model]',
         brand: '[data-brand]',
         price: '[data-price]',
         qty: '[data-qty]',
@@ -89,6 +91,8 @@ const ModifyDelete = (() => {
                 genericOptionSelector(form, '#monitor-display-size', tr.find(dataAttr.displaySize).text());
                 // monitor input fields
                 form.find('#monitor-id').val(tr.find(dataAttr.id).text().trim());
+                const model = tr.find(dataAttr.model).text().trim();
+                form.find('#monitor-model').val(model.substr(MODEL_PREFIX));
                 form.find('#monitor-qty').val(tr.find(dataAttr.qty).text());
                 form.find('#monitor-price').val(tr.find(dataAttr.price).text());
                 form.find('#monitor-weight').val(tr.find(dataAttr.weight).text());
@@ -109,6 +113,9 @@ const ModifyDelete = (() => {
                 genericOptionSelector(form, '#cpu-cores', tr.find(dataAttr.cpuCores).text());
                 // desktop input fields
                 form.find('#desktop-id').val(tr.find(dataAttr.id).text().trim());
+                console.log(tr.find(dataAttr.model).text().trim());
+                const model = tr.find(dataAttr.model).text().trim();
+                form.find('#desktop-model').val(model.substring(MODEL_PREFIX));
                 form.find('#desktop-qty').val(tr.find(dataAttr.qty).text());
                 form.find('#desktop-price').val(tr.find(dataAttr.price).text());
                 form.find('#desktop-weight').val(tr.find(dataAttr.weight).text());
@@ -139,6 +146,8 @@ const ModifyDelete = (() => {
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
                 // tablet input fields
                 form.find('#tablet-id').val(tr.find(dataAttr.id).text().trim());
+                const model = tr.find(dataAttr.model).text().trim();
+                form.find('#tablet-model').val(model.substr(MODEL_PREFIX));
                 form.find('#tablet-qty').val(tr.find(dataAttr.qty).text());
                 form.find('#tablet-price').val(tr.find(dataAttr.price).text());
                 form.find('#tablet-weight').val(tr.find(dataAttr.weight).text());
@@ -170,6 +179,8 @@ const ModifyDelete = (() => {
                 radioCheckerFn(tr.find(dataAttr.touchscreen).text(), touchscreenChoice);
                 // laptop input fields
                 form.find('#laptop-id').val(tr.find(dataAttr.id).text().trim());
+                const model = tr.find(dataAttr.model).text().trim();
+                form.find('#laptop-model').val(model.substr(MODEL_PREFIX));
                 form.find('#laptop-qty').val(tr.find(dataAttr.qty).text());
                 form.find('#laptop-price').val(tr.find(dataAttr.price).text());
                 form.find('#laptop-weight').val(tr.find(dataAttr.weight).text());

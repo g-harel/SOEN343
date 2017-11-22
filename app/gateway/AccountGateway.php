@@ -15,18 +15,18 @@ class AccountGateway
     }
 
     public function getAccountByEmail($email) {
-        $conditionsAssociativeArray = ["email" => $email];
+        $conditionsAssociativeArray = ["email" => $email, "isDeleted" => 0];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function getAccountById($id) {
-        $conditionsAssociativeArray = ["id" => $id];
+        $conditionsAssociativeArray = ["id" => $id, "isDeleted" => 0];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function editAccount($id, $email, $password, $firstName, $lastName, $phoneNumber,
     $doorNumber, $appartement, $street, $city, $province, $country, $postalCode) {
-        $conditionsAssociativeArray = ["id" => $id];
+        $conditionsAssociativeArray = ["id" => $id, "isDeleted" => 0];
         $conditions = transformConditionsToString($conditionsAssociativeArray);
 
         $valuePairs = "email = '$email', password = '$password', first_name = '$firstName', last_name = '$lastName',
@@ -49,18 +49,18 @@ class AccountGateway
     }
 
     public function getAccountByEmailPassword($email, $password) {
-        $conditionsAssociativeArray = ["email" => $email, "password" => $password];
+        $conditionsAssociativeArray = ["email" => $email, "password" => $password, "isDeleted" => 0];
         return singleTableSelectAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function deleteAccountByEmail($email) {
-        $conditionsAssociativeArray = ["email" => $email];
-        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
+        $conditionsAssociativeArray = ["email" => $email, "isDeleted" => 0];
+        return singleTablePseudoDeleteQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function deleteAccountById($id) {
-        $conditionsAssociativeArray = ["id" => $id];
-        return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
+        $conditionsAssociativeArray = ["id" => $id, "isDeleted" => 0];
+        return singleTablePseudoDeleteQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function getAll()

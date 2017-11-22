@@ -39,7 +39,7 @@
                 <!-- radio buttons category -->
                 <div class="row radio no-pad">
                     <div class="col-md-2">
-                        <label><input type="radio" name="type" id="type_Computer" value="Computer" onclick="toggleOptions();">Desktop Computer</label>
+                        <label><input type="radio" name="type" id="type_Computer" value="Computer" onclick="toggleOptions();">Desktop</label>
                     </div>
                     <div class="col-md-2">
                         <label><input type="radio" name="type" id="type_Laptop" value="Laptop" onclick="toggleOptions();">Laptop</label>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <!-- Form for Computers -->
+                <!-- form for desktop -->
                 <div id="nextSetOfComputerOptions" class="row hidden"><hr>
                     <form id="desktop-form" class="form-horizontal" action="/items/computer/desktop/insert" method="POST">
                         {{ csrf_field() }}
@@ -63,6 +63,13 @@
                                     <select required name="desktop-brand" id="desktop-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <div class="input-group">
+                                        <span class="input-group-addon">DES-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -123,7 +130,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Laptops -->
+                <!-- form for laptop -->
                 <div id="nextSetOfLaptopOptions" class="row hidden"><hr>
                     <form id="laptop-form" class="form-horizontal" method="post" action="/items/computer/laptop/insert">
                         {{ csrf_field() }}
@@ -134,6 +141,13 @@
                                     <select name="laptop-brand" id="laptop-brand" class="form-control" required>
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <div class="input-group">
+                                        <span class="input-group-addon">LAP-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -208,7 +222,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Tablets -->
+                <!-- form for tablet -->
                 <div id="nextSetOfTabletOptions" class="row hidden"><hr>
                     <form id="tablet-form"  class="form-horizontal" action="/items/computer/tablet/insert" method="POST">
                         {{ csrf_field() }}
@@ -219,6 +233,13 @@
                                     <select required name="tablet-brand" id="tablet-brand" class="form-control">
                                         <option title="Select brands" value="">Select brands</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <div class="input-group">
+                                        <span class="input-group-addon">TAB-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:
@@ -305,7 +326,7 @@
                     </form>
                 </div>
 
-                <!-- Form for Monitors -->
+                <!-- form for monitor -->
                 <div id="nextSetOfMonitorOptions" class="row hidden"><hr>
                     <form id="monitor-form" class="form-horizontal" action="/items/monitor/insert" method="post">
                         {{ csrf_field() }}
@@ -317,6 +338,13 @@
                                     <select name="monitor-brand" id="monitor-brand" class="form-control" required>
                                         <option title="Select brands" value="">Select Brand</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    Model #:
+                                    <div class="input-group">
+                                        <span class="input-group-addon">MON-</span>
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Price:
