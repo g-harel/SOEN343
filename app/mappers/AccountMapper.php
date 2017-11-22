@@ -6,7 +6,6 @@ use App\Models\AccountCatalog;
 use App\Gateway\AccountGateway;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
-use App\UnitOfWork\UnitOfWork;
 
 
 class AccountMapper implements CollectionMapper
@@ -14,7 +13,6 @@ class AccountMapper implements CollectionMapper
     private $gateway;
     private $accountCatalog;
     private $identityMap;
-    private $unitOfWork;
     private static $instance;
 
     private function __construct()
@@ -22,7 +20,6 @@ class AccountMapper implements CollectionMapper
         $this->gateway = new AccountGateway();
         $this->accountCatalog = AccountCatalog::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->updateCatalog();
     }
 
@@ -59,13 +56,13 @@ class AccountMapper implements CollectionMapper
     public function addAccount($transactionId, $accountParams)
     {
         $account = $this->accountCatalog->createAccount($accountParams);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $account);
+        $this->registerNew($transactionId, self::$instance, $account);
     }
 
     public function deleteAccount($transactionId, $email)
     {
         $account = $this->accountCatalog->getAccountFromEmail($email);
-        $this->unitOfWork->registerDeleted($transactionId, $this->getAccountId($account->getEmail()), self::$instance, $account);
+        $this->registerDeleted($transactionId, $this->getAccountId($account->getEmail()), self::$instance, $account);
     }
 
     public function updateCatalog()
@@ -157,6 +154,19 @@ class AccountMapper implements CollectionMapper
 
     public function commit($transactionId)
     {
-        $this->unitOfWork->commit($transactionId);
+        // AOP INTERCEPTION
+        // $this->unitOfWork->commit($transactionId);
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 }

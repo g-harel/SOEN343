@@ -7,7 +7,7 @@ Interface CollectionMapper {
     public function edit($object);
     public function delete($object);
     public function commit($transactionId);
-    private function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object);
-    private function registerNew($transactionId, CollectionMapper $mapper, $object);
-    private function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object);
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object);
+    public function registerNew($transactionId, CollectionMapper $mapper, $object);
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object);
 }

@@ -4,7 +4,6 @@ namespace App\Mappers;
 
 use App\Models\Unit;
 use App\Gateway\UnitGateway;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 
@@ -129,14 +128,12 @@ class UnitMapper implements CollectionMapper {
     private $deletedUnit;
     private $unitGateway;
     private $identityMap;
-    private $unitOfWork;
     private $catalog;
 
     private function __construct() {
         $this->deletedUnit = new Unit(null, null, null, null, null, null, null);
         $this->unitGateway = UnitGateway::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->catalog = UnitCatalog::getInstance();
 
         // loading all units into the identity map/catalog.
@@ -257,7 +254,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->identityMap->set(mapSerial($serial), $unit);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
+        $this->registerNew($transactionId, self::$instance, $unit);
         return true;
     }
 
@@ -269,7 +266,7 @@ class UnitMapper implements CollectionMapper {
         }
         $this->catalog->remove($unit);
         $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
-        $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
     // reserved units are associated with an account and
@@ -284,7 +281,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->reserve($unit, $accountId);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
@@ -296,7 +293,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->checkout($unit, $accountId, $purchasedPrice);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
@@ -310,7 +307,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->return($unit);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
@@ -320,5 +317,17 @@ class UnitMapper implements CollectionMapper {
 
     public function getPurchased($accountId): array {
         return $this->catalog->query($accountId, StatusEnum::PURCHASED);
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 }

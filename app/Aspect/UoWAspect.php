@@ -26,10 +26,57 @@ class UoWAspect implements Aspect
      * @param MethodInvocation $invocation
      * @Before("execution(public App\Mappers\*->commit(*))")
      */
-    protected function SaveAfterCommit(MethodInvocation $invocation)
+    protected function commit(MethodInvocation $invocation)
     {
         $transactionId = $invocation->getArguments()[0];
-        $UnitOfWork = UnitOfWork::getInstance();
-        $UnitOfWork->commit($transactionId);
+        $unitOfWork = UnitOfWork::getInstance();
+        $unitOfWork->commit($transactionId);
+    }
+
+    /**
+     * Method that activates the UoW after committing to Mapper
+     *
+     * @param MethodInvocation $invocation
+     * @Before("execution(public App\Mappers\*->registerDirty(*))")
+     */
+    protected function registerDirty(MethodInvocation $invocation)
+    {
+        $transactionId = $invocation->getArguments()[0];
+        $objectId = $invocation->getArguments()[1];
+        $mapper = $invocation->getArguments()[2];
+        $object = $invocation->getArguments()[3];
+        $unitOfWork = UnitOfWork::getInstance();
+        $unitOfWork->registerDirty($transactionId, $objectId, $mapper, $object);
+    }
+
+    /**
+     * Method that activates the UoW after committing to Mapper
+     *
+     * @param MethodInvocation $invocation
+     * @Before("execution(public App\Mappers\*->registerNew(*))")
+     */
+    protected function registerNew(MethodInvocation $invocation)
+    {
+        $transactionId = $invocation->getArguments()[0];
+        $mapper = $invocation->getArguments()[1];
+        $object = $invocation->getArguments()[2];
+        $unitOfWork = UnitOfWork::getInstance();
+        $unitOfWork->registerNew($transactionId, $mapper, $object);
+    }
+
+    /**
+     * Method that activates the UoW after committing to Mapper
+     *
+     * @param MethodInvocation $invocation
+     * @Before("execution(public App\Mappers\*->registerDeleted(*))")
+     */
+    protected function registerDeleted(MethodInvocation $invocation)
+    {
+        $transactionId = $invocation->getArguments()[0];
+        $objectId = $invocation->getArguments()[1];
+        $mapper = $invocation->getArguments()[2];
+        $object = $invocation->getArguments()[3];
+        $unitOfWork = UnitOfWork::getInstance();
+        $unitOfWork->registerDeleted($transactionId, $objectId, $mapper, $object);
     }
 }

@@ -4,13 +4,11 @@ namespace App\Mappers;
 
 use App\Models\ItemCatalog;
 use App\Models\ItemType;
-use App\Models\Item;
 use App\Models\Tablet;
 use App\Models\Desktop;
 use App\Models\Laptop;
 use App\Models\Monitor;
 use App\Models\Computer;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\Gateway\ComputerGateway;
@@ -42,13 +40,11 @@ class ItemCatalogMapper implements CollectionMapper {
     ];
     private static $instance;
     private $itemCatalog;
-    private $unitOfWork;
     private $identityMap;
 
     private function __construct() {
         $this->itemCatalog = ItemCatalog::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->updateCatalog();
     }
 
@@ -387,15 +383,15 @@ class ItemCatalogMapper implements CollectionMapper {
         return $array;
     }
 
-    private function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
         // AOP INTERCEPTION
     }
 
-    private function registerNew($transactionId, CollectionMapper $mapper, $object) {
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
         // AOP INTERCEPTION
     }
 
-    private function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
         // AOP INTERCEPTION
     }
 
