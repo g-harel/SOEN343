@@ -156,10 +156,12 @@ class MonitorsController extends Controller
             } else {
                 $params = [
                     "id" => $id,
+                    "model" => 'MON-'.$sanitizedInputs['monitor-model'],
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];

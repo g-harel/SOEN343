@@ -112,7 +112,7 @@
         <table class="table table-bordered table-responsive" id="desktopTable" >
             <thead>
             <tr>
-                <th>#</th>
+                <th class="hidden">#</th>
                 <th>Model #</th>
                 <th>Brand</th>
                 <th>Price</th>
@@ -133,8 +133,7 @@
             <tbody>
             @foreach($result as $value)
                 <tr>
-                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
-                    <td data-brand="123abc">abc123</td>
+                    <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
@@ -180,7 +179,8 @@
     <table class="table table-bordered table-responsive" id="desktopTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Qty</th>
@@ -200,7 +200,8 @@
         <tbody>
         @foreach($desktops as $desktop)
             <tr>
-                <td data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td class="hidden" data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td data-model="{{ $desktop["model"] }}">{{ $desktop["model"] }}</td>
                 <td data-brand="{{ $desktop["brand"] }}">{{ $desktop["brand"] }}</td>
                 <td data-price="{{ $desktop["price"] }}">{{ $desktop["price"] }}</td>
                 <td data-qty="{{ $desktop["quantity"] }}">{{ $desktop["quantity"] }}</td>
@@ -254,11 +255,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-5">
-                                    <input type="hidden" name="item-id" id="desktop-id" class="form-control">
-                                    {{--<div class="form-group">--}}
-                                        {{--Quantity:--}}
-                                        {{--<input type="number" min="0" max="100" required name="desktop-qty" id="desktop-qty" class="form-control">--}}
-                                    {{--</div>--}}
+                                    <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                                    <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">DES-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select required name="desktop-brand" id="desktop-brand" class="form-control">
@@ -370,7 +374,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
-                <div class="modal-body" id="edit-desktop-form-body">
+                <div class="modal-body">
                     <form id="desktop-form-units" class="form-horizontal unit-form" action="/items/computer/desktop/addDesktopUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="item-id" id="desktop-id" class="form-control">

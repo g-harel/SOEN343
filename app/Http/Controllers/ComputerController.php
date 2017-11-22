@@ -283,7 +283,7 @@ class ComputerController extends Controller
     {
         if ($this->isFormSubmitted($_POST)) {
             $sanitizedInputs = filter_input_array(INPUT_POST, $this->desktopValidationFormInputs());
-            $id = filter_input(INPUT_POST, 'desktop-id', FILTER_VALIDATE_INT);
+            $id = filter_input(INPUT_POST, 'desktop-id', FILTER_VALIDATE_INT); // from modal form
             $emptyArrayKeys = array_keys($sanitizedInputs, "");
             if (!empty($emptyArrayKeys)) {
                 return redirect()->back()->with([
@@ -293,6 +293,7 @@ class ComputerController extends Controller
             } else {
                 $params = [
                     "id" => $id,
+                    "model" => 'DES-'.$sanitizedInputs['desktop-model'],
                     "processorType" => $sanitizedInputs["desktop-processor"],
                     "ramSize" => $sanitizedInputs["desktop-ram-size"],
                     "cpuCores" => $sanitizedInputs["desktop-cpu-cores"],
@@ -302,6 +303,7 @@ class ComputerController extends Controller
                     "brand" => $sanitizedInputs["desktop-brand"],
                     "price" => $sanitizedInputs["desktop-price"],
                     "quantity" => 0,
+                    "isDeleted" => 0,
                     "height" => $sanitizedInputs["desktop-height"],
                     "width" => $sanitizedInputs["desktop-width"],
                     "thickness" => $sanitizedInputs["desktop-thickness"]
@@ -335,6 +337,7 @@ class ComputerController extends Controller
             } else {
                 $params = [
                     "id" => $id,
+                    "model" => 'LAP-'.$sanitizedInputs['laptop-model'],
                     "processorType" => $sanitizedInputs['laptop-processor'],
                     "ramSize" => $sanitizedInputs['laptop-ram-size'],
                     "cpuCores" => $sanitizedInputs['laptop-cpu-cores'],
@@ -344,6 +347,7 @@ class ComputerController extends Controller
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
                     "displaySize" => $sanitizedInputs['laptop-display-size'],
                     "os" => $sanitizedInputs['laptop-os'],
                     "battery" => $sanitizedInputs['laptop-battery'],
@@ -379,6 +383,7 @@ class ComputerController extends Controller
             } else {
                 $params = [
                     "id" => $id,
+                    "model" => 'TAB-'.$sanitizedInputs['tablet-model'],
                     "processorType" => $sanitizedInputs['tablet-processor'],
                     "ramSize" => $sanitizedInputs['tablet-ram-size'],
                     "cpuCores" => $sanitizedInputs['tablet-cpu-cores'],
@@ -388,6 +393,7 @@ class ComputerController extends Controller
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
                     "quantity" =>0,
+                    "isDeleted" => 0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],

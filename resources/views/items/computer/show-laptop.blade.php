@@ -109,7 +109,8 @@
     <table class="table table-bordered table-responsive" id="laptopTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Qty</th>
@@ -131,7 +132,8 @@
         <tbody>
         @foreach($result as $value)
             <tr>
-                <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                 <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
@@ -182,7 +184,8 @@
     <table class="table table-bordered table-responsive" id="laptopTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Qty</th>
@@ -204,7 +207,8 @@
         <tbody>
         @foreach($laptops as $laptop)
             <tr>
-                <td data-id="{{ $laptop["id"] }}">{{ $laptop["id"] }}</td>
+                <td class="hidden" data-id="{{ $laptop["id"] }}">{{ $laptop["id"] }}</td>
+                <td data-model="{{ $laptop["model"] }}">{{ $laptop["model"] }}</td>
                 <td data-brand="{{ $laptop["brand"] }}">{{ $laptop["brand"] }}</td>
                 <td data-price="{{ $laptop["price"] }}">{{ $laptop["price"] }}</td>
                 <td data-qty="{{ $laptop["quantity"] }}">{{ $laptop["quantity"] }}</td>
@@ -265,6 +269,13 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="laptop-id" id="laptop-id" class="form-control">
+                                    <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">LAP-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select name="laptop-brand" id="laptop-brand" class="form-control">
@@ -399,7 +410,7 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
-                <div class="modal-body" id="edit-laptop-form-body">
+                <div class="modal-body">
                     <form id="laptop-form-units" class="form-horizontal unit-form" action="/items/computer/laptop/addLaptopUnits" method="POST">
                         <div class="col-md-12">
                             <input type="hidden" name="item-id" id="laptop-id" class="form-control">
