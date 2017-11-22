@@ -53,7 +53,6 @@
                                     <div class="col-md-8">
                                         <p>Price: <b>${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
-                                        <p>Quantity: <b>{{$value['quantity']}}</b> </p>
                                         <p>Processor Type: <b>{{$value['processorType']}} </b> </p>
                                         <p>Ram Size: <b>{{$value['ramSize']}} GB</b> </p>
                                         <p>CPU Cores: <b>{{$value['cpuCores']}} </b> </p>
@@ -74,7 +73,7 @@
                 </div>
             @endforeach
         @endif
-        @if(empty($desktops) && empty($details))
+        @if(empty($desktops) && empty($details) && empty($result))
             <p>Desktop item catalog is currently empty.</p>
         @endif
         @if(empty($details) && empty($result))
@@ -106,13 +105,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form method="post" action="items/desktop/reserve">
-                            <div class="panel-footer">
+                        <div class="panel-footer">
+                            <form method="post" action="items/desktop/reserve">
                                 <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
                                 <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}/{{$desktop['serial']}}" role="button">View details »</a></span>
                                 <input type="hidden" name="serial" value="{{$desktop['serial']}}">
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             @endforeach
@@ -133,7 +132,6 @@
                                 <div class="col-md-8">
                                     <p>Price: <b>${{$details['price']}}</b> </p>
                                     <p>Brand: <b>{{$details['brand']}}</b> </p>
-                                    <p>Quantity: <b>{{$details['quantity']}}</b> </p>
                                     <p>Processor Type: <b>{{$details['processorType']}} </b> </p>
                                     <p>Ram Size: <b>{{$details['ramSize']}} GB</b> </p>
                                     <p>CPU Cores: <b>{{$details['cpuCores']}} </b> </p>
