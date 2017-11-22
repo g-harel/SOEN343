@@ -315,7 +315,7 @@
                     <form id="monitor-form-units" class="form-horizontal unit-form" action="/items/monitor/AddUnits" method="POST">
                         {{ csrf_field() }}
                         <div class="col-md-12">
-                            <input type="hidden" name="monitor-id" id="monitor-id" class="form-control" value="">
+                            <input type="hidden" name="item-id" id="monitor-id" class="form-control" value="">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
                                 <input title="" name="num-of-units" id="num-of-units" type="number" min="1" max="10" class="form-control" required>
