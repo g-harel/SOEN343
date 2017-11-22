@@ -95,7 +95,7 @@ class MonitorsController extends Controller
                 }
                 return view('items.monitor.show-monitor', [
                     'noResults' => true,
-                    'searchResult' => $monitorsToSearch, 'numResult' => $numResult
+                    'monitors' => $monitorsToSearch, 'numResult' => $numResult
                 ]);
             } else {
                 if ($numResult > 0) {

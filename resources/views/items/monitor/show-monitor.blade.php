@@ -118,7 +118,7 @@
             <tbody>
             @foreach($searchResult as $value)
                 <tr>
-                    <td class=hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td class= "hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
                     <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
