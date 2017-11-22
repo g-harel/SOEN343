@@ -10,8 +10,8 @@ class Television extends Item
     private $weight;
     private $type;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $height, $width, $thickness, $weight, $type) {
-        parent::__construct($id, $category, $brand, $price, $quantity);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $height, $width, $thickness, $weight, $type) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted);
         $this->height = $height;
         $this->width = $width;
         $this->thickness = $thickness;

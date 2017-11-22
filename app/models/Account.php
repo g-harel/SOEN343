@@ -12,8 +12,9 @@ class Account
     private $phoneNumber;
     private $address;
     private $isAdmin;
+    private $isDeleted;
 
-    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false) {
+    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false, $isDeleted = 0) {
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;
@@ -21,12 +22,12 @@ class Account
         $this->phoneNumber = $phoneNumber;
         $this->address = $address;
         $this->isAdmin = $isAdmin;
+        $this->isDeleted = $isDeleted;
     }
 
-    public static function createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-    $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false) {
+    public static function createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber, $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin = false, $isDeleted = false) {
         $address = new Address($doorNumber, $appartement, $street, $city, $province, $country, $postalCode);
-        $instance = new self($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin);
+        $instance = new self($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin, $isDeleted);
         return $instance;
     }
 
@@ -36,7 +37,7 @@ class Account
     }
 
     public function getEmail() {
-        return $this->email;    
+        return $this->email;
     }
 
     public function getPassword() {
@@ -63,10 +64,13 @@ class Account
         return $this->isAdmin;
     }
 
+    public function getIsDeleted() {
+        return $this->isDeleted;
+    }
 
     // FORWARDING GETTERS TO ADDRESS
     public function getDoorNumber() {
-        return $this->address->getDoorNumber();    
+        return $this->address->getDoorNumber();
     }
 
     public function getAppartement() {
@@ -105,7 +109,7 @@ class Account
 
     public function setEmail($email) {
         $this->email = $email;
-        return $this; 
+        return $this;
     }
 
     public function setPassword($password) {
@@ -138,10 +142,15 @@ class Account
         return $this;
     }
 
+    public function setIsDeleted($isDeleted) {
+        $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
     // FORWARDING SETTERS TO ADDRESS
     public function setDoorNumber($doorNumber) {
-        $this->address->setDoorNumber($doorNumber); 
-        return $this;   
+        $this->address->setDoorNumber($doorNumber);
+        return $this;
     }
 
     public function setAppartement($appartement) {
@@ -177,5 +186,25 @@ class Account
     //UTILITY
     public function getFullName() {
         return $this->firstName . " " . $this->lastName;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'phoneNumber' => $this->getPhoneNumber(),
+            'doorNumber' => $this->getDoorNumber(),
+            'appartement' => $this->getAppartement(),
+            'street' => $this->getStreet(),
+            'city' => $this->getCity(),
+            'province' => $this->getProvince(),
+            'country' => $this->getCountry(),
+            'postalCode' => $this->getPostalCode(),
+            'isAdmin' => $this->getIsAdmin()
+        );
     }
 }

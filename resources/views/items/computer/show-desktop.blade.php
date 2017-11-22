@@ -112,7 +112,8 @@
         <table class="table table-bordered table-responsive" id="desktopTable" >
             <thead>
             <tr>
-                <th>#</th>
+                <th class="hidden">#</th>
+                <th>Model #</th>
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Qty</th>
@@ -132,7 +133,8 @@
             <tbody>
             @foreach($result as $value)
                 <tr>
-                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
@@ -178,7 +180,8 @@
     <table class="table table-bordered table-responsive" id="desktopTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Qty</th>
@@ -198,7 +201,8 @@
         <tbody>
         @foreach($desktops as $desktop)
             <tr>
-                <td data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td class="hidden" data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td data-model="{{ $desktop["model"] }}">{{ $desktop["model"] }}</td>
                 <td data-brand="{{ $desktop["brand"] }}">{{ $desktop["brand"] }}</td>
                 <td data-price="{{ $desktop["price"] }}">{{ $desktop["price"] }}</td>
                 <td data-qty="{{ $desktop["quantity"] }}">{{ $desktop["quantity"] }}</td>
@@ -253,10 +257,13 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
-                                    {{--<div class="form-group">--}}
-                                        {{--Quantity:--}}
-                                        {{--<input type="number" min="0" max="100" required name="desktop-qty" id="desktop-qty" class="form-control">--}}
-                                    {{--</div>--}}
+                                    <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">DES-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select required name="desktop-brand" id="desktop-brand" class="form-control">
@@ -330,7 +337,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Removing desktop item(s)</h4>
+                    <h4 class="modal-title">Removing desktop specification</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -338,7 +345,7 @@
                             <p><i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i></p>
                         </div>
                         <div class="col-md-10">
-                            <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
+                            <h4>You are about to remove this specification from the inventory.</h4>
                         </div>
                     </div>
                     <form action="/items/computer/desktop/delete" method="post">
@@ -368,13 +375,13 @@
                                 aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Adding Units</h4>
                 </div>
-                <div class="modal-body" id="edit-desktop-form-body">
+                <div class="modal-body">
                     <form id="desktop-form-units" class="form-horizontal unit-form" action="/items/computer/desktop/addDesktopUnits" method="POST">
                         <div class="col-md-12">
-                            <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                            <input type="hidden" name="item-id" id="desktop-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="desktop-units" class="form-control">
+                                <input title="" name="num-of-units"id="num-of-units"  type="number" min="1" max="10" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>
@@ -386,9 +393,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-desktop-form"
-                                        id="submit-desktop-form">Add Units
-                                </button>
+                                <input disabled type="submit" class="btn btn-primary" name="submit-add-units"
+                                        id="submit-desktop-form" value="Add Units">
                             </div>
                         </div>
                     </form>

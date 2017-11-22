@@ -2,273 +2,161 @@
 
 namespace App\Mappers;
 
-use App\Models\Account;
+use App\Models\AccountCatalog;
 use App\Gateway\AccountGateway;
+use App\UnitOfWork\CollectionMapper;
+use App\IdentityMap\IdentityMap;
+use App\UnitOfWork\UnitOfWork;
 
 
-class AccountMapper
+class AccountMapper implements CollectionMapper
 {
-    private $account;
     private $gateway;
+    private $accountCatalog;
+    private $identityMap;
+    private $unitOfWork;
+    private static $instance;
 
-    public function __construct() {
-        $this->gateway = new AccountGateway();
-    }
-    
-    public static function createAccountMapper($id) {
-        $instance = new self();
-        $instance->setAccountFromRecordById($id);
-        return $instance;
-    }
-
-    public static function createAccountMapperDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-                                                      $doorNumber, $appartement, $street, $city, $province,
-                                                      $country, $postalCode, $isAdmin = false)
+    private function __construct()
     {
-        $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin);
-        $instance = self::createAccountMapper($account);
-        return $instance;
+        $this->gateway = new AccountGateway();
+        $this->accountCatalog = AccountCatalog::getInstance();
+        $this->identityMap = IdentityMap::getInstance();
+        $this->unitOfWork = UnitOfWork::getInstance();
+        $this->updateCatalog();
     }
 
-    public function setAccountFromRecordByEmail($email) {
-        $record = $this->gateway->getAccountByEmail($email);
-        if ($record != null || $record != false) {
-            $recordAccount = $record[0];
-            $id = $recordAccount["id"];
-            $email = $recordAccount["email"];
-            $password = $recordAccount["password"];
-            $firstName = $recordAccount["first_name"];
-            $lastName = $recordAccount["last_name"];
-            $phoneNumber = $recordAccount["phone_number"];
-            $doorNumber = $recordAccount["door_number"];
-            $appartement = $recordAccount["appartement"];
-            $street = $recordAccount["street"];
-            $city = $recordAccount["city"];
-            $province = $recordAccount["province"];
-            $country = $recordAccount["country"];
-            $postalCode = $recordAccount["postal_code"];
-            $isAdmin = $recordAccount["isAdmin"];
-    
-            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-            $this->account = $account;
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new AccountMapper();
         }
-
-        return $this;
+        return self::$instance;
     }
-    
-    public function setAccountFromRecordById($id) {
-        $record = $this->gateway->getAccountById($id);
-        if ($record != null || $record != false) {
-            $recordAccount = $record[0];
-            $id = $recordAccount["id"];
-            $email = $recordAccount["email"];
-            $password = $recordAccount["password"];
-            $firstName = $recordAccount["first_name"];
-            $lastName = $recordAccount["last_name"];
-            $phoneNumber = $recordAccount["phone_number"];
-            $doorNumber = $recordAccount["door_number"];
-            $appartement = $recordAccount["appartement"];
-            $street = $recordAccount["street"];
-            $city = $recordAccount["city"];
-            $province = $recordAccount["province"];
-            $country = $recordAccount["country"];
-            $postalCode = $recordAccount["postal_code"];
-            $isAdmin = $recordAccount["isAdmin"];
-    
-            $account = Account::createWithAddressDecomposed($email, $password, $firstName, $lastName, $phoneNumber,
-            $doorNumber, $appartement, $street, $city, $province, $country, $postalCode, $isAdmin)->setId($id);
-            $this->account = $account;
+
+    public function getAccountFromRecordByEmail($email)
+    {
+        $identityMapId = $this->getAccountId($email);
+        $isItemInIdentityMap = $this->identityMap->hasId($identityMapId);
+        $account = null;
+        if ($isItemInIdentityMap) {
+            $account = $this->identityMap->getObject($identityMapId);
+        } else {
+            // If we fall into the else, this should be null. I put this here just in case. Don't want to break anything.
+            $account = $this->accountCatalog->getAccountFromEmail($email);
         }
-
-        return $this;
+        if ($account === null) {
+            return null;
+        } else {
+            return $account->toArray();
+        }
     }
 
-    public function saveAccountInRecord() {
-        $result = $this->gateway->addAccount(
-            $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
-            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
-            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
-            $this->account->getPostalCode(), $this->account->getIsAdmin()
+    private function getAccountId($email) {
+        return $email . "account";
+    }
+
+    public function addAccount($transactionId, $accountParams)
+    {
+        $account = $this->accountCatalog->createAccount($accountParams);
+        $this->unitOfWork->registerNew($transactionId, self::$instance, $account);
+    }
+
+    public function deleteAccount($transactionId, $email)
+    {
+        $account = $this->accountCatalog->getAccountFromEmail($email);
+        $this->unitOfWork->registerDeleted($transactionId, $this->getAccountId($account->getEmail()), self::$instance, $account);
+    }
+
+    public function updateCatalog()
+    {
+        $accounts = $this->gateway->getAll();
+        foreach ($accounts as $account)
+            $this->accountCatalog->addAccount($this->accountCatalog->createAccount($this->databaseArrayToFormParams($account)));
+    }
+
+    private function databaseArrayToFormParams($dbParams)
+    {
+        $account = array();
+        $account["id"] = $dbParams["id"];
+        $account["email"] = $dbParams["email"];
+        $account["password"] = $dbParams["password"];
+        $account["firstName"] = $dbParams["first_name"];
+        $account["lastName"] = $dbParams["last_name"];
+        $account["phoneNumber"] = $dbParams["phone_number"];
+        $account["doorNumber"] = $dbParams["door_number"];
+        $account["appt"] = $dbParams["appartement"];
+        $account["street"] = $dbParams["street"];
+        $account["city"]= $dbParams["city"];
+        $account["province"] = $dbParams["province"];
+        $account["country"] = $dbParams["country"];
+        $account["postalCode"] = $dbParams["postal_code"];
+        $account["isAdmin"] = $dbParams["isAdmin"];
+        return $account;
+    }
+
+    public function getAllAccounts()
+    {
+        return $this->accountCatalog->toArray();
+    }
+
+    public function isEmailExists($email)
+    {
+        if($this->getAccountFromRecordByEmail($email) != null)
+            return true;
+        return false;
+    }
+
+    public function isAccountExist($email, $password)
+    {
+        if($this->isEmailExists($email))
+        {
+            if($this->getAccountFromRecordByEmail($email)["password"] === $password)
+                return true;
+            return false;
+        }
+        return false;
+    }
+
+    //For UoW
+    public function add($account)
+    {
+        $id = $this->gateway->addAccount(
+            $account->getEmail(), $account->getPassword(), $account->getFirstName(), $account->getLastName(),
+            $account->getPhoneNumber(), $account->getDoorNumber(), $account->getAppartement(),
+            $account->getStreet(), $account->getCity(), $account->getProvince(), $account->getCountry(),
+            $account->getPostalCode(), $account->getIsAdmin()
         );
-        $isSuccessful = false;
-        if ($result !== null) {
-            /*$id = $result[0]["id"];
-            $this->account->setId($id);*/
-            $isSuccessful = true;
+        $identityMapId = $this->getAccountId($id);
+        if ($this->identityMap->hasId($identityMapId)){
+            return false;
         }
-        return $isSuccessful;
+        $account->setId($id);
+        $this->identityMap->set($identityMapId, $account);
+        $this->accountCatalog->addAccount($account);
+        return true;
     }
 
-    public function editAccountInRecord() {
-        $success = $this->gateway->editAccount(
-            $this->account->getId(), $this->account->getEmail(), $this->account->getPassword(), $this->account->getFirstName(), $this->account->getLastName(),
-            $this->account->getPhoneNumber(), $this->account->getDoorNumber(), $this->account->getAppartement(),
-            $this->account->getStreet(), $this->account->getCity(), $this->account->getProvince(), $this->account->getCountry(),
-            $this->account->getPostalCode(), $this->account->getIsAdmin()
-        );
-        return $success;
-    }
-    
-    public function deleteAccountInRecord() {
-        $success = $this->gateway->deleteAccountById($this->account->getId());
-        return $success;
-    } 
-
-    public function getAccount() {
-        return $this->account;
+    //For UoW
+    public function edit($object)
+    {
+        //Not needed
     }
 
-    public function getAccountByEmail($email) {
-        return $this->gateway->getAccountByEmail($email);
-    }
-    
-    public function getAccountById($id) {
-        return $this->gateway->getAccountById($id);
-    }
-
-    public function getId() {
-        return $this->account->getId();
-    }
-
-    public function getEmail() {
-        return $this->account->getEmail();    
+    //For UoW
+    public function delete($account)
+    {
+        $email = $account->getEmail();
+        $identityMapId = $this->getAccountId($email);
+        $deleted = $this->gateway->deleteAccountByEmail($email);
+        if ($deleted) {
+            $this->identityMap->removeObject($identityMapId);
+            $this->accountCatalog->removeAccount($email);
+        }
     }
 
-    public function getPassword() {
-        return $this->account->getPassword();
-    }
-
-    public function getFirstName() {
-        return $this->account->getFirstName();
-    }
-
-    public function getLastName() {
-        return $this->account->getLastName();
-    }
-
-    public function getPhoneNumber() {
-        return $this->account->getPhoneNumber();
-    }
-
-    public function getAddress() {
-        return $this->account->getAddress();
-    }
-
-    public function getIsAdmin() {
-        return $this->account->getIsAdmin();
-    }
-
-    public function getDoorNumber() {
-        return $this->account->getDoorNumber();    
-    }
-
-    public function getAppartement() {
-        return $this->account->getAppartement();
-    }
-
-    public function getStreet() {
-        return $this->account->getStreet();
-    }
-
-    public function getCity() {
-        return $this->account->getCity();
-    }
-
-    public function getProvince() {
-        return $this->account->getProvince();
-    }
-
-    public function getCountry() {
-        return $this->account->getCountry();
-    }
-
-    public function getPostalCode() {
-        return $this->account->getPostalCode();
-    }
-
-    public function setAccount($account) {
-        $this->account = $account;
-        return $this;
-    }
-
-    public function setId($id) {
-        $this->account->setId($id);
-        return $this;
-    }
-
-    public function setEmail($email) {
-        $this->account->setEmail($email);
-        return $this;  
-    }
-
-    public function setPassword($password) {
-        $this->account->setPassword($password);
-        return $this;
-    }
-
-    public function setFirstName($firstName) {
-        $this->account->setFirstName($firstName);
-        return $this;
-    }
-
-    public function setLastName($lastName) {
-        $this->account->setLastName($lastName);
-        return $this;
-    }
-
-    public function setPhoneNumber($phoneNumber) {
-        $this->account->setPhoneNumber($phoneNumber);
-        return $this;
-    }
-
-    public function setAddress($address) {
-        $this->account->setAddress($address);
-        return $this;
-    }
-
-    public function setDoorNumber($doorNumber) {
-        $this->account->setDoorNumber($doorNumber);
-        return $this; 
-    }
-
-    public function setAppartement($appartement) {
-        $this->account->setAppartement($appartement);
-        return $this;
-    }
-
-    public function setStreet($street) {
-        $this->account->setStreet($street);
-        return $this;
-    }
-
-    public function setCity($city) {
-        $this->account->setCity($city);
-        return $this;
-    }
-
-    public function setProvince($province) {
-        $this->account->setProvince($province);
-        return $this;
-    }
-
-    public function setCountry($country) {
-        $this->account->setCountry($country);
-        return $this;
-    }
-
-    public function setPostalCode($postalCode) {
-        $this->account->setPostalCode($postalCode);
-        return $this;
-    }
-
-    //UTILITY
-    public function getFullName() {
-        return $this->account->getFullName();
-    }
-
-    public function isAccountExist($email, $password) {
-        return $this->gateway->getAccountByEmailPassword($email, $password);
+    public function commit($transactionId)
+    {
+        $this->unitOfWork->commit($transactionId);
     }
 }

@@ -22,6 +22,7 @@ use App\Gateway\MonitorGateway;
 class ItemCatalogMapper implements CollectionMapper {
     const DOMAIN_STORAGE_ARRAY_KEY_PAIRS = [
         ["id", "id"],
+        ["model", "model"],
         ["category", "category"],
         ["brand", "brand"],
         ["price", "price"],
@@ -38,7 +39,8 @@ class ItemCatalogMapper implements CollectionMapper {
         ["os", "os"],
         ["battery", "battery"],
         ["camera", "camera"],
-        ["isTouchscreen", "is_touchscreen"]
+        ["isTouchscreen", "is_touchscreen"],
+        ["isDeleted", "isDeleted"]
     ];
     private static $instance;
     private $itemCatalog;
@@ -329,10 +331,12 @@ class ItemCatalogMapper implements CollectionMapper {
     private function getItemParams($item) {
         $array = array();
         $array["id"] = $item->getId();
+        $array["model"] = $item->getModel();
         $array["category"] = $item->getCategory();
         $array["brand"] = $item->getBrand();
         $array["price"] = $item->getPrice();
         $array["quantity"] = $item->getQuantity();
+        $array["isDeleted"] = $item->getIsDeleted();
         return $array;
     }
 
