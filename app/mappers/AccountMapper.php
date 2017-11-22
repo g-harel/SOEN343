@@ -71,8 +71,13 @@ class AccountMapper implements CollectionMapper
     public function updateCatalog()
     {
         $accounts = $this->gateway->getAll();
-        foreach ($accounts as $account)
-            $this->accountCatalog->addAccount($this->accountCatalog->createAccount($this->databaseArrayToFormParams($account)));
+        foreach ($accounts as $account){
+            $accountArray = $this->databaseArrayToFormParams($account);
+            $id = $accountArray["id"];
+            $accountObject = $this->accountCatalog->createAccount($accountArray);
+            $accountObject->setId($id);
+            $this->accountCatalog->addAccount($accountObject);
+        }
     }
 
     private function databaseArrayToFormParams($dbParams)
