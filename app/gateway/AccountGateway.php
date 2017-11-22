@@ -62,4 +62,9 @@ class AccountGateway
         $conditionsAssociativeArray = ["id" => $id, "isDeleted" => 0];
         return singleTablePseudoDeleteQuery($conditionsAssociativeArray, $this->tableName);
     }
+
+    public function getAll()
+    {
+        return singleTableSelectAccountQuery(array(), $this->tableName);
+    }
 }
