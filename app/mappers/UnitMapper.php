@@ -155,7 +155,7 @@ class UnitMapper implements CollectionMapper {
             // all accounts' reserved items are made available
             // if the reservation expires.
             if ($unit->getStatus() === StatusEnum::RESERVED) {
-                $maxReservationMinutes = 5000;
+                $maxReservationMinutes = 5;
                 $secondsSinceReserved = time() - strtotime($unit->getReservedDate());
                 if ($secondsSinceReserved > $maxReservationMinutes*60) {
                     $this->catalog->return($unit);
@@ -279,7 +279,6 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $cartSize = count($this->getCart($accountId));
-        //This used to be ($cartSize > 7), abd ut allowed clients to have a Cart with 8 items, changed it so that it restrics to 7
         if ($cartSize > 6) {
             return false;
         }
