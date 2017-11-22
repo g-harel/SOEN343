@@ -151,6 +151,9 @@ class PagesController extends Controller
 
     public function login()
     {
+        if (isset($_SESSION['currentLoggedInId'])) {
+            return view('pages.index');
+        }
         return view('pages.login');
     }
 
