@@ -35,6 +35,7 @@
                                 <input type="hidden" name="serial-nb" id="serial-nb" value="{{ $unit['serial'] }}" />  
                                 <!-- Trigger the modal with a button -->
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin:12px 12px 0;">Return</button>
+                                <!-- modal-->
                                 <div id="myModal" class="modal fade" role="dialog">
                                   <div class="modal-dialog">
                                     <!-- Modal content-->

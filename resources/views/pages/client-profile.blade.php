@@ -53,9 +53,31 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-danger" type="submit">Delete My Account</button></div>
-                                        <!--<input type="submit" name="delete-submit" id="delete-submit" class="col-sm-offset-2 col-sm-10" value="Delete My Account">-->
+                                        <div class="col-sm-offset-2 col-sm-10"> 
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete My Account</button>
+                                        </div>
                                     </div>
+                                            <!-- modal-->
+                                            <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" style="margin:12px 12px 0;">Return</button>-->
+                                            <div id="myModal" class="modal fade" role="dialog">
+                                              <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content" style="text-align:left;">
+                                                  <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                      <h4 class="modal-title">Delete your account</h3>
+                                                  </div>
+                                                  <div class="modal-body" style=>
+                                                    <p>Are you sure you want to delete your account? You will lose all your purchases!</p>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        <!--<input type="submit" name="delete-submit" id="delete-submit" class="col-sm-offset-2 col-sm-10" value="Delete My Account">-->
                                 </form>
                             </div>
                         </div>
