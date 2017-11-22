@@ -86,13 +86,24 @@ class UnitCatalog {
         unset($this->catalog[$unit->getSerial()]);
     }
 
-    public function query($accountId, $itemId, $status): array {
+    public function query($accountId, $status): array {
         $arr = array();
         foreach($this->catalog as $unit) {
             $isStatus = $unit->getStatus() === $status;
             $isAccount = $unit->getAccountId() === $accountId;
+            if ($isStatus && $isAccount) {
+                array_push($arr, $this->toArray($unit));
+            }
+        }
+        return $arr;
+    }
+
+    public function fetchAvailableUnitsByItemId($itemId, $status): array {
+        $arr = [];
+        foreach ($this->catalog as $unit) {
+            $isStatus = $unit->getStatus() === $status;
             $isItemId = $unit->getItemId() === $itemId;
-            if (($isStatus && $isAccount) || ($isStatus && $isItemId)) {
+            if($isStatus && $isItemId) {
                 array_push($arr, $this->toArray($unit));
             }
         }
@@ -314,15 +325,14 @@ class UnitMapper implements CollectionMapper {
     }
 
     public function getCart($accountId): array {
-        return $this->catalog->query($accountId, null, StatusEnum::RESERVED);
+        return $this->catalog->query($accountId, StatusEnum::RESERVED);
     }
 
     public function getPurchased($accountId): array {
-        return $this->catalog->query($accountId, null, StatusEnum::PURCHASED);
+        return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
 
-    // fetch data from catalog not from gateway (db) directly, use by controller
     public function getAvailableUnitsByItemId($itemId) {
-        return $this->catalog->query(null, $itemId, StatusEnum::AVAILABLE);
+        return $this->catalog->fetchAvailableUnitsByItemId($itemId, StatusEnum::AVAILABLE);
     }
 }
