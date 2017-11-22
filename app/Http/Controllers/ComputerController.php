@@ -269,6 +269,7 @@ class ComputerController extends Controller
             if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
+
                 $itemMapper->commit($_SESSION['session_id']);
                 return redirect()->back()->with(['itemSuccessfullyDeleted' => true]);
             } else {
