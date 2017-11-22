@@ -126,6 +126,8 @@ class MonitorsController extends Controller
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
+                    "model" => 'MON-'.$sanitizedInputs['monitor-model'],
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                 ];
                 $addMonitorItem = ItemCatalogMapper::getInstance();

@@ -129,10 +129,10 @@ class ComputerController extends Controller
                     "hddSize" => $sanitizedInputs["desktop-storage-capacity"],
                     "category" => "desktop",
                     "isDeleted" => 0,
+                    "quantity" => 0,
                     "model" => "DES-".$sanitizedInputs["desktop-model"] ,
                     "brand" => $sanitizedInputs['desktop-brand'],
                     "price" => $sanitizedInputs['desktop-price'],
-                    "quantity" => 0,
                     "width" => $sanitizedInputs['desktop-width'],
                     "height" => $sanitizedInputs['desktop-height'],
                     "thickness" => $sanitizedInputs['desktop-thickness'],
@@ -173,7 +173,9 @@ class ComputerController extends Controller
                     "isTouchscreen" => $sanitizedInputs["laptop-touchscreen"],
                     "brand" => $sanitizedInputs['laptop-brand'],
                     "price" => $sanitizedInputs['laptop-price'],
-                    "quantity" =>0
+                    "quantity" =>0,
+                    "isDeleted" => 0,
+                    "model" => 'LAP-'.$sanitizedInputs['laptop-model'],
                 ];
                 $addLaptopItem = ItemCatalogMapper::getInstance();
                 $addLaptopItem->addNewItem($_SESSION['session_id'], Controller::LAPTOP_ITEM_TYPE, $laptopItem); // ufw
@@ -206,7 +208,9 @@ class ComputerController extends Controller
                     "category" => "tablet",
                     "brand" => $sanitizedInputs['tablet-brand'],
                     "price" => $sanitizedInputs['tablet-price'],
+                    "model" => 'TAB-'.$sanitizedInputs['tablet-model'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
                     "displaySize" => $sanitizedInputs['tablet-display-size'],
                     "width" => $sanitizedInputs['tablet-width'],
                     "height" => $sanitizedInputs['tablet-height'],
