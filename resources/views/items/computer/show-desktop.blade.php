@@ -373,7 +373,7 @@
                 <div class="modal-body" id="edit-desktop-form-body">
                     <form id="desktop-form-units" class="form-horizontal unit-form" action="/items/computer/desktop/addDesktopUnits" method="POST">
                         <div class="col-md-12">
-                            <input type="hidden" name="desktop-id" id="desktop-id" class="form-control">
+                            <input type="hidden" name="item-id" id="desktop-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
                                 <input title="" name="num-of-units"id="num-of-units"  type="number" min="1" max="10" class="form-control" required>
