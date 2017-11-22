@@ -134,6 +134,7 @@
             @foreach($result as $value)
                 <tr>
                     <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
@@ -392,9 +393,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-desktop-form"
-                                        id="submit-desktop-form">Add Units
-                                </button>
+                                <input disabled type="submit" class="btn btn-primary" name="submit-add-units"
+                                        id="submit-desktop-form" value="Add Units">
                             </div>
                         </div>
                     </form>

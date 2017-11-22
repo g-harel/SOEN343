@@ -89,12 +89,14 @@ $(document).ready(() => {
             }
             serialInputs(fields, element.form);
             formUnits.displayNext();
+            $(element.form).find('input[name=submit-add-units]').prop('disabled', false);
             return true;
         });
     });
     specs.forEach((element) => { // empty the units modal on close
         $(`.modal${element.modal}`).on('hidden.bs.modal', () => {
             element.emptyVal();
+            $(element.form).find('input[name=submit-add-units]').prop('disabled', true);
             element.form.find('input#num-of-units').val(0);
         });
     });

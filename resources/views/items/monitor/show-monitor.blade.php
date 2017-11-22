@@ -330,9 +330,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-monitor-form"
-                                        id="submit-monitor-form">Add Units
-                                </button>
+                                <input disabled type="submit" class="btn btn-primary" name="submit-add-units"
+                                        id="submit-monitor-form" value="Add Units">
+                                </input>
                             </div>
                         </div>
                     </form>

@@ -284,8 +284,8 @@
                                     <div class="form-group">
                                         Model #:
                                         <div class="input-group">
-                                            <span class="input-group-addon">LAP-</span>
-                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                            <span class="input-group-addon">TAB-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -447,9 +447,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-tablet-form"
-                                        id="submit-tablet-form">Add Units
-                                </button>
+                                <input disabled type="submit" class="btn btn-primary" name="submit-add-units"
+                                        id="submit-tablet-form" value="Add Units">
                             </div>
                         </div>
                     </form>
