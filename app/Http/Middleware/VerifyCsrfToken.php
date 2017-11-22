@@ -26,6 +26,7 @@ class VerifyCsrfToken extends Middleware
         'view/items/monitor/reserve',
         'view/items/desktop/reserve',
         'view/items/laptop/reserve',
-        'view/items/tablet/reserve'
+        'view/items/tablet/reserve',
+        '/returnPurchase'
     ];
 }

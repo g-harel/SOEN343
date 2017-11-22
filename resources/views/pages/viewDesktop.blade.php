@@ -53,30 +53,29 @@
                                     <div class="col-md-8">
                                         <p>Price: <b>${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
-                                        <p>Quantity: <b>{{$value['quantity']}}</b> </p>
-                                        <p>Processor Type: <b>{{$value['processor_type']}} </b> </p>
-                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b> </p>
-                                        <p>CPU Cores: <b>{{$value['cpu_cores']}} </b> </p>
-                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b> </p>
+                                        <p>Processor Type: <b>{{$value['processorType']}} </b> </p>
+                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b> </p>
+                                        <p>CPU Cores: <b>{{$value['cpuCores']}} </b> </p>
+                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b> </p>
                                         <p>Height: <b>{{$value['height']}} cm</b> </p>
                                         <p>Width: <b>{{$value['width']}} cm</b> </p>
                                         <p>Thickness: <b>{{$value['thickness']}} cm</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
+                                        <p>Model #: <b>{{$value['model']}} </b> </p>
                                         <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/desktop/reserve">
                                 <div class="panel-footer">
-                                    <span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}" role="button">View details »</a></span>
-                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                    <span><a class="btn btn-default" href="/view/desktop/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                                 </div>
-                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
             @endforeach
+        @endif
+        @if(empty($desktops) && empty($details) && empty($result))
+            <p>Desktop item catalog is currently empty.</p>
         @endif
         @if(empty($details) && empty($result))
         <div class="row">
@@ -98,21 +97,23 @@
                             <div class="col-md-12">
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li>Processor Type: <b>{{$desktop['processor_type']}}</b></li>
-                                        <li>Ram Size: <b>{{$desktop['ram_size']}} GB</b></li>
-                                        <li>CPU Cores: <b>{{$desktop['cpu_cores']}}</b></li>
-                                        <li>Hard Disk Size: <b>{{$desktop['hdd_size']}} GB</b></li>
+                                        <li>Processor Type: <b>{{$desktop['processorType']}}</b></li>
+                                        <li>Ram Size: <b>{{$desktop['ramSize']}} GB</b></li>
+                                        <li>CPU Cores: <b>{{$desktop['cpuCores']}}</b></li>
+                                        <li>Hard Disk Size: <b>{{$desktop['hddSize']}} GB</b></li>
+                                        <li>Model #: <b>{{$desktop['model']}}</b></li>
+                                        <li>Serial #: <b>{{$desktop['serial']}}</b></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <form method="post" action="items/desktop/reserve">
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}" role="button">View details »</a></span>
-                                <input type="hidden" name="serial" value="{{$desktop['serial']}}">
+                        <div class="panel-footer">
+                            <form method="post" action="items/desktop/reserve">
                                 <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                            </div>
-                        </form>
+                                <span><a class="btn btn-default" href="/view/desktop/{{$desktop['id']}}/{{$desktop['serial']}}" role="button">View details »</a></span>
+                                <input type="hidden" name="serial" value="{{$desktop['serial']}}">
+                            </form>
+                        </div>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             @endforeach
@@ -133,25 +134,19 @@
                                 <div class="col-md-8">
                                     <p>Price: <b>${{$details['price']}}</b> </p>
                                     <p>Brand: <b>{{$details['brand']}}</b> </p>
-                                    <p>Quantity: <b>{{$details['quantity']}}</b> </p>
-                                    <p>Processor Type: <b>{{$details['processor_type']}} </b> </p>
-                                    <p>Ram Size: <b>{{$details['ram_size']}} GB</b> </p>
-                                    <p>CPU Cores: <b>{{$details['cpu_cores']}} </b> </p>
-                                    <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b> </p>
+                                    <p>Processor Type: <b>{{$details['processorType']}} </b> </p>
+                                    <p>Ram Size: <b>{{$details['ramSize']}} GB</b> </p>
+                                    <p>CPU Cores: <b>{{$details['cpuCores']}} </b> </p>
+                                    <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b> </p>
                                     <p>Height: <b>{{$details['height']}} cm</b> </p>
                                     <p>Width: <b>{{$details['width']}} cm</b> </p>
                                     <p>Thickness: <b>{{$details['thickness']}} cm</b> </p>
                                     <p>Weight: <b>{{$details['weight']}} kg</b> </p>
+                                    <p>Model #: <b>{{$details['model']}} kg</b> </p>
+                                    <p>Serial #: <b>{{$details['serial']}}</b></p>
                                 </div>
                             </div>
                         </div>
-                        <form method="post" action="items/desktop/reserve">
-                            <div class="panel-footer">
-                                <span><a class="btn btn-default" href="/view/desktop/{{$details['id']}}" role="button">View details »</a></span>
-                                <input type="hidden" name="serial" value="{{$details['serial']}}">
-                                <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                            </div>
-                        </form>
                     </div>
                 </div><!--/.col-xs-6.col-lg-4-->
             </div>

@@ -109,7 +109,8 @@
     <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px;">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
@@ -134,7 +135,8 @@
         <tbody>
         @foreach($result as $value)
             <tr>
-                <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                <td data-model="{{ $value["model"] }}">{{ $value["model"] }}</td>
                 <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                 <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                 <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
@@ -188,7 +190,8 @@
     <table class="table table-bordered table-responsive" id="tabletTable" style="width:700px;">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model</th>
             <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
@@ -213,7 +216,8 @@
         <tbody>
         @foreach($tablets as $tablet)
             <tr>
-                <td data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
+                <td class="hidden" data-id="{{ $tablet["id"] }}">{{ $tablet["id"] }}</td>
+                <td data-model="{{ $tablet["model"] }}">{{ $tablet["model"] }}</td>
                 <td data-qty="{{ $tablet["quantity"] }}">{{ $tablet["quantity"] }}</td>
                 <td data-brand="{{ $tablet["brand"] }}">{{ $tablet["brand"] }}</td>
                 <td data-price="{{ $tablet["price"] }}">{{ $tablet["price"] }}</td>
@@ -277,6 +281,13 @@
                             <div class="col-md-12">
                                 <div class="col-md-5">
                                     <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                                    <div class="form-group">
+                                        Model #:
+                                        <div class="input-group">
+                                            <span class="input-group-addon">TAB-</span>
+                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         Brand:
                                         <select name="tablet-brand" id="tablet-brand" class="form-control">
@@ -381,7 +392,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Removing tablet item(s)</h4>
+                    <h4 class="modal-title">Removing tablet specification</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -389,7 +400,7 @@
                             <p><i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i></p>
                         </div>
                         <div class="col-md-10">
-                            <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
+                            <h4>You are about to remove this specification from the inventory.</h4>
                         </div>
                     </div>
                     <form action="/items/computer/tablet/delete" method="POST">
@@ -421,10 +432,10 @@
                 <div class="modal-body" id="edit-tablet-form-body">
                     <form id="tablet-form-units" class="form-horizontal unit-form" action="/items/computer/tablet/addTabletUnits" method="POST">
                         <div class="col-md-12">
-                            <input type="hidden" name="tablet-id" id="tablet-id" class="form-control">
+                            <input type="hidden" name="item-id" id="tablet-id" class="form-control">
                             <div class="form-group">
                                 How many unit(s) with this specification would you like to add?
-                                <input title="" name="numOfUnits" type="number" min="0" max="10" id="tablet-units" class="form-control">
+                                <input title="" name="num-of-units" id="num-of-units"  type="number" min="1" max="10" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-12" id="units-inputs-container"></div>
@@ -436,9 +447,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="submit-tablet-form"
-                                        id="submit-tablet-form">Add Units
-                                </button>
+                                <input disabled type="submit" class="btn btn-primary" name="submit-add-units"
+                                        id="submit-tablet-form" value="Add Units">
                             </div>
                         </div>
                     </form>

@@ -36,8 +36,8 @@
                 <label>{{$numResult}} result(s) found.</label>
             </div>
         @endif
-        @if(!empty($result))
-            @foreach($result as $value)
+        @if(!empty($clientSearchResult))
+            @foreach($clientSearchResult as $value)
                 <div class="row">
                     <div class="col-xs-12 col-lg-12">
                         <div class="panel panel-primary">
@@ -52,30 +52,31 @@
                                     <div class="col-md-8">
                                         <p>Price: <b> ${{$value['price']}}</b> </p>
                                         <p>Brand: <b>{{$value['brand']}}</b> </p>
-                                        <p>Display Size: <b>{{$value['display_size']}} inches</b> </p>
+                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b> </p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b> </p>
-                                            <p>Serial #: <b>{{$value['serial']}} </b> </p>
+                                        <p>Model #: <b>{{$value['model']}} </b> </p>
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/monitor/reserve">
                             <div class="panel-footer">
-                                <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                <span><input class="btn btn-default" role="submit" value="Add to Cart"></span>
+                                <span><a class="btn btn-default" href="/view/monitor/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
             @endforeach
         @endif
-        @if(empty($details) && empty($result))
+        @if(empty($monitors) && empty($details) && empty($clientSearchResult))
+            <p>Monitor item catalog is currently empty.</p>
+        @endif
+        @if(empty($details) && empty($clientSearchResult))
         <div class="row">
         @foreach($monitors as $monitor)
             <div class="col-xs-6 col-lg-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">"{{$monitor['display_size']}}  {{$monitor['brand']}} Monitor</h3>
+                        <h3 class="panel-title">"{{$monitor['displaySize']}}  {{$monitor['brand']}} Monitor</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -84,16 +85,18 @@
                             </div>
                             <div class="col-md-6">
                                 <p>Price: ${{$monitor['price']}}</p>
-                                <p>Serial #: {{$monitor['serial']}}</p>
+                                <p>Model #: <b>{{$monitor['model']}} </b> </p>
+                                <p>Serial #: <b>{{$monitor['serial']}}</b></p>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <form method="post" action="items/monitor/reserve">
                             {{ csrf_field() }}
-                                <input type="hidden" name="serial" value="{{$monitor['serial']}}">
-                                <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
-                            <span><a class="btn btn-default" href="/view/monitor/{{$monitor['id']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$monitor['serial']}}">
+                            <input type="hidden" name="item-type" value="1" />
+                            <span><input class="btn btn-default" type="submit" value="Add to Cart"></span>
+                            <span><a class="btn btn-default" href="/view/monitor/{{$monitor['id']}}/{{$monitor['serial']}}" role="button">View details »</a></span>
                         </form>
                     </div>
                 </div>
@@ -116,14 +119,12 @@
                             <div class="col-md-8">
                                 <p>Price:<b> ${{$details['price']}}</b> </p>
                                 <p>Brand: <b>{{$details['brand']}}</b> </p>
-                                <p>Display Size: <b>{{$details['display_size']}} inches</b> </p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b> </p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b> </p>
+                                <p>Model #: <b>{{$details['model']}} </b> </p>
                                 <p>Serial #: <b>{{$details['serial']}} </b> </p>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-footer">
-                        <span><a class="btn btn-default" href="" role="button">Add to Cart »</a></span>
                     </div>
                 </div>
             </div><!--/.col-xs-6.col-lg-4-->
