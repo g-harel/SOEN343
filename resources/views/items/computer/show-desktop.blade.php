@@ -112,7 +112,7 @@
         <table class="table table-bordered table-responsive" id="desktopTable" >
             <thead>
             <tr>
-                <th>#</th>
+                <th class="hidden">#</th>
                 <th>Model #</th>
                 <th>Brand</th>
                 <th>Price</th>
@@ -133,8 +133,8 @@
             <tbody>
             @foreach($result as $value)
                 <tr>
-                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
-                    <td data-brand="123abc">abc123</td>
+                    <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-brand="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
@@ -180,7 +180,8 @@
     <table class="table table-bordered table-responsive" id="desktopTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model #</th>
             <th>Brand</th>
             <th>Price</th>
             <th>Qty</th>
@@ -200,7 +201,8 @@
         <tbody>
         @foreach($desktops as $desktop)
             <tr>
-                <td data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td class="hidden" data-id="{{ $desktop["id"] }}">{{ $desktop["id"] }}</td>
+                <td data-brand="{{ $value["model"] }}">{{ $value["model"] }}</td>
                 <td data-brand="{{ $desktop["brand"] }}">{{ $desktop["brand"] }}</td>
                 <td data-price="{{ $desktop["price"] }}">{{ $desktop["price"] }}</td>
                 <td data-qty="{{ $desktop["quantity"] }}">{{ $desktop["quantity"] }}</td>

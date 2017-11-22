@@ -103,7 +103,8 @@
         <table class="table table-bordered bg-color-white" id="monitorTable">
             <thead>
             <tr>
-                <th>#</th>
+                <th class="hidden">#</th>
+                <th>Model #</th>
                 <th>Brand</th>
                 <th>Price</th>
                 <th>Display Size (inches)</th>
@@ -116,7 +117,8 @@
             <tbody>
             @foreach($searchResult as $value)
                 <tr>
-                    <td data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td class="hidden" data-id="{{ $value["id"] }}">{{ $value["id"] }}</td>
+                    <td data-qty="{{ $value["model"] }}">{{ $value["model"] }}</td>
                     <td data-qty="{{ $value["quantity"] }}">{{ $value["quantity"] }}</td>
                     <td data-brand="{{ $value["brand"] }}">{{ $value["brand"] }}</td>
                     <td data-price="{{ $value["price"] }}">{{ $value["price"] }}</td>
@@ -156,7 +158,8 @@
     <table class="table table-bordered bg-color-white" id="monitorTable">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="hidden">#</th>
+            <th>Model #</th>
             <th>Qty</th>
             <th>Brand</th>
             <th>Price</th>
@@ -170,7 +173,8 @@
         <tbody>
         @foreach($monitors as $monitor)
             <tr>
-                <td data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
+                <td class="hidden" data-id="{{ $monitor["id"] }}">{{ $monitor["id"] }}</td>
+                <td data-qty="{{ $monitor["model"] }}">{{ $monitor["model"] }}</td>
                 <td data-qty="{{ $monitor["quantity"] }}">{{ $monitor["quantity"] }}</td>
                 <td data-brand="{{ $monitor["brand"] }}">{{ $monitor["brand"] }}</td>
                 <td data-price="{{ $monitor["price"] }}">{{ $monitor["price"] }}</td>
