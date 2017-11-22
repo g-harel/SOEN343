@@ -140,6 +140,7 @@ class SessionCatalogMapper implements CollectionMapper
         return $this->sessionCatalog->isSessionValid($sessionId);
     }
 
+    // CREATED FOR THE CONTROLLERS TO CHECK VALIDITY OF ONGOING SESSIONS BEFORE PUSHING CHANGES TO STORAGE
     public function isAccountSessionValid($accountId, $sessionId): bool {
         $this->synchronizeAccountSession($accountId);
         $isValidInMemory = $this->sessionCatalog->isAccountSessionValid($accountId, $sessionId);
