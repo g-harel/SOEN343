@@ -87,7 +87,7 @@ abstract class ItemGateway implements iItemCategory {
 
     public function deleteByCondition($condition) {
         $conditionString = transformConditionsToString($condition);
-        $result = $this->gateway->queryDB("UPDATE items SET isDeleted = '1' WHERE $conditions;");
+        $result = $this->gateway->queryDB("UPDATE items SET isDeleted = '1' WHERE $conditionString;");
         return parseSelectResult($result);
     }
 

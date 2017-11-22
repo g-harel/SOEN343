@@ -332,7 +332,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Removing desktop item(s)</h4>
+                    <h4 class="modal-title">Removing desktop specification</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -340,7 +340,7 @@
                             <p><i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i></p>
                         </div>
                         <div class="col-md-10">
-                            <h4>Are you sure that you want to permanently delete the selected items(s)?</h4>
+                            <h4>You are about to remove this specification from the inventory.</h4>
                         </div>
                     </div>
                     <form action="/items/computer/desktop/delete" method="post">

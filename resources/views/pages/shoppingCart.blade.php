@@ -1,28 +1,4 @@
 @extends('layouts.app')
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    const updateTotal = () => {
-        let total = 0;
-        $('.total').each(() => {
-            total += parseInt($(this).text(), 10);
-        });
-        $('.grand-total').text(total);
-    };
-
-    $(document).ready(() => {
-        $('.btn').click(() => {
-            $(this).parents('tr').first().remove();
-            $(this).parents('.quantity').val('0');
-            updateTotal();
-        });
-
-        $('.quantity').change(() => {
-            const parent = $(this.closest('tr'));
-            parent.find('.total').text($(this).val() * parseInt(parent.find('.price').text(), 10));
-            updateTotal();
-        });
-    });
-</script>
 @section('content')
     <div class="container">
         @if(Session::has('itemSuccessfullyRemoved'))
