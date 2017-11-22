@@ -17,11 +17,16 @@ class SessionCatalog
         $this->catalog = array();
     }
 
-    public function removeSession($accountId, $id): bool {
+    public function removeSession($id): bool {
         $isWorkDone = false;
-        if($this->isSessionValid($accountId, $id)) {
-            unset($this->catalog[accountId]);
-            $isWorkDone = true;
+        foreach ($this->catalog as $session) {
+            $idMatch = $session->getId() === $id;
+            if ($idMatch) {
+                $accountId = $session->getAccountId();
+                unset($this->catalog[$accountId]);
+                $isWorkDone = true;
+                break;
+            }
         }
         return $isWorkDone;
     }
@@ -39,20 +44,32 @@ class SessionCatalog
         return array_key_exists($accountId, $this->catalog);
     }
 
-    public function isSessionValid($accountId, $sessionId): bool {
+    public function isAccountSessionValid($accountId, $sessionId): bool {
         $isValid = false;
         if ($this->hasSession($accountId)) {
-            $isValid = $this->getSessionId($accountId) === $sessionId;
+            $isValid = $this->getSessionId($accountId) == $sessionId;
+        }
+        return $isValid;
+    }
+
+    public function isSessionValid($sessionId): bool {
+        $isValid = false;
+        foreach ($this->catalog as $session) {
+            if ($session->getId() === $sessionId) {
+                $isValid = true;
+                break;
+            }
         }
         return $isValid;
     }
 
     public function addSession($id, $accountId, $loginTime): void {
         $session = new Session($id, $accountId, $loginTime);
-        $catalog[$accountId] = $session;
+        $this->catalog[$accountId] = $session;
+
     }
 
-    public function getSession($accountId): Session {
+    public function getSession($accountId) {
         if ($this->hasSession($accountId)) {
             return $this->catalog[$accountId];
         } else {
@@ -66,6 +83,16 @@ class SessionCatalog
         } else {
             return null;
         }
+    }
+
+    public function equals($accountId, $session): bool {
+        $sessionInCatalog = $this->getSession($accountId);
+        $sessionExists = $sessionInCatalog !== null;
+        $objectsAreEqual = false;
+        if ($sessionExists) {
+            $objectsAreEqual = $sessionInCatalog->equals($session);
+        }
+        return $objectsAreEqual;
     }
 
 }

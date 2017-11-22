@@ -41,4 +41,10 @@ class Session
     public function setLoginTime($loginTime) {
         $this->loginTime = $loginTime;
     }
+
+    public function equals($session): bool {
+        return $this->id === $session->getId() &&
+        $this->accountId === $session->getAccountId() &&
+        $this->loginTime === $session->getLoginTime();
+    }
 }

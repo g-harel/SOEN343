@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mappers\SessionMapper;
+use App\Mappers\SessionCatalogMapper;
 use App\Mappers\AccountMapper;
 
 class Login
@@ -14,7 +14,7 @@ class Login
 
     public function __construct($email, $password)
     {
-        $this->sessionMapper = new SessionMapper();
+        $this->sessionMapper = SessionCatalogMapper::getInstance();
         $this->email = $email;
         $this->password = $password;
         $this->accountMapper = AccountMapper::getInstance();
@@ -27,10 +27,9 @@ class Login
             $_SESSION['currentLoggedInId'] = $this->accountMapper->getAccountFromRecordByEmail($this->email)['id'];
             $_SESSION['currentLoggedInEmail'] = $this->email;
             $accountId = $this->accountMapper->getAccountFromRecordByEmail($this->email)['id'];
-            $sessionMapper = new SessionMapper();
-            $sessionMapper->openSession2($accountId);
+            $this->sessionMapper->openSession($accountId);
             // get the session id by the account
-            $_SESSION['session_id'] = $sessionMapper->getSessionByAccountIdMapper($accountId)[0]['id'];
+            $_SESSION['session_id'] = $this->sessionMapper->getSession($accountId)['id'];
             return true;
         } else {
             return false;

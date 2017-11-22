@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mappers\SessionMapper;
+use App\Mappers\SessionCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
 use App\Mappers\AccountMapper;
 use App\Mappers\UnitMapper;
@@ -151,9 +151,10 @@ class PagesController extends Controller
     public function logout()
     {
         // on log out close session item in session table as well
-        $sessionMapper = new SessionMapper();
+        $sessionMapper = SessionCatalogMapper::getInstance();
         if (isset($_SESSION['currentLoggedInId'])) {
             $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
+            $sessionMapper->commit($_SESSION['session_id']);
         }
         $_SESSION = array();
         session_destroy();
