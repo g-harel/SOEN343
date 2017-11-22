@@ -39,7 +39,7 @@
                 <!-- radio buttons category -->
                 <div class="row radio no-pad">
                     <div class="col-md-2">
-                        <label><input type="radio" name="type" id="type_Computer" value="Computer" onclick="toggleOptions();">Desktop Computer</label>
+                        <label><input type="radio" name="type" id="type_Computer" value="Computer" onclick="toggleOptions();">Desktop</label>
                     </div>
                     <div class="col-md-2">
                         <label><input type="radio" name="type" id="type_Laptop" value="Laptop" onclick="toggleOptions();">Laptop</label>
@@ -65,8 +65,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    Model #:
-                                    <input required type="text"  placeholder="Enter a Model Number" name="desktop-model" id="desktop-model" class="form-control">
+                                Model #:
+                                    <div class="input-group">
+                                        <span class="input-group-addon">DES-</span>
+                                        <input required type="number"  placeholder="Enter a Model Number" name="desktop-model" id="desktop-model" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     Processor Type:

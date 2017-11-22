@@ -48,6 +48,7 @@ class Controller extends BaseController
             'desktop-ram-size' => FILTER_VALIDATE_INT,
             'desktop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
+            'desktop-model' =>  FILTER_SANITIZE_STRING,
             'desktop-price' => $this->filterInputFloatArr,
             'desktop-weight' => $this->filterInputFloatArr,
             'desktop-height' => $this->filterInputFloatArr,

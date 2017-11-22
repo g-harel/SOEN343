@@ -128,6 +128,8 @@ class ComputerController extends Controller
                     "weight" => $sanitizedInputs['desktop-weight'],
                     "hddSize" => $sanitizedInputs["desktop-storage-capacity"],
                     "category" => "desktop",
+                    "isDeleted" => 0,
+                    "model" => "DES-".$sanitizedInputs["desktop-model"] ,
                     "brand" => $sanitizedInputs['desktop-brand'],
                     "price" => $sanitizedInputs['desktop-price'],
                     "quantity" => 0,
