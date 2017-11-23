@@ -67,13 +67,13 @@ Registration page
                                         <label for="phone">
                                             Phone number
                                         </label><br>
-                                        <input type="text" name="phone_number" id="phone_number" class="form-control number" data-masked-input="999-999-9999" placeholder="XXX-XXX-XXXX" maxlength="12">
+                                        <input type="text" name="phone_number" id="phone_number" class="form-control number" placeholder="10 digits only" maxlength="10">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">
                                             Email
                                         </label>
-                                        <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="" value="" required>
+                                        <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="john@example,com" value="" required>
                                         <small id="emailHelp" class="form-text text-muted"></small>
                                     </div>
                                     <div class="form-group">
