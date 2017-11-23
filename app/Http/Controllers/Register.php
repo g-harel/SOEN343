@@ -26,7 +26,8 @@ class Register
             'province' => $province,
             'country' => $country,
             'postalCode' => $postalCode,
-            'isAdmin' => false
+            'isAdmin' => false,
+            'isDeleted' => false
         ];
         $this->accountMapper = AccountMapper::getInstance();
     }

@@ -94,6 +94,7 @@ class AccountMapper implements CollectionMapper
         $account["country"] = $dbParams["country"];
         $account["postalCode"] = $dbParams["postal_code"];
         $account["isAdmin"] = $dbParams["isAdmin"];
+        $account["isDeleted"] = $dbParams["isDeleted"];
         return $account;
     }
 
@@ -113,7 +114,8 @@ class AccountMapper implements CollectionMapper
     {
         if($this->isEmailExists($email))
         {
-            if($this->getAccountFromRecordByEmail($email)["password"] === $password)
+            $account = $this->getAccountFromRecordByEmail($email);
+            if(($account["password"] === $password) && ($account["isDeleted"] != true))
                 return true;
             return false;
         }

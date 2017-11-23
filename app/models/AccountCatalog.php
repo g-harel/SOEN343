@@ -28,7 +28,7 @@ class AccountCatalog
             $accountParams["email"], $accountParams["password"], $accountParams["firstName"], $accountParams["lastName"],
             $accountParams["phoneNumber"], $accountParams["doorNumber"], $accountParams["appt"],
             $accountParams['street'], $accountParams['city'], $accountParams['province'], $accountParams['country'],
-            $accountParams['postalCode'], $accountParams['isAdmin']
+            $accountParams['postalCode'], $accountParams['isAdmin'], $accountParams['isDeleted']
         );
         return $account;
     }
