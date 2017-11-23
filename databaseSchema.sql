@@ -61,7 +61,8 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 (1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, 0),
 (2, 'admin2@gmail.com', 'admin1234', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, 0),
 (3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0),
-(4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0);
+(4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0),
+(5, 'client2@gmail.com', '123', 'George', 'Little', 4504209999, 1, NULL, 'St-Francis', 'Laval', 'Quebec', 'Canada', 'H9Z7F', 0, 0);
 -- --------------------------------------------------------
 
 --
@@ -77,17 +78,7 @@ CREATE TABLE `computers` (
   `hdd_size` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `computers`
---
 
-INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `weight`, `hdd_size`) VALUES
-(3, 'Intel', 12, 4, 5.00, 128),
-(4, 'Rockchip', 16, 6, 13.20, 1000),
-(5, 'AMD', 2, 4, 1.00, 2000),
-(6, 'Intel', 8, 2, 3.00, 256),
-(23, 'NoIdea', 16, 8, 31.20, 1000),
-(24, 'NoIdea', 16, 8, 31.20, 1000);
 
 -- --------------------------------------------------------
 
@@ -102,14 +93,6 @@ CREATE TABLE `desktops` (
   `thickness` float(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `desktops`
---
-
-INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
-(4, 43.00, 24.00, 13.00),
-(23, 12.00, 12.00, 4.00),
-(24, 12.00, 12.00, 4.00);
 
 -- --------------------------------------------------------
 
@@ -126,31 +109,7 @@ CREATE TABLE `items` (
   `isDeleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `items`
---
 
-INSERT INTO `items` (`id`, `model`, `category`, `brand`, `price`) VALUES
-(1, 'TES-623456-A', 'monitor', 'SONY', 12.00),
-(2, 'TES-523456-C', 'monitor', 'ASUS', 99.00),
-(3, 'LAP-323456-A', 'laptop', 'IBM', 1500.00),
-(4, 'DES-223456-Q', 'desktop', 'Dell', 1055.00),
-(5, 'TAB-023456-P', 'tablet', 'Apple', 900.00),
-(6, 'LAP-723456-M', 'laptop', 'Apple', 9999.00),
-(7, 'DES-523456-I', 'desktop', 'Alienware', 2400.00),
-(8, 'DES-223456-J', 'desktop', 'Alienware3333', 240022.00),
-(9, 'DES-183456-A', 'desktop', 'Alienware', 2400.00),
-(10, 'DES-523456-D', 'desktop', 'Alienware3333', 240022.00),
-(11, 'DES-123456-F', 'desktop', 'Alienware', 2400.00),
-(12, 'DES-223456-B', 'desktop', 'Alienware3333', 240022.00),
-(13, 'DES-223456-Y', 'desktop', 'Alienware', 2400.00),
-(14, 'DES-023456-O', 'desktop', 'Alienware3333', 240022.00),
-(15, 'DES-923456-C', 'desktop', 'Alienware', 2400.00),
-(16, 'DES-123456-B', 'desktop', 'Alienware3333', 240022.00),
-(17, 'DES-823456-L', 'desktop', 'Alienware', 2400.00),
-(18, 'DES-623456-Z', 'desktop', 'Alienware3333', 240022.00),
-(23, 'DES-523456-A', 'desktop', 'Alienware6666', 111111.00),
-(24, 'DES-223456-R', 'desktop', 'Alienware3333', 240022.00);
 
 -- --------------------------------------------------------
 
@@ -167,13 +126,6 @@ CREATE TABLE `laptops` (
   `is_touchscreen` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `laptops`
---
-
-INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is_touchscreen`) VALUES
-(3, 14.00, 'Windows XP', 'Li-Ion', 'Yes', 0),
-(6, 13.30, 'macOS', 'Mac', 'Yes', 0);
 
 -- --------------------------------------------------------
 
@@ -187,13 +139,6 @@ CREATE TABLE `monitors` (
   `weight` float(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `monitors`
---
-
-INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
-(1, 12.00, 12.00),
-(2, 77.00, 77.00);
 
 -- --------------------------------------------------------
 
@@ -225,12 +170,7 @@ CREATE TABLE `tablets` (
   `is_touchscreen` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `tablets`
---
 
-INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`, `battery`, `os`, `camera`, `is_touchscreen`) VALUES
-(5, 7.00, 3.00, 2.00, 6.00, 'Mac', 'iOS', 'Yes', 0);
 
 -- --------------------------------------------------------
 
@@ -247,17 +187,6 @@ CREATE TABLE `units` (
   `purchased_price` float(10,2) NULL,
   `purchased_date` timestamp NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `units`
---
-
-INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
-('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
-('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW()),
-('411ATEGBH', 3, 'PURCHASED', 3, NOW(), 99.99, NOW()),
-('678GYDHBN', 4, 'PURCHASED', 2, NOW(), 29.99, NOW()),
-('492AGVELO', 5, 'PURCHASED', 2, NOW(), 79.99, NOW());
 
 -- --------------------------------------------------------
 

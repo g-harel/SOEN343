@@ -7,6 +7,7 @@ use App\Gateway\UnitGateway;
 use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
+use PhpDeal\Annotation as Contract;
 
 // enum for the three possible unit statuses.
 class StatusEnum {
@@ -134,7 +135,11 @@ class UnitCatalog {
         $unit->setPurchasedDate("NULL");
     }
 }
-
+/**
+ * Some account class
+ *
+ * @Contract\Invariant("count($this->catalog) >= 0")
+ */
 class UnitMapper implements CollectionMapper {
     private static $instance;
 
@@ -284,6 +289,18 @@ class UnitMapper implements CollectionMapper {
 
     // reserved units are associated with an account and
     // store their reserved time.
+    /**
+     *
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     * @param integer $accountId
+     *
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && !empty($accountId) && is_numeric($transactionId) && is_numeric($accountId)")
+     * @Contract\Ensure("count($this->getCart($accountId) > $__old->count($this->getCart($accountId)")
+     *
+     * @return boolean
+     */
     public function reserve($transactionId, $serial, $accountId): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
@@ -300,6 +317,20 @@ class UnitMapper implements CollectionMapper {
 
     // checked out units are associated with an account and
     // specify their purchase price and time.
+    /**
+     *
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     * @param integer $accountId
+     * @param float $purchasedPrice
+     *
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && !empty($accountId) && !empty($purchasedPrice) && $purchasedPrice > 0
+     *                      && is_numeric($transactionId) && is_numeric($accountId)")
+     * @Contract\Ensure("count($this->getCart($accountId) < $__old->count($this->getCart($accountId) && count($this->getCart($accountId) == 0")
+     *
+     * @return boolean
+     */
     public function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
@@ -314,6 +345,18 @@ class UnitMapper implements CollectionMapper {
     // have no reserved/purchased fields. note that this method
     // is used to return from both the reserved and the purchased
     // states.
+    /**
+     * Deposits fixed amount of money to the account
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     *
+     *
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && is_numeric($transactionId)")
+     * @Contract\Ensure("count($this->catalog) == $__old->count($this->catalog)")
+     *
+     * @return boolean
+     */
     public function return($transactionId, $serial): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
@@ -331,6 +374,7 @@ class UnitMapper implements CollectionMapper {
     public function getPurchased($accountId): array {
         return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
+
 
     public function getAvailableUnitsByItemId($itemId) {
         return $this->catalog->fetchAvailableUnitsByItemId($itemId, StatusEnum::AVAILABLE);
