@@ -289,7 +289,7 @@ class UnitMapper implements CollectionMapper {
     // reserved units are associated with an account and
     // store their reserved time.
     /**
-     *
+     *This is the contract for adding to cart
      *
      * @param integer $transactionId
      * @param string $serial
@@ -317,7 +317,7 @@ class UnitMapper implements CollectionMapper {
     // checked out units are associated with an account and
     // specify their purchase price and time.
     /**
-     *
+     *This is the contract for purchases
      *
      * @param integer $transactionId
      * @param string $serial
@@ -345,7 +345,7 @@ class UnitMapper implements CollectionMapper {
     // is used to return from both the reserved and the purchased
     // states.
     /**
-     * Deposits fixed amount of money to the account
+     * This is the contract for returning items
      *
      * @param integer $transactionId
      * @param string $serial
