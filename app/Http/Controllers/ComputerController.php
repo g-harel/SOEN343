@@ -121,35 +121,38 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                if($this->checkExistingModelNum(Controller::DESKTOP_ITEM_TYPE,$sanitizedInputs['desktop-model'],Controller::DESKTOP_MODEL_PREFIX)) {
+                if ($this->checkExistingModelNum(
+                    Controller::DESKTOP_ITEM_TYPE,
+                            $sanitizedInputs['desktop-model'],
+                            Controller::DESKTOP_MODEL_PREFIX) == "1") {
                     return redirect()->back()->with([
                         'modelExists' => true,
                     ]);
                 }
                 $params = [
-                    "processorType" => $sanitizedInputs['desktop-processor'],
-                    "ramSize" => $sanitizedInputs['desktop-ram-size'],
-                    "cpuCores" => $sanitizedInputs['desktop-cpu-cores'],
-                    "weight" => $sanitizedInputs['desktop-weight'],
-                    "hddSize" => $sanitizedInputs["desktop-storage-capacity"],
-                    "category" => "desktop",
-                    "isDeleted" => 0,
-                    "quantity" => 0,
-                    "model" => "DES-".$sanitizedInputs["desktop-model"] ,
-                    "brand" => $sanitizedInputs['desktop-brand'],
-                    "price" => $sanitizedInputs['desktop-price'],
-                    "width" => $sanitizedInputs['desktop-width'],
-                    "height" => $sanitizedInputs['desktop-height'],
-                    "thickness" => $sanitizedInputs['desktop-thickness'],
-                ];
-                $addDesktopItem = ItemCatalogMapper::getInstance();
-                $addDesktopItem->addNewItem($_SESSION['session_id'], Controller::DESKTOP_ITEM_TYPE, $params); // ufw
-                $addDesktopItem->commit($_SESSION['session_id']);
-                return redirect()->back()->with([
-                    'itemSuccessfullyAdded' => true,
-                    'for' => 'desktop',
-                    'link' => 'computer/showDesktop'
-                ]);
+                        "processorType" => $sanitizedInputs['desktop-processor'],
+                        "ramSize" => $sanitizedInputs['desktop-ram-size'],
+                        "cpuCores" => $sanitizedInputs['desktop-cpu-cores'],
+                        "weight" => $sanitizedInputs['desktop-weight'],
+                        "hddSize" => $sanitizedInputs["desktop-storage-capacity"],
+                        "category" => "desktop",
+                        "isDeleted" => 0,
+                        "quantity" => 0,
+                        "model" => "DES-".$sanitizedInputs["desktop-model"] ,
+                        "brand" => $sanitizedInputs['desktop-brand'],
+                        "price" => $sanitizedInputs['desktop-price'],
+                        "width" => $sanitizedInputs['desktop-width'],
+                        "height" => $sanitizedInputs['desktop-height'],
+                        "thickness" => $sanitizedInputs['desktop-thickness'],
+                    ];
+                    $addDesktopItem = ItemCatalogMapper::getInstance();
+                    $addDesktopItem->addNewItem($_SESSION['session_id'], Controller::DESKTOP_ITEM_TYPE, $params); // ufw
+                    $addDesktopItem->commit($_SESSION['session_id']);
+                    return redirect()->back()->with([
+                        'itemSuccessfullyAdded' => true,
+                        'for' => 'desktop',
+                        'link' => 'computer/showDesktop'
+                    ]);
             }
         } else {
             return view('items.create');
@@ -164,7 +167,10 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                if($this->checkExistingModelNum(Controller::LAPTOP_ITEM_TYPE,$sanitizedInputs['laptop-model'],Controller::LAPTOP_MODEL_PREFIX)) {
+                if ($this->checkExistingModelNum(
+                        Controller::LAPTOP_ITEM_TYPE,
+                        $sanitizedInputs['laptop-model'],
+                        Controller::LAPTOP_MODEL_PREFIX) == "1") {
                     return redirect()->back()->with([
                         'modelExists' => true,
                     ]);
@@ -209,7 +215,10 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
-                if($this->checkExistingModelNum(Controller::TABLET_ITEM_TYPE,$sanitizedInputs['tablet-model'],Controller::TABLET_MODEL_PREFIX)) {
+                if ($this->checkExistingModelNum(
+                        Controller::TABLET_ITEM_TYPE,
+                        $sanitizedInputs['tablet-model'],
+                        Controller::TABLET_MODEL_PREFIX) == "1") {
                     return redirect()->back()->with([
                         'modelExists' => true,
                     ]);
