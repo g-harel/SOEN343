@@ -260,8 +260,8 @@
                                     <div class="form-group">
                                         Model #:
                                         <div class="input-group">
-                                            <span readonly class="input-group-addon">DES-</span>
-                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
+                                            <span class="input-group-addon">DES-</span>
+                                            <input readonly required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
