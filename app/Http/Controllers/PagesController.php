@@ -162,7 +162,7 @@ class PagesController extends Controller
         // on log out close session item in session table as well
         $sessionMapper = SessionCatalogMapper::getInstance();
         if (isset($_SESSION['currentLoggedInId'])) {
-            $sessionMapper->closeSession($_SESSION['currentLoggedInId']);
+            $sessionMapper->closeSession($_SESSION['currentLoggedInId'], $_SESSION['session_id']);
             $sessionMapper->commit($_SESSION['session_id']);
         }
         $_SESSION = array();
@@ -269,8 +269,8 @@ class PagesController extends Controller
         if($this->isFormSubmitted($_POST)) {
             $userEmail = $_SESSION['currentLoggedInEmail'];
             $userId = filter_input(INPUT_POST, 'current-user-id');
-            $sessionMapper = new SessionMapper();
-            $sessionMapper->closeSession($userId);
+            $sessionMapper = SessionCatalogMapper::getInstance();
+            $sessionMapper->closeSession($userId, $_SESSION['session_id']);
             $_SESSION = array();
             session_destroy();
             //Delete user
