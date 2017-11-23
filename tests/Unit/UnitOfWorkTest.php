@@ -22,7 +22,8 @@ class UnitOfWorkTest extends TestCase {
 
         $unitOfWork->registerNew($transactionId, $mapperStub, $object1);
         $unitOfWork->registerNew($transactionId, $mapperStub, $object2);
-        $unitOfWork->commit($transactionId);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId, $isUnitTest);
         $outputArray = $mapperStub->getAddArray();
         $outputObject1 = $outputArray[0];
         $outputObject2 = $outputArray[1];
@@ -42,7 +43,8 @@ class UnitOfWorkTest extends TestCase {
 
         $unitOfWork->registerDirty($transactionId, $objectId1, $mapperStub, $object1);
         $unitOfWork->registerDirty($transactionId, $objectId2, $mapperStub, $object2);
-        $unitOfWork->commit($transactionId);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId, $isUnitTest);
         $outputArray = $mapperStub->getEditArray();
         $outputObject1 = $outputArray[0];
         $outputObject2 = $outputArray[1];
@@ -62,7 +64,8 @@ class UnitOfWorkTest extends TestCase {
 
         $unitOfWork->registerDeleted($transactionId, $objectId1, $mapperStub, $object1);
         $unitOfWork->registerDeleted($transactionId, $objectId2, $mapperStub, $object2);
-        $unitOfWork->commit($transactionId);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId, $isUnitTest);
         $outputArray = $mapperStub->getDeleteArray();
         $outputObject1 = $outputArray[0];
         $outputObject2 = $outputArray[1];
@@ -83,7 +86,8 @@ class UnitOfWorkTest extends TestCase {
 
         $unitOfWork->registerDeleted($transactionId1, $objectId1, $mapperStub, $object1);
         $unitOfWork->registerDeleted($transactionId2, $objectId2, $mapperStub, $object2);
-        $unitOfWork->commit($transactionId1);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId1, $isUnitTest);
         $outputArray = $mapperStub->getDeleteArray();
         $outputObject1 = $outputArray[0];
         $this->assertTrue(count($outputArray) === 1);
@@ -105,7 +109,8 @@ class UnitOfWorkTest extends TestCase {
         $unitOfWork->registerNew($transactionId, $mapperStub, $new);
         $unitOfWork->registerDirty($transactionId, $dirtyId, $mapperStub, $dirty);
         $unitOfWork->registerDeleted($transactionId, $deletedId, $mapperStub, $deleted);
-        $unitOfWork->commit($transactionId);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId, $isUnitTest);
         $newArray = $mapperStub->getAddArray();
         $dirtyArray = $mapperStub->getEditArray();
         $deletedArray = $mapperStub->getDeleteArray();
@@ -129,7 +134,8 @@ class UnitOfWorkTest extends TestCase {
 
         $unitOfWork->registerDeleted($transactionId, $objectId, $mapperStub, $object);
         $unitOfWork->registerDirty($transactionId, $objectId, $mapperStub, $object);
-        $unitOfWork->commit($transactionId);
+        $isUnitTest = true;
+        $unitOfWork->commit($transactionId, $isUnitTest);
         $deleteArray = $mapperStub->getDeleteArray();
         $dirtyArray = $mapperStub->getEditArray();
         $arrayHaveExpectedSize = count($dirtyArray) === 1 && count($deleteArray === 0);
