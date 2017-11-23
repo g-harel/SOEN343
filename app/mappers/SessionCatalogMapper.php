@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Benjamin
- * Date: 2017-11-21
- * Time: 4:19 PM
- */
 
 namespace App\Mappers;
 
