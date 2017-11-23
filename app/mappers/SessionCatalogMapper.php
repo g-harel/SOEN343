@@ -138,8 +138,13 @@ class SessionCatalogMapper implements CollectionMapper
         // THIS MEANS THAT IF USER 1 OPENS A NEW SESSION IN A SECOND TAB, THE MEMORY RELATED TO TAB 1 WON'T KNOW.
         // THIS MEANS THAT THE ONLY REAL COCONCURRENCY PROTECTION WE CAN HAVE COMES FROM THE DATABASE
         // THIS LINE IS HERE TO ASSURE OURSELVES THAT THE APP IS SYNCHRONIZED. PLEASE IGNORE IT IN VIEW OF THE DESIGN PATTERNS!
-        $this->synchronizeSessionId($sessionId);
-        return $this->sessionCatalog->isSessionValid($sessionId);
+        $isSessionValid = true;
+        if ($sessionId !== -1) {
+            $this->synchronizeSessionId($sessionId);
+            $isSessionValid = $this->sessionCatalog->isSessionValid($sessionId);
+        }
+        return $isSessionValid;
+
     }
 
     // CREATED FOR THE CONTROLLERS TO CHECK VALIDITY OF ONGOING SESSIONS BEFORE PUSHING CHANGES TO STORAGE

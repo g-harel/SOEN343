@@ -40,7 +40,6 @@ class SessionGateway
     }
 
     public function deleteSessionByAccountId($accountId) {
-        echo "DELETING WITH ACCOUNT ID!!";
         $conditionsAssociativeArray = ["account_id" => $accountId];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
