@@ -11,20 +11,24 @@ use Tests\TestCase;
 use App\Gateway\UnitGateway;
 use App\Mappers\UnitMapper;
 
-class UnitMapperTest extends TestCase {
-    public function testGatewayCanRead() {
+class UnitMapperTest extends TestCase
+{
+    public function testGatewayCanRead() 
+    {
         $gateway = UnitGateway::getInstance();
         $rows = $gateway->select(array());
         $this->assertTrue(count($rows) > 0);
     }
 
-    public function testGatewayCanWrite() {
+    public function testGatewayCanWrite() 
+    {
         $gateway = UnitGateway::getInstance();
         $serial = "DD56YG87M";
         $itemId = 1;
         $gateway->insert($serial, $itemId);
         $unit = $gateway->select(array("serial" => $serial))[0];
-        $this->assertEquals($unit, array(
+        $this->assertEquals(
+            $unit, array(
             "serial" => $serial,
             "item_id" => "$itemId",
             "status" => "AVAILABLE",
@@ -32,10 +36,12 @@ class UnitMapperTest extends TestCase {
             "reserved_date" => null,
             "purchased_price" => null,
             "purchased_date" => null,
-        ));
+            )
+        );
     }
 
-    public function testGatewayCanDelete() {
+    public function testGatewayCanDelete() 
+    {
         $gateway = UnitGateway::getInstance();
         $serial = "VR32WSOI6";
         $itemId = 1;
@@ -45,7 +51,8 @@ class UnitMapperTest extends TestCase {
         $this->assertTrue(count($gateway->select(array("serial" => $serial))) === 0);
     }
 
-    public function testGatewayCanUpdate() {
+    public function testGatewayCanUpdate() 
+    {
         $gateway = UnitGateway::getInstance();
         $serial = "X347589K";
         $itemId = 1;
@@ -53,7 +60,8 @@ class UnitMapperTest extends TestCase {
         $gateway->insert($serial, $itemId);
         $gateway->update($serial, $itemId, "RESERVED", 1, "$reservedDate", "NULL", "NULL");
         $unit = $gateway->select(array("serial" => $serial))[0];
-        $this->assertEquals($unit, array(
+        $this->assertEquals(
+            $unit, array(
             "serial" => $serial,
             "item_id" => "$itemId",
             "status" => "RESERVED",
@@ -61,10 +69,12 @@ class UnitMapperTest extends TestCase {
             "reserved_date" => $reservedDate,
             "purchased_price" => null,
             "purchased_date" => null,
-        ));
+            )
+        );
     }
 
-    public function testMapperCanRead() {
+    public function testMapperCanRead() 
+    {
         $mapper = UnitMapper::getInstance();
         // serial from default test data.
         $serial = "ABCDEF123";
@@ -72,7 +82,8 @@ class UnitMapperTest extends TestCase {
         $this->assertTrue($unit["serial"] === $serial);
     }
 
-    public function testMapperCanWrite() {
+    public function testMapperCanWrite() 
+    {
         $mapper = UnitMapper::getInstance();
         $transactionId = "08135642";
         $serial = "43DR567W";
@@ -81,7 +92,8 @@ class UnitMapperTest extends TestCase {
         $this->assertTrue(!!$mapper->get($serial));
     }
 
-    public function testMapperCanDelete() {
+    public function testMapperCanDelete() 
+    {
         $mapper = UnitMapper::getInstance();
         $transactionId = "794432";
         $serial = "12EDFGHUI90";
@@ -92,7 +104,8 @@ class UnitMapperTest extends TestCase {
         $this->assertFalse(!!$mapper->get($serial));
     }
 
-    public function testMapperCanReserve() {
+    public function testMapperCanReserve() 
+    {
         $mapper = UnitMapper::getInstance();
         $transactionId = "3679998";
         $serial = "XSQ2345TGVB";
@@ -106,7 +119,8 @@ class UnitMapperTest extends TestCase {
 
     }
 
-    public function testMapperCanPurchase() {
+    public function testMapperCanPurchase() 
+    {
         $mapper = UnitMapper::getInstance();
         $transactionId = "01234567";
         $serial = "098UHBFR43";
@@ -121,7 +135,8 @@ class UnitMapperTest extends TestCase {
         $this->assertSame($unit["purchased_date"], date("Y-m-d H:i:s"));
     }
 
-    public function testMapperCanReturn() {
+    public function testMapperCanReturn() 
+    {
         $mapper = UnitMapper::getInstance();
         $transactionId = "01234567";
         $serial = "NBVCSW300";
