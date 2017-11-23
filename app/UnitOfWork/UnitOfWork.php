@@ -140,14 +140,15 @@ class UnitOfWork {
         }
     }
 
-    public function commit($transactionId, $objectId = null): void {
-        $isTransactionValid = $this->sessionMapper->doesSessionExists($transactionId);
-        if ($isTransactionValid === false) {
-            // THE TRANSACTION ID IS INVALID. In other words, the session expired or was desynchonised. Don't want to
-            // commit here.
-            return;
+    public function commit($transactionId, $isUnitTest = false): void {
+        if ($isUnitTest === false) {
+            $isTransactionValid = $this->sessionMapper->doesSessionExists($transactionId);
+            if ($isTransactionValid === false) {
+                // THE TRANSACTION ID IS INVALID. In other words, the session expired or was desynchonised. Don't want to
+                // commit here.
+                return;
+            }
         }
-
 
         $sessionId = "0" . $transactionId;
         $actionToPerform = null;
