@@ -115,7 +115,7 @@ class AccountMapper implements CollectionMapper
         if($this->isEmailExists($email))
         {
             $account = $this->getAccountFromRecordByEmail($email);
-            if(($account["password"] === $password) && ($account["isDeleted"] != true))
+            if($account["password"] === $password)
                 return true;
             return false;
         }
