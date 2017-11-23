@@ -3,6 +3,7 @@
 namespace App\UnitOfWork;
 
 use App\UnitOfWork\UnitOfWorkPair;
+use App\Mappers\SessionCatalogMapper;
 
 class UnitOfWork {
     const STATE_NEW = "NEW";
@@ -16,10 +17,14 @@ class UnitOfWork {
     private static $unitOfWork;
     private $storage;
 
+    // Use to check if the sessions are valid before comitting.
+    private $sessionMapper;
+
     private function __construct() {
         $this->storage[self::STATE_NEW] = array();
         $this->storage[self::STATE_DIRTY] = array();
         $this->storage[self::STATE_DELETED] = array();
+        $this->sessionMapper = SessionCatalogMapper::getInstance();
     }
 
     public static function getInstance(): UnitOfWork {
@@ -135,7 +140,16 @@ class UnitOfWork {
         }
     }
 
-    public function commit($transactionId, $objectId = null): void {
+    public function commit($transactionId, $isUnitTest = false): void {
+        if ($isUnitTest === false) {
+            $isTransactionValid = $this->sessionMapper->doesSessionExists($transactionId);
+            if ($isTransactionValid === false) {
+                // THE TRANSACTION ID IS INVALID. In other words, the session expired or was desynchonised. Don't want to
+                // commit here.
+                return;
+            }
+        }
+
         $sessionId = "0" . $transactionId;
         $actionToPerform = null;
         foreach ($this->storage as $key => $array) {

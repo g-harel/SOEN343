@@ -121,6 +121,11 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
+                if($this->checkExistingModelNum(Controller::DESKTOP_ITEM_TYPE,$sanitizedInputs['desktop-model'],Controller::DESKTOP_MODEL_PREFIX)) {
+                    return redirect()->back()->with([
+                        'modelExists' => true,
+                    ]);
+                }
                 $params = [
                     "processorType" => $sanitizedInputs['desktop-processor'],
                     "ramSize" => $sanitizedInputs['desktop-ram-size'],
@@ -159,6 +164,11 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
+                if($this->checkExistingModelNum(Controller::LAPTOP_ITEM_TYPE,$sanitizedInputs['laptop-model'],Controller::LAPTOP_MODEL_PREFIX)) {
+                    return redirect()->back()->with([
+                        'modelExists' => true,
+                    ]);
+                }
                 $laptopItem = [
                     "processorType" => $sanitizedInputs['laptop-processor'],
                     "ramSize" => $sanitizedInputs['laptop-ram-size'],
@@ -199,6 +209,11 @@ class ComputerController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
+                if($this->checkExistingModelNum(Controller::TABLET_ITEM_TYPE,$sanitizedInputs['tablet-model'],Controller::TABLET_MODEL_PREFIX)) {
+                    return redirect()->back()->with([
+                        'modelExists' => true,
+                    ]);
+                }
                 $params = [
                     "processorType" => $sanitizedInputs['tablet-processor'],
                     "ramSize" => $sanitizedInputs['tablet-ram-size'],

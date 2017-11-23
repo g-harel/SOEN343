@@ -4,14 +4,31 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [    {
+        "type": "package",
+        "package": {
+            "name": "NepheriusIsTaken/goaop-laravel-bridge",
+            "version": "dev-master",
+            "source": {
+                "url": "https://github.com/NepheriusIsTaken/goaop-laravel-bridge.git",
+                "type": "git",
+                "reference": "master"
+            },
+            "autoload": {
+                "classmap": [""]
+            }
+        }
+    }],
     "require": {
+        "goaop/framework": "^1.0|^2.0",
+        "NepheriusIsTaken/goaop-laravel-bridge": "dev-master",
         "php": ">=7.0.0",
         "doctrine/annotations": "1.4",
         "fideloper/proxy": "~3.3",
-        "goaop/goaop-laravel-bridge": "^1.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.4.0"
+        "laravelcollective/html": "^5.4.0",
+        "lisachenko/php-deal": "^0.4.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

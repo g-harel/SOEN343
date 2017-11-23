@@ -8,9 +8,11 @@ use App\IdentityMap\IdentityMap;
 use Tests\Stub\ObjectStub;
 
 
-class IdentityMapTest extends TestCase {
+class IdentityMapTest extends TestCase
+{
 
-    public function testIdentityMapId() {
+    public function testIdentityMapId() 
+    {
         $map = IdentityMap::getInstance();
         $objectId = 452;
         $object = new ObjectStub($objectId);
@@ -23,7 +25,8 @@ class IdentityMapTest extends TestCase {
         $this->assertTrue($hasId && $idIsTheSame);
     }
 
-    public function testIdentityMapObject() {
+    public function testIdentityMapObject() 
+    {
         $map = IdentityMap::getInstance();
         $objectId = 452;
         $object = new ObjectStub($objectId);
@@ -36,7 +39,8 @@ class IdentityMapTest extends TestCase {
         $this->assertSame($object, $recoveredObject);
     }
 
-    public function testRemoveIdentityMapObject() {
+    public function testRemoveIdentityMapObject() 
+    {
         $map = IdentityMap::getInstance();
         $objectId = 452;
         $object = new ObjectStub($objectId);
