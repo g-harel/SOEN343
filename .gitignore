@@ -13,4 +13,4 @@ databaseConfig.ini
 .env
 package-lock.json
 composer.lock
-composer.json
+
