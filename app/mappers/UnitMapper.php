@@ -135,8 +135,6 @@ class UnitCatalog {
     }
 }
 /**
- * Some account class
- *
  * @Contract\Invariant("count($this->catalog) >= 0")
  */
 class UnitMapper implements CollectionMapper {
@@ -286,10 +284,10 @@ class UnitMapper implements CollectionMapper {
         $this->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
-    // reserved units are associated with an account and
-    // store their reserved time.
     /**
-     *This is the contract for adding to cart
+     * reserved units are associated with an account and
+     * store their reserved time.
+     * This is the contract for adding to cart
      *
      * @param integer $transactionId
      * @param string $serial
@@ -314,16 +312,16 @@ class UnitMapper implements CollectionMapper {
         return true;
     }
 
-    // checked out units are associated with an account and
-    // specify their purchase price and time.
     /**
-     *This is the contract for purchases
+     * checked out units are associated with an account and
+     * specify their purchase price and time.
      *
      * @param integer $transactionId
      * @param string $serial
      * @param integer $accountId
      * @param float $purchasedPrice
      *
+     * This is the contract for purchases.
      * @Contract\Verify("!empty($transactionId) && !empty($serial) && !empty($accountId) && !empty($purchasedPrice) && $purchasedPrice > 0
      *                      && is_numeric($transactionId) && is_numeric($accountId)")
      * @Contract\Ensure("count($this->getCart($accountId) < $__old->count($this->getCart($accountId) && count($this->getCart($accountId) == 0")
@@ -340,17 +338,16 @@ class UnitMapper implements CollectionMapper {
         return true;
     }
 
-    // returned units are not associated to any account and
-    // have no reserved/purchased fields. note that this method
-    // is used to return from both the reserved and the purchased
-    // states.
     /**
-     * This is the contract for returning items
+     * returned units are not associated to any account and
+     * have no reserved/purchased fields. note that this method
+     * is used to return from both the reserved and the purchased
+     * states.
      *
      * @param integer $transactionId
      * @param string $serial
      *
-     *
+     * This is the contract for returning items.
      * @Contract\Verify("!empty($transactionId) && !empty($serial) && is_numeric($transactionId)")
      * @Contract\Ensure("count($this->catalog) == $__old->count($this->catalog)")
      *
