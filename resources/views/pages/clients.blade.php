@@ -4,20 +4,20 @@
 @endsection
 @section('content')
     <h2>List of Clients</h2>
-    <table class="table">
-        <thead>
-        <td>id</td>
-        <td>Email</td>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Phone Number</td>
-        <td>Door Number</td>
-        <td>Apartment</td>
-        <td>Street</td>
-        <td>City</td>
-        <td>Province</td>
-        <td>Country</td>
-        <td>Postal Code</td>
+    <table class="table table-bordered table-hover">
+        <thead class="">
+        <th>id</th>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Door Number</th>
+        <th>Apartment</th>
+        <th>Street</th>
+        <th>City</th>
+        <th>Province</th>
+        <th>Country</th>
+        <th>Postal Code</th>
         </thead>
         @foreach($clients as $client)
             @if($client['isAdmin'] == false)

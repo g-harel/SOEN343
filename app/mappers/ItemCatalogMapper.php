@@ -4,13 +4,11 @@ namespace App\Mappers;
 
 use App\Models\ItemCatalog;
 use App\Models\ItemType;
-use App\Models\Item;
 use App\Models\Tablet;
 use App\Models\Desktop;
 use App\Models\Laptop;
 use App\Models\Monitor;
 use App\Models\Computer;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 use App\Gateway\ComputerGateway;
@@ -44,13 +42,11 @@ class ItemCatalogMapper implements CollectionMapper {
     ];
     private static $instance;
     private $itemCatalog;
-    private $unitOfWork;
     private $identityMap;
 
     private function __construct() {
         $this->itemCatalog = ItemCatalog::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->updateCatalog();
     }
 
@@ -66,13 +62,13 @@ class ItemCatalogMapper implements CollectionMapper {
         $paramArray = $param;
         $paramArray["id"] = "new";
         $item = $this->itemCatalog->createItem($itemType, $paramArray);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $item);
+        $this->registerNew($transactionId, self::$instance, $item);
     }
 
     // Used by the controllers
     public function removeItem($transactionId, $itemId) {
         $item = $this->itemCatalog->getItem($itemId);
-        $this->unitOfWork->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
+        $this->registerDeleted($transactionId, $this->getItemId($item->getId()), self::$instance, $item);
     }
 
     // Used by the controllers
@@ -81,7 +77,7 @@ class ItemCatalogMapper implements CollectionMapper {
         if ($itemInCatalog !== null) {
             $itemType = ItemType::getItemTypeStringToEnum($param['category']);
             $item = $this->itemCatalog->createItem($itemType, $param);
-            $this->unitOfWork->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
+            $this->registerDirty($transactionId, $this->getItemId($itemId), self::$instance, $item);
             return true;
         } else {
             return false;
@@ -91,7 +87,10 @@ class ItemCatalogMapper implements CollectionMapper {
 
     // Used by the controllers
     public function commit($transactionId) {
-        $this->unitOfWork->commit($transactionId);
+        /**
+         * This is where the Aspect executes
+         * $this->unitOfWork->commit($transactionId);
+         */
     }
 
     // Used by the controllers
@@ -386,6 +385,18 @@ class ItemCatalogMapper implements CollectionMapper {
         $array["camera"] = $item->getCamera();
         $array["isTouchscreen"] = $item->getisTouchscreen();
         return $array;
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 
 }
