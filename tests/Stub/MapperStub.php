@@ -39,4 +39,20 @@ class MapperStub implements CollectionMapper
     public function delete($object) {
         $this->deleteArray[] = $object;
     }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object) {
+        // AOP
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object) {
+        // AOP
+    }
+
+    public function commit($transactionId) {
+        // AOP
+    }
 }

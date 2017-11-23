@@ -19,12 +19,6 @@ Function log_error($str) {
     }
 }
 
-Function getAllSessions($tableName) {
-    $sql = "SELECT * FROM $this->tableName;";
-    $db = new DatabaseGateway();
-    return $this->db->queryDB($sql);
-}
-
 Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) {
     $conditions = transformConditionsToString($conditionsAssociativeArray);
     $sql = "SELECT * FROM $tableName";
@@ -40,6 +34,13 @@ Function singleTableSelectAccountQuery($conditionsAssociativeArray, $tableName) 
     } else {
         return null;
     }
+}
+
+Function singleTablePseudoDeleteQuery($conditionsAssociativeArray, $tableName) {
+    $conditions = transformConditionsToString($conditionsAssociativeArray);
+    $sql = "UPDATE $tableName SET isDeleted = '1' WHERE $conditions;";
+    $db = new DatabaseGateway();
+    return $db->queryDB($sql);
 }
 
 Function singleTableDeleteAccountQuery($conditionsAssociativeArray, $tableName) {

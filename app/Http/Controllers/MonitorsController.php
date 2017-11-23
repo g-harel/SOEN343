@@ -2,71 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Gateway\DesktopGateway;
-use App\Gateway\MonitorGateway;
-use App\Gateway\UnitGateway;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\UnitCatalog;
 use App\Mappers\UnitMapper;
-use App\Models\Desktop;
 use App\Models\Unit;
 
 class MonitorsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
     }
-    //ublic function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
 
-    public function purchaseMonitorUnit(){
-
-    }
-    public function showMonitor() {
+    public function showMonitor()
+    {
         return view('items.monitor.show-monitor', [
             'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE)
         ]);
     }
 
-    public function reserveMonitorUnit(){
-
+    public function reserveMonitorUnit()
+    {
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] != 1) {
             $serial = $_POST['serial'];
-
             $unitMapper = UnitMapper::getInstance();
             $unitMapper->reserve($_SESSION['session_id'], $serial, $_SESSION['currentLoggedInId']);
-//            print_r($res);
-//            die;
             $unitMapper->commit($_SESSION['session_id']);
-            $cond = true;
-
             return redirect()->back()->with(['unitReserved' => true]);
         } else {
             return redirect()->back()->with(['unitNotReserved' => true]);
         }
-
     }
 
-
-
-    public function addMonitorUnits(){
-
-        $numOfUnits = $_POST['numOfUnits'];
-        $itemID = $_POST['monitor-id'];
-        $units = array();
-        $cond =  false;
-        for($i = 0; $i< $numOfUnits; $i++){
-            $units[$i] = new Unit($_POST['serial'.$i],$itemID,"Available",'',"","","");
+    public function addMonitorUnits()
+    {
+        $numOfUnits = $_POST['num-of-units'];
+        $itemID = $_POST['item-id'];
+        $units = [];
+        for ($i = 0; $i < $numOfUnits; $i++) {
+            $units[$i] = new Unit($_POST['serial' . $i], $itemID, "Available", '', "", "", "");
         }
-        $unitMapper =  UnitMapper :: getInstance();
-        foreach($units as $unit){
-            $unitMapper->create($_SESSION['session_id'],$unit->getSerial(),$unit->getItemID());
+        $unitMapper = UnitMapper:: getInstance();
+        foreach ($units as $unit) {
+            $unitMapper->create($_SESSION['session_id'], $unit->getSerial(), $unit->getItemID());
             $unitMapper->commit($_SESSION['session_id']);
         }
         $cond = true;
-        if($cond ){
+        if ($cond) {
             return redirect()->back()->with(['unitsAdded' => true]);
-        }
-        else{
+        } else {
             return redirect()->back()->with(['unitsNotAdded' => true]);
         }
     }
@@ -78,51 +61,52 @@ class MonitorsController extends Controller
             $displaySize = filter_input(INPUT_GET, 'monitor-display-size');
             $maxPrice = filter_input(INPUT_GET, 'max-price');
             $minPrice = filter_input(INPUT_GET, 'min-price');
-            $monitors = $this->returnItemUnits(1);
-            $result = array();
-
-            foreach ($monitors as $monitor) {
+            if ($this->isAdminSearching()) {
+                $monitorsToSearch = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
+            } else {
+                $monitorsToSearch = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
+            }
+            $result = [];
+            foreach ($monitorsToSearch as $monitor) {
                 if ($maxPrice == 0) {
-                    if ($monitor['price'] > $minPrice) {
+                    if ($monitor['price'] >= $minPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['display_size'] == $displaySize || $displaySize == "")
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
                     }
                 } else if ($maxPrice > 0) {
-                    if ($monitor['price'] > $minPrice && $monitor['price'] < $maxPrice) {
+                    if ($monitor['price'] > $minPrice && $monitor['price'] <= $maxPrice) {
                         if (($monitor['brand'] == $brand || $brand == "") &&
-                            ($monitor['display_size'] == $displaySize || $displaySize == "")
+                            ($monitor['displaySize'] == $displaySize || $displaySize == "")
                         ) {
                             array_push($result, $monitor);
                         }
                     }
                 }
             }
-            if (!empty($result)) {
-                $numResult = count($result);
-                if($this->isAdminSearching()) {
+            $numResult = count($result);
+            if ($this->isAdminSearching()) {
+                if ($numResult > 0) {
                     return view('items.monitor.show-monitor', [
-                        'result' => $result, 'numResult' => $numResult
-                    ]);
-                } else {
-                    return view('pages.viewMonitor', [
-                        'result' => $result, 'numResult' => $numResult
+                        'searchResult' => $result, 'numResult' => $numResult
                     ]);
                 }
+                return view('items.monitor.show-monitor', [
+                    'noResults' => true,
+                    'searchResult' => $monitorsToSearch, 'numResult' => $numResult
+                ]);
             } else {
-                if($this->isAdminSearching()) {
-                    return view('items.monitor.show-monitor', [
-                        'monitors' => ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE),
-                        'noResults' => true
-                    ]);
-                } else {
+                if ($numResult > 0) {
                     return view('pages.viewMonitor', [
-                        'monitors' => $this->returnItemUnits(1),
-                        'noResults' => true
+                        'clientSearchResult' => $result, 'numResult' => $numResult
                     ]);
                 }
+                return view('pages.viewMonitor', [
+                    'monitors' => $monitorsToSearch,
+                    'noResults' => true
+                ]);
             }
         }
         return view('pages.view');
@@ -142,6 +126,8 @@ class MonitorsController extends Controller
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
+                    "model" => 'MON-'.$sanitizedInputs['monitor-model'],
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                 ];
                 $addMonitorItem = ItemCatalogMapper::getInstance();
@@ -172,10 +158,12 @@ class MonitorsController extends Controller
             } else {
                 $params = [
                     "id" => $id,
+                    "model" => 'MON-'.$sanitizedInputs['monitor-model'],
                     "category" => "monitor",
                     "brand" => $sanitizedInputs['monitor-brand'],
                     "price" => $sanitizedInputs['monitor-price'],
                     "quantity" => 0,
+                    "isDeleted" => 0,
                     "displaySize" => $sanitizedInputs['monitor-display-size'],
                     "weight" => $sanitizedInputs['monitor-weight']
                 ];
@@ -194,10 +182,11 @@ class MonitorsController extends Controller
         }
     }
 
-    public function deleteMonitor() {
-        if($this->isFormSubmitted($_POST)) {
+    public function deleteMonitor()
+    {
+        if ($this->isFormSubmitted($_POST)) {
             $itemId = filter_input(INPUT_POST, 'item-id', FILTER_SANITIZE_SPECIAL_CHARS);
-            if(!empty($itemId)) {
+            if (!empty($itemId)) {
                 $itemMapper = ItemCatalogMapper::getInstance();
                 $itemMapper->removeItem($_SESSION['session_id'], $itemId);
                 $itemMapper->commit($_SESSION['session_id']);

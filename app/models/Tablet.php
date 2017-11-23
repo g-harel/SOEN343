@@ -13,8 +13,8 @@ class Tablet extends Computer
     private $camera;
     private $isTouchscreen;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera, $touchscreen) {
-        parent::__construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $displaySize, $width, $height, $thickness, $battery, $os, $camera, $touchscreen) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->displaySize = $displaySize;
         $this->width = $width;
         $this->height = $height;

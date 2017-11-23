@@ -6,16 +6,20 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-use App\Gateway\DatabaseGateway;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Mappers\UnitMapper;
 use App\Mappers\ItemCatalogMapper;
-use App\Gateway\MonitorGateway;
-use App\Gateway\TabletGateway;
-use App\Gateway\LaptopGateway;
-use App\Gateway\DesktopGateway;
+use Go\Laravel\GoAopBridge\Kernel\AspectLaravelKernel;
+
+// Initialize an application aspect container
+$applicationAspectKernel = AspectLaravelKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // Use 'false' for production mode
+));
+
 
 
 class Controller extends BaseController
@@ -28,16 +32,16 @@ class Controller extends BaseController
     const TABLET_ITEM_TYPE = 5;
 
     // utility
-    public $filterInputFloatArr = array(
+    public $filterInputFloatArr = [
         'filter' => FILTER_VALIDATE_FLOAT,
         'options' => "decimal"
-    );
+    ];
 
     // utility
-    public $filterIntInputQty = array(
+    public $filterIntInputQty = [
         'filter' => FILTER_VALIDATE_INT,
-        'options' => array('min_range' => 1, 'max_range' => 999)
-    );
+        'options' => ['min_range' => 1, 'max_range' => 999]
+    ];
 
     /**
      * Used for validating desktop form
@@ -53,6 +57,7 @@ class Controller extends BaseController
             'desktop-ram-size' => FILTER_VALIDATE_INT,
             'desktop-storage-capacity' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'desktop-cpu-cores' => FILTER_VALIDATE_INT,
+            'desktop-model' =>  FILTER_SANITIZE_STRING,
             'desktop-price' => $this->filterInputFloatArr,
             'desktop-weight' => $this->filterInputFloatArr,
             'desktop-height' => $this->filterInputFloatArr,
@@ -71,6 +76,7 @@ class Controller extends BaseController
     {
         return [
             'laptop-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'laptop-model' => FILTER_SANITIZE_STRING,
             'laptop-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'laptop-ram-size' => FILTER_VALIDATE_INT,
             'laptop-storage-capacity' => FILTER_VALIDATE_INT,
@@ -95,6 +101,7 @@ class Controller extends BaseController
     {
         return $params = [
             'tablet-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'tablet-model' => FILTER_SANITIZE_STRING,
             'tablet-processor' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'tablet-ram-size' => FILTER_VALIDATE_INT,
             'tablet-cpu-cores' => FILTER_VALIDATE_INT,
@@ -139,6 +146,7 @@ class Controller extends BaseController
     public function monitorValidationFormInputs()
     {
         return [
+            'monitor-model' => FILTER_SANITIZE_STRING,
             'monitor-brand' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'monitor-price' => $this->filterInputFloatArr,
             'monitor-display-size' => $this->filterInputFloatArr,
@@ -155,45 +163,33 @@ class Controller extends BaseController
         }
     }
 
-    public function desktopFilteringFields() {
+    public function desktopSearchParams() {
         return [
             'brand' => filter_input(INPUT_GET, 'desktop-brand'),
             'storage' => filter_input(INPUT_GET, 'desktop-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'desktop-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewDesktop',
-            'adminView' => 'items.computer.show-desktop',
-            'collection' => 'desktops',
-            'itemType' => 3
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
-    public function laptopFilteringFields() {
+    public function laptopSearchParams() {
         return  [
             'brand' => filter_input(INPUT_GET, 'laptop-brand'),
             'storage' => filter_input(INPUT_GET, 'laptop-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'laptop-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewLaptop',
-            'adminView' => 'items.computer.show-laptop',
-            'collection' => 'laptops',
-            'itemType' => 4
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
-    public function tabletFilteringFields() {
+    public function tabletSearchParams() {
         return [
             'brand' => filter_input(INPUT_GET, 'tablet-brand'),
             'storage' => filter_input(INPUT_GET, 'tablet-storage-capacity'),
             'ramSize' => filter_input(INPUT_GET, 'tablet-ram-size'),
             'maxPrice' => filter_input(INPUT_GET, 'max-price'),
-            'minPrice' => filter_input(INPUT_GET, 'min-price'),
-            'clientView' => 'pages.viewTablet',
-            'adminView' => 'items.computer.show-tablet',
-            'collection' => 'tablets',
-            'itemType' => 5
+            'minPrice' => filter_input(INPUT_GET, 'min-price')
         ];
     }
 
@@ -221,62 +217,34 @@ class Controller extends BaseController
             $_SESSION['isAdmin'] == 1;
     }
 
-    /**
-     * e.g. /view/monitor/{id}
-     * return true if id exist, otherwise false
-     * @param $idToSearch
-     * @param $itemType
-     * @return bool
-     */
-    public function isIdExistInCatalog($idToSearch, $itemType) {
-        $ids = array_column(
-            ItemCatalogMapper::getInstance()->selectAllItemType($itemType),
-            'id'
-        );
-        return in_array((int)$idToSearch, $ids);
-    }
-
-    public function isIdExistInCatalog2($idToSearch, $arr) {
-        $ids = array_column(
-            $arr,
-            'id'
-        );
-        return in_array((int)$idToSearch, $ids);
-    }
-
-
     public function returnItemUnits($itemType)
     {
-        $item = null;
-        if($itemType == $this::MONITOR_ITEM_TYPE) {
-            $item = new MonitorGateway();
-        } else if($itemType == $this::DESKTOP_ITEM_TYPE) {
-            $item = new DesktopGateway();
-        } else if($itemType == $this::LAPTOP_ITEM_TYPE) {
-            $item = new LaptopGateway();
-        } else if($itemType == $this::TABLET_ITEM_TYPE) {
-            $item = new TabletGateway();
+        $items = null;
+        if($itemType == Controller::MONITOR_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::MONITOR_ITEM_TYPE);
         }
-        $arr = $item->getByCondition([]);
-        $units_arr = array();
-        for ($i = 0; $i < count($arr); $i++) {
-            $units = $item->getSerialNumberByID($arr[$i]['item_id'], 'units');
-            for ($j = 0; $j < count($units); $j++) {
-                if($units[$j]['status'] != 'AVAILABLE') {
-                    continue;
-                }
-                $serial = $units[$j]['serial'];
-                $units[$j] = $arr[$i];
-                $units[$j]['serial'] = $serial;
-                array_push($units_arr, $units[$j]);
+        if($itemType == Controller::DESKTOP_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+        }
+        if($itemType == Controller::LAPTOP_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+        }
+        if($itemType == Controller::TABLET_ITEM_TYPE) {
+            $items = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+        }
+        $unitsArr = []; // returns units results set with specs
+        foreach($items as $item) {
+            // return available units given an id
+            $availableUnits = UnitMapper::getInstance()->getAvailableUnitsByItemId($item['id']);
+
+            foreach ($availableUnits as $availableUnit) {
+                $specsWithUnit = array_merge($availableUnit, $item);
+                array_push($unitsArr, $specsWithUnit);
             }
-//            $units_arr = array_merge($units_arr, $units);
         }
-//        echo '<pre>';
-//        print_r($units_arr);
-//        die;
-        return $units_arr;
+        return $unitsArr;
     }
 
 
 }
+

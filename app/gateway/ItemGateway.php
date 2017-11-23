@@ -36,11 +36,6 @@ abstract class ItemGateway implements iItemCategory {
         return implode(", ", $list);
     }
 
-
-    public function getSerialNumberByID($itemID,$tableName){
-        $arr = ['item_id' => $itemID];
-        return singleTableSelectAccountQuery($arr,$tableName);
-    }
     public function getByCondition($condition) {
         $sql = $this->buildSelect();
         $sql .= " ".
@@ -50,6 +45,7 @@ abstract class ItemGateway implements iItemCategory {
                 "GROUP BY item_id ".
             ") counts ".
             "ON counts.item_id = items.id";
+        $condition["isDeleted"] = 0;
         $conditionString = transformConditionsToString($condition);
         if (trim($conditionString)) {
             $sql .= " WHERE $conditionString;";
@@ -91,7 +87,7 @@ abstract class ItemGateway implements iItemCategory {
 
     public function deleteByCondition($condition) {
         $conditionString = transformConditionsToString($condition);
-        $result = $this->gateway->queryDB("DELETE FROM items WHERE $conditionString;");
+        $result = $this->gateway->queryDB("UPDATE items SET isDeleted = '1' WHERE $conditionString;");
         return parseSelectResult($result);
     }
 
@@ -106,6 +102,7 @@ abstract class ItemGateway implements iItemCategory {
     // the following values should be overwritten by children
 
     public static $fields = array(
+        "model",
         "category",
         "brand",
         "price",
@@ -124,6 +121,6 @@ abstract class ItemGateway implements iItemCategory {
     public function buildUpdate($item) {
         $id = $item["id"];
         $values = $this->updateList(self::$fields, $item);
-        return "UPDATE items SET $values WHERE id = $id;";
+        return "UPDATE items SET $values WHERE id = $id AND isDeleted = '0';";
     }
 }

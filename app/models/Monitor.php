@@ -7,8 +7,8 @@ class Monitor extends Item
     private $displaySize;
     private $weight;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $displaySize, $weight) {
-        parent::__construct($id, $category, $brand, $price, $quantity);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $displaySize, $weight) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted);
         $this->displaySize = $displaySize;
         $this->weight = $weight;
     }

@@ -50,32 +50,29 @@
                                         <i class="fa fa-desktop fa-5x"></i>
                                     </div>
                                     <div class="col-md-8">
-                                        <p>Quantity: <b>{{$value['quantity']}}</b></p>
                                         <p>Price: <b>${{$value['price']}}</b></p>
                                         <p>Brand: <b>{{$value['brand']}}</b></p>
-                                        <p>Processor Type: <b>{{$value['processor_type']}}</b></p>
+                                        <p>Processor Type: <b>{{$value['processorType']}}</b></p>
                                         <p>OS: <b>{{$value['os']}}</b></p>
-                                        <p>Hard Disk Size: <b>{{$value['hdd_size']}} GB</b></p>
-                                        <p>Ram Size: <b>{{$value['ram_size']}} GB</b></p>
-                                        <p>Display Size: <b>{{$value['display_size']}} inches</b></p>
+                                        <p>Hard Disk Size: <b>{{$value['hddSize']}} GB</b></p>
+                                        <p>Ram Size: <b>{{$value['ramSize']}} GB</b></p>
+                                        <p>Display Size: <b>{{$value['displaySize']}} inches</b></p>
                                         <p>Weight: <b>{{$value['weight']}} kg</b></p>
                                         <p>Battery: <b>{{$value['battery']}}</b></p>
                                         <p>Camera: <b>{{$value['camera']}}</b></p>
-                                        @if($value["is_touchscreen"] == 0)
+                                        @if($value["isTouchscreen"] == 0)
                                             <p>Touchscreen: <b>No</b></p>
                                         @else
                                             <p>Touchscreen: <b>Yes</b></p>
                                         @endif
+                                        <p>Model #: <b>{{$value['model']}} </b> </p>
+                                        <p>Serial #: <b>{{$value['serial']}} </b> </p>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="items/laptop/reserve">
                                 <div class="panel-footer">
-                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}" role="button">View details »</a></span>
-                                    <input type="hidden" name="serial" value="{{$value['serial']}}">
-                                    <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
+                                    <span><a class="btn btn-default" href="/view/laptop/{{$value['id']}}/{{$value['serial']}}" role="button">View details »</a></span>
                                 </div>
-                            </form>
                         </div>
                     </div><!--/.col-xs-6.col-lg-4-->
                 </div>
@@ -88,7 +85,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $laptop['brand'] }}, {{ $laptop['hdd_size'] }} GB {{ $laptop["display_size"] }}"
+                            {{ $laptop['brand'] }}, {{ $laptop['hddSize'] }} GB {{ $laptop["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -102,20 +99,22 @@
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group">
-                                <li>Processor Type: <b>{{ $laptop['processor_type'] }}</b></li>
-                                <li>Ram Size: <b>{{ $laptop['ram_size'] }} GB</b></li>
-                                <li>Cpu cores: <b>{{ $laptop['cpu_cores'] }}</b></li>
-                                <li>Hard Disk Size: <b>{{ $laptop['hdd_size'] }} GB</b></li>
+                                <li>Processor Type: <b>{{ $laptop['processorType'] }}</b></li>
+                                <li>Ram Size: <b>{{ $laptop['ramSize'] }} GB</b></li>
+                                <li>Cpu cores: <b>{{ $laptop['cpuCores'] }}</b></li>
+                                <li>Hard Disk Size: <b>{{ $laptop['hddSize'] }} GB</b></li>
+                                <li>Model #: <b>{{$laptop['model']}}</b></li>
+                                <li>Serial #: <b>{{$laptop['serial']}}</b></li>
                             </ul>
                         </div>
                     </div>
-                    <form method="post" action="items/laptop/reserve">
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/desktop/{{$laptop['id']}}" role="button">View details »</a></span>
-                            <input type="hidden" name="serial" value="{{$laptop['serial']}}">
+                    <div class="panel-footer">
+                        <form method="post" action="items/laptop/reserve">
                             <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                        </div>
-                    </form>
+                            <span><a class="btn btn-default" href="/view/laptop/{{$laptop['id']}}/{{$laptop['serial']}}" role="button">View details »</a></span>
+                            <input type="hidden" name="serial" value="{{$laptop['serial']}}">
+                        </form>
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -129,7 +128,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            {{ $details['brand'] }}, {{ $details['hdd_size'] }} GB {{ $details["display_size"] }}"
+                            {{ $details['brand'] }}, {{ $details['hddSize'] }} GB {{ $details["displaySize"] }}"
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -138,32 +137,26 @@
                                 <i class="fa fa-laptop fa-5x"></i>
                             </div>
                             <div class="col-md-8">
-                                <p>Quantity: <b>{{$details['quantity']}}</b></p>
                                 <p>Price: <b>${{$details['price']}}</b></p>
                                 <p>Brand: <b>{{$details['brand']}}</b></p>
-                                <p>Processor Type: <b>{{$details['processor_type']}}</b></p>
+                                <p>Processor Type: <b>{{$details['processorType']}}</b></p>
                                 <p>OS: <b>{{$details['os']}}</b></p>
-                                <p>Hard Disk Size: <b>{{$details['hdd_size']}} GB</b></p>
-                                <p>Ram Size: <b>{{$details['ram_size']}} GB</b></p>
-                                <p>Display Size: <b>{{$details['display_size']}} inches</b></p>
+                                <p>Hard Disk Size: <b>{{$details['hddSize']}} GB</b></p>
+                                <p>Ram Size: <b>{{$details['ramSize']}} GB</b></p>
+                                <p>Display Size: <b>{{$details['displaySize']}} inches</b></p>
                                 <p>Weight: <b>{{$details['weight']}} kg</b></p>
                                 <p>Battery: <b>{{$details['battery']}}</b></p>
                                 <p>Camera: <b>{{$details['camera']}}</b></p>
-                                @if($details["is_touchscreen"] == 0)
+                                @if($details["isTouchscreen"] == 0)
                                     <p>Touchscreen: <b>No</b></p>
                                 @else
                                     <p>Touchscreen: <b>Yes</b></p>
                                 @endif
+                                <p>Model #: <b>{{$details['model']}}</b></p>
+                                <p>Serial #: <b>{{$details['serial']}}</b></p>
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="items/laptop/reserve">
-                        <div class="panel-footer">
-                            <span><a class="btn btn-default" href="/view/laptop/{{$details['id']}}" role="button">View details »</a></span>
-                            <input type="hidden" name="serial" value="{{$details['serial']}}">
-                            <span><input class="btn btn-default" type="submit" role="submit" value="Add to Cart"></span>
-                        </div>
-                    </form>
                 </div>
             </div>
         @endif

@@ -32,17 +32,103 @@ class ItemCatalog {
     public function createItem($itemType, $params) {
             switch($itemType) {
                 case ItemType::item:
-                return new Item($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"]);
+                    return new Item(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"]
+                    );
                 case ItemType::monitor:
-                return new Monitor($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["displaySize"], $params["weight"]);
+                    return new Monitor(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"],
+                        $params["displaySize"],
+                        $params["weight"]
+                    );
                 case ItemType::computer:
-                return new Computer($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"]);
+                    return new Computer(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"],
+                        $params["processorType"],
+                        $params["ramSize"],
+                        $params["cpuCores"],
+                        $params["weight"],
+                        $params["hddSize"]
+                    );
                 case ItemType::desktop:
-                return new Desktop($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["height"], $params["width"], $params["thickness"]);
+                    return new Desktop(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"],
+                        $params["processorType"],
+                        $params["ramSize"],
+                        $params["cpuCores"],
+                        $params["weight"],
+                        $params["hddSize"],
+                        $params["height"],
+                        $params["width"],
+                        $params["thickness"]
+                    );
                 case ItemType::laptop:
-                return new Laptop($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["os"], $params["battery"], $params["camera"], $params["isTouchscreen"]);
+                    return new Laptop(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"],
+                        $params["processorType"],
+                        $params["ramSize"],
+                        $params["cpuCores"],
+                        $params["weight"],
+                        $params["hddSize"],
+                        $params["displaySize"],
+                        $params["os"],
+                        $params["battery"],
+                        $params["camera"],
+                        $params["isTouchscreen"]
+                    );
                 case ItemType::tablet:
-                return new Tablet($params["id"], $params["category"], $params["brand"], $params["price"], $params["quantity"], $params["processorType"], $params["ramSize"], $params["cpuCores"], $params["weight"], $params["hddSize"], $params["displaySize"], $params["width"], $params["height"], $params["thickness"], $params["battery"], $params["os"], $params["camera"], $params["isTouchscreen"]);
+                    return new Tablet(
+                        $params["id"],
+                        $params["model"],
+                        $params["category"],
+                        $params["brand"],
+                        $params["price"],
+                        $params["quantity"],
+                        $params["isDeleted"],
+                        $params["processorType"],
+                        $params["ramSize"],
+                        $params["cpuCores"],
+                        $params["weight"],
+                        $params["hddSize"],
+                        $params["displaySize"],
+                        $params["width"],
+                        $params["height"],
+                        $params["thickness"],
+                        $params["battery"],
+                        $params["os"],
+                        $params["camera"],
+                        $params["isTouchscreen"]
+                    );
                 default:
                 return false;
             }
@@ -86,23 +172,23 @@ class ItemCatalog {
             $itemType = ItemType::getItemTypeEnum($item);
             switch($itemType) {
                 case ItemType::item:
-                $this->setItemParams($item, $itemParam);
-                break;
+                    $this->setItemParams($item, $itemParam);
+                    break;
                 case ItemType::monitor:
-                $this->setMonitorParams($item, $itemParam);
-                break;
+                    $this->setMonitorParams($item, $itemParam);
+                    break;
                 case ItemType::computer:
-                $this->setComputerParams($item, $itemParam);
-                break;
+                    $this->setComputerParams($item, $itemParam);
+                    break;
                 case ItemType::desktop:
-                $this->setDesktopParams($item, $itemParam);
-                break;
+                    $this->setDesktopParams($item, $itemParam);
+                    break;
                 case ItemType::laptop:
-                $this->setLaptopParams($item, $itemParam);
-                break;
+                    $this->setLaptopParams($item, $itemParam);
+                    break;
                 case ItemType::tablet:
-                $this->setTabletParams($item, $itemParam);
-                break;
+                    $this->setTabletParams($item, $itemParam);
+                    break;
                 default:
                 return false;
             }
@@ -135,10 +221,12 @@ class ItemCatalog {
 
     private function setItemParams(Item $item, $param) {
         $item->setId($param["id"]);
+        $item->setModel($param["model"]);
         $item->setCategory($param["category"]);
         $item->setBrand($param["brand"]);
         $item->setPrice($param["price"]);
         $item->setQuantity($param["quantity"]);
+        $item->setIsDeleted($param["isDeleted"]);
     }
 
     private function setMonitorParams(Monitor $item, $param) {
