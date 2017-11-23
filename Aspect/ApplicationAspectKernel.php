@@ -1,6 +1,8 @@
 <?php
 // app/ApplicationAspectKernel.php
 
+namespace Aspect;
+
 use Go\Core\AspectKernel;
 use Go\Core\AspectContainer;
 
