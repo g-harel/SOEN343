@@ -120,6 +120,11 @@ class MonitorsController extends Controller
             if (!empty($emptyArrayKeys)) {
                 return view('items.create', ['inputErrors' => $emptyArrayKeys, 'alertType' => 'warning']);
             } else {
+                if($this->checkExistingModelNum(Controller::MONITOR_ITEM_TYPE,$sanitizedInputs['monitor-model'],Controller::MONITOR_MODEL_PREFIX)){
+                    return redirect()->back()->with([
+                        'modelExists' => true,
+                    ]);
+                }
                 $params = [
                     "weight" => $sanitizedInputs['monitor-weight'],
                     "category" => "monitor",
@@ -138,11 +143,12 @@ class MonitorsController extends Controller
                     'for' => 'monitor',
                     'link' => 'monitor/showMonitor'
                 ]);
+
             }
         } else {
             return view('items.create');
         }
-    }
+}
 
     public function modifyMonitor()
     {

@@ -229,7 +229,7 @@
                                         Model #:
                                         <div class="input-group">
                                             <span class="input-group-addon">MON-</span>
-                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
+                                            <input readonly required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -317,7 +317,7 @@
                         <div class="col-md-12">
                             <input type="hidden" name="item-id" id="monitor-id" class="form-control" value="">
                             <div class="form-group">
-                                How many unit(s) with this specification would you like to add?
+                                How many unit(s) with this specification would you like to add? (max: 10 per attempt)
                                 <input title="" name="num-of-units" id="num-of-units" type="number" min="1" max="10" class="form-control" required>
                             </div>
                         </div>
