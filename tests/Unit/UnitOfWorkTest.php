@@ -8,9 +8,11 @@ use App\UnitOfWork\UnitOfWork;
 use Tests\Stub\ObjectStub;
 use Tests\Stub\MapperStub;
 
-class UnitOfWorkTest extends TestCase {
+class UnitOfWorkTest extends TestCase
+{
 
-    public function testRegisterNew() {
+    public function testRegisterNew() 
+    {
         $objectId1 = 54;
         $objectId2 = 11;
         $mapperStub = new MapperStub();
@@ -30,7 +32,8 @@ class UnitOfWorkTest extends TestCase {
         $this->assertTrue($outputObject2->getId() === $objectId2);
     }
 
-    public function testRegisterDirty() {
+    public function testRegisterDirty() 
+    {
         $objectId1 = 54;
         $objectId2 = 11;
         $mapperStub = new MapperStub();
@@ -50,7 +53,8 @@ class UnitOfWorkTest extends TestCase {
         $this->assertTrue($outputObject2->getId() === $objectId2);
     }
 
-    public function testRegisterDeleted() {
+    public function testRegisterDeleted() 
+    {
         $objectId1 = 54;
         $objectId2 = 11;
         $mapperStub = new MapperStub();
@@ -70,7 +74,8 @@ class UnitOfWorkTest extends TestCase {
         $this->assertTrue($outputObject2->getId() === $objectId2);
     }
 
-    public function testCommitAffectsOnlyOneSession() {
+    public function testCommitAffectsOnlyOneSession() 
+    {
         $objectId1 = 54;
         $objectId2 = 11;
         $mapperStub = new MapperStub();
@@ -90,7 +95,8 @@ class UnitOfWorkTest extends TestCase {
         $this->assertTrue($outputObject1->getId() === $objectId1);
     }
 
-    public function testCommitAffectsNewDirtyAndDeleted() {
+    public function testCommitAffectsNewDirtyAndDeleted() 
+    {
         $newId = 54;
         $dirtyId = 11;
         $deletedId = 231;
@@ -119,7 +125,8 @@ class UnitOfWorkTest extends TestCase {
     }
 
     // Tests that an object that is first deleted then modified doesn't appear in the "to delete" pool.
-    public function testSameObjectDeletedThenModified() {
+    public function testSameObjectDeletedThenModified() 
+    {
         $objectId = 54;
         $mapperStub = new MapperStub();
         $object = new ObjectStub($objectId);
