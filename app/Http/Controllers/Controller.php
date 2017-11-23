@@ -249,6 +249,13 @@ class Controller extends BaseController
         return $unitsArr;
     }
 
+    /**
+     * Checks if model exists
+     * @param $itemType
+     * @param $modelNumber
+     * @param $modelPrefix
+     * @return string
+     */
     public function checkExistingModelNum($itemType, $modelNumber, $modelPrefix) {
         $specs = ItemCatalogMapper::getInstance()->selectAllItemType($itemType);
         $cond = "0";
