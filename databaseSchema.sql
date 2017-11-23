@@ -58,10 +58,12 @@ CREATE TABLE `accounts` (
 -- Contenu de la table `accounts`
 --
 INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `phone_number`, `door_number`, `appartement`, `street`, `city`, `province`, `country`, `postal_code`, `isAdmin`, `isDeleted`) VALUES
-(1, 'admin@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, 0),
-(2, 'admin2@gmail.com', 'admin1234', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, 0),
-(3, 'admin3@gmail.com', 'admin12345', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0),
-(4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0);
+(1, 'admin1@gmail.com', 'admin123', 'John', 'Doe', 123456789, 101, NULL, 'Maple', 'Montreal', 'Quebec', 'Canada', 'J6J3K7', 1, 0),
+(2, 'admin2@gmail.com', 'admin123', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, 0),
+(3, 'admin3@gmail.com', 'admin123', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0),
+(4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0),
+(5, 'client2@gmail.com', '123', 'Spencer', 'McDonald', 5141234123, 28615, NULL, 'Lagrange', 'Montreal', 'Quebec', 'Canada', 'K0L8N6', 1, 0),
+(6, 'client3@gmail.com', '123', 'Maxine', 'Doe', 514365654, 28615, NULL, 'Baulieu', 'Montreal', 'Quebec', 'Canada', 'B7H8C5', 0, 0);
 -- --------------------------------------------------------
 
 --
@@ -86,8 +88,8 @@ INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `
 (4, 'Rockchip', 16, 6, 13.20, 1000),
 (5, 'AMD', 2, 4, 1.00, 2000),
 (6, 'Intel', 8, 2, 3.00, 256),
-(23, 'NoIdea', 16, 8, 31.20, 1000),
-(24, 'NoIdea', 16, 8, 31.20, 1000);
+(7, 'AMD', 16, 8, 31.20, 1000),
+(8, 'AMD', 16, 8, 31.20, 1000);
 
 -- --------------------------------------------------------
 
@@ -107,9 +109,9 @@ CREATE TABLE `desktops` (
 --
 
 INSERT INTO `desktops` (`item_id`, `height`, `width`, `thickness`) VALUES
-(4, 43.00, 24.00, 13.00),
-(23, 12.00, 12.00, 4.00),
-(24, 12.00, 12.00, 4.00);
+(6, 43.00, 24.00, 13.00),
+(7, 12.00, 12.00, 4.00),
+(8, 12.00, 12.00, 4.00);
 
 -- --------------------------------------------------------
 
@@ -134,23 +136,11 @@ INSERT INTO `items` (`id`, `model`, `category`, `brand`, `price`) VALUES
 (1, 'TES-623456-A', 'monitor', 'SONY', 12.00),
 (2, 'TES-523456-C', 'monitor', 'ASUS', 99.00),
 (3, 'LAP-323456-A', 'laptop', 'IBM', 1500.00),
-(4, 'DES-223456-Q', 'desktop', 'Dell', 1055.00),
+(4, 'LAP-723456-M', 'laptop', 'Apple', 9999.00),
 (5, 'TAB-023456-P', 'tablet', 'Apple', 900.00),
-(6, 'LAP-723456-M', 'laptop', 'Apple', 9999.00),
-(7, 'DES-523456-I', 'desktop', 'Alienware', 2400.00),
-(8, 'DES-223456-J', 'desktop', 'Alienware3333', 240022.00),
-(9, 'DES-183456-A', 'desktop', 'Alienware', 2400.00),
-(10, 'DES-523456-D', 'desktop', 'Alienware3333', 240022.00),
-(11, 'DES-123456-F', 'desktop', 'Alienware', 2400.00),
-(12, 'DES-223456-B', 'desktop', 'Alienware3333', 240022.00),
-(13, 'DES-223456-Y', 'desktop', 'Alienware', 2400.00),
-(14, 'DES-023456-O', 'desktop', 'Alienware3333', 240022.00),
-(15, 'DES-923456-C', 'desktop', 'Alienware', 2400.00),
-(16, 'DES-123456-B', 'desktop', 'Alienware3333', 240022.00),
-(17, 'DES-823456-L', 'desktop', 'Alienware', 2400.00),
-(18, 'DES-623456-Z', 'desktop', 'Alienware3333', 240022.00),
-(23, 'DES-523456-A', 'desktop', 'Alienware6666', 111111.00),
-(24, 'DES-223456-R', 'desktop', 'Alienware3333', 240022.00);
+(6, 'DES-223456-Q', 'desktop', 'Dell', 1055.00),
+(7, 'DES-523456-A', 'desktop', 'Alienware', 1120.00),
+(8, 'DES-223456-R', 'desktop', 'Alienware', 2499.00);
 
 -- --------------------------------------------------------
 
@@ -173,7 +163,7 @@ CREATE TABLE `laptops` (
 
 INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is_touchscreen`) VALUES
 (3, 14.00, 'Windows XP', 'Li-Ion', 'Yes', 0),
-(6, 13.30, 'macOS', 'Mac', 'Yes', 0);
+(4, 13.30, 'macOS', 'Mac', 'Yes', 0);
 
 -- --------------------------------------------------------
 
@@ -253,11 +243,23 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`serial`, `item_id`, `status`, `account_id`, `reserved_date`, `purchased_price`, `purchased_date`) VALUES
-('ABCDEF123', 1, 'AVAILABLE', 1, NOW(), 12.99, NOW()),
-('312FEDCBA', 2, 'AVAILABLE', 3, NOW(), 12.99, NOW()),
-('411ATEGBH', 3, 'PURCHASED', 3, NOW(), 99.99, NOW()),
-('678GYDHBN', 4, 'PURCHASED', 2, NOW(), 29.99, NOW()),
-('492AGVELO', 5, 'PURCHASED', 2, NOW(), 79.99, NOW());
+('PH2KP8GE4P', 1, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('1MJ477HXWI', 1, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('T3EM9MJHF9', 1, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('IWICMRHXBQ', 1, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('RRRN0640FB', 2, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('RE2OI0OG8R', 3, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('F3PKRAPD8A', 3, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('7H1RK89HVF', 4, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('GC3YVK17BV', 5, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('IHID4H28MP', 5, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('UFHKNC154Y', 5, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('RA6IJ2TSQC', 6, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('G3O8QSTTOG', 6, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('7SR31X4G2C', 6, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('OSMV54WL9S', 7, 'AVAILABLE', NULL, NULL, NULL, NULL),
+('LAMS7RIR46', 7, 'AVAILABLE', NULL, NULL, NULL, NULL);
+
 
 -- --------------------------------------------------------
 
