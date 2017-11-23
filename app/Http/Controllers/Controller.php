@@ -12,6 +12,15 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Mappers\UnitMapper;
 use App\Mappers\ItemCatalogMapper;
+use Go\Laravel\GoAopBridge\Kernel\AspectLaravelKernel;
+
+// Initialize an application aspect container
+$applicationAspectKernel = AspectLaravelKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // Use 'false' for production mode
+));
+
+
 
 class Controller extends BaseController
 {
