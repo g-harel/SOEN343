@@ -4,7 +4,6 @@ namespace App\Mappers;
 
 use App\Models\Unit;
 use App\Gateway\UnitGateway;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 
@@ -86,12 +85,13 @@ class UnitCatalog {
         unset($this->catalog[$unit->getSerial()]);
     }
 
-    public function query($accountId, $status): array {
+    public function query($accountId, $itemId, $status): array {
         $arr = array();
         foreach($this->catalog as $unit) {
             $isStatus = $unit->getStatus() === $status;
             $isAccount = $unit->getAccountId() === $accountId;
-            if ($isStatus && $isAccount) {
+            $isItemId = $unit->getItemId() === $itemId;
+            if (($isStatus && $isAccount) || ($isStatus && $isItemId)) {
                 array_push($arr, $this->toArray($unit));
             }
         }
@@ -129,14 +129,12 @@ class UnitMapper implements CollectionMapper {
     private $deletedUnit;
     private $unitGateway;
     private $identityMap;
-    private $unitOfWork;
     private $catalog;
 
     private function __construct() {
         $this->deletedUnit = new Unit(null, null, null, null, null, null, null);
         $this->unitGateway = UnitGateway::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->catalog = UnitCatalog::getInstance();
 
         // loading all units into the identity map/catalog.
@@ -227,7 +225,9 @@ class UnitMapper implements CollectionMapper {
     ////////////////////////////
 
     public function commit($transactionId): void {
-        $this->unitOfWork->commit($transactionId);
+
+        // INTERCEPTED IN AOP!!!
+        // $this->unitOfWork->commit($transactionId);
     }
 
     // fetches an item from memory, and returns it as an
@@ -255,7 +255,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->identityMap->set(mapSerial($serial), $unit);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
+        $this->registerNew($transactionId, self::$instance, $unit);
         return true;
     }
 
@@ -267,7 +267,7 @@ class UnitMapper implements CollectionMapper {
         }
         $this->catalog->remove($unit);
         $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
-        $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
     // reserved units are associated with an account and
@@ -278,11 +278,11 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $cartSize = count($this->getCart($accountId));
-        if ($cartSize > 7) {
+        if ($cartSize > 6) {
             return false;
         }
         $this->catalog->reserve($unit, $accountId);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
@@ -294,7 +294,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->checkout($unit, $accountId, $purchasedPrice);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
@@ -308,15 +308,32 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->return($unit);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
     public function getCart($accountId): array {
-        return $this->catalog->query($accountId, StatusEnum::RESERVED);
+        return $this->catalog->query($accountId, null, StatusEnum::RESERVED);
     }
 
     public function getPurchased($accountId): array {
-        return $this->catalog->query($accountId, StatusEnum::PURCHASED);
+        return $this->catalog->query($accountId, null, StatusEnum::PURCHASED);
+    }
+
+    // fetch data from catalog not from gateway (db) directly, use by controller
+    public function getAvailableUnitsByItemId($itemId) {
+        return $this->catalog->query(null, $itemId, StatusEnum::AVAILABLE);
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 }

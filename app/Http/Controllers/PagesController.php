@@ -32,7 +32,7 @@ class PagesController extends Controller
     public function purchaseHistory(){
         return view('pages.purchaseHistory');
     }
-    
+
     public function view()
     {
         return view('pages.view');
@@ -40,8 +40,7 @@ class PagesController extends Controller
 
     public function viewDesktop()
     {
-        $desktops = $this->returnItemUnits(3);
-//        print_r($desktops);
+        $desktops = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
         return view('pages.viewDesktop', [
             'desktops' => $desktops
         ]);
@@ -50,13 +49,13 @@ class PagesController extends Controller
     public function viewLaptop()
     {
         return view('pages.viewLaptop', [
-            'laptops' => $this->returnItemUnits(4)
+            'laptops' => $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE)
         ]);
     }
 
     public function viewMonitor()
     {
-        $monitors = $this->returnItemUnits(1);
+        $monitors = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
         return view('pages.viewMonitor', [
             'monitors' => $monitors
         ]);
@@ -64,19 +63,21 @@ class PagesController extends Controller
 
     public function viewTablet()
     {
-        $tablets = $this->returnItemUnits(5);
+        $tablets = $this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
         return view('pages.viewTablet', [
             'tablets' => $tablets
         ]);
     }
 
-    public function monitorDetails($id)
+    public function monitorDetails($id, $serial)
     {
-        $monitors = $this->returnItemUnits(1);
+        $monitors = $this->returnItemUnits(Controller::MONITOR_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog2($id, $monitors)) {
+        $monitor_ids = array_column($monitors, 'id');
+        if(in_array((int)$id, $monitor_ids)) {
             foreach($monitors as $monitor){
-                $details = $monitor;
+                if($monitor['serial'] == $serial)
+                    $details = $monitor;
             }
             return view('pages.viewMonitor', [
                 'details' => $details,
@@ -88,13 +89,15 @@ class PagesController extends Controller
         }
     }
 
-    public function desktopDetails($id)
+    public function desktopDetails($id, $serial)
     {
+        $desktops = $this->returnItemUnits(Controller::DESKTOP_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::DESKTOP_ITEM_TYPE)) {
-            $desktops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::DESKTOP_ITEM_TYPE);
+        $desktops_ids = array_column($desktops, 'id');
+        if(in_array((int)$id, $desktops_ids)) {
             foreach($desktops as $desktop){
-                $details = $desktop;
+                if($desktop['serial'] == $serial)
+                    $details = $desktop;
             }
             return view('pages.viewDesktop', [
                 'details' => $details,
@@ -104,19 +107,20 @@ class PagesController extends Controller
                 'notFound' => true
             ]);
         }
-
     }
 
-    public function laptopDetails($id)
+    public function laptopDetails($id, $serial)
     {
+        $laptops = $this->returnItemUnits(Controller::LAPTOP_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::LAPTOP_ITEM_TYPE)) {
-            $laptops = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::LAPTOP_ITEM_TYPE);
+        $laptops_ids = array_column($laptops, 'id');
+        if(in_array((int)$id, $laptops_ids)) {
             foreach($laptops as $laptop){
-                $details = $laptop;
+                if($laptop['serial'] == $serial)
+                    $details = $laptop;
             }
             return view('pages.viewLaptop', [
-                'details' => $details
+                'details' => $details,
             ]);
         } else {
             return redirect()->back()->with([
@@ -125,15 +129,17 @@ class PagesController extends Controller
         }
     }
 
-    public function tabletDetails($id)
+    public function tabletDetails($id, $serial)
     {
+        $tablets = $this->returnItemUnits(Controller::TABLET_ITEM_TYPE);
         $details = [];
-        if($this->isIdExistInCatalog($id, Controller::TABLET_ITEM_TYPE)) {
-            $tablets = ItemCatalogMapper::getInstance()->selectAllItemType(Controller::TABLET_ITEM_TYPE);
+        $tablets_ids = array_column($tablets, 'id');
+        if(in_array((int)$id, $tablets_ids)) {
             foreach($tablets as $tablet){
-                $details = $tablet;
+                if($tablet['serial'] == $serial)
+                    $details = $tablet;
             }
-            return view('pages.viewLaptop', [
+            return view('pages.viewTablet', [
                 'details' => $details
             ]);
         } else {
@@ -168,22 +174,31 @@ class PagesController extends Controller
 
     public function shoppingCart()
     {
-        $cart = UnitMapper::getInstance();
-
-        $units = $cart->getCart($_SESSION['currentLoggedInId']);
-        $itemMapper = ItemCatalogMapper::getInstance();
-
+        $total = 0;
         $specs = [];
-        foreach ($units as $unit) {
-            array_push($specs, $itemMapper->getItem($unit['item_id']));
+        $finalSpecs = []; //specs with units values
+        $cart = UnitMapper::getInstance();
+        if (isset($_SESSION['currentLoggedInId'])) {
+            $account_id = $_SESSION['currentLoggedInId'];
+            $units = $cart->getCart($account_id); // returns reserved units by account id
+            $itemMapper = ItemCatalogMapper::getInstance();
+            foreach ($units as $unit) {
+                $item_specs = $itemMapper->getItem($unit['item_id']); // returns specs given an item id
+                array_push($specs, $item_specs);
+            }
+            foreach ($specs as $key => &$subArray) {
+                $subArray += $units[$key];
+                array_push($finalSpecs, $subArray);
+            }
         }
-//        echo '<pre>';
-//        print_r($specs);
-//        die;
+        foreach($finalSpecs as $price){
+            $total += $price['price'];
+        }
         return view('pages.shoppingCart', [
-            'cart' => $specs
+            'cart' => $finalSpecs,
+            'total' => $total
         ]);
-//        return view('pages.shoppingCart');
+
     }
 
     public function loginVerify()
@@ -236,9 +251,8 @@ class PagesController extends Controller
             return view('pages.login', ['registrationSuccess' => true]);
         }
     }
-
-    public function clients()
-    {
+  
+    public function clients() {
         return view('pages.clients', ['clients' => AccountMapper::getInstance()->getAllAccounts()]);
     }
 
@@ -248,7 +262,7 @@ class PagesController extends Controller
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
 
-    public function deleteAccount(){
+    public function deleteAccount() {
         if($this->isFormSubmitted($_POST)) {
             $userEmail = $_SESSION['currentLoggedInEmail'];
             $userId = filter_input(INPUT_POST, 'current-user-id');

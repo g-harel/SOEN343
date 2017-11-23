@@ -8,8 +8,8 @@ class Desktop extends Computer
     private $width;
     private $thickness;
 
-    public function __construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $height, $width, $thickness) {
-        parent::__construct($id, $category, $brand, $price, $quantity, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
+    public function __construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize, $height, $width, $thickness) {
+        parent::__construct($id, $model, $category, $brand, $price, $quantity, $isDeleted, $processorType, $ramSize, $cpuCores, $weight, $hddSize);
         $this->height = $height;
         $this->width = $width;
         $this->thickness = $thickness;
