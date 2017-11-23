@@ -285,7 +285,7 @@
                                         Model #:
                                         <div class="input-group">
                                             <span readonly class="input-group-addon">TAB-</span>
-                                            <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
+                                            <input readonly required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
