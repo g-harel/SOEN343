@@ -34,12 +34,13 @@ class SessionGateway
         return $this->db->queryDB($sql);
     }
 
-    public function deleteSessionById($email) {
+    public function deleteSessionById($id) {
         $conditionsAssociativeArray = ["id" => $id];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
 
     public function deleteSessionByAccountId($accountId) {
+        echo "DELETING WITH ACCOUNT ID!!";
         $conditionsAssociativeArray = ["account_id" => $accountId];
         return singleTableDeleteAccountQuery($conditionsAssociativeArray, $this->tableName);
     }
