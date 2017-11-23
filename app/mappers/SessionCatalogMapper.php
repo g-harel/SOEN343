@@ -6,7 +6,6 @@ use App\Models\SessionCatalog;
 use App\Models\Session;
 use App\Gateway\SessionGateway;
 use App\IdentityMap\IdentityMap;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 
 
@@ -15,14 +14,12 @@ class SessionCatalogMapper implements CollectionMapper
     private $sessionCatalog;
     private $gateway;
     private $identityMap;
-    private $unitOfWork;
     private static $instance;
 
     private function __construct(){
         $this->sessionCatalog = new SessionCatalog();
         $this->gateway = new SessionGateway();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
     }
 
     public static function getInstance(): SessionCatalogMapper {
@@ -72,14 +69,14 @@ class SessionCatalogMapper implements CollectionMapper
         if ($isSessionValid) {
             $uoWobjectId = $this->getIdentityMapId($sessionId);
             $session = $this->sessionCatalog->getSession($accountId);
-            $this->unitOfWork->registerDeleted($sessionId, $uoWobjectId, self::$instance, $session);
+            $this->registerDeleted($sessionId, $uoWobjectId, self::$instance, $session);
             $isSessionClosing = true;
         }
         return $isSessionClosing;
     }
 
     public function commit($sessionId) {
-        $this->unitOfWork->commit($sessionId);
+        // INTERCEPTED BY AOP
     }
 
     public function getSession($accountId) {
@@ -117,10 +114,21 @@ class SessionCatalogMapper implements CollectionMapper
 
     // UoW Interface methods
     public function delete($session) {
-        echo "IN DELETE METHOD!!";
         $accountId = $session->getAccountId();
         $this->gateway->deleteSessionByAccountId($accountId);
         $this->removeSessionFromCatalogAndMap($accountId);
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // INTERCEPTED IN AOP
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object) {
+        // INTERCEPTED IN AOP
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object) {
+        // INTERCEPTED IN AOP
     }
 
     // CREATED FOR UNIT OF WORK VALID SESSION VERIFICATION
