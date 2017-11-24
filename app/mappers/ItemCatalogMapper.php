@@ -147,7 +147,6 @@ class ItemCatalogMapper implements CollectionMapper {
             return false;
         }
         $item->setId($id);
-        $this->identityMap->set($identityMapId, $item);
         $this->itemCatalog->addItem($item);
         return true;
     }
@@ -223,6 +222,7 @@ class ItemCatalogMapper implements CollectionMapper {
             } else {
                 $item = $this->itemCatalog->createItem($itemType, $itemParamsArray);
                 $this->itemCatalog->addItem($item);
+                $this->identityMap->set($itemId, $item);
             }
         }
 
