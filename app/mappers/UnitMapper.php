@@ -82,7 +82,7 @@ class UnitCatalog {
         return true;
     }
 
-    public function remove(Unit $unit): void {
+    public function remove(Unit $unit){
         unset($this->catalog[$unit->getSerial()]);
     }
 
@@ -110,7 +110,7 @@ class UnitCatalog {
         return $arr;
     }
 
-    public function reserve(Unit $unit, $accountId): void {
+    public function reserve(Unit $unit, $accountId){
         $unit->setStatus(StatusEnum::RESERVED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate(getDate());
@@ -118,7 +118,7 @@ class UnitCatalog {
         $unit->setPurchasedDate("NULL");
     }
 
-    public function checkout(Unit $unit, $accountId, $purchasedPrice): void {
+    public function checkout(Unit $unit, $accountId, $purchasedPrice){
         $unit->setStatus(StatusEnum::PURCHASED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate("NULL");
@@ -126,7 +126,7 @@ class UnitCatalog {
         $unit->setPurchasedDate(getDate());
     }
 
-    public function return(Unit $unit): void {
+    public function return(Unit $unit){
         $unit->setStatus(StatusEnum::AVAILABLE);
         $unit->setAccountId('NULL');
         $unit->setReservedDate("NULL");
@@ -210,7 +210,7 @@ class UnitMapper implements CollectionMapper {
     ///  UNIT OF WORK INTERFACE  ///
     ////////////////////////////////
 
-    public function add($object): void {
+    public function add($object) {
         $this->unitGateway->insert(
             $object->getSerial(),
             $object->getItemId()
@@ -218,7 +218,7 @@ class UnitMapper implements CollectionMapper {
         $this->edit($object);
     }
 
-    public function edit($object): void {
+    public function edit($object) {
         $this->unitGateway->update(
             $object->getSerial(),
             $object->getItemId(),
@@ -230,7 +230,7 @@ class UnitMapper implements CollectionMapper {
         );
     }
 
-    public function delete($object): void {
+    public function delete($object) {
         $this->unitGateway->delete($object->getSerial());
     }
 
@@ -238,7 +238,7 @@ class UnitMapper implements CollectionMapper {
     ///  CONTROLLER METHODS  ///
     ////////////////////////////
 
-    public function commit($transactionId): void {
+    public function commit($transactionId) {
 
         // INTERCEPTED IN AOP!!!
         // $this->unitOfWork->commit($transactionId);
@@ -274,7 +274,7 @@ class UnitMapper implements CollectionMapper {
     }
 
     // delete unit from database.
-    public function remove($transactionId, $serial): void {
+    public function remove($transactionId, $serial) {
         $unit = $this->getObject($serial);
         if (!$unit) {
             return;

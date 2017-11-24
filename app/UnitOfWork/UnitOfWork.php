@@ -34,7 +34,7 @@ class UnitOfWork {
         return self::$unitOfWork;
     }
 
-    private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null): void {
+    private function registerEntity($transactionId, $mapper, $object, $state, $objectId = null){
 
         /*
         DATA STRUCTURE FOR STORAGE
@@ -88,7 +88,7 @@ class UnitOfWork {
 
 
     // Make sure that the same object isn't in both the DIRTY and DELETED state at the same time.
-    private function removeFromState($transactionId, $objectId, $state): void {
+    private function removeFromState($transactionId, $objectId, $state){
         $sessionId = "0" . $transactionId;
         $stateStorage = null;
         if ($state === self::STATE_DIRTY) {
@@ -113,24 +113,24 @@ class UnitOfWork {
         }
     }
 
-    public function registerNew($transactionId, CollectionMapper $mapper, $object): void {
+    public function registerNew($transactionId, CollectionMapper $mapper, $object){
         $state = self::STATE_NEW;
         $this->registerEntity($transactionId, $mapper, $object, $state);
     }
 
-    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object): void {
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
         $state = self::STATE_DIRTY;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
     }
 
-    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object): void {
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
         $state = self::STATE_DELETED;
         $this->registerEntity($transactionId, $mapper, $object, $state, $objectId);
         $this->removeFromState($transactionId, $objectId, $state);
     }
 
-    private function mapperAction($actionToPerform, $mapper, $object): void {
+    private function mapperAction($actionToPerform, $mapper, $object){
         if ($actionToPerform === self::ACTION_INSERT) {
             $mapper->add($object);
         } else if ($actionToPerform === self::ACTION_MODIFY) {
@@ -140,7 +140,7 @@ class UnitOfWork {
         }
     }
 
-    public function commit($transactionId, $isUnitTest = false): void {
+    public function commit($transactionId, $isUnitTest = false){
         if ($isUnitTest === false) {
             $isTransactionValid = $this->sessionMapper->doesSessionExists($transactionId);
             if ($isTransactionValid === false) {
@@ -178,7 +178,7 @@ class UnitOfWork {
         $this->clear($sessionId);
     }
 
-    public function rollback($transactionId, $objectId): void {
+    public function rollback($transactionId, $objectId){
         foreach ($this->storage as $array) {
             if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId]->delete($objectId);
@@ -186,7 +186,7 @@ class UnitOfWork {
         }
     }
 
-    public function clear($transactionId): void {
+    public function clear($transactionId){
         foreach ($this->storage as $array) {
             if (array_key_exists($transactionId, $array)) {
                 $array[$transactionId] = array();

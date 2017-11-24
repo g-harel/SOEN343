@@ -217,7 +217,7 @@ class SessionCatalogMapper implements CollectionMapper
         }
     }
 
-    private function synchronizeAccountSession($accountId): void {
+    private function synchronizeAccountSession($accountId){
         $storageSessionArray = $this->gateway->getSessionByAccountId($accountId);
 
         $sessionExists = $storageSessionArray !== null;
@@ -228,7 +228,7 @@ class SessionCatalogMapper implements CollectionMapper
         }
     }
 
-    private function synchronizeSessionId($sessionId): void {
+    private function synchronizeSessionId($sessionId){
         $storageSessionArray = $this->gateway->getSessionById($sessionId);
         $sessionExists = $storageSessionArray !== null;
         if ($sessionExists) {
