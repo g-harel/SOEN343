@@ -167,7 +167,7 @@ class PagesController extends Controller
         }
         $_SESSION = array();
         session_destroy();
-        return view('pages.login');
+        return redirect('/');
     }
 
     public function registerVerification()
@@ -251,10 +251,10 @@ class PagesController extends Controller
             } else {
                 $registerThis->createAccount();
             }
-            return view('pages.login', ['registrationSuccess' => true]);
+            return redirect('/login');
         }
     }
-  
+
     public function clients() {
         return view('pages.clients', ['clients' => AccountMapper::getInstance()->getAllAccounts()]);
     }

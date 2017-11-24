@@ -21,6 +21,6 @@ class MonitorGateway extends ItemGateway implements iItemCategory {
   public function buildUpdate($item) {
       $id = $item["id"];
       $values = $this->updateList(self::$fields, $item);
-      return parent::buildUpdate($item)."UPDATE monitors SET $values WHERE item_id = $id AND isDeleted = '0';";
+      return parent::buildUpdate($item)."UPDATE monitors SET $values WHERE item_id = $id;";
   }
 }

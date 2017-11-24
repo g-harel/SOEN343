@@ -10,47 +10,47 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SanityTest extends TestCase
 {
-    public function testHome() 
+    public function testHome()
     {
         $this->get('/')->assertStatus(200);
     }
 
-    public function testLogin() 
+    public function testLogin()
     {
         $this->get('/login')->assertStatus(200);
     }
 
-    public function testLogout() 
+    public function testLogout()
     {
-        $this->get('/logout')->assertStatus(200);
+        $this->get('/logout')->assertStatus(302);
     }
 
-    public function testRegister() 
+    public function testRegister()
     {
         $this->get('/register')->assertStatus(200);
     }
 
-    public function testView() 
+    public function testView()
     {
         $this->get('/view')->assertStatus(200);
     }
 
-    public function testMonitor() 
+    public function testMonitor()
     {
         $this->get('/view/monitor')->assertStatus(200);
     }
 
-    public function testDesktop() 
+    public function testDesktop()
     {
         $this->get('/view/desktop')->assertStatus(200);
     }
 
-    public function testLaptop() 
+    public function testLaptop()
     {
         $this->get('/view/laptop')->assertStatus(200);
     }
 
-    public function testTablet() 
+    public function testTablet()
     {
         $this->get('/view/tablet')->assertStatus(200);
     }
