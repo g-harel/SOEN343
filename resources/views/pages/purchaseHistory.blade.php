@@ -42,10 +42,10 @@
                                     <div class="modal-content" style="text-align:left;">
                                       <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                          <h3 class="modal-title">Return purchased item</h3>
+                                          <h4 class="modal-title">Return purchased item</h3>
                                       </div>
                                       <div class="modal-body">
-                                        <p>Are you sure you want to return this item?</p>
+                                        <p><span style="font-size:15px;">Are you sure you want to return this item?</span></p>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="submit" name="submit" class="btn btn-success">Return</button>
