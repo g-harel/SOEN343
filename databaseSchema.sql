@@ -84,12 +84,12 @@ CREATE TABLE `computers` (
 --
 
 INSERT INTO `computers` (`item_id`, `processor_type`, `ram_size`, `cpu_cores`, `weight`, `hdd_size`) VALUES
-(3, 'Intel', 12, 4, 5.00, 128),
+(3, 'Intel',    12, 4,  5.00,  128),
 (4, 'Rockchip', 16, 6, 13.20, 1000),
-(5, 'AMD', 2, 4, 1.00, 2000),
-(6, 'Intel', 8, 2, 3.00, 256),
-(7, 'AMD', 16, 8, 31.20, 1000),
-(8, 'AMD', 16, 8, 31.20, 1000);
+(5, 'AMD',       2, 4,  1.00, 2000),
+(6, 'Intel',     8, 2,  3.00,  240),
+(7, 'AMD',      16, 8, 31.20, 1000),
+(8, 'AMD',      16, 8, 31.20, 1000);
 
 -- --------------------------------------------------------
 
@@ -133,12 +133,12 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `model`, `category`, `brand`, `price`) VALUES
-(1, 'TES-623456-A', 'monitor', 'SONY', 12.00),
-(2, 'TES-523456-C', 'monitor', 'ASUS', 99.00),
-(3, 'LAP-323456-A', 'laptop', 'IBM', 1500.00),
-(4, 'LAP-723456-M', 'laptop', 'Apple', 9999.00),
-(5, 'TAB-023456-P', 'tablet', 'Apple', 900.00),
-(6, 'DES-223456-Q', 'desktop', 'Dell', 1055.00),
+(1, 'TES-623456-A', 'monitor', 'Sony',        12.00),
+(2, 'TES-523456-C', 'monitor', 'Asus',        99.00),
+(3, 'LAP-323456-A', 'laptop',  'IBM',       1500.00),
+(4, 'LAP-723456-M', 'laptop',  'Apple',     9999.00),
+(5, 'TAB-023456-P', 'tablet',  'Apple',      900.00),
+(6, 'DES-223456-Q', 'desktop', 'Dell',      1055.00),
 (7, 'DES-523456-A', 'desktop', 'Alienware', 1120.00),
 (8, 'DES-223456-R', 'desktop', 'Alienware', 2499.00);
 
@@ -162,8 +162,8 @@ CREATE TABLE `laptops` (
 --
 
 INSERT INTO `laptops` (`item_id`, `display_size`, `os`, `battery`, `camera`, `is_touchscreen`) VALUES
-(3, 14.00, 'Windows XP', 'Li-Ion', 'Yes', 0),
-(4, 13.30, 'macOS', 'Mac', 'Yes', 0);
+(3, 14.00, 'Windows XP',     'Li-Ion', 'Yes', 0),
+(4, 13.30, 'Mac OS X 10.11', 'Mac',    'Yes', 0);
 
 -- --------------------------------------------------------
 
@@ -183,7 +183,7 @@ CREATE TABLE `monitors` (
 
 INSERT INTO `monitors` (`item_id`, `display_size`, `weight`) VALUES
 (1, 12.00, 12.00),
-(2, 77.00, 77.00);
+(2, 57.00, 57.00);
 
 -- --------------------------------------------------------
 
@@ -220,7 +220,7 @@ CREATE TABLE `tablets` (
 --
 
 INSERT INTO `tablets` (`item_id`, `display_size`, `width`, `height`, `thickness`, `battery`, `os`, `camera`, `is_touchscreen`) VALUES
-(5, 7.00, 3.00, 2.00, 6.00, 'Mac', 'iOS', 'Yes', 0);
+(5, 15.00, 3.00, 2.00, 6.00, 'Mac', 'Apple iOS', 'Yes', 0);
 
 -- --------------------------------------------------------
 
