@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mappers\SessionCatalogMapper;
-use App\Mappers\AccountMapper;
+use App\Mappers\AccountCatalogMapper;
 
 class Login
 {
@@ -17,7 +17,7 @@ class Login
         $this->sessionMapper = SessionCatalogMapper::getInstance();
         $this->email = $email;
         $this->password = $password;
-        $this->accountMapper = AccountMapper::getInstance();
+        $this->accountMapper = AccountCatalogMapper::getInstance();
     }
 
     public function validate()

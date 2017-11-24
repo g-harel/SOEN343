@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SessionCatalogMapper;
 use App\Mappers\ItemCatalogMapper;
-use App\Mappers\AccountMapper;
+use App\Mappers\AccountCatalogMapper;
 use App\Mappers\UnitMapper;
 
 class PagesController extends Controller
@@ -256,11 +256,11 @@ class PagesController extends Controller
     }
 
     public function clients() {
-        return view('pages.clients', ['clients' => AccountMapper::getInstance()->getAllAccounts()]);
+        return view('pages.clients', ['clients' => AccountCatalogMapper::getInstance()->getAllAccounts()]);
     }
 
     public function viewProfile() {
-        $accountMapper = AccountMapper::getInstance();
+        $accountMapper = AccountCatalogMapper::getInstance();
         $currentUser = $accountMapper->getAccountFromRecordByEmail($_SESSION['currentLoggedInEmail']);
         return view('pages.client-profile', ['currentUser' => $currentUser]);
     }
@@ -274,7 +274,7 @@ class PagesController extends Controller
             $_SESSION = array();
             session_destroy();
             //Delete user
-            $accountMapper = AccountMapper::getInstance();
+            $accountMapper = AccountCatalogMapper::getInstance();
             $accountMapper->deleteAccount($userId, $userEmail);
             $accountMapper->commit($userId);
             return view('pages.index', ['accountDeleted' => 'Your Account has been successfully deleted!']);

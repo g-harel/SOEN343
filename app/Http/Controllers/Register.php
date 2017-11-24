@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mappers\AccountMapper;
+use App\Mappers\AccountCatalogMapper;
 
 class Register
 {
@@ -29,7 +29,7 @@ class Register
             'isAdmin' => false,
             'isDeleted' => false
         ];
-        $this->accountMapper = AccountMapper::getInstance();
+        $this->accountMapper = AccountCatalogMapper::getInstance();
     }
 
     public function createAccount()
