@@ -8,7 +8,7 @@ use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
 
 
-class AccountMapper implements CollectionMapper
+class AccountCatalogMapper implements CollectionMapper
 {
     private $gateway;
     private $accountCatalog;
@@ -26,7 +26,7 @@ class AccountMapper implements CollectionMapper
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new AccountMapper();
+            self::$instance = new AccountCatalogMapper();
         }
         return self::$instance;
     }
