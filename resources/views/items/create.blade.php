@@ -8,6 +8,16 @@
             <li>Create Item Specs</li>
         </ol>
     </div>
+    @if(Session::has('modelExists'))
+        <div class="row">
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <p>
+                    This Model Number already exists, please try again!
+                </p>
+            </div>
+        </div>
+    @endif
     @if(Session::has('itemSuccessfullyAdded'))
         <div class="row">
             <div class="alert alert-success">
@@ -68,7 +78,7 @@
                                     Model #:
                                     <div class="input-group">
                                         <span class="input-group-addon">DES-</span>
-                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number of length no greater than 9" name="desktop-model" id="desktop-model" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -146,7 +156,7 @@
                                     Model #:
                                     <div class="input-group">
                                         <span class="input-group-addon">LAP-</span>
-                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number of length no greater than 9" name="laptop-model" id="laptop-model" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -238,7 +248,7 @@
                                     Model #:
                                     <div class="input-group">
                                         <span class="input-group-addon">TAB-</span>
-                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number of length no greater than 9" name="tablet-model" id="tablet-model" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -343,7 +353,7 @@
                                     Model #:
                                     <div class="input-group">
                                         <span class="input-group-addon">MON-</span>
-                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
+                                        <input required type="text" maxlength="9" pattern="\d*" placeholder="Enter a Model Number of length no greater than 9" name="monitor-model" id="monitor-model" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -26,15 +26,19 @@ class Register
             'province' => $province,
             'country' => $country,
             'postalCode' => $postalCode,
-            'isAdmin' => false
+            'isAdmin' => false,
+            'isDeleted' => false
         ];
         $this->accountMapper = AccountMapper::getInstance();
     }
 
     public function createAccount()
     {
-        $this->accountMapper->addAccount(0, $this->params);
-        $this->accountMapper->commit(0);
+        // -1 is a bogus session number used because when creating an account, there is no session yet.
+        // -1 is used to not clash with other session number and to avoid wonky logic check that could happen with
+        // sessionId = 0 (0 evaluates to false)
+        $this->accountMapper->addAccount(-1, $this->params);
+        $this->accountMapper->commit(-1);
     }
 
     public function isEmailExists()

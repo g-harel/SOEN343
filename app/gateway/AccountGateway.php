@@ -65,6 +65,6 @@ class AccountGateway
 
     public function getAll()
     {
-        return singleTableSelectAccountQuery(array(), $this->tableName);
+        return singleTableSelectAccountQuery(["isDeleted" => 0], $this->tableName);
     }
 }

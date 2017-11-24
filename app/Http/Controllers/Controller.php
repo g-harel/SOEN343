@@ -12,6 +12,15 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Mappers\UnitMapper;
 use App\Mappers\ItemCatalogMapper;
+use Go\Laravel\GoAopBridge\Kernel\AspectLaravelKernel;
+
+// Initialize an application aspect container
+$applicationAspectKernel = AspectLaravelKernel::getInstance();
+$applicationAspectKernel->init(array(
+    'debug' => true, // Use 'false' for production mode
+));
+
+
 
 class Controller extends BaseController
 {
@@ -21,6 +30,10 @@ class Controller extends BaseController
     const DESKTOP_ITEM_TYPE = 3;
     const LAPTOP_ITEM_TYPE = 4;
     const TABLET_ITEM_TYPE = 5;
+    const MONITOR_MODEL_PREFIX = "MON-";
+    const DESKTOP_MODEL_PREFIX = "DES-";
+    const LAPTOP_MODEL_PREFIX = "LAP-";
+    const TABLET_MODEL_PREFIX = "TAB-";
 
     // utility
     public $filterInputFloatArr = [
@@ -236,6 +249,25 @@ class Controller extends BaseController
         return $unitsArr;
     }
 
+    /**
+     * Checks if model exists
+     * @param $itemType
+     * @param $modelNumber
+     * @param $modelPrefix
+     * @return string
+     */
+    public function checkExistingModelNum($itemType, $modelNumber, $modelPrefix) {
+        $specs = ItemCatalogMapper::getInstance()->selectAllItemType($itemType);
+        $cond = "0";
+        $models = array_column($specs, 'model');
+        foreach ($models as $model) {
+            if($model === $modelPrefix.$modelNumber) {
+                $cond = "1";
+                break;
+            }
+        }
+        return $cond;
+    }
 
 }
 

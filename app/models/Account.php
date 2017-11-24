@@ -14,7 +14,7 @@ class Account
     private $isAdmin;
     private $isDeleted;
 
-    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false, $isDeleted = 0) {
+    public function __construct($email, $password, $firstName, $lastName, $phoneNumber, $address, $isAdmin = false, $isDeleted = false) {
         $this->email = $email;
         $this->password = $password;
         $this->firstName = $firstName;
@@ -204,7 +204,8 @@ class Account
             'province' => $this->getProvince(),
             'country' => $this->getCountry(),
             'postalCode' => $this->getPostalCode(),
-            'isAdmin' => $this->getIsAdmin()
+            'isAdmin' => $this->getIsAdmin(),
+            'isDeleted' => $this->getIsDeleted()
         );
     }
 }

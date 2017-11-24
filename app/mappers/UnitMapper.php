@@ -4,9 +4,9 @@ namespace App\Mappers;
 
 use App\Models\Unit;
 use App\Gateway\UnitGateway;
-use App\UnitOfWork\UnitOfWork;
 use App\UnitOfWork\CollectionMapper;
 use App\IdentityMap\IdentityMap;
+use PhpDeal\Annotation as Contract;
 
 // enum for the three possible unit statuses.
 class StatusEnum {
@@ -86,13 +86,24 @@ class UnitCatalog {
         unset($this->catalog[$unit->getSerial()]);
     }
 
-    public function query($accountId, $itemId, $status): array {
+    public function query($accountId, $status): array {
         $arr = array();
         foreach($this->catalog as $unit) {
             $isStatus = $unit->getStatus() === $status;
             $isAccount = $unit->getAccountId() === $accountId;
+            if ($isStatus && $isAccount) {
+                array_push($arr, $this->toArray($unit));
+            }
+        }
+        return $arr;
+    }
+
+    public function fetchAvailableUnitsByItemId($itemId, $status): array {
+        $arr = [];
+        foreach ($this->catalog as $unit) {
+            $isStatus = $unit->getStatus() === $status;
             $isItemId = $unit->getItemId() === $itemId;
-            if (($isStatus && $isAccount) || ($isStatus && $isItemId)) {
+            if($isStatus && $isItemId) {
                 array_push($arr, $this->toArray($unit));
             }
         }
@@ -123,21 +134,21 @@ class UnitCatalog {
         $unit->setPurchasedDate("NULL");
     }
 }
-
+/**
+ * @Contract\Invariant("count($this->catalog) >= 0")
+ */
 class UnitMapper implements CollectionMapper {
     private static $instance;
 
     private $deletedUnit;
     private $unitGateway;
     private $identityMap;
-    private $unitOfWork;
     private $catalog;
 
     private function __construct() {
         $this->deletedUnit = new Unit(null, null, null, null, null, null, null);
         $this->unitGateway = UnitGateway::getInstance();
         $this->identityMap = IdentityMap::getInstance();
-        $this->unitOfWork = UnitOfWork::getInstance();
         $this->catalog = UnitCatalog::getInstance();
 
         // loading all units into the identity map/catalog.
@@ -228,7 +239,9 @@ class UnitMapper implements CollectionMapper {
     ////////////////////////////
 
     public function commit($transactionId): void {
-        $this->unitOfWork->commit($transactionId);
+
+        // INTERCEPTED IN AOP!!!
+        // $this->unitOfWork->commit($transactionId);
     }
 
     // fetches an item from memory, and returns it as an
@@ -256,7 +269,7 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->identityMap->set(mapSerial($serial), $unit);
-        $this->unitOfWork->registerNew($transactionId, self::$instance, $unit);
+        $this->registerNew($transactionId, self::$instance, $unit);
         return true;
     }
 
@@ -268,11 +281,23 @@ class UnitMapper implements CollectionMapper {
         }
         $this->catalog->remove($unit);
         $this->identityMap->set(mapSerial($serial), $this->deletedUnit);
-        $this->unitOfWork->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDeleted($transactionId, mapSerial($serial), self::$instance, $unit);
     }
 
-    // reserved units are associated with an account and
-    // store their reserved time.
+    /**
+     * reserved units are associated with an account and
+     * store their reserved time.
+     * This is the contract for adding to cart
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     * @param integer $accountId
+     *
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && !empty($accountId) && is_numeric($transactionId) && is_numeric($accountId)")
+     * @Contract\Ensure("count($this->getCart($accountId) > $__old->count($this->getCart($accountId)")
+     *
+     * @return boolean
+     */
     public function reserve($transactionId, $serial, $accountId): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
@@ -283,46 +308,83 @@ class UnitMapper implements CollectionMapper {
             return false;
         }
         $this->catalog->reserve($unit, $accountId);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
-    // checked out units are associated with an account and
-    // specify their purchase price and time.
+    /**
+     * checked out units are associated with an account and
+     * specify their purchase price and time.
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     * @param integer $accountId
+     * @param float $purchasedPrice
+     *
+     * This is the contract for purchases.
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && !empty($accountId) && !empty($purchasedPrice) && $purchasedPrice > 0
+     *                      && is_numeric($transactionId) && is_numeric($accountId)")
+     * @Contract\Ensure("count($this->getCart($accountId) < $__old->count($this->getCart($accountId) && count($this->getCart($accountId) == 0")
+     *
+     * @return boolean
+     */
     public function checkout($transactionId, $serial, $accountId, $purchasedPrice): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
             return false;
         }
         $this->catalog->checkout($unit, $accountId, $purchasedPrice);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
-    // returned units are not associated to any account and
-    // have no reserved/purchased fields. note that this method
-    // is used to return from both the reserved and the purchased
-    // states.
+    /**
+     * returned units are not associated to any account and
+     * have no reserved/purchased fields. note that this method
+     * is used to return from both the reserved and the purchased
+     * states.
+     *
+     * @param integer $transactionId
+     * @param string $serial
+     *
+     * This is the contract for returning items.
+     * @Contract\Verify("!empty($transactionId) && !empty($serial) && is_numeric($transactionId)")
+     * @Contract\Ensure("count($this->catalog) == $__old->count($this->catalog)")
+     *
+     * @return boolean
+     */
     public function return($transactionId, $serial): bool {
         $unit = $this->getObject($serial);
         if (!$unit) {
             return false;
         }
         $this->catalog->return($unit);
-        $this->unitOfWork->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
+        $this->registerDirty($transactionId, mapSerial($serial), self::$instance, $unit);
         return true;
     }
 
     public function getCart($accountId): array {
-        return $this->catalog->query($accountId, null, StatusEnum::RESERVED);
+        return $this->catalog->query($accountId, StatusEnum::RESERVED);
     }
 
     public function getPurchased($accountId): array {
-        return $this->catalog->query($accountId, null, StatusEnum::PURCHASED);
+        return $this->catalog->query($accountId, StatusEnum::PURCHASED);
     }
 
-    // fetch data from catalog not from gateway (db) directly, use by controller
+
     public function getAvailableUnitsByItemId($itemId) {
-        return $this->catalog->query(null, $itemId, StatusEnum::AVAILABLE);
+        return $this->catalog->fetchAvailableUnitsByItemId($itemId, StatusEnum::AVAILABLE);
+    }
+
+    public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
+    }
+
+    public function registerNew($transactionId, CollectionMapper $mapper, $object) {
+        // AOP INTERCEPTION
+    }
+
+    public function registerDeleted($transactionId, $objectId, CollectionMapper $mapper, $object){
+        // AOP INTERCEPTION
     }
 }
