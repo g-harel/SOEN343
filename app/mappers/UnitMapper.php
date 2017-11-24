@@ -9,7 +9,7 @@ use App\IdentityMap\IdentityMap;
 use PhpDeal\Annotation as Contract;
 
 // enum for the three possible unit statuses.
-class StatusEnum {
+class UnitStatusEnum {
     const AVAILABLE = "AVAILABLE";
     const RESERVED = 'RESERVED';
     const PURCHASED = 'PURCHASED';
@@ -111,7 +111,7 @@ class UnitCatalog {
     }
 
     public function reserve(Unit $unit, $accountId){
-        $unit->setStatus(StatusEnum::RESERVED);
+        $unit->setStatus(UnitStatusEnum::RESERVED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate(getDate());
         $unit->setPurchasedPrice("NULL");
@@ -119,7 +119,7 @@ class UnitCatalog {
     }
 
     public function checkout(Unit $unit, $accountId, $purchasedPrice){
-        $unit->setStatus(StatusEnum::PURCHASED);
+        $unit->setStatus(UnitStatusEnum::PURCHASED);
         $unit->setAccountId($accountId);
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice($purchasedPrice);
@@ -127,7 +127,7 @@ class UnitCatalog {
     }
 
     public function return(Unit $unit){
-        $unit->setStatus(StatusEnum::AVAILABLE);
+        $unit->setStatus(UnitStatusEnum::AVAILABLE);
         $unit->setAccountId('NULL');
         $unit->setReservedDate("NULL");
         $unit->setPurchasedPrice("NULL");
@@ -144,6 +144,7 @@ class UnitMapper implements CollectionMapper {
     private $unitGateway;
     private $identityMap;
     private $catalog;
+    private $maxReservedMinutes;
 
     private function __construct() {
         $this->deletedUnit = new Unit(null, null, null, null, null, null, null);
@@ -165,10 +166,10 @@ class UnitMapper implements CollectionMapper {
             $this->catalog->add($unit);
             // all accounts' reserved items are made available
             // if the reservation expires.
-            if ($unit->getStatus() === StatusEnum::RESERVED) {
-                $maxReservationMinutes = 5;
+            if ($unit->getStatus() === UnitStatusEnum::RESERVED) {
+                $this->maxReservedMinutes = 5;
                 $secondsSinceReserved = time() - strtotime($unit->getReservedDate());
-                if ($secondsSinceReserved > $maxReservationMinutes*60) {
+                if ($secondsSinceReserved > $this->maxReservedMinutes*60) {
                     $this->catalog->return($unit);
                     $this->edit($unit);
                 }
@@ -260,7 +261,7 @@ class UnitMapper implements CollectionMapper {
         // this can be done since the primary key (serial) is
         // is not auto-generated which means all the necessary
         // information is available.
-        $unit = new Unit($serial, $itemId, StatusEnum::AVAILABLE, "NULL", "NULL", "NULL", "NULL");
+        $unit = new Unit($serial, $itemId, UnitStatusEnum::AVAILABLE, "NULL", "NULL", "NULL", "NULL");
         $serial = $unit->getSerial();
         // the catalog returns whether the unit's id wasn't
         // already in the catalog, making the creation invalid.
@@ -364,16 +365,16 @@ class UnitMapper implements CollectionMapper {
     }
 
     public function getCart($accountId): array {
-        return $this->catalog->query($accountId, StatusEnum::RESERVED);
+        return $this->catalog->query($accountId, UnitStatusEnum::RESERVED);
     }
 
     public function getPurchased($accountId): array {
-        return $this->catalog->query($accountId, StatusEnum::PURCHASED);
+        return $this->catalog->query($accountId, UnitStatusEnum::PURCHASED);
     }
 
 
     public function getAvailableUnitsByItemId($itemId) {
-        return $this->catalog->fetchAvailableUnitsByItemId($itemId, StatusEnum::AVAILABLE);
+        return $this->catalog->fetchAvailableUnitsByItemId($itemId, UnitStatusEnum::AVAILABLE);
     }
 
     public function registerDirty($transactionId, $objectId, CollectionMapper $mapper, $object){
