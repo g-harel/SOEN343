@@ -57,7 +57,7 @@ class SessionCatalog
         return $isValid;
     }
 
-    public function addSession($id, $accountId, $loginTime): void {
+    public function addSession($id, $accountId, $loginTime){
         $session = new Session($id, $accountId, $loginTime);
         $this->catalog[$accountId] = $session;
 
