@@ -62,7 +62,7 @@ INSERT INTO `accounts` (`id`, `email`, `password`, `first_name`, `last_name`, `p
 (2, 'admin2@gmail.com', 'admin123', 'Mike', 'Joe', 5141234567, 1055, NULL, 'Nancy', 'Montreal', 'Quebec', 'Canada', 'P3U2J1', 1, 0),
 (3, 'admin3@gmail.com', 'admin123', 'Jane', 'Doe', 5146666666, 28615, NULL, 'Lorimier', 'Montreal', 'Quebec', 'Canada', 'H0H0H0', 1, 0),
 (4, 'client1@gmail.com', '123', 'Spike', 'Mackenzie', 4504204242, 1, NULL, 'Jean-Pistache', 'Montreal', 'Quebec', 'Canada', 'H9Z7F', 0, 0),
-(5, 'client2@gmail.com', '123', 'Spencer', 'McDonald', 5141234123, 28615, NULL, 'Lagrange', 'Montreal', 'Quebec', 'Canada', 'K0L8N6', 1, 0),
+(5, 'client2@gmail.com', '123', 'Spencer', 'McDonald', 5141234123, 28615, NULL, 'Lagrange', 'Montreal', 'Quebec', 'Canada', 'K0L8N6', 0, 0),
 (6, 'client3@gmail.com', '123', 'Maxine', 'Doe', 514365654, 28615, NULL, 'Baulieu', 'Montreal', 'Quebec', 'Canada', 'B7H8C5', 0, 0);
 -- --------------------------------------------------------
 
